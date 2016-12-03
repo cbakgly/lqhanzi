@@ -82,9 +82,9 @@ page: 2,
 
  *Parameters*
 
- | Field | Chinese |
- |:------|:--------|
- | q |部件查询语句：5h/8s|
+| Field | Chinese |
+|:------|:--------|
+| q | 部件查询语句：5h/8s |
 
 *Response*
 ```json
@@ -106,13 +106,13 @@ page: 2,
 
  *Parameters*
 
- | Field | Chinese |
- |:------|:--------|
- | hanzi_char | 汉字字符：5h/8s |
- | hanzi_pic_id | 汉字统一图像编码：A00001 |
+| Field | Chinese |
+|:------|:--------|
+| hanzi_char | 汉字字符：5h/8s |
+| hanzi_pic_id | 汉字统一图像编码：A00001 |
 
 *Response*
-```json
+```js
 {
   dicts: [
   { name: 'unicode', value: ['U+6DE8'] },
@@ -221,7 +221,7 @@ hanzi_char: '明',
 hanzi_pic_id: 'A00001',
 hanzi_pic_url: '',
 origin: 'tw',
-}，
+},
 {
 id: 2,
 hanzi_type: 1, //【文字： 0， 图片： 1， 文字且图片： 2】
@@ -246,7 +246,7 @@ hanzi_char: '明',
 hanzi_pic_id: 'A00001',
 hanzi_pic_url: '',
 origin: 'tw',
-}，
+},
 {
 id: 2,
 hanzi_type: 1, //【文字： 0， 图片： 1， 文字且图片： 2】
@@ -302,35 +302,35 @@ page_info: 'p1',
 token_id: 1,
 level: 1,
 page_title: '第二版修订说明',
-}，
+},
 {
 id: 2,
 page_info: 'p2',
 token_id: 2,
 level: 1,
 page_title: '前言',
-}，
+},
 {
 id: 3,
 page_info: 'p3',
 token_id: 3,
 level: 1,
 page_title: '第一章，一部',
-}，
+},
 {
 id: 4,
 page_info: 'p4',
 token_id: 3,
 level: 2,
 page_title: '第一章，二部',
-}，
+},
 {
 id: 5,
 page_info: 'p4',
 token_id: 3,
 level: 2,
 page_title: '第一章，儿部',
-}，
+},
 {
 id: 689,
 page_info: 'p633',
@@ -356,7 +356,7 @@ page: 2,
 *Url*
  `/api/v1/dict/origin=&page_info=&page_size=&page=`
 
- | Field | Chinese |
+| Field | Chinese |
 |:------|:--------|
 | origin | 字典查询语句：'hanyu' |
 |page_info| 字典页面信息：'p3' |
