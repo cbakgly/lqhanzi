@@ -84,7 +84,7 @@ page: 2,
 
  | Field | Chinese |
  |:------|:--------|
- | q | 部件查询语句：5h/8s |
+ | q |部件查询语句：5h/8s|
 
 *Response*
 ```json
