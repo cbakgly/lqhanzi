@@ -24,9 +24,9 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/oplogs/?logtype=&begin_at=&end_at=&username=&logkey=`
+*Url:* `/api/v1/sysadmin/oplogs/?logtype=&begin_at=&end_at=&username=&logkey=`
 
-*Url:* `/api/v1/admin/oplogs/?logtype=&begin_at=&end_at=&user_id=&logkey=`
+*Url:* `/api/v1/sysadmin/oplogs/?logtype=&begin_at=&end_at=&user_id=&logkey=`
 
 *Response:*
 
@@ -47,7 +47,7 @@
 *Method: GET*
 
 *Url*
- `/api/v1/admin/task_packages?format=0&username=&task_type=&task_stage=&obtain_begin_at=&obtain_end_at&finish_begin_at=&finish_end_at=`
+ `/api/v1/sysadmin/task_packages?format=0&username=&task_type=&task_stage=&obtain_begin_at=&obtain_end_at&finish_begin_at=&finish_end_at=`
 
 *Parameters:*
 
@@ -68,7 +68,7 @@
 *Method: GET*
 
 *Url:*
- `/api/v1/admin/task_packages/1/`
+ `/api/v1/sysadmin/task_packages/1/`
 
 *Parameters:*
 
@@ -89,7 +89,7 @@
 *Method: POST*
 
 *Url:*
-`/api/v1/admin/task_packages/1/`
+`/api/v1/sysadmin/task_packages/1/`
 
 *Post Data:*
 ```json
@@ -101,7 +101,7 @@
 ## <47>. M3  运营管理后台-F1  任务包管理-P2 统计
 *Method: GET*
 
-*Url:* `/api/v1/admin/task_packages?format=1&querytype=`
+*Url:* `/api/v1/sysadmin/task_packages?format=1&querytype=`
 
 *Response:*
 > 只是示例，具体待定
@@ -123,7 +123,7 @@
 |去重        | 2   |---| 审查 | 2   |---| #     | # |
 
 *Url:*
-`/api/v1/admin/tasks?format=0&username=&task_id=&state=&stage=&task_type=&indb_begin_at&indb_end_at&obtain_begin_at&obtain_end_at&complete_begin_at=&complete_end_at=`
+`/api/v1/sysadmin/tasks?format=0&username=&task_id=&state=&stage=&task_type=&indb_begin_at&indb_end_at&obtain_begin_at&obtain_end_at&complete_begin_at=&complete_end_at=`
 
 *Response:*
 
@@ -139,7 +139,7 @@
 *Method: GET*
 
 *Url:*
-`/api/v1/admin/tasks/1/`
+`/api/v1/sysadmin/tasks/1/`
 
 *Response:*
 
@@ -150,7 +150,7 @@
 
 *METHOD: DELETE*
 
-*URL:* `/api/v1/admin/tasks/1/`
+*URL:* `/api/v1/sysadmin/tasks/1/`
 
 ## <49> M3 运营管理后台-F2任务管理-P2统计
 
@@ -159,7 +159,7 @@
 *Method: GET*
 
 *Url:*
-`/api/v1/admin/tasks?format=1&task_type=0`
+`/api/v1/sysadmin/tasks?format=1&task_type=0`
 
 *Response:*
 > 具体返回格式另行商议
@@ -168,7 +168,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/tasks/daily?format=1&complete_begin_at=&complete_end_at=&username=&stage=`
+*Url:* `/api/v1/sysadmin/tasks/daily?format=1&complete_begin_at=&complete_end_at=&username=&stage=`
 
 *Response:*
 > 具体返回格式另行商议
@@ -184,7 +184,7 @@
 | 查询回收时间开始 | begin_at            |
 | 查询回收时间结束 | end_at              |
 
-*Url:* `/api/v1/admin/tasks/trash?username=&begin_at=&end_at=`
+*Url:* `/api/v1/sysadmin/tasks/trash?username=&begin_at=&end_at=`
 
 *Response:*
 
@@ -199,13 +199,13 @@
 
 *Method: POST*
 
-*Url:* `/api/v1/admin/tasks/trash/1/restore/`
+*Url:* `/api/v1/sysadmin/tasks/trash/1/restore/`
 
 ### 3. 彻底删除任务
 
 *Method: DELETE*
 
-*Url:* `/api/v1/admin/tasks/trash/1/`
+*Url:* `/api/v1/sysadmin/tasks/trash/1/`
 
 ## <51> M3运营管理后台-F2任务管理-P4操作日志
 > 见 操作日志
@@ -214,7 +214,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/diaries?format=0&username=&begin_at=&end_at=`
+*Url:* `/api/v1/sysadmin/diaries?format=0&username=&begin_at=&end_at=`
 
 *Response:*
 
@@ -231,7 +231,7 @@
 
 *Method: GET* 
 
-*Url:* `/api/v1/admin/diaries?format=0&username=&begin_at=&end_at=`
+*Url:* `/api/v1/sysadmin/diaries?format=0&username=&begin_at=&end_at=`
 
 *Response:*
 > TBD
@@ -241,7 +241,7 @@
 *Method: GET*
 
 *Url:*
-`/api/v1/admin/credits?username=&total_credits_from=&total_credits_to=&rest_credits_from=&rest_credits_to=&credits_type=`
+`/api/v1/sysadmin/credits?username=&total_credits_from=&total_credits_to=&rest_credits_from=&rest_credits_to=&credits_type=`
 
 *Response:*
 
@@ -265,7 +265,7 @@
 | 去重积分         | remove_dup_credits  |
 
 
-*Url:* `/api/v1/admin/credits/current/?format=0&type=0`
+*Url:* `/api/v1/sysadmin/credits/current/?format=0&type=0`
 
 *Response:*
 
@@ -278,7 +278,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits/current/?format=0&type=1`
+*Url:* `/api/v1/sysadmin/credits/current/?format=0&type=1`
 
 *Method: GET*
 
@@ -294,7 +294,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits?begin_at=&end_at=`
+*Url:* `/api/v1/sysadmin/credits?begin_at=&end_at=`
 
 *Response:*
 
@@ -304,7 +304,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits/settings/`
+*Url:* `/api/v1/sysadmin/credits/settings/`
 
 *Response:* 
 
@@ -316,7 +316,7 @@
 
 *Method: POST*
 
-*Url:* `/api/v1/admin/credits/settings/1/`
+*Url:* `/api/v1/sysadmin/credits/settings/1/`
 
 *Post Data:*
 
@@ -328,7 +328,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits/settings/1/`
+*Url:* `/api/v1/sysadmin/credits/settings/1/`
 
 *Response:*
 
@@ -342,13 +342,13 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits/shop?username=&reward_name=&stage=`
+*Url:* `/api/v1/sysadmin/credits/shop?username=&reward_name=&stage=`
 
 *Response:*
 
 ```json
 [ {"id": 1, "username": "zhangming", "state": 1, "reward_name": "<abc>", "consume_credits": 1000, "applied_at":
-"2016-11-12 12:20:10", "accepted_at": "2016-11-12 13:10:15", "complete_at": "2016-11-12 15:10:10", "admin": "xianmm"} ]
+"2016-11-12 12:20:10", "accepted_at": "2016-11-12 13:10:15", "complete_at": "2016-11-12 15:10:10", "sysadmin": "xianmm"} ]
 ```
 
 > 下面几个API是否可以尝试用一个？POST DATA 类型表示不同的操作？
@@ -362,7 +362,7 @@
 
 *Method: POST*
 
-*Url:* `/api/v1/admin/credits/shop/1/`
+*Url:* `/api/v1/sysadmin/credits/shop/1/`
 
 *Post Data:*
 
@@ -393,7 +393,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/credits/shop/1/`
+*Url:* `/api/v1/sysadmin/credits/shop/1/`
 
 *Response:*
 
@@ -407,7 +407,7 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/rewards/`
+*Url:* `/api/v1/sysadmin/rewards/`
 
 *Response:*
 
@@ -419,7 +419,7 @@
 
 *Method: POST*
 
-*Url:* `/api/v1/admin/rewords/1/`
+*Url:* `/api/v1/sysadmin/rewords/1/`
 
 *Post Data:*
 
@@ -431,7 +431,7 @@
 
 *Method: DELETE*
 
-*Url:* `/api/v1/admin/rewords/1/`
+*Url:* `/api/v1/sysadmin/rewords/1/`
 
 ## 以下建议合并成一个API，就是关于用户管理或者管理员管理的，最后只用一个即可。
 
@@ -441,6 +441,6 @@
 
 *Method: GET*
 
-*Url:* `/api/v1/admin/forum/admin/`
+*Url:* `/api/v1/sysadmin/forum/sysadmin/`
 
 ## 剩下几个API 可以参考老的稍后写
