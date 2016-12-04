@@ -1,7 +1,23 @@
 Lqhanzi project
 ===============
 
-> Django 1.10.4
+环境安装要求
+-------------
+> 需要安装以下软件，建议使用`pip`进行安装，`Django`以及下面的所有`app`都有详细的开发文档，请查看官网．
+
+* [Django](https://www.djangoproject.com/)
+* [django-guardian](http://django-guardian.readthedocs.io/en/stable/)
+* [restframework](http://www.django-rest-framework.org)
+* [djangorestframework-jwt](https://github.com/GetBlimp/django-rest-framework-jwt)
+
+```bash
+> pip install django==1.10.4
+> pip install django-guardian
+> pip install djangorestframework
+> pip install markdown       # Markdown support for the browsable API.
+> pip install django-filter  # Filtering support
+> pip install djangorestframework-jwt
+```
 
 pubdocs 
 -------
