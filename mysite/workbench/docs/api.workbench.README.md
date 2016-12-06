@@ -3,6 +3,101 @@
 > 基于产品图v1/workbench.2 20161124
 
 
+##<产品图第16页> M2 用户工作台-F1 导航点-P1 工作打卡
+
+### 1 获取时间线记录
+*Method: GET*
+
+`/api/v1/workbench/diaries?user_id=&date=&day_scope=`
+
+*Parameters*
+
+| Field | Chinese |
+|:------|:--------|
+| user_id| 指定用户ID |
+| date | 指定月份 |
+| day_scope | 日期范围  例1,3 |
+
+*Response 200*
+
+```json
+成功 Code 200
+{	
+	models: [
+		{
+			"rank": 12,
+			"user_id": 10,
+			"tag": "心情故事",
+			"work_types": ["去重", "拆字"],
+			"work_brief":"",
+			"content": "",
+			"c_t": "",
+			"u_t": ""
+		},
+		{ 
+			"rank": 2,
+			"user_id": 100,
+			"tag": "心情故事",
+			"work_types": ["去重", "拆字"],
+			"work_brief":"",
+			"content": "",
+			"c_t": "",
+			"u_t": ""
+		},
+		{ 
+			"rank": 3,
+			"user_id": 50,
+			"tag": "心情故事",
+			"work_types": ["去重", "拆字"],
+			"work_brief":"",
+			"content": "",
+			"c_t": "",
+			"u_t": ""
+		}
+	]
+}
+
+失败 Code >= 400
+{
+	"error": ""
+}
+```
+
+### 2 提交日记
+*Method: PUT*
+
+`/api/v1/workbench/diaries?user_id=&tag=&content=`
+
+*Parameters*
+
+| Field | Chinese |
+|:------|:--------|
+| user_id| 指定用户ID |
+| tag | 标签 |
+| content | 日记内容 |
+
+*Response 200*
+
+```json
+成功 Code 200
+{	
+	"rank": 12,
+	"user_id": 10,
+	"tag": "心情故事",
+	"work_types": ["去重", "拆字"],
+	"work_brief":"",
+	"content": "",
+	"c_t": "",
+	"u_t": ""
+}
+
+失败 Code >= 400
+{
+	"error": ""
+}
+```
+
+
 ##<产品图第17页> M2 用户工作台-F1 导航点-P2 积分-积分排行榜
 
 > 说明：
@@ -15,7 +110,7 @@
 *Method: GET*
 
 
-`/api/v1/workbench/console/credits_ranking?sort=&user_name=&page=&page_size=`
+`/api/v1/workbench/credits_ranking?sort=&user_name=&page=&page_size=`
 
 *Parameters*
 
@@ -80,7 +175,7 @@
 *Method: GET*
 
 
-`/api/v1/workbench/console/credits?sort=&page=&page_size`
+`/api/v1/workbench/credits?sort=&page=&page_size`
 
 *Parameters*
 
@@ -148,7 +243,7 @@
 
 *Method： GET*
 
-`/api/v1/workbench/console/redeems?order_by=&page_size=&page=`
+`/api/v1/workbench/redeems?order_by=&page_size=&page=`
 
 *Parameters*
 
@@ -212,7 +307,7 @@
 
 *Method： POST*
 
-`/api/v1/workbench/console/redeems?cost=&reward_id=`
+`/api/v1/workbench/redeems?cost=&reward_id=`
 
 *Parameters*
 
@@ -244,7 +339,9 @@
 
 *Method： PUT*
 
-`/api/v1/workbench/console/redeems/{id}?status=0`
+`/api/v1/workbench/redeems/{id}/cancel`
+`/api/v1/workbench/redeems/{id}?status=0`
+
 
 *Parameters*
 
@@ -400,7 +497,7 @@
 *Method PUT*
 
 
-`/api/v1/workbench/task_packages/{id}?&daily_plan=`
+`/api/v1/workbench/task_packages/{id}?daily_plan=`
 
 *Parameters*
 
