@@ -18,6 +18,11 @@ Lqhanzi project
 > pip install django-filter  # Filtering support
 > pip install djangorestframework-jwt
 ```
+*可以直接使用下面的命令安装*
+
+```bash
+pip install -r requirements.txt
+```
 
 pubdocs 
 -------
