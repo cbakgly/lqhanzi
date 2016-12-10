@@ -1,7 +1,8 @@
-Role Permissions
+Django Guardian
 ================
 
-> All models can add prefix like below:
+> 对数据模型的基本权限，可以在定义数据模型的时候加上，可以参考下面网址学习，文档内容简单易懂:
+> [django-guardian readthedocs](http://django-guardian.readthedocs.io/en/stable/)
 
 ```text
 add__
