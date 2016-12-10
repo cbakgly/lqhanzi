@@ -19,7 +19,6 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 from rest_framework.urlpatterns import format_suffix_patterns
-from human.views import HumanView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
