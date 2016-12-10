@@ -1,0 +1,6 @@
+django==1.10.4
+django-guardian
+djangorestframework
+markdown
+django-filter
+djangorestframework-jwt
