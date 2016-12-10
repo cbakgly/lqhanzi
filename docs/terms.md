@@ -142,17 +142,17 @@
 
 ## T
 
-|中文 	En 	解释或例子　　
-|-----|---------|---------|
-|笔画数 	strokes 	#
-|调笔拆分 	deform_split_final 	#
-|图片字编码 	hanzi_pic_id_final 	#
-|图片字编号 	hanzi_pic_id 	A00001
-|调笔拆分 	deform_split 	#
-|调笔拆分 	deform_split_draft 	#
-|调笔拆分 	deform_split_review 	#
-|图片字编码 	hanzi_pic_id_draft 	#
-|图片字编码 	hanzi_pic_id_review
+|中文 |	En|
+|-----|-----|
+|笔画数 |	strokes
+|调笔拆分 |	deform_split_final
+|图片字编码 |	hanzi_pic_id_final 
+|图片字编号| 	hanzi_pic_id
+|调笔拆分 |	deform_split
+|调笔拆分 | deform_split_draft
+|调笔拆分   |	deform_split_review 
+|图片字编码 |	hanzi_pic_id_draft 
+|图片字编码 |	hanzi_pic_id_review
 
 ## U
 
