@@ -17,11 +17,43 @@ Lqhanzi project
 > pip install markdown       # Markdown support for the browsable API.
 > pip install django-filter  # Filtering support
 > pip install djangorestframework-jwt
+> ... # 其他软件包，建议用下面的命令安装
 ```
 *可以直接使用下面的命令安装*
 
 ```bash
-pip install -r requirements.txt
+# 安装Python虚拟环境
+>pip install virtualenv
+>pip install virtualenvwrapper
+
+# 下载代码
+>git clone http://gitlab.lqdzj.cn/lqdzj/lqhanzi.git
+
+# 基于同目录，建立项目环境
+>virtualenv lqhanzi
+>cd lqhanzi
+
+# 进入项目环境，安装依赖包
+>. bin/activate
+(lqhanzi)>pip install -r requirements.txt
+
+# 退出环境
+(lqhanzi)> deactivate
+
+# 启动mysql
+> mysql.server start
+
+# 创建数据库lqhanzi
+> mysqladmin create lqhanzi -u root -p
+
+# 创建表
+> . bin/activate
+(lqhanzi)> cd lqhanzi/project
+(lqhanzi)> ./manage.py migrate
+(lqhanzi)> ./manage.py test
+
+# 启动服务器
+(lqhanzi)> ./manage.py runserver
 ```
 
 pubdocs 
