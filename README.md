@@ -9,7 +9,6 @@ Lqhanzi project
 * [django-guardian](http://django-guardian.readthedocs.io/en/stable/)
 * [restframework](http://www.django-rest-framework.org)
 * [djangorestframework-jwt](https://github.com/GetBlimp/django-rest-framework-jwt)
-* add
 
 ```bash
 > pip install django==1.10.4
