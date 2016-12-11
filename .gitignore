@@ -1,6 +1,7 @@
-*.pyc
 .*
+*.pyc
 bin/
 include/
 lib/
+project/static/uploads/
 pip-selfcheck.json
