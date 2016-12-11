@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    ### 3rd party modules ###
     'guardian',
 
     ### User defined apps ###
@@ -118,6 +120,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Guardian uses it
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
