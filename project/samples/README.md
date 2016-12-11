@@ -1,4 +1,4 @@
 Samples
 =======
 
-> We can write some samples in this app which we can delete it anytime as we want to.
+> 可以写一些自己认为可以给大家看的代码放在这个`app`里，如果这个`app`不需要了，随时可以删除。
