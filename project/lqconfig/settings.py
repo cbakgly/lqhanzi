@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'hanzi', 
     'sysadmin',
     'workbench',
+    'samples', # For some samples code here.
     ### User defined apps ###
 
 ]
