@@ -19,7 +19,7 @@ bind-address		= 0.0.0.0
 mysql> create database lqhanzi;
 Query OK, 1 row affected (0.01 sec)
 
-mysql> grant all privileges on lqhanzi.* to lq@'%' identified by '1234678';
+mysql> grant all privileges on lqhanzi.* to lq@'%' identified by '123456';
 Query OK, 0 rows affected, 1 warning (0.00 sec)
 
 mysql> flush privileges;
