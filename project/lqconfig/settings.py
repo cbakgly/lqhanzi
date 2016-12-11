@@ -162,3 +162,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', 
     'guardian.backends.ObjectPermissionBackend'
 )
+
+
+# For abstract user
+AUTH_USER_MODEL = 'sysadmin.User'

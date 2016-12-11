@@ -22,10 +22,20 @@ CREATE TABLE `auth_user` (
   `gender` varchar(2), -- F for Female M for Male
   `qq` varchar(32),
   `mb` varchar(32), -- Mobile phone
-  `location` varchar(128), -- Address/or Location
-
+  `address` varchar(128), -- Address/or Location
 
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
+
+操作日志
+--------
+
+id default
+1. user_id  foreign key
+2. logtype == number
+2. logtime
+3. message
+
+
