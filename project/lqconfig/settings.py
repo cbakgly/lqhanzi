@@ -158,6 +158,12 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Rest framework paging setting added by @xianduan
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', 
@@ -167,3 +173,5 @@ AUTHENTICATION_BACKENDS = (
 
 # For abstract user
 AUTH_USER_MODEL = 'sysadmin.User'
+
+
