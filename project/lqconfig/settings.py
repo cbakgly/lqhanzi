@@ -146,18 +146,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# For jwt token auth added by @xianduan
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-    'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-    'rest_framework.authentication.SessionAuthentication',
-    'rest_framework.authentication.BasicAuthentication',
-    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-}
-
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -175,3 +163,14 @@ AUTHENTICATION_BACKENDS = (
 AUTH_USER_MODEL = 'sysadmin.User'
 
 
+# For jwt token auth added by @xianduan
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+    'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication',
+    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
