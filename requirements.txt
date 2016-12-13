@@ -5,3 +5,5 @@ markdown
 django-filter
 djangorestframework-jwt
 mysqlclient
+bcrypt
+django-extensions

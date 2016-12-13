@@ -1,6 +1,8 @@
-*.pyc
 .*
+*.pyc
 bin/
 include/
 lib/
+project/static/uploads/
+bower_components/
 pip-selfcheck.json

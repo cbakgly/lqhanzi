@@ -52,6 +52,10 @@ Lqhanzi project
 (lqhanzi)> ./manage.py migrate
 (lqhanzi)> ./manage.py test
 
+# 初始化数据
+(lqhanzi)> ./manage.py runscript init_db
+(lqhanzi)> ./manage.py runscript init_rbac
+
 # 启动服务器
 (lqhanzi)> ./manage.py runserver
 ```
