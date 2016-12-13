@@ -35,17 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 
-    ### 3rd party modules ###
     'guardian',
+    'rest_framework',
 
-    ### User defined apps ###
     'hanzi',
     'sysadmin',
     'workbench',
     'samples',  # For some samples code here.
-    ### User defined apps ###
-
 ]
 
 MIDDLEWARE = [
@@ -140,7 +138,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_URL = '/static/'
 
 # User uploaded files
