@@ -141,7 +141,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # User uploaded files
-MEDIA_ROOT = '/static/uploads/'
+MEDIA_ROOT = 'static/uploads/'
 
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
@@ -156,3 +156,6 @@ AUTHENTICATION_BACKENDS = (
 
 # For abstract user
 AUTH_USER_MODEL = 'sysadmin.User'
+
+# For customized user model, guardian must be tuned
+GUARDIAN_MONKEY_PATCH = False
