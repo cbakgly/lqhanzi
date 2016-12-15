@@ -6,5 +6,4 @@ from rest_framework_jwt.views import verify_jwt_token
 from views.api_sysadmin import OperationView
 
 urlpatterns = [
-    url(r'^operation/', OperationView.as_view()),
 ]
