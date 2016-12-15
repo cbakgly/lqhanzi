@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,19 +35,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 
-    ### 3rd party modules ###
     'guardian',
     'rest_framework',
+<<<<<<< HEAD
     'crispy_forms',
+=======
+>>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318
 
-    ### User defined apps ###
-    'hanzi', 
+    'hanzi',
     'sysadmin',
     'workbench',
-    'samples', # For some samples code here.
-    ### User defined apps ###
-
+    'samples',  # For some samples code here.
 ]
 
 MIDDLEWARE = [
@@ -82,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lqconfig.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -104,6 +101,13 @@ DATABASES = {
     }
 }
 
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -113,6 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 8, }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -121,13 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Guardian uses it
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # default
-    'guardian.backends.ObjectPermissionBackend',
-)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -142,28 +140,32 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_URL = '/static/'
+
+# User uploaded files
+MEDIA_ROOT = 'static/uploads/'
 
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 100,
+    'DEFAULT_AUTH_ENTICATION_CLASSES': (
+    #'rest_framework.authentication.BasicAuthentication',
+    'rest_framework.authentication.SessionAuthentication',
+    ),
 }
 
-
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', 
+    'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend'
 )
-
 
 # For abstract user
 AUTH_USER_MODEL = 'sysadmin.User'
 
+<<<<<<< HEAD
 
 # For jwt token auth added by @xianduan
 REST_FRAMEWORK = {
@@ -177,3 +179,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
+=======
+# For customized user model, guardian must be tuned
+GUARDIAN_MONKEY_PATCH = False
+>>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318

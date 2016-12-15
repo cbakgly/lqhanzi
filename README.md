@@ -49,8 +49,13 @@ Lqhanzi project
 # 创建表
 > . bin/activate
 (lqhanzi)> cd lqhanzi/project
+(lqhanzi)> ./manage.py makemigration
 (lqhanzi)> ./manage.py migrate
 (lqhanzi)> ./manage.py test
+
+# 初始化数据
+(lqhanzi)> ./manage.py runscript init_db
+(lqhanzi)> ./manage.py runscript init_rbac
 
 # 启动服务器
 (lqhanzi)> ./manage.py runserver

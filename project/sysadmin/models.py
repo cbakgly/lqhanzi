@@ -2,9 +2,9 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.db import models
+from guardian.mixins import GuardianUserMixin
 
-
-class User(AbstractUser):
+class User(AbstractUser, GuardianUserMixin):
     gender = models.CharField(max_length=1, blank=True)
     mb = models.CharField(max_length=32, blank=True)
     qq = models.CharField(max_length=32, blank=True)
