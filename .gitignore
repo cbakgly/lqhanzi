@@ -1,7 +1,10 @@
-*.pyc
 .*
+*.pyc
 bin/
 include/
 lib/
+project/static/uploads/
+bower_components/
+migrations
 pip-selfcheck.json
 .DS_Store
