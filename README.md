@@ -49,6 +49,7 @@ Lqhanzi project
 # 创建表
 > . bin/activate
 (lqhanzi)> cd lqhanzi/project
+(lqhanzi)> ./manage.py makemigration
 (lqhanzi)> ./manage.py migrate
 (lqhanzi)> ./manage.py test
 
