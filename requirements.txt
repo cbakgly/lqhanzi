@@ -8,3 +8,4 @@ djangorestframework-jwt
 mysqlclient
 bcrypt
 django-extensions
+requests
