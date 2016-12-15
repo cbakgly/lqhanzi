@@ -1,3 +1,6 @@
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 #!/usr/bin/env python
 import os
 import sys

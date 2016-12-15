@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     ### 3rd party modules ###
     'guardian',
+    'rest_framework',
+    'crispy_forms',
 
     ### User defined apps ###
     'hanzi', 
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'lqconfig.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/usr/local/lib/python2.7/dist-packages/rest_framework/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,7 +132,7 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
 TIME_ZONE = 'UTC'
 
@@ -173,4 +175,5 @@ REST_FRAMEWORK = {
     'rest_framework.authentication.BasicAuthentication',
     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }

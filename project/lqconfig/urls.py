@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^sysadmin/', include('sysadmin.api_urls')),
+    url(r'^workbench/', include('workbench.urls')),
 ]
