@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 # -*- coding:utf8 -*-
-=======
 # encoding: utf-8
 
->>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318
 from __future__ import unicode_literals
 
 from django.db import models
@@ -11,7 +8,6 @@ from sysadmin.models import User
 import datetime
 
 
-<<<<<<< HEAD
 # Create your models here.
 class Tag(models.Model):
     """
@@ -26,7 +22,6 @@ class Tag(models.Model):
 
 
 
-=======
 
 class RbacAction(models.Model):
     code = models.CharField(max_length=100, blank=False)
@@ -298,4 +293,3 @@ class Diaries(models.model):
     content = models.TextField(u'打卡日记', null=True)
     c_t = models.IntegerField(u'创建时间', null=True)
     u_t = models.IntegerField(u'修改时间', null=True)
->>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318

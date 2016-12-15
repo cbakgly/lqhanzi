@@ -39,10 +39,8 @@ INSTALLED_APPS = [
 
     'guardian',
     'rest_framework',
-<<<<<<< HEAD
+
     'crispy_forms',
-=======
->>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318
 
     'hanzi',
     'sysadmin',
@@ -165,7 +163,6 @@ AUTHENTICATION_BACKENDS = (
 # For abstract user
 AUTH_USER_MODEL = 'sysadmin.User'
 
-<<<<<<< HEAD
 
 # For jwt token auth added by @xianduan
 REST_FRAMEWORK = {
@@ -179,7 +176,5 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
-=======
 # For customized user model, guardian must be tuned
 GUARDIAN_MONKEY_PATCH = False
->>>>>>> d9c298117fc9429dadfd14e1d5caa1fd9e169318
