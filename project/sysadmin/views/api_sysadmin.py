@@ -1,18 +1,39 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework import filters
 from sysadmin.models import User
 from sysadmin.models import Operation
 from rest_framework.response import Response
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
+from django.db.models import Q
+from datetime import datetime
+from rest_framework import serializers
+import rest_framework_filters as filters
 
-class OperationView(APIView):
-    def get(self, request):
-        user = User.objects.get(username=request.user)
-        username, begin_at, end_at, logtype = (self.request.query_params.get(key, None) for key in \
-                ("username", "begin_at", "end_at"))
+class OperationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Operation
+        fields = ('message', 'logtype', 'logtime', 'user')
 
-        #operation_list = Operation.objects.filter(user=user
+    def create(self, validated_data):
+        user = validated_data['user']
+        operation = Operation(user=user, logtype=validated_data['logtype'], \
+        logtime=validated_data['logtime'], message=validated_data['message'])
 
-        return Response({"message": "for test"})
+        operation.save()
+        return Operation(**validated_data)
+
+class OperationFilter(filters.FilterSet):
+    logtime = filters.DateFromToRangeFilter()
+    class Meta:
+        model = Operation
+        fields = {
+                'logtype': ['exact'],
+                'user__username': ['exact'],
+                'message': ['in', 'startswith'],
+        }
+
+class OperationViewSet(viewsets.ModelViewSet):
+    serializer_class = OperationSerializer
+    filter_class = OperationFilter
+    queryset = Operation.objects.all()
