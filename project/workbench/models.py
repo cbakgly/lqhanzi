@@ -42,7 +42,7 @@ class RbacAction(models.Model):
         )
 
 
-class HanziSet(models.model):
+class HanziSet(models.Model):
     source = models.SmallIntegerField(u'来源', null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', null=True)
     hanzi_char = models.CharField(u'文字', null=True, max_length=8)
@@ -73,7 +73,7 @@ class HanziSet(models.model):
     u_t = models.IntegerField(u'修改时间')
 
 
-class VariantsSplit(models.model):
+class VariantsSplit(models.Model):
     source = models.SmallIntegerField(u'来源', null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', null=True)
     hanzi_char = models.CharField(u'文字', null=True, max_length=8)
@@ -114,14 +114,14 @@ class VariantsSplit(models.model):
     u_t = models.IntegerField(u'修改时间')
 
 
-class VariantsInput(models.model):
+class VariantsInput(models.Model):
     volume_num = models.SmallIntegerField(u'册', null=True)
     page_num = models.IntegerField(u'页码', null=True)
 
     seq_num_draft = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_draft = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_draft = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_draft = models.SmallIntegerField(u'正异类型', max_length=64, null=True)
+    variant_type_draft = models.SmallIntegerField(u'正异类型', null=True)
     std_hanzi_draft = models.CharField(u'所属正字', max_length=64, null=True)
     notes_draft = models.CharField(u'注释信息', max_length=64, null=True)
     is_del_draft = models.SmallIntegerField(u'是否删除', null=True)
@@ -152,7 +152,7 @@ class VariantsInput(models.model):
     u_t = models.IntegerField(u'修改时间')
 
 
-class KoreanVariantsDict(models.model):
+class KoreanVariantsDict(models.Model):
     glyph = models.CharField(u'字形', max_length=16, null=True)
     code = models.CharField(u'Unicode', max_length=16, null=True)
     busu_id = models.IntegerField(u'部首ID，对应于hanzi_radicals的id', null=True)
@@ -170,18 +170,18 @@ class KoreanVariantsDict(models.model):
     emean = models.CharField(u'英文含义', max_length=128, null=True)
 
 
-class HanziRadicals(models.model):
+class HanziRadicals(models.Model):
     radical = models.CharField(u'部首', max_length=16, null=True)
     strokes = models.SmallIntegerField(u'笔画数', null=True)
 
 
-class KoreanDupZhengCodes(models.model):
-    zheng_code = emean = models.CharField(u'郑码', max_length=32, null=True)
+class KoreanDupZhengCodes(models.Model):
+    #zheng_code = emean = models.CharField(u'郑码', max_length=32, null=True)
     count = models.SmallIntegerField(u'郑码对应汉字的数量', null=True)
     page_num = models.SmallIntegerField(u'页码', null=True)
 
 
-class KoreanDedup(models.model):
+class KoreanDedup(models.Model):
     source = models.SmallIntegerField(u'来源', null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
@@ -195,7 +195,7 @@ class KoreanDedup(models.model):
     u_t = models.IntegerField(u'修改时间')
 
 
-class KoreanDupCharacters(models.model):
+class KoreanDupCharacters(models.Model):
     korean_variant = models.CharField(u'高丽字头', max_length=32, null=True)
     unicode_of_korean = models.CharField(u'与字头字形相同/相近的Unicode', max_length=32, null=True)
     relation = models.SmallIntegerField(u'二者关系：形码均相同，形似码相同，形同码不同，无相同字形', null=True)
@@ -204,7 +204,7 @@ class KoreanDupCharacters(models.model):
     u_t = models.IntegerField(u'修改时间', null=True)
 
 
-class InterDictDedup(models.model):
+class InterDictDedup(models.Model):
     source = models.SmallIntegerField(u'来源', null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
@@ -224,10 +224,10 @@ class InterDictDedup(models.model):
     u_t = models.IntegerField(u'修改时间')
 
 
-class Tasks(models.model):
+class Tasks(models.Model):
     user_id = models.IntegerField(u'拆字员', null=True)
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
-    task_package_id = models.IntegerField(u'任务包ID', null=True, max_length=11)
+    task_package_id = models.IntegerField(u'任务包ID', null=True)
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     task_status = models.SmallIntegerField(u'任务状态', null=True)
@@ -239,7 +239,7 @@ class Tasks(models.model):
     u_t = models.IntegerField(u'修改时间', null=True)
 
 
-class TaskPackages(models.model):
+class TaskPackages(models.Model):
     user_id = models.IntegerField(u'用户id', null=True)
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
@@ -253,7 +253,7 @@ class TaskPackages(models.model):
     u_t = models.IntegerField(u'修改时间', null=True)
 
 
-class CreditsRedeem(models.model):
+class CreditsRedeem(models.Model):
     applied_by = models.IntegerField(u'申请人的用户id', null=True)
     accepted_by = models.IntegerField(u'受理人的用户id', null=True)
     completed_by = models.IntegerField(u'完成人的用户id', null=True)
@@ -267,7 +267,7 @@ class CreditsRedeem(models.model):
     u_t = models.IntegerField(u'修改时间', null=True)
 
 
-class Diaries(models.model):
+class Diaries(models.Model):
     user_id = models.IntegerField(u'用户id', null=True)
     tag = models.SmallIntegerField(u'标签', null=True)
     work_types = models.CharField(u'工作类型', max_length=64, null=True)
