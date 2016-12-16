@@ -37,8 +37,23 @@ class OperationTestCase(TestCase):
     def test_post_operation(self):
         payload = {"user": 1, "logtime": datetime.now().isoformat(), "message": binascii.b2a_hex(os.urandom(15)), "logtype": 1}
         response = self.client.post(self.url, payload)
+        #print response.content
         self.assertEqual(response.status_code, 201) # 201 HTTP CREATED CODE
+
+    def test_put_operation(self):
+        test_id = Operation.objects.all()[0].id
+        payload = {"user": 1, "logtime": datetime.now().isoformat(), "message": binascii.b2a_hex(os.urandom(15)), "logtype": 1}
+        payload = json.dumps(payload)
+        url = "{0}{1}/".format(self.url, test_id)
+        #print url
+        response = self.client.put(url, payload, content_type='application/json')
+        #print response.content
+        #pdb.set_trace()
+        self.assertLess(response.status_code, 300) # 201 HTTP CREATED CODE
 
     def test_delete_one_record_operation(self):
         response = self.client.delete("/sysadmin/operation/1/")
         self.assertGreater(response.status_code, 200)
+
+
+
