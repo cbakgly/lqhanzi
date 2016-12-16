@@ -63,7 +63,7 @@ ROOT_URLCONF = 'lqconfig.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/usr/local/lib/python2.7/dist-packages/rest_framework/templates/'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
