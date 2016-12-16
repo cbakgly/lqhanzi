@@ -20,7 +20,3 @@ class Operation(models.Model):
 
     def __unicode__(self):
         return self.message
-
-    def save_log(self):
-        self.logtime = timezone.now()
-        self.save()
