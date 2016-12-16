@@ -1,19 +1,14 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework import viewsets
-from rest_framework import filters
 from sysadmin.models import User
 from sysadmin.models import Operation
-from rest_framework.response import Response
-from django.db.models import Q
-from datetime import datetime
+from rest_framework import viewsets
 from rest_framework import serializers
+from django.utils import timezone as datetime
 import rest_framework_filters as filters
 
 class OperationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Operation
-        fields = ('message', 'logtype', 'logtime', 'user')
+        fields = ('id', 'message', 'logtype', 'logtime', 'user')
 
     def create(self, validated_data):
         user = validated_data['user']
@@ -22,6 +17,15 @@ class OperationSerializer(serializers.ModelSerializer):
 
         operation.save()
         return Operation(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.logtime = validated_data.get('logtime', instance.logtime)
+        instance.user = validated_data.get('user', instance.user)
+        instance.logtype = validated_data.get('logtype', instance.logtype)
+        instance.message = validated_data.get('message', instance.message)
+        instance.save()
+        return instance
+
 
 class OperationFilter(filters.FilterSet):
     logtime = filters.DateFromToRangeFilter()
