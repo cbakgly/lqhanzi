@@ -166,15 +166,20 @@ AUTH_USER_MODEL = 'sysadmin.User'
 
 # For jwt token auth added by @xianduan
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-    'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_AUTH_ENTICATION_CLASSES': (
+    #'rest_framework.authentication.BasicAuthentication',
     'rest_framework.authentication.SessionAuthentication',
-    'rest_framework.authentication.BasicAuthentication',
-    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend'
+)
+
+# For abstract user
+AUTH_USER_MODEL = 'sysadmin.User'
+
 # For customized user model, guardian must be tuned
 GUARDIAN_MONKEY_PATCH = False
