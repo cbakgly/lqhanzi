@@ -27,7 +27,7 @@ class RbacAction(models.Model):
             ("op_final_input", "Can operate final_input"),
             # 任务操作权限
             ("op_task", "Can operate task"),
-             # 积分操作权限
+            # 积分操作权限
             ("op_credit", "Can operate credit"),
             # 日记操作权限
             ("op_diary", "Can operate diary"),
@@ -176,7 +176,7 @@ class HanziRadicals(models.Model):
 
 
 class KoreanDupZhengCodes(models.Model):
-    #zheng_code = emean = models.CharField(u'郑码', max_length=32, null=True)
+    zheng_code = models.CharField(u'郑码', max_length=32, null=True)
     count = models.SmallIntegerField(u'郑码对应汉字的数量', null=True)
     page_num = models.SmallIntegerField(u'页码', null=True)
 
