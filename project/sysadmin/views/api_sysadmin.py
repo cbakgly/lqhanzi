@@ -2,7 +2,6 @@ from sysadmin.models import User
 from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
-from django.utils import timezone as datetime
 import rest_framework_filters as filters
 
 class OperationSerializer(serializers.ModelSerializer):
@@ -12,14 +11,11 @@ class OperationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = validated_data['user']
-        operation = Operation(user=user, logtype=validated_data['logtype'], \
-        logtime=validated_data['logtime'], message=validated_data['message'])
-
-        operation.save()
+        operation = Operation(user=user, logtype=validated_data['logtype'], message=validated_data['message'])
+        operation.save_log()
         return Operation(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.logtime = validated_data.get('logtime', instance.logtime)
         instance.user = validated_data.get('user', instance.user)
         instance.logtype = validated_data.get('logtype', instance.logtype)
         instance.message = validated_data.get('message', instance.message)

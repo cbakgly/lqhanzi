@@ -16,7 +16,7 @@ class Operation(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
     logtype = models.IntegerField()
     message = models.CharField(max_length=1024)
-    logtime = models.DateTimeField()
+    logtime = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.message
