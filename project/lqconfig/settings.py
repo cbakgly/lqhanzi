@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'guardian',
     'rest_framework',
 
-    'crispy_forms',
+    # 'crispy_forms',
 
     'hanzi',
     'sysadmin',

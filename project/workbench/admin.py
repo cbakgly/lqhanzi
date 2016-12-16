@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
-from models import Diary,Tag
+from models import Diaries,Tag
 # Register your models here.
 
 
@@ -12,5 +12,5 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('tag',)
 
 
-admin.site.register(Diary, DiaryAdmin)
+admin.site.register(Diaries, DiaryAdmin)
 admin.site.register(Tag, TagAdmin)

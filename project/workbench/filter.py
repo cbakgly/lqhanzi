@@ -11,5 +11,5 @@ class DiaryFilter(django_filters.rest_framework.FilterSet):
     c_t = django_filters.DateTimeFromToRangeFilter()
 
     class Meta:
-        model = models.Diary
+        model = models.Diaries
         fields = ['user_id', 'c_t']

@@ -13,7 +13,7 @@ class DiaryViewSet(viewsets.ModelViewSet):
     """
     允许查看打卡记录的API endpoint
     """
-    queryset = models.Diary.objects.all()
+    queryset = models.Diaries.objects.all()
     serializer_class = serializer.DiarySerializer
     filter_class = filter.DiaryFilter
     ordering_fields = ('c_t')
