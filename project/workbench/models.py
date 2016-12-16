@@ -1,8 +1,26 @@
+# -*- coding:utf8 -*-
 # encoding: utf-8
 
 from __future__ import unicode_literals
 
 from django.db import models
+from sysadmin.models import User
+import datetime
+
+
+# Create your models here.
+class Tag(models.Model):
+    """
+    打卡标签
+    """
+    tag = models.CharField(max_length=16)
+
+    def __unicode__(self):
+        return self.tag
+
+
+
+
 
 
 class RbacAction(models.Model):
