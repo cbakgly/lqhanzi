@@ -12,7 +12,7 @@ class OperationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = validated_data['user']
         operation = Operation(user=user, logtype=validated_data['logtype'], message=validated_data['message'])
-        operation.save_log()
+        operation.save()
         return Operation(**validated_data)
 
     def update(self, instance, validated_data):
