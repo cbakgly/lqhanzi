@@ -2,7 +2,7 @@ from sysadmin.models import User
 from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
-from datetime import datetime
+from django.utils import timezone as datetime
 import rest_framework_filters as filters
 
 class OperationSerializer(serializers.ModelSerializer):

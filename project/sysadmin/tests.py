@@ -3,7 +3,7 @@ import json
 import pdb
 import random
 import os, binascii
-from datetime import datetime
+from django.utils import timezone as datetime
 
 from django.test import TestCase
 from sysadmin.models import User
