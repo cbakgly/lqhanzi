@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 import rest_framework_filters as filters
 
+# User management
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -23,17 +24,21 @@ class UserSerializer(serializers.ModelSerializer):
         instance.set_password(validated_data['password'])
         instance.save()
         return instance
-        
+
+
 class UserFilter(filters.FilterSet):
     class Meta:
         model = User
         fields = {'username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb'}
-        
+
+
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     filter_class = UserFilter
     queryset = User.objects.all()
 
+
+# Operation log management
 class OperationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Operation
@@ -62,6 +67,7 @@ class OperationFilter(filters.FilterSet):
                 'user__username': ['exact'],
                 'message': ['in', 'startswith'],
         }
+
 
 class OperationViewSet(viewsets.ModelViewSet):
     serializer_class = OperationSerializer

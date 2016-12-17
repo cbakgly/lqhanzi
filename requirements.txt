@@ -9,3 +9,4 @@ mysqlclient
 bcrypt
 django-extensions
 requests
+django-debug-toolbar
