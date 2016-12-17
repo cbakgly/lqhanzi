@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'guardian',
     'rest_framework',
+    'debug_toolbar',
 
     # 'crispy_forms',
 
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'lqconfig.urls'
@@ -165,3 +167,5 @@ AUTH_USER_MODEL = 'sysadmin.User'
 
 # For customized user model, guardian must be tuned
 GUARDIAN_MONKEY_PATCH = False
+
+INTERNAL_IPS = ('127.0.0.1',)

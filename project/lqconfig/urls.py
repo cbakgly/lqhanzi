@@ -19,6 +19,7 @@ from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
+import settings
 
 admin.autodiscover()
 
@@ -31,3 +32,9 @@ urlpatterns = [
     url(r'^sysadmin/', include('sysadmin.api_urls')),
     url(r'^workbench/', include('workbench.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
