@@ -1,3 +1,4 @@
+# -*- coding:utf8 -*-
 """mysite URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -31,6 +32,8 @@ urlpatterns = [
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^sysadmin/', include('sysadmin.api_urls')),
     url(r'^workbench/', include('workbench.urls')),
+    url(r'^api/(?P<version>)\w+/workbench/', include('workbench.api_urls')),
+    # url(r'^$', hanzi.index)
 ]
 
 if settings.DEBUG:

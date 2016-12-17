@@ -150,6 +150,7 @@ MEDIA_ROOT = 'static/uploads/'
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'PAGE_SIZE': 100,
     'DEFAULT_AUTH_ENTICATION_CLASSES': (
     #'rest_framework.authentication.BasicAuthentication',
