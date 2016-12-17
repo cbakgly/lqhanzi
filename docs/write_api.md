@@ -30,6 +30,7 @@
    http://127.0.0.1:8000/sysadmin/user/?username=xianer&first_name=贤二
 
    > 老外的名字`first_name` 到底是姓还是名？
+   > 更复杂的用法可以使用`startswith` `in` `exact` `range` 等参数
 
 5. 删除一个用户
 
@@ -42,6 +43,7 @@
 7. 更改一个用户
 
    http://127.0.0.1:8000/sysadmin/user/3/ 看到有个`PUT`么？改完点击下
+
 
 
 看看代码怎么实现的
@@ -119,6 +121,13 @@ pip install -r requirements.txt
 pip install django-debug-toolbar
 ```
 
+API 测试
+-----------------
+下面可以带大家看看`testcase` 怎么写，`sysadmin/tests.py` 就是例子
+```bash
+./manager.py test # 就可以执行测试了
+./manager.py test sysadmin.tests # 只测试一个
+```
 
 Thanks everybody!
 ----------------------------------------
