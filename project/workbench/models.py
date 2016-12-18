@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from sysadmin.models import User
-import datetime
+import django.utils.timezone as timezone
 
 
 # Create your models here.
@@ -14,6 +14,10 @@ class Tag(models.Model):
     打卡标签
     """
     tag = models.CharField(max_length=16)
+
+    class Meta:
+        verbose_name = "打卡类型"
+        verbose_name_plural = "打卡类型"
 
     def __unicode__(self):
         return self.tag
@@ -251,10 +255,52 @@ class CreditsRedeem(models.Model):
 
 
 class Diaries(models.Model):
-    user_id = models.IntegerField(u'用户id', null=True)
+    """
+    打卡记录
+    """
+    #user_id = models.IntegerField(u'用户id', null=True)
+    user = models.ForeignKey(User)
     tag = models.SmallIntegerField(u'标签', null=True)
     work_types = models.CharField(u'工作类型', max_length=64, null=True)
     work_brief = models.CharField(u'工作摘要，如：【拆字x个，去重y页，录入z个。】', max_length=512, null=True)
     content = models.TextField(u'打卡日记', null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        verbose_name = "打卡记录"
+        verbose_name_plural = "打卡记录"
+
+    def __unicode__(self):
+        return self.work_brief
+
+
+class CreditSort(models.Model):
+    """
+    积分类型
+    """
+    credit_sort = models.CharField(max_length=20)
+
+    class Meta:
+        verbose_name = "积分类型"
+        verbose_name_plural = "积分类型"
+
+    def __unicode__(self):
+        return self.credit_sort
+
+
+class Credits(models.Model):
+    """
+    积分
+    """
+    #user_id = models.IntegerField(u'用户id', null=True)
+    user = models.ForeignKey(User)
+    credit = models.IntegerField(u'积分值', null=True)
+    sort = models.ForeignKey(CreditSort, related_name='type')
+
+    class Meta:
+        verbose_name = "积分"
+        verbose_name_plural = "积分"
+
+    def __unicode__(self):
+        return self.sort.credit_sort
