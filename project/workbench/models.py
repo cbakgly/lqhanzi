@@ -258,7 +258,7 @@ class Diaries(models.Model):
     """
     打卡记录
     """
-    # user_id = models.IntegerField(u'用户id', null=True)
+    #user_id = models.IntegerField(u'用户id', null=True)
     user = models.ForeignKey(User)
     tag = models.SmallIntegerField(u'标签', null=True)
     work_types = models.CharField(u'工作类型', max_length=64, null=True)
