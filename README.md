@@ -28,6 +28,8 @@ Lqhanzi project
 
 # 下载代码
 >git clone http://gitlab.lqdzj.cn/lqdzj/lqhanzi.git
+OR
+>git clone ssh://git@gitlab.lqdzj.cn:9022/lqdzj/lqhanzi.git
 
 # 基于同目录，建立项目环境
 >virtualenv lqhanzi
@@ -61,7 +63,7 @@ Lqhanzi project
 (lqhanzi)> ./manage.py runserver
 ```
 
-pubdocs 
+pubdocs
 -------
 > 请把一些说明性的文档，如PEP8等，或者其他介绍的文档放在此路径，建议用`Markdown`写文档
 > 如果内容含有中文，请务必使用`UTF8`编码。
