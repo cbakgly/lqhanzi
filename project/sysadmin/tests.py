@@ -11,6 +11,7 @@ from django.test import Client
 
 class OperationTestCase(TestCase):
     def setUp(self):
+        # SetUp will execute everytime before each test case 
         print "<Test sysadmin apps...>"
         print "-----------------------------------\n"
         self.url = "/sysadmin/operation/"
@@ -22,7 +23,7 @@ class OperationTestCase(TestCase):
         user.save()
 
         # Create tmp message
-        self.logtype = random.randint(1, 200)
+        self.logtype = random.randint(0, 5) # Because logtype in (0, 1, 2, 3, 4, 5) if more than 5 it can not get data by filter
         operation = Operation(user=user, logtype=self.logtype, message=self.tmp_msg)
         operation.save()
 
@@ -30,9 +31,10 @@ class OperationTestCase(TestCase):
     def test_get_one_operation(self):
         payload = {"user__username": self.tmp_username, "logtype": self.logtype, "message__contains": self.tmp_msg[:10]}
         response = self.client.get(self.url, payload)
-        print "test_get_one_operation: {0} {1}".format(response.status_code, response.content)
         data = json.loads(response.content)
-        get_msg = data['results'][0].get('message')
+        get_msg = data['results'][0]['message']
+        print "test_get_one_operation: {0} {1}".format(response.status_code, response.content)
+        #pdb.set_trace()
         self.assertEqual(get_msg, self.tmp_msg)
 
 

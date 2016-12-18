@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'PAGE_SIZE': 100,
     'DEFAULT_AUTH_ENTICATION_CLASSES': (
-    #'rest_framework.authentication.BasicAuthentication',
+    'rest_framework.authentication.BasicAuthentication',
     'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
