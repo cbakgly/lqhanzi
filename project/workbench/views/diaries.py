@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from django.shortcuts import render
 from rest_framework import viewsets
 import django_filters
 
@@ -35,3 +36,7 @@ class CreditViewSet(viewsets.ModelViewSet):
     filter_class = wb_filter.CreditFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     pagination_class = SmallResultsSetPagination
+
+
+def index(request):
+    return render(request, 'diaries.html')

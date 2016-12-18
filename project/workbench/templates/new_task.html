@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block right_side %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="myTasks.html">我的任务</a></li>
+        <li class="active">任务领取</li>
+    </ol>
+</section>
+<!-- /.content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header">
+                    <div class="box-header-inner">
+                        <div class="ser-bd z-ser-bd">
+                            <div class="task-item">
+                                <div class="task-fl">任务类型：</div>
+                                <div class="radios task-fr">
+                                    <label><input type="radio" name="t1" checked="checked" class="minimal">拆字</label>
+                                    <label><input type="radio" name="t1">录入</label>
+                                    <label><input type="radio" name="t1" class="minimal">去重</label>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-fl">任务阶段：</div>
+                                <div class="radios task-fr">
+                                    <label><input type="radio" name="t2" checked="checked">初次</label>
+                                    <label><input type="radio" name="t2">回查</label>
+                                    <label><input type="radio" name="t2" class="minimal">审查</label>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-fl">任务包大小：</div>
+                                <div class="radios task-fr">
+                                    <label><input type="radio" name="t3" checked="checked">100字</label>
+                                    <label><input type="radio" name="t3">200字</label>
+                                    <label><input type="radio" name="t3" class="minimal">500字</label>
+                                    <label><input type="radio" name="t3" class="minimal">1000字</label>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-fl">每日计划：</div>
+                                <div class="radios task-fr">
+                                    <label><input type="radio" name="t4" checked="checked">5字</label>
+                                    <label><input type="radio" name="t4">10字</label>
+                                    <label><input type="radio" name="t4">15字</label>
+                                    <label><input type="radio" name="t4">20字</label>
+                                    <label><input type="radio" name="t4">其它<input class="z-other" type="text"
+                                                                                  placeholder="请输入5的倍数"></label>
+                                </div>
+                            </div>
+                            <div class="z-btns">
+                                <button class="btn btn-default btn-sm z-btn-sm">取消</button>
+                                <button class="btn btn-primary btn-sm z-btn-sm">领取</button>
+                            </div>
+                            <div class="z-tip">
+                                <p>温馨提示：</p>
+                                <p>1.请您慎重选择每日计划;</p>
+                                <p>2.如果有必要，您也可以在任务进行中修改计划;</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section><!-- /.content -->
+{% endblock %}
