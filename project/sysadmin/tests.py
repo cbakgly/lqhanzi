@@ -11,6 +11,7 @@ from django.test import Client
 
 class OperationTestCase(TestCase):
     def setUp(self):
+        # SetUp will execute everytime before each test case 
         print "<Test sysadmin apps...>"
         print "-----------------------------------\n"
         self.url = "/sysadmin/operation/"
@@ -22,7 +23,7 @@ class OperationTestCase(TestCase):
         user.save()
 
         # Create tmp message
-        self.logtype = random.randint(0, 5)
+        self.logtype = random.randint(0, 5) # Because logtype in (0, 1, 2, 3, 4, 5) if more than 5 it can not get data by filter
         operation = Operation(user=user, logtype=self.logtype, message=self.tmp_msg)
         operation.save()
 

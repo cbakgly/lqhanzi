@@ -121,6 +121,7 @@ pip install -r requirements.txt
 pip install django-debug-toolbar
 ```
 
+
 API 测试
 -----------------
 下面可以带大家看看`testcase` 怎么写，`sysadmin/tests.py` 就是例子
@@ -128,6 +129,7 @@ API 测试
 ./manager.py test # 就可以执行测试了
 ./manager.py test sysadmin.tests # 只测试一个
 ```
+
 
 Thanks everybody!
 ----------------------------------------
