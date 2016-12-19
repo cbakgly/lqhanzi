@@ -1,19 +1,10 @@
 # -*- coding:utf8 -*-
-from django.conf.urls import url, include
-from rest_framework import routers
+from django.conf.urls import url
 from views import diaries, task_package, search, forum, credits, task
-
-router = routers.DefaultRouter()
-router.register(r'diaries', diaries.DiaryViewSet)
-router.register(r'tags', diaries.TagViewSet)
-router.register(r'credits', diaries.CreditViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
     # 工作打卡
     url(r'diaries', diaries.index, name='m2.diaries'),
 

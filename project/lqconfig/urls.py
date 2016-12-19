@@ -22,6 +22,8 @@ from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 import settings
 
+from hanzi.views.hanzi import index
+
 admin.autodiscover()
 
 urlpatterns = [
@@ -30,10 +32,13 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
-    url(r'^sysadmin/', include('sysadmin.api_urls')),
+    # url(r'^sysadmin/', include('sysadmin.urls')),
     url(r'^workbench/', include('workbench.urls')),
     url(r'^api/(?P<version>)\w+/workbench/', include('workbench.api_urls')),
-    # url(r'^$', hanzi.index)
+    # url(r'^api/(?P<version>)\w+/hanzi/', include('hanzi.api_urls')),
+    url(r'^api/(?P<version>)\w+/sysadmin/', include('sysadmin.api_urls')),
+    url(r'^$', index)
+    # url(r'^$', include('hanzi.urls'))
 ]
 
 if settings.DEBUG:
