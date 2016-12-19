@@ -7,7 +7,7 @@
 
 使用 `restful_framework`
 ----------------------------------------------------------
-> `restful_framework` 是 `Django` 下使用推荐的一个框架，我们之所以使用框架就是为>了，不再重复别人已经走过的冤枉路。轮子已经造好，我们只需要会用就可以了。
+> `restful_framework` 是 `Django` 下使用推荐的一个框架，我们之所以使用框架就是为了，不再重复别人已经走过的冤枉路。轮子已经造好，我们只需要会用就可以了。
 
 
 先看瓜甜不甜
@@ -50,7 +50,8 @@
 --------------------------------------
 > 代码简单的都不好意思了，目前为了方便我都写到一个文件里了。回头可以分开的😄
 
-1. 先来看看`views` 怎么写
+1.先来看看`views` 怎么写
+
 ```python
 # encoding: utf-8
 from __future__ import unicode_literals
@@ -94,7 +95,7 @@ class UserViewSet(viewsets.ModelViewSet): # 这个viewset多简单
     filter_class = UserFilter
     queryset = User.objects.all()
 ```
-2. 看看`URL` 怎么写
+2.看看`URL` 怎么写
 
 ```python
 from django.conf.urls import url
@@ -115,6 +116,7 @@ urlpatterns = router.urls
 https://django-debug-toolbar.readthedocs.io/en/stable/installation.html 详细的文档
 
 配置里写好了，您要做的仅仅是下面
+
 ```bash
 pip install -r requirements.txt
 ### 或者直接安装包 ###
@@ -125,6 +127,7 @@ pip install django-debug-toolbar
 API 测试
 -----------------
 下面可以带大家看看`testcase` 怎么写，`sysadmin/tests.py` 就是例子
+
 ```bash
 ./manager.py test # 就可以执行测试了
 ./manager.py test sysadmin.tests # 只测试一个
