@@ -6,6 +6,7 @@ from views import diaries, task_package
 router = routers.DefaultRouter()
 router.register(r'diaries', diaries.DiaryViewSet)
 router.register(r'tags', diaries.TagViewSet)
+router.register(r'credits', diaries.CreditViewSet)
 
 
 # Wire up our API using automatic URL routing.
