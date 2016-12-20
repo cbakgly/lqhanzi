@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
 # Create your models here.
 
 class HanziSet(models.Model):
@@ -35,3 +36,6 @@ class HanziSet(models.Model):
     remark = models.CharField(u'备注', max_length=128, null=True)
     c_t = models.IntegerField(u'创建时间')
     u_t = models.IntegerField(u'修改时间')
+
+    class Meta:
+        db_table = 'hanzi_set'
