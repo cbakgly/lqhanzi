@@ -18,6 +18,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = "打卡类型"
         verbose_name_plural = "打卡类型"
+        db_table = 'tag'
 
     def __unicode__(self):
         return self.tag
@@ -58,6 +59,7 @@ class RbacAction(models.Model):
             # 系统操作权限
             ("op_system", "Can operate system"),
         )
+        db_table = 'rbac_action'
 
 
 class VariantsSplit(models.Model):
@@ -97,8 +99,11 @@ class VariantsSplit(models.Model):
     is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'variants_split'
 
 
 class VariantsInput(models.Model):
@@ -135,8 +140,11 @@ class VariantsInput(models.Model):
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
 
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'variants_input'
 
 
 class KoreanVariantsDict(models.Model):
@@ -156,16 +164,25 @@ class KoreanVariantsDict(models.Model):
     jmean = models.CharField(u'日文含义', max_length=128, null=True)
     emean = models.CharField(u'英文含义', max_length=128, null=True)
 
+    class Meta:
+        db_table = 'korean_variants_dict'
+
 
 class HanziRadicals(models.Model):
     radical = models.CharField(u'部首', max_length=16, null=True)
     strokes = models.SmallIntegerField(u'笔画数', null=True)
+
+    class Meta:
+        db_table = 'hanzi_radicals'
 
 
 class KoreanDupZhengCodes(models.Model):
     zheng_code = models.CharField(u'郑码', max_length=32, null=True)
     count = models.SmallIntegerField(u'郑码对应汉字的数量', null=True)
     page_num = models.SmallIntegerField(u'页码', null=True)
+
+    class Meta:
+        db_table = 'korean_dup_zheng_codes'
 
 
 class KoreanDedup(models.Model):
@@ -178,8 +195,11 @@ class KoreanDedup(models.Model):
     zheng_code = models.CharField(u'郑码', max_length=32, null=True)
     korean_dup_hanzi = models.CharField(u'异体字字典内部重复编码', max_length=32, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'korean_dedup'
 
 
 class KoreanDupCharacters(models.Model):
@@ -187,8 +207,11 @@ class KoreanDupCharacters(models.Model):
     unicode_of_korean = models.CharField(u'与字头字形相同/相近的Unicode', max_length=32, null=True)
     relation = models.SmallIntegerField(u'二者关系：形码均相同，形似码相同，形同码不同，无相同字形', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'korean_dup_characters'
 
 
 class InterDictDedup(models.Model):
@@ -207,8 +230,11 @@ class InterDictDedup(models.Model):
     is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'inter_dict_dedup'
 
 
 class Tasks(models.Model):
@@ -222,8 +248,11 @@ class Tasks(models.Model):
     remark = models.CharField(u'备注', max_length=128, null=True)
     assigned_at = models.IntegerField(u'分配时间', null=True)
     completed_at = models.IntegerField(u'完成时间', null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'tasks'
 
 
 class TaskPackages(models.Model):
@@ -236,8 +265,11 @@ class TaskPackages(models.Model):
     due_date = models.IntegerField(u'预计完成时间', null=True)
     completed_num = models.SmallIntegerField(u'已完成数量', null=True)
     completed_at = models.IntegerField(u'完成时间', null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'task_packages'
 
 
 class CreditsRedeem(models.Model):
@@ -250,15 +282,18 @@ class CreditsRedeem(models.Model):
     cost_credits = models.IntegerField(u'所用积分', null=True)
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'申请时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'credits_redeem'
 
 
 class Diaries(models.Model):
     """
     打卡记录
     """
-    #user_id = models.IntegerField(u'用户id', null=True)
+    # user_id = models.IntegerField(u'用户id', null=True)
     user = models.ForeignKey(User)
     tag = models.SmallIntegerField(u'标签', null=True)
     work_types = models.CharField(u'工作类型', max_length=64, null=True)
@@ -270,6 +305,7 @@ class Diaries(models.Model):
     class Meta:
         verbose_name = "打卡记录"
         verbose_name_plural = "打卡记录"
+        db_table = 'diaries'
 
     def __unicode__(self):
         return self.work_brief
@@ -284,6 +320,7 @@ class CreditSort(models.Model):
     class Meta:
         verbose_name = "积分类型"
         verbose_name_plural = "积分类型"
+        db_table = 'credit_sort'
 
     def __unicode__(self):
         return self.credit_sort
@@ -293,7 +330,7 @@ class Credits(models.Model):
     """
     积分
     """
-    #user_id = models.IntegerField(u'用户id', null=True)
+    # user_id = models.IntegerField(u'用户id', null=True)
     user = models.ForeignKey(User)
     credit = models.IntegerField(u'积分值', null=True)
     sort = models.ForeignKey(CreditSort, related_name='type')
@@ -301,6 +338,7 @@ class Credits(models.Model):
     class Meta:
         verbose_name = "积分"
         verbose_name_plural = "积分"
+        db_table = 'credits'
 
     def __unicode__(self):
         return self.sort.credit_sort

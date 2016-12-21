@@ -1,3 +1,4 @@
+# -*- coding:utf8 -*-
 """
 Django settings for lqconfig project.
 
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-
     'guardian',
     'rest_framework',
     'debug_toolbar',
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 'crispy_forms',
     'django_filters',
 
+    'registration',
     'hanzi',
     'sysadmin',
     'workbench',
@@ -113,19 +114,10 @@ PASSWORD_HASHERS = (
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 8, }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 8, }},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
 # Internationalization
@@ -144,9 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    'static/'
-]
+STATICFILES_DIRS = ['static/']
 
 # User uploaded files
 MEDIA_ROOT = 'static/uploads/'
@@ -157,11 +147,11 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'PAGE_SIZE': 100,
     'DEFAULT_AUTH_ENTICATION_CLASSES': (
-    'rest_framework.authentication.BasicAuthentication',
-    'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_filters.backends.DjangoFilterBackend', 
+        'rest_framework_filters.backends.DjangoFilterBackend',
     ),
 }
 
@@ -177,3 +167,42 @@ AUTH_USER_MODEL = 'sysadmin.User'
 GUARDIAN_MONKEY_PATCH = False
 
 INTERNAL_IPS = ('127.0.0.1',)
+
+# If True, users can register
+REGISTRATION_OPEN = True
+# One-week activation window; you may, of course, use a different value.
+ACCOUNT_ACTIVATION_DAYS = 1
+# If True, the user will be automatically logged in.
+REGISTRATION_AUTO_LOGIN = False
+# The page you want users to arrive at after they successfully log in
+LOGIN_REDIRECT_URL = '/workbench/'
+# The page users are directed to if they are not logged in,
+# and are trying to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
+REGISTRATION_EMAIL_SUBJECT_PREFIX = '[龙泉字库注册邮件]'
+SEND_ACTIVATION_EMAIL = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'alqdzj@126.com'
+# 原始密码同aws密码
+EMAIL_HOST_PASSWORD = 'dongpeilou404'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+# Host for sending email.
+EMAIL_HOST = 'smtp.126.com'
+
+# Port for sending email.
+EMAIL_PORT = 25
+
+'''''
+
+AUTHENTICATION_BACKENDS = (
+        'registration_email.auth.EmailBackend',
+        )
+
+LOGIN_REDIRECT_URL = '/'
+
+REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = \
+        lambda request, user: '/accounts/activate/complete/'
+
+REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = \
+        lambda request, user: '/accounts/register/complete/'
+'''

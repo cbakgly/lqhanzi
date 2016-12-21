@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db import models
 from guardian.mixins import GuardianUserMixin
 
+
 class User(AbstractUser, GuardianUserMixin):
     gender_choices = ((0, 'M'), (1, 'F'))
     gender = models.IntegerField(u'性别', choices=gender_choices, default=0)
@@ -13,6 +14,10 @@ class User(AbstractUser, GuardianUserMixin):
     qq = models.CharField(u'腾讯QQ', max_length=32, blank=True)
     address = models.CharField(u'地址', max_length=64, blank=True)
     avatar = models.FileField(u'头像')
+
+    class Meta:
+        db_table = 'user'
+
 
 # Operation log table
 class Operation(models.Model):
