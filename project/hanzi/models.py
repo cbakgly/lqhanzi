@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import django.utils.timezone as timezone
 
 
 # Create your models here.
