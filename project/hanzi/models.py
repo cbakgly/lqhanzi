@@ -34,8 +34,8 @@ class HanziSet(models.Model):
     similar_parts = models.CharField(u'相似部件', max_length=128, null=True)
     stroke_serial = models.CharField(u'部件序列', max_length=128, null=True)
     remark = models.CharField(u'备注', max_length=128, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'hanzi_set'

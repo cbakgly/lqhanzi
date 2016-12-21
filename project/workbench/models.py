@@ -99,8 +99,8 @@ class VariantsSplit(models.Model):
     is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'variants_split'
@@ -140,8 +140,8 @@ class VariantsInput(models.Model):
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
 
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'variants_input'
@@ -195,8 +195,8 @@ class KoreanDedup(models.Model):
     zheng_code = models.CharField(u'郑码', max_length=32, null=True)
     korean_dup_hanzi = models.CharField(u'异体字字典内部重复编码', max_length=32, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'korean_dedup'
@@ -207,8 +207,8 @@ class KoreanDupCharacters(models.Model):
     unicode_of_korean = models.CharField(u'与字头字形相同/相近的Unicode', max_length=32, null=True)
     relation = models.SmallIntegerField(u'二者关系：形码均相同，形似码相同，形同码不同，无相同字形', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'korean_dup_characters'
@@ -230,8 +230,8 @@ class InterDictDedup(models.Model):
     is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'创建时间')
-    u_t = models.IntegerField(u'修改时间')
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'inter_dict_dedup'
@@ -248,8 +248,8 @@ class Tasks(models.Model):
     remark = models.CharField(u'备注', max_length=128, null=True)
     assigned_at = models.IntegerField(u'分配时间', null=True)
     completed_at = models.IntegerField(u'完成时间', null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'tasks'
@@ -265,8 +265,8 @@ class TaskPackages(models.Model):
     due_date = models.IntegerField(u'预计完成时间', null=True)
     completed_num = models.SmallIntegerField(u'已完成数量', null=True)
     completed_at = models.IntegerField(u'完成时间', null=True)
-    c_t = models.IntegerField(u'创建时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'task_packages'
@@ -282,8 +282,8 @@ class CreditsRedeem(models.Model):
     cost_credits = models.IntegerField(u'所用积分', null=True)
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.IntegerField(u'申请时间', null=True)
-    u_t = models.IntegerField(u'修改时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'credits_redeem'
