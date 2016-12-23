@@ -239,7 +239,7 @@ class InterDictDedup(models.Model):
 
 
 class TaskPackages(models.Model):
-    user_id = models.IntegerField(u'用户id', null=True)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     size = models.SmallIntegerField(u'工作包大小', null=True)
