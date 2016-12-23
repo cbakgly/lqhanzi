@@ -44,13 +44,13 @@
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="tasks-menu">
                     <a href="#" class="dropdown-toggle">
-                        <span class="today-score">今日累积积分：<b>{{ user.today_credits|default:0 }}</b>分</span>
+                        <span class="today-score">今日累积积分：<b>{{ today_credits|default:0 }}</b>分</span>
                     </a>
                 </li>
                 <!-- Notifications: style can be found in dropdown.less -->
                 <li class="tasks-menu">
                     <a href="#" class="dropdown-toggle">
-                        <span class="total-score">总积分：<b>{{ user.total_credits|default:0 }}</b>分</span>
+                        <span class="total-score">总积分：<b>{{ total_credits|default:0 }}</b>分</span>
                     </a>
                 </li>
                 <!-- Tasks: style can be found in dropdown.less -->
@@ -96,7 +96,7 @@
                             <p>
                                 {% if user.is_authenticated %}
                                 {{ user.username }}
-                                <small>Member since {{ user.created_at }}</small>
+                                <small>{% trans 'Last login' %} {{ user.last_login }}</small>
                                 {% else %}
                                 游客
                                 {% endif %}

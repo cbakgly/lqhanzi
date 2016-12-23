@@ -1,4 +1,4 @@
-工作台 Workbench API 列表 
+工作台 Workbench API 列表
 =======
 > 基于产品图v1/workbench.2 20161124
 
@@ -22,10 +22,10 @@
 
 ```json
 成功 Code 200
-{	
-	models: [
+{
+	"results": [
 		{
-			"rank": 12,
+			"id": 12,
 			"user_id": 10,
 			"tag": "心情故事",
 			"work_types": ["去重", "拆字"],
@@ -34,8 +34,8 @@
 			"c_t": "",
 			"u_t": ""
 		},
-		{ 
-			"rank": 2,
+		{
+			"id": 2,
 			"user_id": 100,
 			"tag": "心情故事",
 			"work_types": ["去重", "拆字"],
@@ -44,8 +44,8 @@
 			"c_t": "",
 			"u_t": ""
 		},
-		{ 
-			"rank": 3,
+		{
+			"id": 3,
 			"user_id": 50,
 			"tag": "心情故事",
 			"work_types": ["去重", "拆字"],
@@ -59,7 +59,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -80,8 +80,8 @@
 
 ```json
 成功 Code 200
-{	
-	"rank": 12,
+{
+	"id": 12,
 	"user_id": 10,
 	"tag": "心情故事",
 	"work_types": ["去重", "拆字"],
@@ -93,7 +93,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -126,31 +126,25 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 531, 
-		"end_index": 630, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
+	"count": 954,
+    "next": "http://xxx:8000/api/v1/workbench/{model}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
 		{
 			"rank": 1,
 			"user_id": 10,
 			"user_name": "张三",
 			"credits": 1800
 		},
-		
-		{ 
+
+		{
 			"rank": 2,
 			"user_id": 100,
 			"user_name": "张三feng",
 			"credits": 1000
 		},
-		{ 
+		{
 			"rank": 3,
 			"user_id": 50,
 			"user_name": "张三yu",
@@ -161,7 +155,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -190,33 +184,27 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 531, 
-		"end_index": 630, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://xxx:8000/api/v1/workbench/{model}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"type": "拆字",
 			"credits": 1800，
 			"package_id": 123,
 			"package_name": "异体字拆字"
 		},
-		
-		{ 
+
+		{
 			"id": 2,
 			"user_name": "去重",
 			"credits": 1000
 			"package_id": 123,
 			"package_name": "高丽去重"
 		},
-		{ 
+		{
 			"id": 3,
 			"user_name": "录入",
 			"credits": 800
@@ -228,7 +216,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -258,18 +246,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 531, 
-		"end_index": 630, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://xxx:8000/api/v1/workbench/{model}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"datetime": "2016-01-01 14:00:02",
 			"reward": "感悟人生"，
@@ -277,8 +259,8 @@
 			"status": "已领取",
 			"remark": "希望法师签名"
 		},
-		
-		{ 
+
+		{
 			"id": 2,
 			"datetime": "2016-02-04 14:00:02",
 			"reward": "感悟人生"，
@@ -286,7 +268,7 @@
 			"status": "已受理",
 			"remark": "希望法师签名"
 		},
-		{ 
+		{
 			"id": 3,
 			"datetime": "2016-01-02 14:00:02",
 			"reward": "文集"，
@@ -299,7 +281,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -320,7 +302,7 @@
 
 ```json
 成功 Code 200
-{ 
+{
 	"id": 3,
 	"datetime": "2016-01-02 14:00:02",
 	"reward": "文集"，
@@ -331,7 +313,7 @@
 
 失败 Code >= 400
 {
-	"error": "credits not enough"
+	"detail": "credits not enough"
 }
 ```
 
@@ -354,7 +336,7 @@
 
 ```json
 成功 Code 200
-{ 
+{
 	"id": 3,
 	"datetime": "2016-01-02 14:00:02",
 	"reward": "文集"，
@@ -365,7 +347,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -381,28 +363,22 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 531, 
-		"end_index": 630, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://xxx:8000/api/v1/workbench/{model}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"name": "感悟人生"，
 			"cost_credits": 1200
 		},
-		{ 
+		{
 			"id": 2,
 			"name": "感悟人生"，
 			"cost_credits": 1200
 		},
-		{ 
+		{
 			"id": 3,
 			"name": "文集"，
 			"cost_credits": 1000
@@ -412,7 +388,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -437,18 +413,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 531, 
-		"end_index": 630, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://xxx:8000/api/v1/workbench/{model}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"business_type": "录入",
 			"task_package_id": 100,
@@ -459,8 +429,8 @@
 			"total_progress": 60,
 			"task_create_date": "2016-11-10",
 			"est_due_date": "2016-11-20",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"business_type": "拆字",
 			"task_package_id": 100,
@@ -471,8 +441,8 @@
 			"total_progress": 60,
 			"task_create_date": "2016-11-10",
 			"est_due_date": "2016-11-20",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"business_type": "去重",
 			"task_package_id": 100,
@@ -489,7 +459,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -525,7 +495,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -560,18 +530,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 650, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/tasks/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -583,8 +547,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -596,8 +560,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -615,7 +579,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -651,18 +615,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 650, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/tasks/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -674,8 +632,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -687,8 +645,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -706,7 +664,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -736,30 +694,24 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 650, 
-		"total_entries": 5111, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/tasks/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"source": "高丽异体字",
 			"hanzi_char": "录",
 			"hanzi_pic_id": "",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"source": "高丽异体字",
 			"hanzi_char": "焰",
 			"hanzi_pic_id": "回1",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"source": "高丽异体字",
 			"hanzi_char": "我",
@@ -770,7 +722,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -798,34 +750,28 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"business_type": "录入",
 			"business_stage": "初次",
 			"task_package_id": 100,
 			"task_create_date": "2016-11-10",
 			"task_done_date": "2016-11-20",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"business_type": "拆字",
 			"business_stage": "回查",
 			"task_package_id": 100,
 			"task_create_date": "2016-11-10",
 			"task_done_date": "2016-11-20",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"business_type": "去重",
 			"business_stage": "审查",
@@ -838,7 +784,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -881,7 +827,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -924,35 +870,35 @@
 	"hanzi_type": "文字且图片",
 	"hanzi_char": "明",
 	"hanzi_pic_id": "初1",
-	
+
 	"is_hard_draft": "",
 	"init_split_draft": "",
 	"other_init_split_draft": "",
 	"deform_split_draft": "",
 	"similar_parts_draft": "",
 	"dup_id_draft": "",
-	
+
 	"is_hard_review": "",
 	"init_split_review": "",
 	"other_init_split_review": "",
 	"deform_split_review": "",
 	"similar_parts_review": "",
 	"dup_id_review": "",
-	
+
 	"is_hard_final": "",
 	"init_split_final": "",
 	"other_init_split_final": "",
 	"deform_split_final": "",
 	"similar_parts_final": "",
 	"dup_id_final": "",
-	
+
 	"user_id": 23,
 	"task_package_id": 10
 }
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1018,14 +964,14 @@
 	"deform_split_draft": "",
 	"similar_parts_draft": "",
 	"dup_id_draft": "",
-	
+
 	"is_hard_review": "",
 	"init_split_review": "",
 	"other_init_split_review": "",
 	"deform_split_review": "",
 	"similar_parts_review": "",
 	"dup_id_review": "",
-	
+
 	"is_hard_final": "",
 	"init_split_final": "",
 	"other_init_split_final": "",
@@ -1036,17 +982,17 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
 
-##<产品图第27页> M2 用户工作台-F2 我的任务-F2 去重-P1 初次-未发帖 
+##<产品图第27页> M2 用户工作台-F2 我的任务-F2 去重-P1 初次-未发帖
 ##<产品图第29页> M2 用户工作台-F2 我的任务-F2 去重-P3 回查
 ##<产品图第30页> M2 用户工作台-F2 我的任务-F2 去重-P4 审查
 
 > 这里的去重，只包括字典间去重（目前是台湾字典和高丽字典）。
-> 
+>
 > 高丽内部去重已经完成。表中数据做为回查用。
 
 ### 1 获取待去重字信息
@@ -1081,7 +1027,7 @@
 			{"id":101, "hanzi_char": "曰", "hanzi_pic_id": "了1", "inter_dict_dup_hanzi": ""}
 		]
 	},
-	
+
 	"korean_variants" : {
 		"id": 321,
 		"std_hanzi": "洗1",
@@ -1094,7 +1040,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1116,7 +1062,7 @@
 	"business_stage": 1,
 	"task_status": 2,
 	"doubt" : 0,
-	
+
 	"connections": [
 		{
 			"taiwan_variants": {"id":100, "hanzi_char": "百", "hanzi_pic_id": "所2", "inter_dict_dup_hanzi": "所2"},
@@ -1150,7 +1096,7 @@
 			{"id":101, "hanzi_char": "曰", "hanzi_pic_id": "了1", "inter_dict_dup_hanzi": ""}
 		]
 	},
-	
+
 	"korean_variants" : {
 		"id": 321,
 		"std_hanzi": "洗1",
@@ -1163,7 +1109,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1196,16 +1142,10 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
 	Models: [
 		{
 			"id": 123,
@@ -1232,7 +1172,7 @@
 			"std_hanzi_final": "",
 			"notes_final": "",
 			"is_del_final": "",
-			"remark": ""			
+			"remark": ""
 		},
 		{
 			"id": 150,
@@ -1259,14 +1199,14 @@
 			"std_hanzi_final": "",
 			"notes_final": "",
 			"is_del_final": "",
-			"remark": ""			
+			"remark": ""
 		}
 	]
 }
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1324,7 +1264,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1360,18 +1300,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"source": 0,
 			"hanzi_char": "录",
@@ -1395,8 +1329,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"stroke_serial": ""
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"source": 2,
 			"hanzi_char": "对",
@@ -1420,8 +1354,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"stroke_serial": ""
-		},	
-		{ 
+		},
+		{
 			"id": 10,
 			"source": 3,
 			"hanzi_char": "是",
@@ -1439,7 +1373,7 @@
 			"korean_dup_hanzi": "",
 			"is_hard": 0
 			"similar_parts": "",
-			"min_split": "",		
+			"min_split": "",
 			"max_split": "",
 			"mix_split": "",
 			"deform_split": "",
@@ -1451,7 +1385,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1487,7 +1421,7 @@
 	"mix_split": "",
 	"deform_split": "",
 	"similar_parts": "",
-	"stroke_serial": ""		
+	"stroke_serial": ""
 }
 ```
 
@@ -1518,7 +1452,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1547,18 +1481,12 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -1570,8 +1498,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},		
-		{ 
+		},
+		{
 			"id": 2,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -1583,8 +1511,8 @@
 			"deform_split": "",
 			"similar_parts": "",
 			"dup_id": "",
-		},	
-		{ 
+		},
+		{
 			"id": 3,
 			"task_package_id": 123,
 			"source": "高丽异体字",
@@ -1602,7 +1530,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1629,30 +1557,24 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"korean_variant": "",
 			"unicode": "字",
 			"stage": 1,
-		},		
-		{ 
+		},
+		{
 			"id": 23,
 			"korean_variant": "",
 			"unicode": "",
 			"stage": 1,
-		},	
-		{ 
+		},
+		{
 			"id": 44,
 			"korean_variant": "",
 			"unicode": "",
@@ -1663,7 +1585,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1689,30 +1611,24 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	models: [
-		{ 
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	"results": [
+		{
 			"id": 1,
 			"korean_variant": "",
 			"unicode": "字",
 			"stage": 1,
-		},		
-		{ 
+		},
+		{
 			"id": 23,
 			"korean_variant": "",
 			"unicode": "",
 			"stage": 1,
-		},	
-		{ 
+		},
+		{
 			"id": 44,
 			"korean_variant": "",
 			"unicode": "",
@@ -1723,14 +1639,14 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
 ##<产品图39页> M2 用户工作台-F3 字库检索-P4 高丽异体字去重-详情
 > 按：这里的详情页，会移到我的任务中。本质上是高丽字典内部去重的一个工作页面。
 
-### 1 查询 
+### 1 查询
 >此查询表为korean_dup_zheng_codes。通过郑码将同页数据列出来。
 
 *Method GET*
@@ -1750,17 +1666,11 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	}, 
-	
-	"models" :[
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
+	""results"" :[
 		{
 			"zheng_code": "BUGQ",
 			"variants": [
@@ -1768,7 +1678,7 @@
 				{"id":101, "hanzi_char": "曰", "hanzi_pic_id": "了1", "korean_dup_hanzi": "百"}
 			]
 		},
-		
+
 		{
 			"zheng_code": "BZB",
 			"variants": [
@@ -1781,7 +1691,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1822,7 +1732,7 @@
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
@@ -1848,16 +1758,10 @@
 ```json
 成功 Code 200
 {
-	pagination: { 
-		"previous_page": 0, 
-		"next_page": 2, 
-		"start_index": 600, 
-		"end_index": 603, 
-		"total_entries": 60, 
-		"total_pages": 20, 
-		"page": 1, 
-	},
-	
+	"count": 954,
+    "next": "http://localhost:8000/api/v1/workbench/{action}/?limit=5&offset=5",
+    "previous": null,
+
 	"Models": [
 		{
 			"volumn_num": 2,
@@ -1868,7 +1772,7 @@
 			"variant_type": "",
 			"std_hanzi": "",
 			"notes": "",
-			"is_del": "",		
+			"is_del": "",
 		},
 		{
 			"volumn_num": 2,
@@ -1879,16 +1783,16 @@
 			"variant_type": "",
 			"std_hanzi": "",
 			"notes": "",
-			"is_del": "",		
+			"is_del": "",
 		},
 	]
 }
 
 失败 Code >= 400
 {
-	"error": ""
+	"detail": ""
 }
 ```
 
 
-##<产品图41页> M2 用户工作台-F4 讨论区-P1 拆字	 
+##<产品图41页> M2 用户工作台-F4 讨论区-P1 拆字
