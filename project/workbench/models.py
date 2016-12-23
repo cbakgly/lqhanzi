@@ -254,10 +254,13 @@ class TaskPackages(models.Model):
     class Meta:
         db_table = 'task_packages'
 
+    def __unicode__(self):
+        return str(self.id)
+
 class Tasks(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
-    task_package = models.ForeignKey(TaskPackages, models.SET_NULL, blank=True, null=True)
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     task_status = models.SmallIntegerField(u'任务状态', null=True)
@@ -270,6 +273,9 @@ class Tasks(models.Model):
 
     class Meta:
         db_table = 'tasks'
+
+    def __unicode__(self):
+        return str(self.id)
 
 
 

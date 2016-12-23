@@ -100,7 +100,7 @@ DATABASES = {
         'USER': 'lq',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
-        'PORT': '3316'
+        'PORT': '3306'
     }
 }
 
@@ -132,7 +132,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key in ('username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb', 'qq'):
-            if getattr(instance, key) != None:
+            if getattr(validated_data, key) != None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
         instance.set_password(validated_data['password'])
         instance.save()
