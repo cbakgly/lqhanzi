@@ -12,3 +12,4 @@ requests
 django-debug-toolbar
 #django-compressor==2.1
 #csscompressor==0.9.4
+django-redis

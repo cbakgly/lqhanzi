@@ -146,7 +146,7 @@ MEDIA_ROOT = 'static/uploads/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
-    'PAGE_SIZE': 100,
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTH_ENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -189,19 +189,19 @@ EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 # Host for sending email.
 EMAIL_HOST = 'smtp.126.com'
-
 # Port for sending email.
 EMAIL_PORT = 25
 
-'''''
 
-AUTHENTICATION_BACKENDS = (
-        'registration_email.auth.EmailBackend',
-        )
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
 
-REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = \
-        lambda request, user: '/accounts/activate/complete/'
-
-REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = \
-        lambda request, user: '/accounts/register/complete/'
-'''
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
