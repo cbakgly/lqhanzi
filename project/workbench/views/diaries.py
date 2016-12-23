@@ -4,13 +4,14 @@ from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.decorators import login_required
+from django.template import loader, Context
 import django_filters.rest_framework
 
 from ..pagination import SmallResultsSetPagination
 from ..serializer import DiarySerializer, TagSerializer, CreditSerializer
 from .. import wb_filter
 from ..models import Diaries, Tag, Credits
-
+from .credits import get_user_today_and_total_credits
 
 class DiaryViewSet(viewsets.ModelViewSet):
     """
@@ -52,4 +53,6 @@ class CreditViewSet(viewsets.ModelViewSet):
 
 @login_required
 def index(request):
-    return render(request, 'diaries.html')
+    c = Context()
+    c.update(get_user_today_and_total_credits(request.user.id))
+    return render(request, 'diaries.html', c)
