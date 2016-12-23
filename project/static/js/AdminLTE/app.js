@@ -11,7 +11,7 @@
  */
 var left_side_width = 200; //Sidebar width in pixels
 
-$(function() {
+$(function($) {
     "use strict";
 
     //Enable sidebar toggle
