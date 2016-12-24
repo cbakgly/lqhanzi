@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS variants_split (
   is_checked tinyint DEFAULT 0, -- '是否人工审核'
 
 
-  is_submitted tinyint DEFAULT 0, — '是否入hanzi库'
+  is_submitted tinyint DEFAULT 0, -- '是否入hanzi库'
 
 
   remark varchar(64) DEFAULT NULL, -- '备注'
