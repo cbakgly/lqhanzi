@@ -14,7 +14,6 @@ class User(AbstractUser, GuardianUserMixin):
     qq = models.CharField(u'腾讯QQ', max_length=32, blank=True)
     address = models.CharField(u'地址', max_length=64, blank=True)
     avatar = models.FileField(u'头像')
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
