@@ -37,6 +37,9 @@ urlpatterns = [
     url(r'^api/(?P<version>)\w+/workbench/', include('workbench.api_urls')),
     # url(r'^api/(?P<version>)\w+/hanzi/', include('hanzi.api_urls')),
     url(r'^api/(?P<version>)\w+/sysadmin/', include('sysadmin.api_urls')),
+    url(r'^api/(?P<version>)\w+/', include('sysadmin.api_tasks')),
+    url(r'^api/(?P<version>)\w+/', include('sysadmin.api_task_packages')),
+
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^$', index, name='index'),
     # url(r'^$', include('hanzi.urls'))
