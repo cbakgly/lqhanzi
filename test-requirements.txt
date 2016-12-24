@@ -1,0 +1,15 @@
+django==1.10.4
+django-guardian
+djangorestframework-filters
+djangorestframework
+markdown
+django-filter
+#djangorestframework-jwt
+#mysqlclient
+#bcrypt
+django-extensions
+requests
+django-debug-toolbar
+#django-compressor==2.1
+#csscompressor==0.9.4
+django-redis
