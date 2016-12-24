@@ -4,39 +4,9 @@ from sysadmin.models import User
 from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework.decorators import detail_route, list_route
 import rest_framework_filters as filters
-
-# User management
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb', 'qq', 'address')
-
-    def create(self, validated_data):
-        user = User.objects.create(**validated_data)
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
-
-    def update(self, instance, validated_data):
-        for key in ('username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb', 'qq'):
-            setattr(instance, key, validated_data.get(key, getattr(instance, key)))
-        instance.set_password(validated_data['password'])
-        instance.save()
-        return instance
-
-
-class UserFilter(filters.FilterSet):
-    class Meta:
-        model = User
-        fields = {'username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb'}
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    filter_class = UserFilter
-    queryset = User.objects.all()
-
+from rest_framework.response import Response
 
 # Operation log management
 class OperationSerializer(serializers.ModelSerializer):

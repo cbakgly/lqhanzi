@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 from django.db import models
 from sysadmin.models import User
 import django.utils.timezone as timezone
+from datetime import timedelta
 
 
 # Create your models here.
@@ -237,39 +238,45 @@ class InterDictDedup(models.Model):
         db_table = 'inter_dict_dedup'
 
 
+class TaskPackages(models.Model):
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
+    business_type = models.SmallIntegerField(u'任务类型', null=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', null=True)
+    size = models.SmallIntegerField(u'工作包大小', null=True)
+    status = models.SmallIntegerField(u'工作包状态', null=True)
+    daily_plan = models.SmallIntegerField(u'日计划工作量', null=True)
+    due_date = models.DateTimeField(u'预计完成时间', null=True)
+    completed_num = models.SmallIntegerField(u'已完成数量', null=True)
+    completed_at = models.DateTimeField(u'完成时间', null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'task_packages'
+
+    def __unicode__(self):
+        return str(self.id)
+
 class Tasks(models.Model):
-    user_id = models.IntegerField(u'拆字员', null=True)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
-    task_package_id = models.IntegerField(u'任务包ID', null=True)
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     task_status = models.SmallIntegerField(u'任务状态', null=True)
     credits = models.SmallIntegerField(u'积分', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True)
-    assigned_at = models.IntegerField(u'分配时间', null=True)
-    completed_at = models.IntegerField(u'完成时间', null=True)
+    assigned_at = models.DateTimeField(u'分配时间', null=True, default=timezone.now)
+    completed_at = models.DateTimeField(u'完成时间', null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'tasks'
 
+    def __unicode__(self):
+        return str(self.id)
 
-class TaskPackages(models.Model):
-    user_id = models.IntegerField(u'用户id', null=True)
-    business_type = models.SmallIntegerField(u'任务类型', null=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', null=True)
-    size = models.SmallIntegerField(u'工作包大小', null=True)
-    status = models.SmallIntegerField(u'工作包状态', null=True)
-    daily_plan = models.SmallIntegerField(u'日计划工作量', null=True)
-    due_date = models.IntegerField(u'预计完成时间', null=True)
-    completed_num = models.SmallIntegerField(u'已完成数量', null=True)
-    completed_at = models.IntegerField(u'完成时间', null=True)
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
-
-    class Meta:
-        db_table = 'task_packages'
 
 
 class CreditsRedeem(models.Model):
