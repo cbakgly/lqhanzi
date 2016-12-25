@@ -239,11 +239,29 @@ class InterDictDedup(models.Model):
 
 
 class TaskPackages(models.Model):
+    business_type_choices = (
+        (0, u'录入'),
+        (1, u'去重'),
+        (2, u'拆字'),
+        (3, u'互助')
+    )
+
+    business_stage_choices = (
+        (0, u'初次'),
+        (1, u'回查'),
+        (2, u'审查')
+    )
+
+    status_choices = (
+        (0, u'进行中'),
+        (1, u'已完成')
+    )
+
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
-    business_type = models.SmallIntegerField(u'任务类型', null=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', null=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
     size = models.SmallIntegerField(u'工作包大小', null=True)
-    status = models.SmallIntegerField(u'工作包状态', null=True)
+    status = models.SmallIntegerField(u'工作包状态', choices=status_choices, null=True)
     daily_plan = models.SmallIntegerField(u'日计划工作量', null=True)
     due_date = models.DateTimeField(u'预计完成时间', null=True)
     completed_num = models.SmallIntegerField(u'已完成数量', null=True)
