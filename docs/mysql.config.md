@@ -19,9 +19,11 @@ bind-address		= 0.0.0.0
 
 3. Connect to MySQL Server and create database
 ```mysql
-mysql> create database lqhanzi default character set utf8 collate utf8_general_ci;
+mysql> create database lqhanzi default character set utf8 collate utf8_unicode_520_ci;
 Query OK, 1 row affected (0.01 sec)
 
+4. user
+mysql> create user 'lq'@'%' identified by '123456';
 mysql> -- If you want to make testcase works, you should give privileges to current mysql user --
 mysql> grant all privileges on *.* to lq@'%' identified by '123456'; 
 Query OK, 0 rows affected, 1 warning (0.00 sec)

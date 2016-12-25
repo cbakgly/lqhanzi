@@ -239,7 +239,7 @@ class InterDictDedup(models.Model):
 
 
 class TaskPackages(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     size = models.SmallIntegerField(u'工作包大小', null=True)
@@ -257,8 +257,9 @@ class TaskPackages(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+
 class Tasks(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
     business_type = models.SmallIntegerField(u'任务类型', null=True)
@@ -278,13 +279,12 @@ class Tasks(models.Model):
         return str(self.id)
 
 
-
 class CreditsRedeem(models.Model):
     applied_by = models.IntegerField(u'申请人的用户id', null=True)
     accepted_by = models.IntegerField(u'受理人的用户id', null=True)
     completed_by = models.IntegerField(u'完成人的用户id', null=True)
-    accepted_at = models.IntegerField(u'受理时间', null=True)
-    completed_at = models.IntegerField(u'完成时间', null=True)
+    accepted_at = models.DateTimeField(u'接受时间', null=True)
+    completed_at = models.DateTimeField(u'完成时间', null=True)
     reward_name = models.CharField(u'奖品名称', max_length=64, null=True)
     cost_credits = models.IntegerField(u'所用积分', null=True)
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', null=True)
