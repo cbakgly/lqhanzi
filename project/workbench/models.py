@@ -260,6 +260,9 @@ class TaskPackages(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
+    business_type = models.SmallIntegerField(u'任务类型', null=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', null=True)
     size = models.SmallIntegerField(u'工作包大小', null=True)
     status = models.SmallIntegerField(u'工作包状态', choices=status_choices, null=True)
     daily_plan = models.SmallIntegerField(u'日计划工作量', null=True)
@@ -283,11 +286,12 @@ class TaskTypes(models.Model):
     )
 
     business_type = models.SmallIntegerField(u'任务类型', choices = business_type_choices, null=True)
+    business_name = models.CharField(u'任务名称', null=True)
     credits = models.SmallIntegerField(u'单个任务积分', default=0)
     is_active = models.SmallIntegerField(u'是否启用', default=1)
 
 class Tasks(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
 
@@ -325,13 +329,12 @@ class Tasks(models.Model):
         return str(self.id)
 
 
-
 class CreditsRedeem(models.Model):
     applied_by = models.IntegerField(u'申请人的用户id', null=True)
     accepted_by = models.IntegerField(u'受理人的用户id', null=True)
     completed_by = models.IntegerField(u'完成人的用户id', null=True)
-    accepted_at = models.IntegerField(u'受理时间', null=True)
-    completed_at = models.IntegerField(u'完成时间', null=True)
+    accepted_at = models.DateTimeField(u'接受时间', null=True)
+    completed_at = models.DateTimeField(u'完成时间', null=True)
     reward_name = models.CharField(u'奖品名称', max_length=64, null=True)
     cost_credits = models.IntegerField(u'所用积分', null=True)
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', null=True)

@@ -34,12 +34,11 @@ OR
 >. bin/activate
 (lqhanzi)>pip install -r requirements.txt
 
-# 创建表
+# 创建表 (凡是数据表更新过，都需要跑一下以下的migration命令)
 > . bin/activate
 (lqhanzi)> cd lqhanzi/project
 (lqhanzi)> ./manage.py makemigration
 (lqhanzi)> ./manage.py migrate
-(lqhanzi)> ./manage.py test
 
 # 初始化数据
 (lqhanzi)> ./manage.py runscript init_db
