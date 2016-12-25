@@ -286,7 +286,7 @@ class TaskTypes(models.Model):
     )
 
     business_type = models.SmallIntegerField(u'任务类型', choices = business_type_choices, null=True)
-    business_name = models.CharField(u'任务名称', null=True)
+    business_name = models.CharField(u'任务名称', max_length=64, null=True)
     credits = models.SmallIntegerField(u'单个任务积分', default=0)
     is_active = models.SmallIntegerField(u'是否启用', default=1)
 
