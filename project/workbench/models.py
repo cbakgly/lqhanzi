@@ -275,6 +275,17 @@ class TaskPackages(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+class TaskTypes(models.Model):
+    business_type_choices = (
+        (0, u'录入'),
+        (1, u'去重'),
+        (2, u'拆字'),
+    )
+
+    business_type = models.SmallIntegerField(u'任务类型', choices = business_type_choices, null=True)
+    credits = models.SmallIntegerField(u'单个任务积分', default=0)
+    is_active = models.SmallIntegerField(u'是否启用', default=1)
+
 class Tasks(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True) # 用户，拆字员
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
@@ -284,7 +295,6 @@ class Tasks(models.Model):
         (0, u'录入'),
         (1, u'去重'),
         (2, u'拆字'),
-        (3, u'互助')
     )
 
     business_stage_choices = (
