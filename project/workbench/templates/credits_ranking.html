@@ -3,75 +3,79 @@
 {% block content %}
 <div class="row">
     <div class="col-xs-12">
-        <div class="box">
-            <!-- /.box-header -->
-            <div class="box-header">
-                <div class="box-header-inner">
-                    <h3 class="box-title">积分排行:</h3>
-                    <div class="ser-bd">
-                        <div class="ser-left z-ser-left">
-                            <div class="input-group">
-                                <span class="input-group-addon">类型:</span>
-                                <!-- select -->
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option>总积分</option>
-                                        <option>拆字积分</option>
-                                        <option>去重积分</option>
-                                        <option>录入积分</option>
-                                        <option>互助积分</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">姓名:</span>
-                                <input type="text" class="form-control" placeholder="请输入姓名">
-                            </div>
-                            <div class="input-group">
-                                <button class="btn btn-primary btn-sm">查询</button>
-                            </div>
-                        </div>
+      <div class="box">
+        <!-- /.box-header -->
+        <div class="box-header">
+          <div class="box-header-inner">
+            <h3 class="box-title">积分排行:</h3>
+            <div class="ser-bd">
+              <div class="z-ser z1-ser">
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">类型:</span>
+                    <!-- select -->
+                    <div class="form-group">
+                      <select class="form-control">
+                        <option>总积分</option>
+                        <option>拆字积分</option>
+                        <option>去重积分</option>
+                        <option>录入积分</option>
+                        <option>互助积分</option>
+                      </select>
                     </div>
+                  </div>
                 </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">姓名:</span>
+                    <input type="text" class="form-control" placeholder="请输入姓名">
+                  </div>
+                </div>
+              </div>
+              <div class="btns">
+                <button class="btn btn-primary btn-sm">搜索</button>
+              </div>
             </div>
-            <div class="z-info">
-                <a class="z-score" href="scoreDetails.html" title="查看积分详情">我的积分：<b>300</b></a>
-                <span class="z-sort">我的排名：<b>2</b></span>
-            </div>
-            <div class="box-body table-responsive">
-                <table id="example1" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>姓名</th>
-                        <th>积分</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>贤一</td>
-                        <td>2000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>贤二</td>
-                        <td>1800</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>贤三</td>
-                        <td>1700</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>贤四</td>
-                        <td>1600</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
+          </div>
+        </div>
+        <div class="z-info">
+          <a class="z-score" href="scoreDetails.html" title="查看积分详情">我的积分：<b>300</b></a>
+          <span class="z-sort">我的排名：<b>2</b></span>
+        </div>
+        <div class="box-body table-responsive">
+          <table id="example1" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th>姓名</th>
+              <th>积分</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>1</td>
+              <td>贤一</td>
+              <td>2000</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>贤二</td>
+              <td>1800</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>贤三</td>
+              <td>1700</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>贤四</td>
+              <td>1600</td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
     </div>
 </div>
 {% endblock %}

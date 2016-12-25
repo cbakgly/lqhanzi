@@ -1,0 +1,106 @@
+{% extends "m2_base.html" %}
+
+{% block content %}
+	<div class="content-header">
+        <ol class="breadcrumb">
+          <li><a href="javascript:;">字库检索</a></li>
+          <li class="active">汉大去重库</li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-header">
+              <div class="box-header-inner">
+                <div class="ser-bd">
+                  <div class="z-ser z2-ser">
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">汉大图片字:</span>
+                        <input type="text" class="form-control" placeholder="请输入图片字编码">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">重复编码:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">是否已入库:</span>
+                        <!-- select -->
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>请选择</option>
+                            <option>是</option>
+                            <option>否</option>
+                          </select>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btns">
+                    <button class="btn btn-primary btn-sm z-btn-sm">搜索</button>
+                    <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-body table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>汉大图片字</th>
+                  <th>重复编码</th>
+                  <th>是否已入库</th>
+                  <th>更新时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div><!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+              </ul>
+            </div>
+          </div><!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+{% endblock %}

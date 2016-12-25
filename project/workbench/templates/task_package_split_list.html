@@ -1,125 +1,105 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
+<div class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="javascript:;">我的任务</a></li>
+      <li>任务包</li>
+      <li class="active">005</li>
+    </ol>
+</div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="box">
-            <!-- /.box-header -->
-            <div class="box-header">
-                <div class="box-header-inner">
-                    <div class="ser-bd">
-                        <div class="ser-left z1-ser-left">
-                            <div class="input-group">
-                                <span class="input-group-addon">字头:</span>
-                                <input type="text" class="form-control" placeholder="字头">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">来源:</span>
-                                <!-- select -->
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option>台湾异体字</option>
-                                        <option>台湾异体字</option>
-                                        <option>台湾异体字</option>
-                                        <option>台湾异体字</option>
-                                        <option>台湾异体字</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">拆分信息:</span>
-                                <input type="text" class="form-control" placeholder="拆分信息">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">相似部件:</span>
-                                <input type="text" class="form-control" placeholder="相似部件">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">任务包编号:</span>
-                                <input type="text" class="form-control" placeholder="任务包编号">
-                            </div>
-                        </div>
-                        <div class="z-btns z1-btns">
-                            <button class="btn btn-primary btn-sm z-btn-sm">查询</button>
-                            <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
-                        </div>
-                    </div>
+      <div class="box">
+        <!-- /.box-header -->
+        <div class="box-header">
+          <div class="box-header-inner">
+            <div class="box-tools pull-right">
+              <div class="input-group input-group-sm" style="width: 180px;">
+                <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入">
+
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                 </div>
+              </div>
             </div>
-            <div class="box-body table-responsive">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>任务包编号</th>
-                        <th>字头</th>
-                        <th>来源</th>
-                        <th>重复值</th>
-                        <th>是否难字</th>
-                        <th>初步拆分1</th>
-                        <th>初步拆分2</th>
-                        <th>调笔拆分</th>
-                        <th>相似部件</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>#5</td>
-                        <td>戊</td>
-                        <td>台湾异体字</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">查看</a>&nbsp;<a href="#">修改</a></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>#5</td>
-                        <td>戊</td>
-                        <td>台湾异体字</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">查看</a>&nbsp;<a href="#">修改</a></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>#5</td>
-                        <td>戊</td>
-                        <td>台湾异体字</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">查看</a>&nbsp;<a href="#">修改</a></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>#5</td>
-                        <td>戊</td>
-                        <td>台湾异体字</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">查看</a>&nbsp;<a href="#">修改</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
+          </div>
+          <p class="total-data">共搜索到<span>900</span>条数据</p>
+        </div>
+        <div class="box-body table-responsive">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th>阶段</th>
+              <th>字头</th>
+              <th>重复值</th>
+              <th>初步拆分一</th>
+              <th>初步拆分二</th>
+              <th>调笔拆分</th>
+              <th>相似部件</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>初次</td>
+                <td></td>
+                <td></td>
+                <td>⿰⿰亻丨⿱厶夫</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="#">查看</a></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>初次</td>
+                <td></td>
+                <td></td>
+                <td>⿰⿰亻丨⿱厶夫</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="#">查看</a></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>初次</td>
+                <td></td>
+                <td></td>
+                <td>⿰⿰亻丨⿱厶夫</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="#">查看</a></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>初次</td>
+                <td></td>
+                <td></td>
+                <td>⿰⿰亻丨⿱厶夫</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="#">查看</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <ul class="pagination pagination-sm no-margin pull-right">
+            <li><a href="#">«</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">»</a></li>
+          </ul>
+        </div>
+      </div><!-- /.box -->
     </div>
+<!-- /.col -->
 </div>
 {% endblock %}
