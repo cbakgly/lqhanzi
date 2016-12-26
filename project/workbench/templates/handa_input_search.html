@@ -1,0 +1,361 @@
+{% extends "m2_base.html" %}
+
+{% block content %}
+	<!-- Content Header-->
+      <div class="content-header">
+        <ol class="breadcrumb">
+          <li><a href="javascript:;">字库检索</a></li>
+          <li class="active">汉大录入库</li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-header">
+              <div class="box-header-inner">
+                <div class="ser-bd">
+                  <div class="z-ser z2-ser">
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">页码:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">阶段:</span>
+                        <select class="form-control">
+                          <option>请选择</option>
+                          <option>阶段</option>
+                          <option>阶段</option>
+                          <option>阶段</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">文字:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">图片字编码:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">正异类型:</span>
+                        <!-- select -->
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>请选择</option>
+                            <option>正异类型</option>
+                            <option>正异类型</option>
+                            <option>正异类型</option>
+                            <option>正异类型</option>
+                            <option>正异类型</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">所属正字:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">注释信息:</span>
+                        <select class="form-control">
+                          <option>请选择</option>
+                          <option>注释信息</option>
+                          <option>注释信息</option>
+                          <option>注释信息</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">初次=审查:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">是否审核:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">初次=回查:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">是否入库:</span>
+                        <input type="text" class="form-control" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="col col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">更新时段:</span>
+                        <i class="fa fa-calendar"></i>
+                        <input type="text" class="form-control pull-right" id="reservationtime">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btns">
+                    <button class="btn btn-primary btn-sm z-btn-sm">搜索</button>
+                    <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
+                    <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sel-more"><a class="sel-more-btn show-layer" data-show-layer="hw-layer" role="button">+ 多选</a></div>
+            <div class="box-body table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>文字</th>
+                  <th>图片字</th>
+                  <th>页码</th>
+                  <th>序号</th>
+                  <th>正异类型/初次</th>
+                  <th>通行字/初次</th>
+                  <th>注释信息/初次</th>
+                  <th>初次=回查</th>
+                  <th>回查=审核</th>
+                  <th>是否审核</th>
+                  <th>是否入库</th>
+                  <th>更新时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><a href="#">查看</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div><!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+              </ul>
+            </div>
+          </div><!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!--遮罩层-->
+      <div class="hw-overlay" id="hw-layer">
+        <div class="hw-layer-wrap">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="checkboxs">
+                <label><input type="checkbox" checked="checked">册</label>
+                <label><input type="checkbox" checked="checked">页码</label>
+                <label><input type="checkbox" checked="checked">序号/初次</label>
+                <label><input type="checkbox" checked="checked">文字/初次</label>
+                <label><input type="checkbox" checked="checked">图片字/初次</label>
+                <label><input type="checkbox">正异类型/初次</label>
+                <label><input type="checkbox" checked="checked">通行字/初次</label>
+                <label><input type="checkbox">注释信息/初次</label>
+                <label><input type="checkbox" checked="checked">序号/回查</label>
+                <label><input type="checkbox" checked="checked">文字/回查</label>
+                <label><input type="checkbox">图片字/回查</label>
+                <label><input type="checkbox" checked="checked">正异类型/回查</label>
+                <label><input type="checkbox" checked="checked">通行字/回查</label>
+                <label><input type="checkbox" checked="checked">注释信息/回查</label>
+                <label><input type="checkbox" checked="checked">序号/审查</label>
+                <label><input type="checkbox" checked="checked">文字/审查</label>
+                <label><input type="checkbox" checked="checked">图片字/审查</label>
+                <label><input type="checkbox">正异类型/审查</label>
+                <label><input type="checkbox">通行字/审查</label>
+                <label><input type="checkbox" checked="checked">注释信息/审查</label>
+                <label><input type="checkbox" checked="checked">初次=回查</label>
+                <label><input type="checkbox" checked="checked">回查=审查</label>
+                <label><input type="checkbox" checked="checked">是否审核</label>
+                <label><input type="checkbox" checked="checked">是否入库</label>
+                <label><input type="checkbox" checked="checked">更新时段</label>
+                <label><input type="checkbox" checked="checked">备注</label>
+              </div>
+              <div class="btns">
+                <button class="btn btn-primary btn-sm z-btn-sm hwLayer-ok">确定</button>
+                <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.遮罩层-->
+{% endblock %}

@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'myFont';
+  src:  url('../fonts/myFont.eot?50weje');
+  src:  url('../fonts/myFont.eot?50weje#iefix') format('embedded-opentype'),
+    url('../fonts/myFont.ttf?50weje') format('truetype'),
+    url('../fonts/myFont.woff?50weje') format('woff'),
+    url('../fonts/myFont.svg?50weje#myFont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'myFont' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add:before {
+  content: "\e900";
+}
+.icon-back:before {
+  content: "\e901";
+}
+.icon-comment:before {
+  content: "\e902";
+}
+.icon-del:before {
+  content: "\e903";
+}
+.icon-down-arrow:before {
+  content: "\e904";
+}
+.icon-edit:before {
+  content: "\e905";
+}
+.icon-forum:before {
+  content: "\e906";
+}
+.icon-help:before {
+  content: "\e907";
+}
+.icon-help-l:before {
+  content: "\e908";
+}
+.icon-help-s:before {
+  content: "\e909";
+}
+.icon-save:before {
+  content: "\e90a";
+}
+.icon-score1:before {
+  content: "\e90b";
+}
+.icon-score2:before {
+  content: "\e90c";
+}
+.icon-score3:before {
+  content: "\e90d";
+}
+.icon-search:before {
+  content: "\e90e";
+}
+.icon-task:before {
+  content: "\e90f";
+}
+.icon-toggle:before {
+  content: "\e910";
+}
+.icon-top:before {
+  content: "\e911";
+}
+.icon-up-arrow:before {
+  content: "\e912";
+}
+.icon-user:before {
+  content: "\e913";
+}
+
