@@ -49,7 +49,7 @@
           </div>
           <div class="z-btns">
             <button class="btn btn-default btn-sm">取消</button>
-            <button class="btn btn-primary btn-sm">领取</button>
+            <button class="btn btn-primary btn-sm" id="submit-task-button">领取</button>
           </div>
           <div class="z-tip">
             <p>温馨提示：</p>
@@ -63,6 +63,9 @@
 </div>
 <script type="text/javascript">
 
+    // TODO: replace with reverse lookup name of route
+    var new_task_url = '/api/v1/task_packages/';
+
     $("#submit-task-button").click(function() {
         var business_type = $('input[name=business_type]:checked').attr('val');
         var business_stage = $('input[name=business_stage]:checked').attr('val');
@@ -74,11 +77,22 @@
         var package_status = 0;
 
         var t = new Date();
-        var due_date = Date.now() + package_size/package_plan*24*3600*1000 - 8*3600*1000;
+        var due_date = new Date(Date.now() + package_size/package_plan*24*3600*1000 - 8*3600*1000);
         var completed_num = 0;
         var completed_at = null;
 
-        $.post();
+        $.post(new_task_url,
+                {"user": user.id,
+                "business_type": business_type,
+                "business_stage": business_stage,
+                "size": package_size,
+                "status": package_status,
+                "daily_plan": package_plan,
+                "due_date": due_date.toJSON(),
+                },
+                function(result) {
+                    console.log(result);
+        });
 
     });
 </script>
