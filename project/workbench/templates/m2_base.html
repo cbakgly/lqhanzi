@@ -47,6 +47,14 @@
   <script src="{% static '' %}js/AdminLTE/app.js"></script>
   <!--my js-->
   <script src="{% static '' %}js/my.js"></script>
+
+    <script type="text/javascript">
+        // expose user info in javascript context.
+        var user={
+            "id": {{ user.id }},
+            "name": "{{ user.username }}"
+        };
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -114,18 +122,18 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">内容</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">内容</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">内容</a>
-                  </div>
-                </div>
+              <!--<li class="user-body">-->
+                <!--<div class="row">-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                <!--</div>-->
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
@@ -140,7 +148,7 @@
                   {% else %}
                   <div class="pull-left">
                       <a href="{% url 'registration_register' %}" class="btn btn-default btn-flat">{% trans "Sign in" %}</a>
-                  </div>                                        
+                  </div>
                   <div class="pull-right">
                       <a href="{% url 'auth_login' %}" class="btn btn-default btn-flat">{% trans "Log in" %}</a>
                   </div>
@@ -167,9 +175,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> 进行中</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 已完成</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 领任务</a></li>
+            <li><a href="{% url 'm2.task-package-ongoing' %}"><i class="fa fa-circle-o"></i> 进行中</a></li>
+            <li><a href="{% url 'm2.task-package-completed' %}"><i class="fa fa-circle-o"></i> 已完成</a></li>
+            <li><a href="{% url 'm2.new-task-package' %}"><i class="fa fa-circle-o"></i> 领任务</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -179,12 +187,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> 龙泉字库</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 龙泉拆字库</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 汉大录入库</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 高丽去重库</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 高台去重库</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 汉大去重库</a></li>
+            <li><a href="{% url 'm2.lq-hanzi-search' %}"><i class="fa fa-circle-o"></i> 龙泉字库</a></li>
+            <li><a href="{% url 'm2.lq-split-search' %}"><i class="fa fa-circle-o"></i> 龙泉拆字库</a></li>
+            <li><a href="{% url 'm2.cn-dict-input-search' %}"><i class="fa fa-circle-o"></i> 汉大录入库</a></li>
+            <li><a href="{% url 'm2.korean-dedup-search' %}"><i class="fa fa-circle-o"></i> 高丽去重库</a></li>
+            <li><a href="{% url 'm2.korean-taiwan-dedup-search' %}"><i class="fa fa-circle-o"></i> 高台去重库</a></li>
+            <li><a href="{% url 'm2.cn-dict-dedup-search' %}"><i class="fa fa-circle-o"></i> 汉大去重库</a></li>
           </ul>
         </li>
         <li class="treeview">
