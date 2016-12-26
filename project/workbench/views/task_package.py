@@ -19,5 +19,9 @@ def task_package_split_list(request):
     return render(request, 'task_package_split_list.html')
 
 
-def task_package(request):
-    return render(request, 'task_package.html')
+def task_package_complete(request):
+    return render(request, 'task_package_complete.html')
+
+
+def task_package_ongoing(request):
+    return render(request, 'task_package_ongoing.html')

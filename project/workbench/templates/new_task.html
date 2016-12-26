@@ -14,36 +14,37 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
-              <label><input type="radio" name="r1" checked="checked" class="minimal">拆字</label>
-              <label><input type="radio" name="r1">录入</label>
-              <label><input type="radio" name="r1" class="minimal">去重</label>
+            <label><input type="radio" name="business_type" val="2" checked="checked" class="minimal">拆字</label>
+            <label><input type="radio" name="business_type" val="1">录入</label>
+            <label><input type="radio" name="business_type" val="3" class="minimal">去重</label>
             </div>
           </div>
           <div class="task-item">
             <div class="task-name fl">任务阶段：</div>
             <div class="radio fl">
-              <label><input type="radio" name="r2"checked="checked">初次</label>
-              <label><input type="radio" name="r2">回查</label>
-              <label><input type="radio" name="r2" class="minimal">审查</label>
+            <label><input type="radio" name="business_stage" val="1" checked="checked">初次</label>
+            <label><input type="radio" name="business_stage" val="2">回查</label>
+            <label><input type="radio" name="business_stage" val="3" class="minimal">审查</label>
             </div>
           </div>
           <div class="task-item">
             <div class="task-name fl">任务包大小：</div>
             <div class="radio flr">
-              <label><input type="radio" name="r3"checked="checked">100字</label>
-              <label><input type="radio" name="r3">200字</label>
-              <label><input type="radio" name="r3" class="minimal">500字</label>
-              <label><input type="radio" name="r3" class="minimal">1000字</label>
+            <label><input type="radio" name="package_size" val="100" checked="checked">100字</label>
+            <label><input type="radio" name="package_size" val="200">200字</label>
+            <label><input type="radio" name="package_size" val="500" class="minimal">500字</label>
+            <label><input type="radio" name="package_size" val="1000" class="minimal">1000字</label>
             </div>
           </div>
           <div class="task-item">
             <div class="task-name fl">每日计划：</div>
             <div class="radio fl">
-              <label><input type="radio" name="r4" checked="checked">5字</label>
-              <label><input type="radio" name="r4">10字</label>
-              <label><input type="radio" name="r4">15字</label>
-              <label><input type="radio" name="r4">20字</label>
-              <label><input type="radio" name="r4">其它&nbsp;&nbsp;<input class="z-other" type="text" placeholder="请输入5的倍数"></label>
+            <label><input type="radio" name="package_plan" val="5" checked="checked">5字</label>
+            <label><input type="radio" name="package_plan" val="10">10字</label>
+            <label><input type="radio" name="package_plan" val="15">15字</label>
+            <label><input type="radio" name="package_plan" val="20">20字</label>
+            <label><input type="radio" name="package_plan" val="0">其它
+                    <input class="z-other" type="text" placeholder="请输入5的倍数" id="custom_plan"></label>
             </div>
           </div>
           <div class="z-btns">
@@ -60,4 +61,25 @@
     </div>
 <!-- /.col -->
 </div>
+<script type="text/javascript">
+
+    $("#submit-task-button").click(function() {
+        var business_type = $('input[name=business_type]:checked').attr('val');
+        var business_stage = $('input[name=business_stage]:checked').attr('val');
+        var package_size = $('input[name=package_size]:checked').attr('val');
+        var package_plan = $('input[name=package_plan]:checked').attr('val');
+        if (package_plan == 0) package_plan = $('#custom_plan').attr('val');
+        if (package_plan == 0 || package_plan%5 != 0) alert('Please input valid plan number.');
+
+        var package_status = 0;
+
+        var t = new Date();
+        var due_date = Date.now() + package_size/package_plan*24*3600*1000 - 8*3600*1000;
+        var completed_num = 0;
+        var completed_at = null;
+
+        $.post();
+
+    });
+</script>
 {% endblock %}

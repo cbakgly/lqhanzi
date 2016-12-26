@@ -20,8 +20,7 @@ from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
-import settings
-
+from . import settings
 from hanzi.views.hanzi import index
 
 admin.autodiscover()
