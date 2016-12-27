@@ -1,0 +1,32 @@
+---
+image: python:2.7-alpine
+
+stages:
+  - staticcheck
+  - unittest
+
+staticcheck:
+  stage: staticcheck
+  before_script:
+    - pip install -U flake8
+  script:
+    - flake8 --max-line-length=248 project/
+
+unittest:
+  stage: unittest
+#  image: lqhanzi:mysql
+# TODO use sqlite as unittest DB
+#  services:
+#    - mysql:latest
+
+#  variables:
+#    MYSQL_DATABASE: "lqhanzi"
+#    MYSQL_ROOT_PASSWORD: "123456"
+#    MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+#  before_script:
+#    - pip install -Ur test-requirements.txt
+#    - python project/manage.py migrate
+#    - python project/manage.py collectstatic --noinput
+  script:
+#    - python project/manage.py --database="test_default" test 
+     - echo 'Skip unittest until it is ready'
