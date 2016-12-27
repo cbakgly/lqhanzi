@@ -55,7 +55,7 @@
 	            </td>
 	            <td>2016/10/27</td>
 	            <td>2016/10/30</td>
-	            <td><a href="#">继续录入</a>&nbsp;&nbsp;<a href="lrDetails.html">查看</a>&nbsp;&nbsp;<a href="#">修改</a></td>
+	            <td><a href="#">继续录入</a>&nbsp;&nbsp;<a href="lrDetails.html">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
 	          </tr>
 	          <tr>
 	            <!--<td>2</td>-->
@@ -84,7 +84,7 @@
 	            </td>
 	            <td>2016/10/27</td>
 	            <td>2016/10/30</td>
-	            <td><a href="#">继续拆字</a>&nbsp;&nbsp;<a href="czDetails.html">查看</a>&nbsp;&nbsp;<a href="#">修改</a></td>
+	            <td><a href="#">继续拆字</a>&nbsp;&nbsp;<a href="czDetails.html">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
 	          </tr>
 	          <tr>
 	            <!--<td>3</td>-->
@@ -114,7 +114,7 @@
 	            </td>
 	            <td>2016/10/27</td>
 	            <td>2016/10/30</td>
-	            <td><a href="#">继续去重</a>&nbsp;&nbsp;<a href="#">查看</a>&nbsp;&nbsp;<a href="#">修改</a></td>
+	            <td><a href="#">继续去重</a>&nbsp;&nbsp;<a href="#">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
 	          </tr>
 	        </tbody>
 	      </table>
@@ -123,4 +123,24 @@
 	</div>
 <!-- /.col -->
 </div>
+ <!--遮罩层-->
+  <div class="hw-overlay" id="hw-layer">
+    <div class="hw-layer-wrap">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="title">修改每日计划<span class="glyphicon glyphicon-remove hwLayer-close"></span></div>
+          <p>请尽量按最初的计划进行，不要随意修改每日计划。</p>
+          <div class="input-group">
+            <span class="input-group-addon">每日计划:</span>
+            <input type="text" class="form-control" placeholder="请输入">
+          </div>
+          <div class="btns">
+            <button class="btn btn-primary btn-sm z-btn-sm hwLayer-ok">确定</button>
+            <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--/.遮罩层-->
 {% endblock %}
