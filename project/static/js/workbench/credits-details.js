@@ -1,5 +1,11 @@
 /**
  * Created by ZhouYi on 2016/12/24.
+
+ //TODOs:
+ 1. 载入界面显示“总积分”的查询结果
+ 2. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
+ 3. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
+
  */
 var creditsSort = new Vue({
   delimiters: ["#[", "]"],
