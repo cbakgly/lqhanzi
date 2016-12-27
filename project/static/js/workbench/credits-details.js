@@ -5,7 +5,6 @@
  1. 载入界面显示“总积分”的查询结果
  2. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
  3. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
-
  */
 var creditsSort = new Vue({
   delimiters: ["#[", "]"],
@@ -29,7 +28,12 @@ var creditsSort = new Vue({
   methods: {
     getData: function(sortNum) {
         var app = this
-        axios.get('http://127.0.0.1:8000/api/v1/workbench/credits?sort=' + sortNum)
+        axios({
+          method: 'get',
+          url: 'http://127.0.0.1:8000/api/v1/workbench/credits?sort=' + sortNum,
+          xsrfCookieName: 'csrftoken',
+          xsrfHeaderName: 'X-CSRFToken'
+        })
           .then(function (response) {
             app.result = response.data.results;
           })
