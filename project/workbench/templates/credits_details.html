@@ -1,57 +1,58 @@
 {% extends "m2_base.html" %}
-
+{% load staticfiles %}
 {% block content %}
 <div class="row">
-    <div class="col-xs-12">
-        <div id="credits-sort" class="box">
-          <div class="box">
-            <div class="box-header-inner">
-              <h3 class="box-title">我的积分详情:</h3>
-              <div class="ser-bd">
-                <div class="z-ser z1-ser">
-                  <div class="z-myScore">
-                    <span class="z-total">总积分：<b>3000</b></span>
-                    <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
-                    <a class="exchange" href="{% url 'm2.credits-redeem' %}" title="查看我的兑换">已兑换：<b>800</b></a>
-                  </div>
-                  <div class="col col-md-4 col-sm-6 col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon">任务类型:</span>
-                      <!-- select -->
-                      <div class="form-group">
-                        <select class="form-control" v-model="sort">
-                          <option v-for="option in options" v-bind:value="option.value">
-                            {% templatetag openvariable %} option.text {% templatetag closevariable %}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
+  <div class="col-xs-12">
+    <div id="credits-sort" class="box">
+      <!-- /.box-header -->
+      <div class="box-header">
+        <div class="box-header-inner">
+          <h3 class="box-title">我的积分详情:</h3>
+          <div class="ser-bd">
+            <div class="z-ser z1-ser">
+              <div class="z-myScore">
+                <span class="z-total">总积分：<b>3000</b></span>
+                <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
+                <a class="exchange" href="{% url 'm2.credits-redeem' %}" title="查看我的兑换">已兑换：<b>800</b></a>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">任务类型:</span>
+                  <!-- select -->
+                  <div class="form-group">
+                    <select class="form-control" v-model="sort">
+                      <option v-for="option in options" v-bind:value="option.value">#[option.text]</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="box-body table-responsive">
-              <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>积分</th>
-                    <th>任务类型</th>
-                    <!-- <th>任务包名称</th> -->
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(item, index) in result">
-                    <td v-text="index+1">hihi</td>
-                    <td v-text="item.credit">hi</td>
-                    <td v-text="item.sort">hello world</td>
-                    <!-- <td v-text="item.name">hi</td> -->
-                </tr>
-                </tbody>
-              </table>
-            </div>
-        </div><!-- /.box -->
-    </div>
+        </div>
+      </div>
+      <div class="box-body table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>积分</th>
+                <th>任务类型</th>
+                <!-- <th>任务包名称</th> -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in result">
+            <!-- <tr v-if="sort=1" v-bind:result="getData(1)"> -->
+                <td v-text="index+1">hihi</td>
+                <td v-text="item.credit">hi</td>
+                <td v-text="item.sort">hello world</td>
+                <!-- <td v-text="item.name">hi</td> -->
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    </div><!-- /.box -->
+  </div>
 </div>
+<script src="{% static '' %}js/workbench/credits-details.js"></script>
 {% endblock %}
