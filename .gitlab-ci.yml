@@ -10,7 +10,7 @@ staticcheck:
   before_script:
     - pip install -U flake8
   script:
-    - flake8 project/
+    - flake8 --max-line-length=248 project/
 
 unittest:
   stage: unittest
