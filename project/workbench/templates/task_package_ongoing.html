@@ -1,5 +1,5 @@
 {% extends "m2_base.html" %}
-
+{{ data }}
 {% block content %}
 <div class="content-header">
     <ol class="breadcrumb">
@@ -28,94 +28,45 @@
 	          </tr>
 	        </thead>
 	        <tbody>
+            {% for item in task_packages %}
 	          <tr>
-	            <!--<td>1</td>-->
-	            <td>#1</td>
-	            <td>录入</td>
-	            <td>初次</td>
-	            <td>30页</td>
-	            <td>3页</td>
+	            <td>#{{ item.id }}</td>
+	            <td>{{ item.get_business_type_display }}</td>
+	            <td>{{ item.get_business_stage_display }}</td>
+	            <td>{{ item.size }}{% if item.business_type == 2 %}页{% endif %}</td>
+	            <td>{{ item.daily_plan }}{% if item.business_type == 2 %}页{% endif %}</td>
 	            <td>
 	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 75%"></div>
+	                <div class="progress-bar progress-bar-yellow" style="width: {% widthratio item.today_num|default:0 item.daily_plan 100 %}%"></div>
 	              </div>
 	              <div class="pros">
-	                <span class="pro pull-left">3页</span>
-	                <span class="percent pull-right">75%</span>
+	                <span class="pro pull-left">
+                        {{ item.today_num|default:0 }}{% if item.business_type == 2 %}页{% endif %}</span>
+	                <span class="percent pull-right">{% widthratio item.today_num|default:0 item.daily_plan 100 %}%</span>
 	              </div>
 	            </td>
 	            <td>
 	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 85%"></div>
+	                <div class="progress-bar progress-bar-yellow" style="width: {% widthratio item.completed_num item.size 100 %}%"></div>
 	              </div>
 	              <div class="pros">
-	                <span class="pro pull-left">3页</span>
-	                <span class="percent pull-right">85%</span>
+	                <span class="pro pull-left">{{ item.completed_num|default:0 }} {% if item.business_type == 0 %}页{% endif %}</span>
+	                <span class="percent pull-right">{% widthratio item.completed_num item.size 100 %}%</span>
 	              </div>
 	            </td>
-	            <td>2016/10/27</td>
-	            <td>2016/10/30</td>
-	            <td><a href="#">继续录入</a>&nbsp;&nbsp;<a href="lrDetails.html">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
+	            <td>{{ item.c_t }}</td>
+	            <td>{{ item.due_date }}</td>
+	            <td>
+                    {% if item.business_type == 0 %}
+                    <a href="{% url 'm2.task-input' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-input-list' %}">查看</a>&nbsp;&nbsp;
+                    {% elif item.business_type == 1 %}
+                    <a href="{% url 'm2.task-split' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-split-list' %}">查看</a>&nbsp;&nbsp;
+                    {% elif item.business_type == 2 %}
+                    <a href="{% url 'm2.task-dedup' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-dedup-list' %}">查看</a>&nbsp;&nbsp;
+                    {% endif %}
+                    <a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
 	          </tr>
-	          <tr>
-	            <!--<td>2</td>-->
-	            <td>#2</td>
-	            <td>拆字</td>
-	            <td>回查</td>
-	            <td>20页</td>
-	            <td>3页</td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 55%"></div>
-	              </div>
-	              <div class="pros">
-	                <span class="pro pull-left">3页</span>
-	                <span class="percent pull-right">55%</span>
-	              </div>
-	            </td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 55%"></div>
-	              </div>
-	              <div class="pros">
-	                <span class="pro pull-left">3页</span>
-	                <span class="percent pull-right">55%</span>
-	              </div>
-	            </td>
-	            <td>2016/10/27</td>
-	            <td>2016/10/30</td>
-	            <td><a href="#">继续拆字</a>&nbsp;&nbsp;<a href="czDetails.html">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
-	          </tr>
-	          <tr>
-	            <!--<td>3</td>-->
-	            <td>#3</td>
-	            <td>去重</td>
-	            <td>审查</td>
-	            <td>50字</td>
-	            <td>20字</td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 55%"></div>
-	              </div>
-	              <div class="pros">
-	                <span class="pro pull-left">3页</span>
-	                <span class="percent pull-right">55%</span>
-	              </div>
-	            </td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: 75%"></div>
-	              </div>
-	              <div class="pros">
-	                <span class="pro pull-left">30页</span>
-	                <span class="percent pull-right">75%</span>
-	              </div>
-
-	            </td>
-	            <td>2016/10/27</td>
-	            <td>2016/10/30</td>
-	            <td><a href="#">继续去重</a>&nbsp;&nbsp;<a href="#">查看</a>&nbsp;&nbsp;<a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
-	          </tr>
+            {% endfor %}
 	        </tbody>
 	      </table>
 	    </div><!-- /.box-body -->
@@ -132,10 +83,10 @@
           <p>请尽量按最初的计划进行，不要随意修改每日计划。</p>
           <div class="input-group">
             <span class="input-group-addon">每日计划:</span>
-            <input type="text" class="form-control" placeholder="请输入">
+            <input type="text" class="form-control" placeholder="请输入5的倍数" v-model="daily_plan">
           </div>
           <div class="btns">
-            <button class="btn btn-primary btn-sm z-btn-sm hwLayer-ok">确定</button>
+            <button class="btn btn-primary btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
             <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
           </div>
         </div>
@@ -143,4 +94,33 @@
     </div>
   </div>
 <!--/.遮罩层-->
+<script type="text/javascript">
+    var dialog = new Vue({
+        delimiters: ["#[", "]"],
+        el: '#hw-layer',
+        data: {
+            daily_plan: 0,
+        },
+        methods: {
+            confirm: function() {
+                if(this.daily_plan % 5 != 0) {
+                    alert("Please input number of multiple of 5.");
+                } else {
+                    $.ajax({ //TODO: need real id to replace 1 below
+                        url: '{% url 'taskpackages-detail' version='v1' pk=1 %}',
+                        type: 'PUT',
+                        data: {"daily_plan": daily_plan},
+                        success: function(data) {
+                            console.log("New task sent.");
+                        },
+                        error: function(jqXHR, status, error) {
+                            console.log(error);
+                        }
+                    })
+                }
+            }
+        }
+
+    });
+</script>
 {% endblock %}

@@ -7,5 +7,5 @@ from sysadmin.views.api_tasks import TasksViewSet
 from sysadmin.views.api_task_packages import TaskPackagesViewSet
 
 router = DefaultRouter()
-router.register(r'^task_packages', TaskPackagesViewSet)
+router.register(r'task_packages', TaskPackagesViewSet)
 urlpatterns = router.urls

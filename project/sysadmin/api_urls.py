@@ -8,7 +8,7 @@ from sysadmin.views.api_task_packages import TaskPackagesViewSet
 from sysadmin.views.api_diaries import DiariesViewSet
 
 router = DefaultRouter()
-router.register(r'^operation', OperationViewSet)
-router.register(r'^user', UserViewSet)
-router.register(r'^diaries', DiariesViewSet)
+router.register(r'operation', OperationViewSet)
+router.register(r'user', UserViewSet)
+router.register(r'diaries', DiariesViewSet)
 urlpatterns = router.urls

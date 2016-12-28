@@ -137,7 +137,7 @@ $.AdminLTE.options = {
  * functions and plugins as specified by the
  * options above.
  */
-$(function ($) {
+$(function () {
  
 
   //Fix for IE page transitions
@@ -608,7 +608,7 @@ function _init() {
  * @type plugin
  * @usage $("#box-widget").boxRefresh( options );
  */
-(function ($) {
+(function () {
 
   "use strict";
 
@@ -688,7 +688,7 @@ function _init() {
  * @usage $("#box-widget").toggleBox();
  * @usage $("#box-widget").removeBox();
  */
-(function ($) {
+(function () {
 
   'use strict';
 
@@ -716,7 +716,7 @@ function _init() {
  * @type plugin
  * @usage $("#todo-widget").todolist( options );
  */
-(function ($) {
+(function () {
 
   'use strict';
 

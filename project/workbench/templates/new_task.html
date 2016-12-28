@@ -14,9 +14,9 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
-            <label><input type="radio" name="business_type" val="2" checked="checked" class="minimal">拆字</label>
-            <label><input type="radio" name="business_type" val="1">录入</label>
-            <label><input type="radio" name="business_type" val="3" class="minimal">去重</label>
+            <label><input type="radio" name="business_type" val="1" checked="checked" class="minimal">拆字</label>
+            <label><input type="radio" name="business_type" val="0">录入</label>
+            <label><input type="radio" name="business_type" val="2" class="minimal">去重</label>
             </div>
           </div>
           <div class="task-item">
@@ -62,10 +62,6 @@
 <!-- /.col -->
 </div>
 <script type="text/javascript">
-
-    // TODO: replace with reverse lookup name of route
-    var new_task_url = '/api/v1/task_packages/';
-
     $("#submit-task-button").click(function() {
         var business_type = $('input[name=business_type]:checked').attr('val');
         var business_stage = $('input[name=business_stage]:checked').attr('val');
@@ -81,8 +77,10 @@
         var completed_num = 0;
         var completed_at = null;
 
-        $.post(new_task_url,
-                {"user": user.id,
+        $.ajax({
+                url: '{% url 'taskpackages-list' version='v1' %}',
+                type: 'POST',
+                data: {"user": user.id,
                 "business_type": business_type,
                 "business_stage": business_stage,
                 "size": package_size,
@@ -90,8 +88,14 @@
                 "daily_plan": package_plan,
                 "due_date": due_date.toJSON(),
                 },
-                function(result) {
-                    console.log(result);
+                success: function(data) {
+                    console.log(data);
+                    alert("success");
+                },
+                error: function(jqXHR, status, error) {
+                    console.log(jqXHR.responseText);
+                    alert(jqXHR.responseText);
+                }
         });
 
     });
