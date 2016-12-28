@@ -37,18 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'guardian',
-    'rest_framework',
-    'debug_toolbar',
-
-    # 'crispy_forms',
     'django_filters',
-
+    'rest_framework',
+    'guardian',
+    'debug_toolbar',
+    # 'crispy_forms',
     'registration',
     'hanzi',
     'sysadmin',
     'workbench',
-    'samples',  # For some samples code here.
 ]
 
 MIDDLEWARE = [
