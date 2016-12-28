@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load i18n %}
-
 <html>
 <head>
   <meta charset="utf-8">
@@ -34,6 +33,9 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <!-- REQUIRED JS SCRIPTS -->
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
   <!-- jQuery 2.2.3 -->
   <script src="{% static '' %}js/jquery-2.2.3.min.js"></script>
   <!-- Bootstrap 3.3.6 -->
@@ -49,14 +51,12 @@
   <script src="{% static '' %}js/m2-template-specific.js"></script>
   <!--m2-template-specific js-->
   <script src="{% static '' %}js/js.cookie.js"></script>
-
     <script type="text/javascript">
         // expose user info in javascript context.
         var user={
             "id": {{ user.id }},
             "name": "{{ user.username }}"
         };
-
         // For api with token, need passing via header.
         $(document).ajaxSend(function(event, xhr, settings) {
             if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)

@@ -1,10 +1,14 @@
 {% extends "m2_base.html" %}
-
+{% load staticfiles %}
 {% block content %}
+<!--
+1. 载入界面显示“总积分”的查询结果
+2. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
+3. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
+-->
 <div class="row">
   <div class="col-xs-12">
-    <div class="box">
-      <!-- /.box-header -->
+    <div id="credits-sort" class="box">
       <div class="box-header">
         <div class="box-header-inner">
           <h3 class="box-title">我的积分详情:</h3>
@@ -13,19 +17,14 @@
               <div class="z-myScore">
                 <span class="z-total">总积分：<b>3000</b></span>
                 <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
-                <a class="exchange" href="myExchange.html" title="查看我的兑换">已兑换：<b>800</b></a>
+                <a class="exchange" href="{% url 'm2.credits-redeem' %}" title="查看我的兑换">已兑换：<b>800</b></a>
               </div>
               <div class="col col-md-4 col-sm-6 col-xs-12">
                 <div class="input-group">
                   <span class="input-group-addon">任务类型:</span>
-                  <!-- select -->
                   <div class="form-group">
-                    <select class="form-control">
-                      <option>总积分</option>
-                      <option>拆字积分</option>
-                      <option>去重积分</option>
-                      <option>录入积分</option>
-                      <option>互助积分</option>
+                    <select class="form-control" v-model="sort">
+                      <option v-for="option in options" v-bind:value="option.value">#[option.text]</option>
                     </select>
                   </div>
                 </div>
@@ -35,50 +34,25 @@
         </div>
       </div>
       <div class="box-body table-responsive">
-        <table id="example1" class="table table-bordered table-striped">
-          <thead>
-          <tr>
-            <th>序号</th>
-            <th>积分</th>
-            <th>任务类型</th>
-            <th>任务包名称</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>200</td>
-            <td>去重</td>
-            <td>#001_异体字去重</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>200</td>
-            <td>拆字</td>
-            <td>#001_异体字去重</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>200</td>
-            <td>录入</td>
-            <td>#001_异体字去重</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>200</td>
-            <td>去重</td>
-            <td>#001_异体字去重</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>200</td>
-            <td>去重</td>
-            <td>#001_异体字去重</td>
-          </tr>
-          </tbody>
-        </table>
-      </div><!-- /.box-body -->
-    </div><!-- /.box -->
+          <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>积分</th>
+                <th>任务类型</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in result">
+                <td v-text="index+1">hihi</td>
+                <td v-text="item.credit">hi</td>
+                <td v-text="item.sort">hello world</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
   </div>
 </div>
+<script src="{% static '' %}js/workbench/credits-details.js"></script>
 {% endblock %}
