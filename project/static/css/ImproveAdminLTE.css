@@ -454,3 +454,83 @@ input[type="radio"], input[type="checkbox"]{
 	    margin-left: 0;
 	}
 }
+.z-table-responsive tbody td span{
+    display: block;
+}
+.z-table-responsive tbody td span:first-child{
+    font-size:34px;
+}
+.z-table-responsive table > thead > tr > th, .z-table-responsive table> tbody > tr > th, .z-table-responsive table> tfoot > tr > th, .z-table-responsive table> thead > tr > td, .z-table-responsive table> tbody > tr > td, .z-table-responsive table> tfoot > tr > td{
+    vertical-align:middle;
+}
+.z-table-responsive .pic img{
+    width:40px;
+    height:40px;
+}
+.z-table-responsive .small em{
+    font-style:normal;
+}
+/* input */
+.z-table-responsive td input{
+    border:1px solid #ddd;
+    background:#fff;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    padding:4px 0;
+    text-align:center;
+    font-size:1.4em;
+    outline:none;
+    margin:0 auto;
+}
+.gaoli-ser-results .z1-info{
+    padding:10px 0;
+}
+.gaoli-ser-results .res-item{
+    overflow:hidden;
+}
+.gaoli-ser-results li{
+    width:8%;
+    float: left;
+    padding:5px;
+    border:1px solid #ddd;
+    border-radius:3px;
+    text-align: center;
+    margin:10px 0.54%;
+    overflow:hidden;
+}
+@media (max-width: 768px) {
+    .gaoli-ser-results li{
+        width:12%;
+        margin:10px 2.3%;
+    }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .gaoli-ser-results li{
+        width:13%;
+        margin:10px 0.64%;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .gaoli-ser-results li{
+        width: 12%;
+        margin: 10px 1.1%;
+    }
+}
+@media (min-width: 1200px){
+    .gaoli-ser-results li{
+        width:8%;
+    }
+}
+.gaoli-ser-results li p img{
+    margin-bottom:10px;
+    width:50px;
+    height:50px;
+}
+em{
+    font-style:normal;
+}
+
+.gaoli-ser-results .item-right{
+    padding-top:18px;
+}

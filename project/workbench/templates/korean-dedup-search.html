@@ -1,0 +1,118 @@
+{% extends "m2_base.html" %}
+
+{% block content %}
+    <!-- Content Header-->
+    <div class="content-header">
+      <ol class="breadcrumb">
+        <li><a href="javascript:;">字库检索</a></li>
+        <li class="active">高丽去重库</li>
+      </ol>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <!-- /.box-header -->
+          <div class="box-header">
+            <div class="box-header-inner">
+              <div class="ser-bd">
+                <div class="z-ser z2-ser">
+                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                    <div class="input-group">
+                      <span class="input-group-addon">郑码:</span>
+                      <input type="text" class="form-control" placeholder="请输入">
+                    </div>
+                  </div>
+                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">是否重复:</span>
+                        <!-- select -->
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>请选择</option>
+                            <option>是</option>
+                            <option>否</option>
+                          </select>
+                        </div>
+                      </div>
+
+                  </div>
+                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                    <div class="input-group">
+                      <span class="input-group-addon">文字:</span>
+                      <input type="text" class="form-control" placeholder="请输入">
+                    </div>
+                  </div>
+                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                    <div class="input-group">
+                      <span class="input-group-addon">图片字编码:</span>
+                      <input type="text" class="form-control" placeholder="请输入">
+                    </div>
+                  </div>
+                </div>
+                <div class="btns">
+                  <button class="btn btn-primary btn-sm z-btn-sm">搜索</button>
+                  <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
+                  <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="gaoli-ser-results">
+              <div class="res-item">
+                <div class="z1-info">
+                  <h3 class="box-title">郑码: <span>BUGQ</span></h3>
+                </div>
+                <ul class="item-lists">
+                  <li>
+                    <div class="item-left pull-left">
+                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
+                      <p class="txt"><em>熱</em><em>1</em></p>
+                    </div>
+                    <div class="item-right pull-right">
+                      <p class="txt">熱<em></em><em>1</em></p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="res-item">
+                <div class="z1-info">
+                  <h3 class="box-title">郑码: <span>BZB</span></h3>
+                </div>
+                <ul class="item-lists">
+                  <li>
+                    <div class="item-left pull-left">
+                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
+                      <p class="txt"><em>熱</em><em>1</em></p>
+                    </div>
+                    <div class="item-right pull-right">
+                      <p class="txt">熱<em></em><em>1</em></p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item-left pull-left">
+                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
+                      <p class="txt"><em>熱</em><em>1</em></p>
+                    </div>
+                    <div class="item-right pull-right">
+                      <p class="txt">熱<em></em><em>1</em></p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div><!-- /.box-body -->
+          <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+              <li><a href="#">«</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">»</a></li>
+            </ul>
+          </div>
+        </div><!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+{% endblock %}

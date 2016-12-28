@@ -62,3 +62,25 @@ $(function () {
         }
     });
 });
+//汉大去重库，修改事件
+$(function(){
+    $(".z-table-responsive tbody tr td .modify").click(function() {
+        str = $(this).text()=="修改"?"确定":"修改";
+        $(this).text(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
+        $(this).parent().siblings("td:eq(2)").each(function() {  // 获取当前行的第3列单元格
+            obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+            if(!obj_text.length){
+                // 如果没有文本框，则在td添加文本框
+                $(this).children('span').hide();
+                $(this).append("<input type='text' value='"+$(this).children('span:nth-child(2)').text()+"'>");
+            }else{
+                // 如果已经存在文本框，则将其显示为文本框修改的值
+                $(this).children('span').show();
+                var val = $(this).children('input').val();
+                $(this).children('input').remove();
+                $(this).children('span:nth-child(2)').text(val);
+                // $(this).remove('input');
+            }
+        });
+    });
+});
