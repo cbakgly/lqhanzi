@@ -1,12 +1,15 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 from sysadmin.models import User
-from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.status import HTTP_204_NO_CONTENT
 import rest_framework_filters as filters
 from rest_framework.response import Response
+
 
 # User management
 class UserSerializer(serializers.ModelSerializer):
@@ -22,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key in ('username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb', 'qq'):
-            if getattr(validated_data, key) != None:
+            if getattr(validated_data, key) is not None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
         instance.set_password(validated_data['password'])
         instance.save()
@@ -49,6 +52,9 @@ class PasswordSerializer(serializers.Serializer):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     serializer_class = UserSerializer
     filter_class = UserFilter
     queryset = User.objects.all()
@@ -66,10 +72,10 @@ class UserViewSet(viewsets.ModelViewSet):
             user.save()
             return Response({'status': 'Password set'})
 
-    def destory(self, request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=HTTP_204_NO_CONTENT)
 
     def perform_destroy(self, instance):
         instance.delete()

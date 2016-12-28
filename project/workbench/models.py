@@ -1,12 +1,10 @@
 # -*- coding:utf8 -*-
-# encoding: utf-8
 
 from __future__ import unicode_literals
 
 from django.db import models
 from sysadmin.models import User
 import django.utils.timezone as timezone
-from datetime import timedelta
 
 
 # Create your models here.
@@ -248,8 +246,8 @@ class InterDictDedup(models.Model):
 class TaskPackages(models.Model):
     business_type_choices = (
         (0, u'录入'),
-        (1, u'去重'),
-        (2, u'拆字'),
+        (1, u'拆字'),
+        (2, u'去重'),
         (3, u'互助')
     )
 
@@ -267,11 +265,11 @@ class TaskPackages(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
-    size = models.SmallIntegerField(u'工作包大小', null=True)
-    status = models.SmallIntegerField(u'工作包状态', choices=status_choices, null=True)
-    daily_plan = models.SmallIntegerField(u'日计划工作量', null=True)
+    size = models.SmallIntegerField(u'工作包大小', null=False, default=100)
+    status = models.SmallIntegerField(u'工作包状态', choices=status_choices, default=0)
+    daily_plan = models.SmallIntegerField(u'日计划工作量', null=False, default=5)
     due_date = models.DateTimeField(u'预计完成时间', null=True)
-    completed_num = models.SmallIntegerField(u'已完成数量', null=True)
+    completed_num = models.SmallIntegerField(u'已完成数量', default=0)
     completed_at = models.DateTimeField(u'完成时间', null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)

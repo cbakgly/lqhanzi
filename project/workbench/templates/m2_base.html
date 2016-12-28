@@ -51,20 +51,21 @@
   <script src="{% static '' %}js/m2-template-specific.js"></script>
   <!--m2-template-specific js-->
   <script src="{% static '' %}js/js.cookie.js"></script>
-    <script type="text/javascript">
-        // expose user info in javascript context.
-        var user={
-            "id": {{ user.id }},
-            "name": "{{ user.username }}"
-        };
-        // For api with token, need passing via header.
-        $(document).ajaxSend(function(event, xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)
-                    && !settings.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
-            }
-        });
-    </script>
+  <script type="text/javascript">
+      // expose user info in javascript context.
+      var user={
+          "id": {{ user.id }},
+          "name": "{{ user.username }}"
+      };
+
+      // For api with token, need passing it via header.
+      $(document).ajaxSend(function(event, xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)
+                  && !settings.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+          }
+      });
+   </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

@@ -24,8 +24,7 @@ SECRET_KEY = 'nej4uf&$0-18*bb)--qjx3vc6-ahsxt!c!z92g^h$qjl4036*x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ["*",]
-
+ALLOWED_HOSTS = ["*", ]
 
 # Application definition
 
@@ -37,18 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'guardian',
-    'rest_framework',
-    'debug_toolbar',
-
-    # 'crispy_forms',
     'django_filters',
-
+    'rest_framework',
+    'guardian',
+    'debug_toolbar',
+    # 'crispy_forms',
     'registration',
     'hanzi',
     'sysadmin',
     'workbench',
-    'samples',  # For some samples code here.
 ]
 
 MIDDLEWARE = [
@@ -94,10 +90,10 @@ WSGI_APPLICATION = 'lqconfig.wsgi.application'
 # }
 
 DATABASES = {
-     'test_default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-     },
+    'test_default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -149,13 +145,10 @@ MEDIA_ROOT = 'static/uploads/'
 
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'PAGE_SIZE': 10,
-    'DEFAULT_AUTH_ENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
+    'DEFAULT_VERSION': 'v1',
+    'ALLOWED_VERSIONS': ['v1', 'v2'],
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework_filters.backends.DjangoFilterBackend',
     ),
@@ -196,7 +189,6 @@ EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
 # Port for sending email.
 EMAIL_PORT = 25
-
 
 CACHES = {
     'default': {

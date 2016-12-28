@@ -1,6 +1,8 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
 from models import Diaries, Tag, Credits, CreditSort
+
+
 # Register your models here.
 
 
@@ -18,6 +20,7 @@ class CreditsAdmin(admin.ModelAdmin):
 
 class CreditSortAdmin(admin.ModelAdmin):
     list_display = ('credit_sort',)
+
 
 admin.site.register(Diaries, DiaryAdmin)
 admin.site.register(Tag, TagAdmin)

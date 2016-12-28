@@ -1,12 +1,13 @@
 # encoding: utf-8
 from __future__ import unicode_literals
-from sysadmin.models import User
-from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 import rest_framework_filters as filters
-from rest_framework.response import Response
 from workbench.models import Diaries
+
 
 # Operation log management
 class DiariesSerializer(serializers.ModelSerializer):
@@ -30,7 +31,11 @@ class DiariesFilter(filters.FilterSet):
         model = Diaries
         fields = '__all__'
 
+
 class DiariesViewSet(viewsets.ModelViewSet):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     serializer_class = DiariesSerializer
     filter_class = DiariesFilter
     queryset = Diaries.objects.all()
