@@ -1,12 +1,12 @@
 # encoding: utf-8
 from __future__ import unicode_literals
-from sysadmin.models import User
 from sysadmin.models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 import rest_framework_filters as filters
-from rest_framework.response import Response
+
 
 # Operation log management
 class OperationSerializer(serializers.ModelSerializer):
@@ -30,16 +30,20 @@ class OperationSerializer(serializers.ModelSerializer):
 
 class OperationFilter(filters.FilterSet):
     logtime = filters.DateFromToRangeFilter()
+
     class Meta:
         model = Operation
         fields = {
-                'logtype': ['exact'],
-                'user__username': ['exact'],
-                'message': ['in', 'startswith'],
+            'logtype': ['exact'],
+            'user__username': ['exact'],
+            'message': ['in', 'startswith'],
         }
 
 
 class OperationViewSet(viewsets.ModelViewSet):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     serializer_class = OperationSerializer
     filter_class = OperationFilter
     queryset = Operation.objects.all()
