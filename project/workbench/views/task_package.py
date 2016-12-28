@@ -6,6 +6,7 @@ from ..models import TaskPackages
 from ..cache_keys import getcachekey_today_completed_task_num
 from ..enums import getenum_business_status
 
+
 @login_required
 def new_task_page(request):
     return render(request, 'new_task.html')

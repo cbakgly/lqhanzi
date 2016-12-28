@@ -1,5 +1,4 @@
 # -*- coding:utf8 -*-
-from models import Diaries
 from models import Diaries, Credits
 from models import Tag
 from rest_framework import serializers

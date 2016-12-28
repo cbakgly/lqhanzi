@@ -24,8 +24,7 @@ SECRET_KEY = 'nej4uf&$0-18*bb)--qjx3vc6-ahsxt!c!z92g^h$qjl4036*x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ["*",]
-
+ALLOWED_HOSTS = ["*", ]
 
 # Application definition
 
@@ -91,10 +90,10 @@ WSGI_APPLICATION = 'lqconfig.wsgi.application'
 # }
 
 DATABASES = {
-     'test_default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-     },
+    'test_default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -190,7 +189,6 @@ EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
 # Port for sending email.
 EMAIL_PORT = 25
-
 
 CACHES = {
     'default': {

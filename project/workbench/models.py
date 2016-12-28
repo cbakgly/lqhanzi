@@ -1,12 +1,10 @@
 # -*- coding:utf8 -*-
-# encoding: utf-8
 
 from __future__ import unicode_literals
 
 from django.db import models
 from sysadmin.models import User
 import django.utils.timezone as timezone
-from datetime import timedelta
 
 
 # Create your models here.

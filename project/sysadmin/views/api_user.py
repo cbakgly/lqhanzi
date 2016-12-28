@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from sysadmin.models import User
 from rest_framework import viewsets
 from rest_framework import serializers
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_204_NO_CONTENT
@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key in ('username', 'first_name', 'last_name', 'email', 'is_active', 'gender', 'mb', 'qq'):
-            if getattr(validated_data, key) != None:
+            if getattr(validated_data, key) is not None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
         instance.set_password(validated_data['password'])
         instance.save()

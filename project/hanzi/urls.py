@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
 
-from django.conf.urls import url, include
+from django.conf.urls import url
 from hanzi.views import hanzi
 
 urlpatterns = [

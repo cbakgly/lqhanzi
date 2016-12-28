@@ -21,7 +21,7 @@ class TasksSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key in ['business_id', 'business_type', 'user', 'business_stage', 'task_status', 'credits', 'remark', 'completed_at', 'task_package']:
-            if validated_data.get(key) != None:  # Only Set values which is put.
+            if validated_data.get(key) is not None:  # Only Set values which is put.
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
 
             instance.save()
