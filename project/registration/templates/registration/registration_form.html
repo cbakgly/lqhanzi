@@ -1,14 +1,48 @@
 {% extends "registration/registration_base.html" %}
 {% load i18n %}
-
+{% load staticfiles %}
+{% load rest_framework %}
 {% block title %}{% trans "Register for an account" %}{% endblock %}
 
 {% block content %}
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% trans 'Submit' %}" />
+<form action="{% url 'rest_framework:login' %}" role="form" method="post">
+{% csrf_token %}
+    <div class="form-group has-feedback">
+        {{ form.username.errors }}
+        <input name="username" required type="text" class="form-control required" placeholder="{% trans 'username' %}">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <p class="text-error">{{ form.username.help_text|safe }}</p>
+        {{ form.username.errors }}
+    </div>
+    <div class="form-group has-feedback">
+        <input name="email"  required type="email" class="form-control" placeholder="{% trans 'Email' %}">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+        <input name="password" required type="password" class="form-control required" placeholder="{% trans 'password' %}">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="{% trans 'Password (again)' %}">
+        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        <p class="text-error">{{ form.password2.help_text|safe }}</p>
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="checkbox icheck">
+                <label>
+                    <input type="checkbox"> 我完全同意 <a href="#">注册协议</a>
+                </label>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">{% trans 'Submit' %}</button>
+        </div>
+        <!-- /.col -->
+    </div>
 </form>
+
 {% endblock %}
 
 
