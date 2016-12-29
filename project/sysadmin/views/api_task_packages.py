@@ -1,6 +1,7 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -32,7 +33,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         biz_type = validated_data['business_type']
         exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_business_status('ongoing'))
         if exist is not None:
-            raise ValidationError("Only one package per type per stage can it be created.")
+            raise ValidationError(_("Only one package per type per stage can it be created."))
         task_package = TaskPackages.objects.create(**validated_data)
         task_package.save()
         return task_package

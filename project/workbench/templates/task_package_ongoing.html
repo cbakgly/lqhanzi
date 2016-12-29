@@ -1,5 +1,6 @@
 {% extends "m2_base.html" %}
-{{ data }}
+{% load i18n %}
+
 {% block content %}
 <div class="content-header">
     <ol class="breadcrumb">
@@ -111,7 +112,7 @@
                         type: 'PUT',
                         data: {"daily_plan": daily_plan},
                         success: function(data) {
-                            console.log("New task sent.");
+                            console.log("{% trans "New task sent." %}");
                         },
                         error: function(jqXHR, status, error) {
                             console.log(error);

@@ -1,4 +1,5 @@
 {% extends "m2_base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="content-header">
@@ -90,7 +91,7 @@
                 },
                 success: function(data) {
                     console.log(data);
-                    alert("success");
+                    alert("{% trans "success" %}");
                 },
                 error: function(jqXHR, status, error) {
                     console.log(jqXHR.responseText);
