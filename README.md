@@ -37,7 +37,7 @@ OR
 # 创建表 (凡是数据表更新过，都需要跑一下以下的migration命令)
 > . bin/activate
 (lqhanzi)> cd lqhanzi/project
-(lqhanzi)> ./manage.py makemigration
+(lqhanzi)> ./manage.py makemigrations
 (lqhanzi)> ./manage.py migrate
 
 # 初始化数据
