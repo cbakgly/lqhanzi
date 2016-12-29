@@ -5,6 +5,7 @@
 {% block title %}{% trans "Register for an account" %}{% endblock %}
 
 {% block content %}
+<div class="login-box-body">
 <form action="" role="form" method="post">
 {% csrf_token %}
     <div class="form-group has-feedback">
@@ -42,7 +43,7 @@
         <!-- /.col -->
     </div>
 </form>
-
+</div>
 {% endblock %}
 
 
