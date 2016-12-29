@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^api-token-verify/', verify_jwt_token),
     # url(r'^sysadmin/', include('sysadmin.urls')),
     url(r'^workbench/', include('workbench.urls')),
-    url(r'^api/(?P<version>)\w+/workbench/', include('workbench.api_urls')),
+    url(r'^api/workbench/', include('workbench.api_urls')),
     # url(r'^api/(?P<version>)\w+/hanzi/', include('hanzi.api_urls')),
 
     # Maintainer: xianduan <quqinglei@icloud.com>

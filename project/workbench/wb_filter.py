@@ -12,15 +12,24 @@ class DiaryFilter(filters.FilterSet):
 
     class Meta:
         model = models.Diaries
-        fields = ['user', 'c_t']
+        fields = ["user", "c_t"]
 
 
 class CreditFilter(filters.FilterSet):
     """
     根据用户id和时间来筛选
     """
-    c_t = filters.DateTimeFromToRangeFilter()
 
     class Meta:
         model = models.Credits
-        fields = ['sort', 'user']
+        fields = ["id", "user", "sort", "user__username"]
+
+
+class RedeemFilter(filters.FilterSet):
+    """
+    根据用户来获取
+    """
+
+    class Meta:
+        model = models.CreditsRedeem
+        fields = ["applied_by", "accepted_by", "completed_by", "accepted_at", "completed_at", "status"]
