@@ -8,19 +8,6 @@ import django.utils.timezone as timezone
 
 
 # Create your models here.
-class Tag(models.Model):
-    """
-    打卡标签
-    """
-    tag = models.CharField(max_length=16)
-
-    class Meta:
-        verbose_name = "打卡类型"
-        verbose_name_plural = "打卡类型"
-        db_table = 'tag'
-
-    def __unicode__(self):
-        return self.tag
 
 
 class RbacAction(models.Model):
@@ -375,34 +362,27 @@ class Diaries(models.Model):
         return self.work_brief
 
 
-class CreditSort(models.Model):
-    """
-    积分类型
-    """
-    credit_sort = models.CharField(max_length=20)
-
-    class Meta:
-        verbose_name = "积分类型"
-        verbose_name_plural = "积分类型"
-        db_table = 'credit_sort'
-
-    def __unicode__(self):
-        return self.credit_sort
-
-
 class Credits(models.Model):
     """
     积分
     """
+    sort_choices = (
+        (1,u"总积分"),
+        (2, u"拆字积分"),
+        (3, u"去重积分"),
+        (4, u"录入积分"),
+        (5, u"互助积分"),
+    )
     # user_id = models.IntegerField(u'用户id', null=True)
-    user = models.ForeignKey(User)
-    credit = models.IntegerField(u'积分值', null=True)
-    sort = models.ForeignKey(CreditSort, related_name='type')
+    user = models.ForeignKey(User, verbose_name="用户", related_name="user_credits")
+    credit = models.IntegerField(u"积分值", null=True)
+    sort = models.IntegerField(u"积分类型", choices=sort_choices, default=1)
 
     class Meta:
         verbose_name = "积分"
         verbose_name_plural = "积分"
         db_table = 'credits'
+        ordering = ["-credit"]
 
     def __unicode__(self):
         return self.sort.credit_sort
