@@ -1,6 +1,4 @@
 # -*- coding:utf8 -*-
-import datetime
-from django.db.models import Q
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -11,7 +9,7 @@ from ..pagination import StandardPagination
 from ..serializer import DiarySerializer, CreditSerializer, RedeemSerializer, RedeemSerializerVersion1
 
 from .. import wb_filter
-from ..models import Diaries, Credits, CreditsRedeem, TaskPackages
+from ..models import Diaries, Credits, CreditsRedeem
 from ..versioning import AllVersioning
 
 
@@ -55,7 +53,6 @@ class RedeemViewSet(viewsets.ModelViewSet):
     """
     queryset = CreditsRedeem.objects.all()
     versioning_class = AllVersioning
-    #serializer_class = RedeemSerializer
     filter_class = wb_filter.RedeemFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     pagination_class = StandardPagination

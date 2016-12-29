@@ -19,6 +19,7 @@ class CreditFilter(filters.FilterSet):
     """
     根据用户id和时间来筛选
     """
+
     class Meta:
         model = models.Credits
         fields = ["id", "user", "sort", "user__username"]
@@ -31,4 +32,4 @@ class RedeemFilter(filters.FilterSet):
 
     class Meta:
         model = models.CreditsRedeem
-        fields = ["applied_by", "accepted_by", "completed_by", "accepted_at", "completed_at","status"]
+        fields = ["applied_by", "accepted_by", "completed_by", "accepted_at", "completed_at", "status"]

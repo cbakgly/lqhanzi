@@ -5,11 +5,9 @@ from rest_framework import serializers
 
 from models import Diaries, Credits, CreditsRedeem
 from sysadmin.models import User
-import django_redis
 
 
 class DiarySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Diaries
         fields = ("__all__")
@@ -48,7 +46,7 @@ class CreditSerializer(serializers.ModelSerializer):
     def get_rank(self, obj):
         ranks = {}
         credit_set = Credits.objects.all()
-        for i in range(1,6):
+        for i in range(1, 6):
             ranks[i] = []
 
         for c in credit_set:
@@ -59,7 +57,7 @@ class CreditSerializer(serializers.ModelSerializer):
         for i in range(1, 6):
             ranks[i].sort()
             ranks[i].reverse()
-        return ranks[obj.sort].index(obj.credit)+1
+        return ranks[obj.sort].index(obj.credit) + 1
 
     def get_sort(self, obj):
         for sc in Credits.sort_choices:
