@@ -33,20 +33,11 @@
             <input type="hidden" name="next" value="{{ next }}" />
         </form>
         <!-- Login Form end -->
-        <a href="#" class="btn btn-link">忘记密码</a><br>
-        <a href="registration_form.html" class="btn btn-link text-center">
-            注册新账户</a>
+        {% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}" class="btn btn-link">{% trans "Reset it" %}</a><br>
+        {% trans "Not a member?" %}<a href="{% url 'registration_register' %}" class="btn btn-link text-center">
+            {% trans "Register" %}</a>
 
     </div>
-<form method="post" action="">
-
-    {{ form.as_p }}
-    <input type="submit" value="" />
-
-</form>
-
-<p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>
-<p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p>
 {% endblock %}
 
 

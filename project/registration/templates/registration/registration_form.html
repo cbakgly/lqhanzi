@@ -5,7 +5,7 @@
 {% block title %}{% trans "Register for an account" %}{% endblock %}
 
 {% block content %}
-<form action="{% url 'rest_framework:login' %}" role="form" method="post">
+<form action="" role="form" method="post">
 {% csrf_token %}
     <div class="form-group has-feedback">
         {{ form.username.errors }}
@@ -31,7 +31,7 @@
         <div class="col-xs-8">
             <div class="checkbox icheck">
                 <label>
-                    <input type="checkbox"> 我完全同意 <a href="#">注册协议</a>
+                    <input type="checkbox" checked> 我完全同意 <a href="#">注册协议</a>
                 </label>
             </div>
         </div>
