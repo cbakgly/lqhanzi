@@ -6,9 +6,6 @@ from django.db import models
 from sysadmin.models import User
 import django.utils.timezone as timezone
 
-
-# Create your models here.
-
 variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
 hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 
@@ -221,6 +218,7 @@ class TaskTypes(models.Model):
 
     class Meta:
         db_table = 'lq_task_types'
+
 
 class Tasks(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
