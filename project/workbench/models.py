@@ -9,45 +9,6 @@ import django.utils.timezone as timezone
 
 # Create your models here.
 
-
-class RbacAction(models.Model):
-    code = models.CharField(max_length=100, blank=False)
-
-    class Meta:
-        permissions = (
-            # 帖子权限
-            ("op_post", "Can operate post"),
-            # 初次拆字权限
-            ("op_draft_split", "Can operate draft_split"),
-            # 回查拆字权限
-            ("op_review_split", "Can operate review_split"),
-            # 审查拆字权限
-            ("op_final_split", "Can operate final_split"),
-            # 下面依照上面类推
-            ("op_draft_dedup", "Can operate draft_dedup"),
-            ("op_review_dedup", "Can operate review_dedup"),
-            ("op_final_dedup", "Can operate final_dedup"),
-            ("op_draft_input", "Can operate draft_input"),
-            ("op_review_input", "Can operate review_input"),
-            ("op_final_input", "Can operate final_input"),
-            # 任务操作权限
-            ("op_task", "Can operate task"),
-            # 积分操作权限
-            ("op_credit", "Can operate credit"),
-            # 日记操作权限
-            ("op_diary", "Can operate diary"),
-            # 礼品操作权限
-            ("op_gift", "Can operate gift"),
-            # 论坛操作权限
-            ("op_forum", "Can operate forum"),
-            # 用户操作权限
-            ("op_user", "Can operate user"),
-            # 系统操作权限
-            ("op_system", "Can operate system"),
-        )
-        db_table = 'rbac_action'
-
-
 variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
 hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 
@@ -93,7 +54,7 @@ class VariantsSplit(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'variants_split'
+        db_table = 'lq_variants_split'
 
 
 class VariantsInput(models.Model):
@@ -134,7 +95,7 @@ class VariantsInput(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'variants_input'
+        db_table = 'lq_variants_input'
 
 
 class KoreanVariantsDict(models.Model):
@@ -155,7 +116,7 @@ class KoreanVariantsDict(models.Model):
     emean = models.CharField(u'英文含义', max_length=128, null=True)
 
     class Meta:
-        db_table = 'korean_variants_dict'
+        db_table = 'lq_korean_variants_dict'
 
 
 class HanziRadicals(models.Model):
@@ -163,7 +124,7 @@ class HanziRadicals(models.Model):
     strokes = models.SmallIntegerField(u'笔画数', null=True)
 
     class Meta:
-        db_table = 'hanzi_radicals'
+        db_table = 'lq_hanzi_radicals'
 
 
 class KoreanDupZhengCodes(models.Model):
@@ -172,7 +133,7 @@ class KoreanDupZhengCodes(models.Model):
     page_num = models.SmallIntegerField(u'页码', null=True)
 
     class Meta:
-        db_table = 'korean_dup_zheng_codes'
+        db_table = 'lq_korean_dup_zheng_codes'
 
 
 class KoreanDedup(models.Model):
@@ -189,7 +150,7 @@ class KoreanDedup(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'korean_dedup'
+        db_table = 'lq_korean_dedup'
 
 
 class KoreanDupCharacters(models.Model):
@@ -201,7 +162,7 @@ class KoreanDupCharacters(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'korean_dup_characters'
+        db_table = 'lq_korean_dup_characters'
 
 
 class InterDictDedup(models.Model):
@@ -224,7 +185,7 @@ class InterDictDedup(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'inter_dict_dedup'
+        db_table = 'lq_inter_dict_dedup'
 
 
 business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
@@ -246,7 +207,7 @@ class TaskPackages(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'task_packages'
+        db_table = 'lq_task_packages'
 
     def __unicode__(self):
         return str(self.id)
@@ -258,6 +219,8 @@ class TaskTypes(models.Model):
     credits = models.SmallIntegerField(u'单个任务积分', default=0)
     is_active = models.SmallIntegerField(u'是否启用', default=1)
 
+    class Meta:
+        db_table = 'lq_task_types'
 
 class Tasks(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
@@ -274,7 +237,7 @@ class Tasks(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'tasks'
+        db_table = 'lq_tasks'
 
     def __unicode__(self):
         return str(self.id)
@@ -296,7 +259,7 @@ class CreditsRedeem(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'credits_redeem'
+        db_table = 'lq_credits_redeem'
 
 
 class Diaries(models.Model):
@@ -317,7 +280,7 @@ class Diaries(models.Model):
     class Meta:
         verbose_name = "打卡记录"
         verbose_name_plural = "打卡记录"
-        db_table = 'diaries'
+        db_table = 'lq_diaries'
 
     def __unicode__(self):
         return self.work_brief
@@ -337,7 +300,7 @@ class Credits(models.Model):
     class Meta:
         verbose_name = "积分"
         verbose_name_plural = "积分"
-        db_table = 'credits'
+        db_table = 'lq_credits'
         ordering = ["-credit"]
 
     def __unicode__(self):

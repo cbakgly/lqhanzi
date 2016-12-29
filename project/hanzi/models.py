@@ -39,4 +39,4 @@ class HanziSet(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        db_table = 'hanzi_set'
+        db_table = 'lq_hanzi_set'

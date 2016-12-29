@@ -52,14 +52,14 @@ modify__hanzi_set
 > 参考项目README.md中的说明，做完初始化后，
 > 基本权限就配置完了。
 > 
-> 权限信息请参考 workbench.models.RbacAction
+> 权限信息请参考 sysadmin.models.RbacAction
 > 
 > 默认管理员参考 scripts.init_rbac
 > 
 > 使用方式如下：
 
 ```
-from workbench.models import RbacAction
+from sysadmin.models import RbacAction
 action = RbacAction.objects.get(code="op")
 
 # 查找某个用户的记录, 这里user是sys_admin
