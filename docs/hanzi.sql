@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS variants_split (
   is_checked tinyint DEFAULT 0, -- '是否人工审核'
 
 
-  is_submitted tinyint DEFAULT 0, — '是否入hanzi库'
+  is_submitted tinyint DEFAULT 0, -- '是否入hanzi库'
 
 
   remark varchar(64) DEFAULT NULL, -- '备注'
@@ -315,30 +315,17 @@ CREATE TABLE IF NOT EXISTS diaries (
 
 
 /* 部件集 */
-/* 部件来源：中华字库；GB13000.1规范；旧版龙泉字库（拆字网）；费锦昌；胡敬禹；龙泉字库 */
 CREATE TABLE IF NOT EXISTS hanzi_parts (
   id INT PRIMARY KEY,
-  part_type tinyint DEFAULT NULL, -- '部件类型：文字、图片、文字且图片'
   part_char varchar(8) DEFAULT NULL, -- '文字'
   part_pic_id varchar(32) DEFAULT NULL, -- '图片字编码'
-  value varchar(32) DEFAULT NULL, -- '图片字IDS值'
-  src tinyint DEFAULT NULL, -- '部件来源'
-  src_chs_lib tinyint DEFAULT NULL, -- '中华字库'
-  src_gb13000 tinyint DEFAULT NULL, -- 'GB13000.1规范'
-  src_old_lqhanzi tinyint DEFAULT NULL, -- '旧版龙泉字库'
-  src_feijinchang tinyint DEFAULT NULL, -- '费锦昌'
-  src_hujingyu tinyint DEFAULT NULL, -- '胡敬禹'
-  src_lqhanzi tinyint DEFAULT NULL, -- '龙泉字库'
-  lqhanzi_sn tinyint DEFAULT NULL, -- '龙泉字库序号'
-  is_redundant tinyint DEFAULT NULL, -- '是否多余'
+  part_value varchar(32) DEFAULT NULL, -- '图片字value值'
+  sn tinyint DEFAULT NULL, -- '序号'
   hard_level tinyint DEFAULT NULL, -- '难易等级'
-  frequency int DEFAULT NULL, -- '部件频率'
   is_split_part tinyint DEFAULT NULL, -- '是否拆分部件'
   is_search_part tinyint DEFAULT NULL, -- '是否检索部件'
   replace_parts varchar(64) DEFAULT NULL, -- '代替部件'
   strokes tinyint DEFAULT NULL, -- '笔画数'
   stroke_order varchar(64) DEFAULT NULL, -- '笔顺'
   remark varchar(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL, -- '创建时间'
-  u_t DATATIME NOT NULL -- '修改时间'
 );
