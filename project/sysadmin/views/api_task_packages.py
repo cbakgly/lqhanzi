@@ -32,7 +32,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         user_id = validated_data['user'].id
         biz_type = validated_data['business_type']
         exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_business_status('ongoing'))
-        if exist is not []:
+        if exist:
             raise ValidationError(_("Only one package per type per stage can it be created."))
         task_package = TaskPackages.objects.create(**validated_data)
         task_package.save()
