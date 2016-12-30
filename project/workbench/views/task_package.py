@@ -5,31 +5,37 @@ from django.contrib.auth.decorators import login_required
 from ..models import TaskPackages
 from ..cache_keys import getcachekey_today_completed_task_num
 from ..enums import getenum_business_status
+from .common import get_today_credits
 
 
 @login_required
 def new_task_page(request):
-    return render(request, 'new_task.html')
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'new_task.html', {"today_credits": today_credits})
 
 
 @login_required
 def task_package_input_list(request):
-    return render(request, 'task_package_input_list.html')
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'task_package_input_list.html', {"today_credits": today_credits})
 
 
 @login_required
 def task_package_dedup_list(request):
-    return render(request, 'task_package_dedup_list.html')
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'task_package_dedup_list.html', {"today_credits": today_credits})
 
 
 @login_required
 def task_package_split_list(request):
-    return render(request, 'task_package_split_list.html')
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'task_package_split_list.html', {"today_credits": today_credits})
 
 
 @login_required
 def task_package_complete(request):
-    return render(request, 'task_package_complete.html')
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'task_package_complete.html', {"today_credits": today_credits})
 
 
 @login_required
@@ -44,4 +50,5 @@ def task_package_ongoing(request):
         i['today_num'] = cache.get(getcachekey_today_completed_task_num(user_id, item.business_type), 0)
         task_packages.append(i)
 
-    return render(request, 'task_package_ongoing.html', {'task_packages': task_packages})
+    today_credits = get_today_credits(request.user.id)
+    return render(request, 'task_package_ongoing.html', {'task_packages': task_packages, "today_credits": today_credits})
