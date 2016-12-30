@@ -27,6 +27,11 @@ class OperationSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def to_representation(self, instance):
+        ret = super(OperationSerializer, self).to_representation(instance)
+        ret['logtype_display'] = instance.get_logtype_display()
+        return ret
+
 
 class OperationFilter(filters.FilterSet):
     logtime = filters.DateFromToRangeFilter()

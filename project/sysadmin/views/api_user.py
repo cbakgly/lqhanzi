@@ -31,6 +31,11 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def to_representation(self, instance):
+        ret = super(UserSerializer, self).to_representation(instance)
+        ret['gender_display'] = instance.get_gender_display()
+        return ret
+
 
 class UserFilter(filters.FilterSet):
     class Meta:
