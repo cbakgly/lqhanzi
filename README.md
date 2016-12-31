@@ -6,14 +6,22 @@ Lqhanzi project
 > 需要安装以下软件，建议使用`pip`进行安装，`Django`以及下面的所有`app`都有详细的开发文档，请查看官网．
 
 ```bash
+# OSX环境
+> /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# 安装mysql
+> brew install mysql
+
 # 启动mysql
 > mysql.server start
+# OSX环境结束
+
 
 # 创建数据库lqhanzi
-> mysqladmin create lqhanzi -u root -p
+> mysql -uroot -p
+> CREATE DATABASE lqhanzi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;
 
 # 为lqhanzi 创建用户lq，密码123456
-> mysql -u root -p
 > CREATE USER lq@'localhost' IDENTIFIED BY '123456';
 > GRANT ALL PRIVILEGES ON lqhanzi.* TO lq;
 
@@ -21,6 +29,11 @@ Lqhanzi project
 >git clone http://gitlab.lqdzj.cn/lqdzj/lqhanzi.git
 OR
 >git clone ssh://git@gitlab.lqdzj.cn:9022/lqdzj/lqhanzi.git
+
+# 在gitlab.lqdzj.cn上fork代码到自己的库中，假设名字为abc，以下abc要替换成自己的username
+# push, pull 参考https://segmentfault.com/a/1190000002783245
+> cd lqhanzi
+> git remote add mylib http://gitlab.lqdzj.cn/abc/lqhanzi.git
 
 # 安装Python虚拟环境
 >pip install virtualenv
@@ -109,14 +122,3 @@ lqhanzi/ # 项目代码路径
     ├── tests.py
     └── views.py
 ```
-##同步主库信息
-`
-    git remote -v
-`
-
-origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (fetch)
-origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (push)
-
-如没有upstream，执行下面命令
-
-git remote add upstream ssh://git@gitlab.lqdzj.cn:9022/lqdzj/lqhanzi.git
