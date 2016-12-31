@@ -230,6 +230,7 @@ class RegistrationProfile(models.Model):
     objects = RegistrationManager()
 
     class Meta:
+        db_table = 'registration_profile'
         verbose_name = _('registration profile')
         verbose_name_plural = _('registration profiles')
 

@@ -12,13 +12,10 @@ hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 
 class VariantsSplit(models.Model):
     source = models.SmallIntegerField(u'来源', null=True, blank=True)
-    hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
     hanzi_char = models.CharField(u'文字', null=True, blank=True, max_length=8)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, blank=True, max_length=32)
-    variant_type_choices = (
-        (0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'),
-        (8, '其他不入库类型'), (9, '其他入库类型'))
+
     variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True, blank=True)
     std_hanzi = models.CharField(u'所属正字', null=True, blank=True, max_length=64)
     as_std_hanzi = models.CharField(u'兼正字号', null=True, blank=True, max_length=32)
@@ -229,34 +226,19 @@ class TaskTypes(models.Model):
 
 class Tasks(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
-    split_business_id = models.ForeignKey(VariantsSplit, models.SET_NULL, related_name="split_task", null=True, blank=True)
-    input_business_id = models.ForeignKey(VariantsInput, models.SET_NULL, related_name="input_task", null=True, blank=True)
-    korean_dedup_business_id = models.ForeignKey(KoreanDedup, models.SET_NULL, related_name="korean_dedup_task", null=True, blank=True)
-    idedup_business_id = models.ForeignKey(InterDictDedup, models.SET_NULL, related_name="inter_dedup_task", null=True, blank=True)
-    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True,
-                                     null=True)
+    variant_split = models.ForeignKey(VariantsSplit, models.SET_NULL, related_name="split_task", null=True, blank=True)
+    variant_input = models.ForeignKey(VariantsInput, models.SET_NULL, related_name="input_task", null=True, blank=True)
+    korean_dedup = models.ForeignKey(KoreanDedup, models.SET_NULL, related_name="korean_dedup_task", null=True, blank=True)
+    interdict_dedup = models.ForeignKey(InterDictDedup, models.SET_NULL, related_name="inter_dedup_task", null=True, blank=True)
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
 
-    business_type_choices = (
-        (0, u'录入'),
-        (1, u'去重'),
-        (2, u'拆字'),
-    )
-
-    business_stage_choices = (
-        (0, u'初次'),
-        (1, u'回查'),
-        (2, u'审查')
-    )
-
-    status_choices = (
-        (0, u'进行中'),
-        (1, u'已完成')
-    )
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=status_choices, null=True)
+
     credits = models.SmallIntegerField(u'积分', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
+
     assigned_at = models.DateTimeField(u'分配时间', null=True, default=timezone.now)
     completed_at = models.DateTimeField(u'完成时间', null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
@@ -266,16 +248,11 @@ class Tasks(models.Model):
         db_table = 'lq_tasks'
 
     def __unicode__(self):
-        return "#"+self.business_type_choices[self.business_type][1] +\
-               self.business_stage_choices[self.business_stage][1] + str(self.id)
+        return "#"+self.business_type_choices[self.business_type][1] + self.business_stage_choices[self.business_stage][1] + str(self.id)
 
 
 class CreditsRedeem(models.Model):
-    redeem_status_choices = (
-        (0, '申请中'),
-        (1, '已受理'),
-        (2, '已完成')
-    )
+    redeem_status_choices = ((0, '申请中'), (1, '已受理'), (2, '已完成'))
 
     applied_by = models.ForeignKey(User, verbose_name="申请人", related_name="applier")
     accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor")
@@ -289,7 +266,6 @@ class CreditsRedeem(models.Model):
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
-    created = models.CharField(max_length=45)
 
     class Meta:
         db_table = 'lq_credits_redeem'
