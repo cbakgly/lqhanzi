@@ -8,54 +8,55 @@
 ### 1 获取时间线记录
 *Method: GET*
 
-`/api/v1/workbench/diaries?user_id=&date=&day_scope=`
+`/api/workbench/diaries/?user=&c_t_0=&c_t_1=
 
 *Parameters*
 
 | Field | Chinese |
 |:------|:--------|
-| user_id| 指定用户ID |
-| date | 指定月份 |
-| day_scope | 日期范围  例1,3 |
-
+| user| 指定用户ID |
+| c_t_0 | 起始日期 |
+| c_t_1 | 结束日期 |
+示例：/api/workbench/diaries/?user=2&c_t_0=2015-11-04&c_t_1=2015-11-05
 *Response 200*
 
 ```json
 成功 Code 200
 {
-	"results": [
-		{
-			"id": 12,
-			"user_id": 10,
-			"tag": "心情故事",
-			"work_types": ["去重", "拆字"],
-			"work_brief":"",
-			"content": "",
-			"c_t": "",
-			"u_t": ""
-		},
-		{
-			"id": 2,
-			"user_id": 100,
-			"tag": "心情故事",
-			"work_types": ["去重", "拆字"],
-			"work_brief":"",
-			"content": "",
-			"c_t": "",
-			"u_t": ""
-		},
-		{
-			"id": 3,
-			"user_id": 50,
-			"tag": "心情故事",
-			"work_types": ["去重", "拆字"],
-			"work_brief":"",
-			"content": "",
-			"c_t": "",
-			"u_t": ""
-		}
-	]
+    "models": [
+        {
+            "id": 1,
+            "tag": 2,
+            "work_types": "拆字 录入",
+            "work_brief": "拆子100个，录入100个",
+            "content": "今天天气不错，干活也不错，感恩三宝加持！",
+            "c_t": "2015-11-04T02:34:00Z",
+            "u_t": "2016-12-25T08:58:49.474569Z",
+            "user": 2
+        }
+    ],
+    "html_context": {
+        "previous_url": null,
+        "page_links": [
+            [
+                "http://localhost:8000/api/workbench/diaries/",
+                1,
+                true,
+                false
+            ]
+        ],
+        "next_url": null
+    }
 }
+注："html_context" 可用于分页，此后所有api都有此部分，不再赘述
+previous_url:上一页链接
+page_links:所有页面链接
+    url:页面链接
+    page:页码
+    is_active:是否为当前页
+    is_break:是否最后一页
+next_url:下一页链接
+
 
 失败 Code >= 400
 {
@@ -64,16 +65,16 @@
 ```
 
 ### 2 提交日记
-*Method: PUT*
+*Method: POST*
 
-`/api/v1/workbench/diaries?user_id=&tag=&content=`
+`/api/v1/workbench/diaries?&tag=&content=`
 
 *Parameters*
 
-| Field | Chinese |
-|:------|:--------|
-| user_id| 指定用户ID |
-| tag | 标签 |
+| Field | Chinese   |
+|:------|:----------|
+| user  | 指定用户ID |
+| tag   | 标签       |
 | content | 日记内容 |
 
 *Response 200*
@@ -81,14 +82,14 @@
 ```json
 成功 Code 200
 {
-	"id": 12,
-	"user_id": 10,
-	"tag": "心情故事",
-	"work_types": ["去重", "拆字"],
-	"work_brief":"",
-	"content": "",
-	"c_t": "",
-	"u_t": ""
+	"id": 30,
+    "tag": 0,
+    "work_types": "拆字",
+    "work_brief": "拆字3个 ",
+    "content": "有一个天，一个老外来到了龙泉寺，他获得了一个银杏果，他觉得很好吃，所以他每年秋天都会来，直到他遇到了学诚法师，他就留在了龙泉寺。",
+    "c_t": "2016-12-30T07:57:11Z",
+    "u_t": "2016-12-30T07:57:10.878680Z",
+    "user": 2
 }
 
 失败 Code >= 400
@@ -110,17 +111,18 @@
 *Method: GET*
 
 
-`/api/v1/workbench/credits_ranking?sort=&user_name=&page=&page_size=`
+`/api/workbench/credits/?sort__id=1&user__username=wangwei&page=&page_size=`
 
 *Parameters*
 
 | Field | Chinese |
 |:------|:--------|
-| sort  | 积分榜类型 0: 总积分(default)；1: 拆字积分；2: 去重积分； 3: 录入积分； 4互助积分|
-| user_name | 指定用户  空值：排名从1开始（default）；"name"：积分榜跳到指定用户开始的5个排名|
+| sort__id  | 积分榜类型 1: 总积分(default)；2: 拆字积分；3: 去重积分； 4: 录入积分； 5:互助积分|
+| user__username | 指定用户  空值：排名从1开始（default）；"name"：积分榜跳到指定用户开始的5个排名|
 | page_size | 分页大小（default 5） |
 | page | 页序号，从1开始（default） |
 
+示例：/api/workbench/credits/?sort__id=1&user__username=wangwei
 *Response 200*
 
 ```json

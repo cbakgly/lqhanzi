@@ -2,10 +2,14 @@
 from __future__ import unicode_literals
 from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework.decorators import list_route
+from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-import rest_framework_filters as filters
+# import rest_framework_filters as filters
+import django_filters as filters
 from workbench.models import Tasks
+from workbench.serializer import VariantsSplitSerializer
 
 
 # Task Packages management
@@ -35,6 +39,7 @@ class TasksSerializer(serializers.ModelSerializer):
         ret['task_status_display'] = instance.get_task_status_display()
         return ret
 
+
 class TasksFilter(filters.FilterSet):
     assigned_at = filters.DateFromToRangeFilter()
     completed_at = filters.DateFromToRangeFilter()
@@ -43,13 +48,20 @@ class TasksFilter(filters.FilterSet):
 
     class Meta:
         model = Tasks
-        fields = '__all__'
+        fields = ['split_business_id__hanzi_char']
 
 
 class TasksViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
-
+    filter_backends = (filters.rest_framework.DjangoFilterBackend,)
     serializer_class = TasksSerializer
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
+
+    @list_route()
+    def split_tasks(self, request):
+        split_task = Tasks(pk=1).split_task.all()
+        serializer = VariantsSplitSerializer(split_task, many=True)
+
+        return Response(serializer.data)

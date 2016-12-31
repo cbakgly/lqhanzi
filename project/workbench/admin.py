@@ -1,7 +1,8 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
 
-from models import Diaries, Credits
+from models import Diaries, Credits, VariantsSplit
+# VariantsInput, KoreanDedup, InterDictDedup
 from models import TaskPackages, Tasks, CreditsRedeem
 # Register your models here.
 
@@ -20,9 +21,39 @@ class TaskPackagesAdmin(admin.ModelAdmin):
               "c_t")
 
 
+class TasksInline(admin.TabularInline):
+    model = Tasks
+
+
 class TasksAdmin(admin.ModelAdmin):
-    fields = ("user", "business_id", "task_package", "task_status", "credits",
-              "remark", "assigned_at", "completed_at", "c_t", "business_type", "business_stage")
+    fields = ("user",
+              "split_business_id",
+              "input_business_id",
+              "korean_dedup_business_id",
+              "idedup_business_id",
+              "task_package",
+              "business_type",
+              "business_stage",
+              "task_status",
+              "credits",
+              "remark",
+              "assigned_at",
+              "completed_at",
+              "c_t"
+              )
+
+
+class VariantsSplitAdmin(admin.ModelAdmin):
+    inlines = [TasksInline]
+    fieldsets = (
+        ['Main', {
+            'fields': ("source", "hanzi_type", "hanzi_char"),
+        }],
+    ['Advance', {
+        'classes': ('collapse',),
+        'fields': ("skip_num_draft", "init_split_draft", "other_init_split_draft"),
+    }]
+    )
 
 
 class CreditsRedeemAdmin(admin.ModelAdmin):
@@ -34,4 +65,5 @@ admin.site.register(Diaries, DiaryAdmin)
 admin.site.register(Credits, CreditsAdmin)
 admin.site.register(TaskPackages, TaskPackagesAdmin)
 admin.site.register(Tasks, TasksAdmin)
+admin.site.register(VariantsSplit, VariantsSplitAdmin)
 admin.site.register(CreditsRedeem, CreditsRedeemAdmin)

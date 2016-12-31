@@ -8,11 +8,11 @@ class DiaryFilter(filters.FilterSet):
     """
     根据用户id和时间来筛选
     """
-    c_t = filters.DateTimeFromToRangeFilter()
+    c_t = filters.DateFromToRangeFilter()
 
     class Meta:
         model = models.Diaries
-        fields = ["user", "c_t"]
+        fields = ["user__username", "c_t"]
 
 
 class CreditFilter(filters.FilterSet):
@@ -32,4 +32,14 @@ class RedeemFilter(filters.FilterSet):
 
     class Meta:
         model = models.CreditsRedeem
-        fields = ["applied_by", "accepted_by", "completed_by", "accepted_at", "completed_at", "status"]
+        fields = ["applied_by__username", "status"]
+
+
+class VariantsSplitFilter(filters.FilterSet):
+    """
+    异体字拆字过滤器
+    """
+
+    class Meta:
+        model = models.VariantsSplit
+        fields = ("__all__")

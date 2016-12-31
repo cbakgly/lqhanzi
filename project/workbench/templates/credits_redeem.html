@@ -1,172 +1,221 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-  <div class="row">
-      <div class="col-xs-12">
+<div class="row">
+    <div class="col-xs-12">
         <div class="box">
-          <!-- /.box-header -->
-          <div class="box-header">
-            <div class="box-header-inner">
-              <h3 class="box-title">我的兑换:</h3>
-              <div class="ser-bd">
-                <div class="z-ser">
-                  <div class="z-myScore">
-                    <span class="z-total">总积分：<b>3000</b></span>
-                    <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
-                    <a class="exchange" href="javascript:;">已兑换：<b>800</b></a>
-                  </div>
+            <!-- /.box-header -->
+            <div class="box-header">
+                <div class="box-header-inner">
+                    <h3 class="box-title">我的兑换:</h3>
+                    <div class="ser-bd">
+                        <div class="z-ser">
+                            <div class="z-myScore">
+                                <span class="z-total">总积分：<b>3000</b></span>
+                                <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
+                                <a class="exchange" href="javascript:;">已兑换：<b>800</b></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="box-body table-responsive">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>奖品</th>
+                            <th>所用分值</th>
+                            <th>状态</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>2016/10/1 14:10:19</td>
+                            <td>感悟人生</td>
+                            <td>200</td>
+                            <td>已领取</td>
+                            <td>希望法师题字</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2016/10/1 14:10:19</td>
+                            <td>感悟人生</td>
+                            <td>200</td>
+                            <td>已受理</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2016/10/9 14:10:19</td>
+                            <td>感悟人生</td>
+                            <td>500</td>
+                            <td>申请中</td>
+                            <td></td>
+                            <td><a class="blue" href="javascript:;">删除</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul id="app" class="pagination" style="margin: 5px 0 10px 0">
+                        {% if previous_url %}
+                        <li>
+                            <a href="{{ previous_url }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for page_link in page_links %}
+                        {% if page_link.is_break %}
+                        <li class="disabled">
+                            <a href="#"><span aria-hidden="true">&hellip;</span></a>
+                        </li>
+                        {% else %}
+                        {% if page_link.is_active %}
+                        <li class="active">
+                            <a href="{{ page_link.url }}">{{ page_link.number }}</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ page_link.url }}">{{ page_link.number }}</a>
+                        </li>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if next_url %}
+                        <li>
+                            <a href="{{ next_url }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div><!-- /.box-body -->
             </div>
-            <div class="box-body table-responsive">
-              <table id="example1" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>时间</th>
-                  <th>奖品</th>
-                  <th>所用分值</th>
-                  <th>状态</th>
-                  <th>备注</th>
-                  <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>2016/10/1 14:10:19</td>
-                  <td>感悟人生</td>
-                  <td>200</td>
-                  <td>已领取</td>
-                  <td>希望法师题字</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>2016/10/1 14:10:19</td>
-                  <td>感悟人生</td>
-                  <td>200</td>
-                  <td>已受理</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>2016/10/9 14:10:19</td>
-                  <td>感悟人生</td>
-                  <td>500</td>
-                  <td>申请中</td>
-                  <td></td>
-                  <td><a class="blue" href="javascript:;">删除</a></td>
-                </tr>
-                </tbody>
-              </table>
-            </div><!-- /.box-body -->
-          </div>
         </div><!-- /.box -->
-      </div>
-      <div class="exchange-infos">
-        <div class="z1-box-inner box">
-          <div class="z1-info">
-            <h3 class="box-title">积分兑换:</h3>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/1.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">感悟人生</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/2.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">好好说话</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/3.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">苦乐人生</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/4.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">苦乐人生</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/5.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">善的力量</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/6.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">认识人生</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/7.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">责任担当</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/8.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">和合愿景</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/9.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">烦恼都是自找的</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-xs-6">
-            <div class="z-exchangeItem">
-              <img src="../img/10.jpg" alt="">
-              <div class="z-txt">
-                <p class="z-name">放下是舍更是得</p>
-                <p class="z-needScore">兑换分值:<span>1000</span>分</p>
-                <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+    <div class="exchange-infos">
+        <div class="z1-box-inner box">
+            <div class="z1-info">
+                <h3 class="box-title">积分兑换:</h3>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/1.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">感悟人生</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/2.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">好好说话</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/3.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">苦乐人生</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/4.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">苦乐人生</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/5.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">善的力量</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/6.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">认识人生</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/7.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">责任担当</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/8.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">和合愿景</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/9.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">烦恼都是自找的</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="z-exchangeItem">
+                    <img src="../img/10.jpg" alt="">
+                    <div class="z-txt">
+                        <p class="z-name">放下是舍更是得</p>
+                        <p class="z-needScore">兑换分值:<span>1000</span>分</p>
+                        <button class="btn btn-primary btn-sm btn-mt">申请兑换</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% load staticfiles %}
+<script src="{% static 'js/workbench/redeem.js' %}" type="text/javascript"></script>
 {% endblock %}

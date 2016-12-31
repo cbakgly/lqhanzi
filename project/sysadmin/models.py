@@ -17,6 +17,9 @@ class User(AbstractUser, GuardianUserMixin):
     class Meta:
         db_table = 'user'
 
+    def __unicode__(self):
+        return self.username
+
 
 # Operation log table
 class Operation(models.Model):

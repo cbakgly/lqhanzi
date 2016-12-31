@@ -44,4 +44,3 @@ class HanziSet(models.Model):
 
     class Meta:
         db_table = 'lq_hanzi_set'
-
