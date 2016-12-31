@@ -87,22 +87,23 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
+          <li class="dropdown message">
+            <span>欢迎您使用龙泉字库用户工作台!</span>
+          </li>
           <li class="dropdown messages-menu">
-            <a href="javascript:;" class="dropdown-toggle">
-              <i class="icon-score3"></i><span class="label label-danger">{{ today_credits|default:0 }}</span>
+            <a href="#" class="dropdown-toggle">
+              <i class="icon-score"></i><span class="label label-success">4</span>
             </a>
           </li>
-          <!-- /.messages-menu -->
           <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
+          <!-- <li class="dropdown tasks-menu">
             <a href="{% url 'm2.credits-ranking' %}" class="dropdown-toggle">
               <span class="sort">积分排行</span>
             </a>
-          </li>
+          </li> -->
           <li class="dropdown tasks-menu">
-            <a href="{% url 'm2.diaries' %}" class="dropdown-toggle">
-              <span class="sign">打卡</span>
+            <a href="pages/scoreSort.html" class="dropdown-toggle">
+              <i class="icon-clock"></i><span class="label label-danger circle"> </span>
             </a>
           </li>
           <!-- User Account Menu -->

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'myFont';
-  src:  url('../fonts/myFont.eot?50weje');
-  src:  url('../fonts/myFont.eot?50weje#iefix') format('embedded-opentype'),
-    url('../fonts/myFont.ttf?50weje') format('truetype'),
-    url('../fonts/myFont.woff?50weje') format('woff'),
-    url('../fonts/myFont.svg?50weje#myFont') format('svg');
+  src:  url('../fonts/myFont.eot?yw3ud9');
+  src:  url('../fonts/myFont.eot?yw3ud9#iefix') format('embedded-opentype'),
+  url('../fonts/myFont.ttf?yw3ud9') format('truetype'),
+  url('../fonts/myFont.woff?yw3ud9') format('woff'),
+  url('../fonts/myFont.svg?yw3ud9#myFont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -18,61 +18,65 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
+  display: inline-block;
+  width:15px;
+  font-size:14px;
+  position: relative;
+  top:2px;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-add:before {
+.icon-help:before {
   content: "\e900";
 }
-.icon-back:before {
+.icon-score:before {
   content: "\e901";
 }
-.icon-comment:before {
+.icon-all:before {
   content: "\e902";
 }
-.icon-del:before {
+.icon-task:before {
   content: "\e903";
 }
-.icon-down-arrow:before {
+.icon-back:before {
   content: "\e904";
 }
-.icon-edit:before {
+.icon-clock:before {
   content: "\e905";
 }
-.icon-forum:before {
+.icon-comments:before {
   content: "\e906";
 }
-.icon-help:before {
+.icon-del:before {
   content: "\e907";
 }
-.icon-help-l:before {
+.icon-down-arrow:before {
   content: "\e908";
 }
-.icon-help-s:before {
+.icon-edit:before {
   content: "\e909";
 }
-.icon-save:before {
+.icon-forum:before {
   content: "\e90a";
 }
-.icon-score1:before {
+.icon-left:before {
   content: "\e90b";
 }
-.icon-score2:before {
+.icon-like:before {
   content: "\e90c";
 }
-.icon-score3:before {
+.icon-query:before {
   content: "\e90d";
 }
-.icon-search:before {
+.icon-right:before {
   content: "\e90e";
 }
-.icon-task:before {
+.icon-search:before {
   content: "\e90f";
 }
-.icon-toggle:before {
+.icon-time:before {
   content: "\e910";
 }
 .icon-top:before {
@@ -81,7 +85,10 @@
 .icon-up-arrow:before {
   content: "\e912";
 }
-.icon-user:before {
+.icon-zomIn:before {
   content: "\e913";
+}
+.icon-zoomOut:before {
+  content: "\e914";
 }
 
