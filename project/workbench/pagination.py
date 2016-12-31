@@ -45,5 +45,6 @@ class NumberPagination(pagination.PageNumberPagination):
             'models': data,
         })
 
+
 class LimitOffsetPagination(pagination.LimitOffsetPagination):
     pass

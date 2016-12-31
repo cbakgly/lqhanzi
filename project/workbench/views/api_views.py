@@ -23,6 +23,7 @@ class DiaryViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
+
 class CreditViewSet(viewsets.ModelViewSet):
     """
     积分

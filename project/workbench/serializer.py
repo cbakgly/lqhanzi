@@ -3,7 +3,7 @@ import datetime
 from django.utils.timezone import now, timedelta
 from rest_framework import serializers
 
-from models import Diaries, Credits, CreditsRedeem, VariantsSplit, Tasks
+from models import Diaries, Credits, CreditsRedeem, VariantsSplit
 from sysadmin.models import User
 
 
@@ -11,7 +11,6 @@ class DiarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Diaries
         fields = ("__all__")
-        #exclude = ("work_brief", "work_types", "c_t", "user")
 
     def create(self, validated_data):
         user = self.context['request'].user

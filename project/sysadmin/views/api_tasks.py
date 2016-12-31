@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.decorators import list_route
-from  rest_framework.response import Response
+from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-#import rest_framework_filters as filters
+# import rest_framework_filters as filters
 import django_filters as filters
 from workbench.models import Tasks
 from workbench.serializer import VariantsSplitSerializer
@@ -38,6 +38,7 @@ class TasksSerializer(serializers.ModelSerializer):
         ret['business_stage_display'] = instance.get_business_stage_display()
         ret['task_status_display'] = instance.get_task_status_display()
         return ret
+
 
 class TasksFilter(filters.FilterSet):
     assigned_at = filters.DateFromToRangeFilter()

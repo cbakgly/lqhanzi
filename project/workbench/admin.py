@@ -1,7 +1,8 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
 
-from models import Diaries, Credits, VariantsSplit, VariantsInput, KoreanDedup, InterDictDedup
+from models import Diaries, Credits, VariantsSplit
+# VariantsInput, KoreanDedup, InterDictDedup
 from models import TaskPackages, Tasks, CreditsRedeem
 # Register your models here.
 
@@ -25,11 +26,21 @@ class TasksInline(admin.TabularInline):
 
 
 class TasksAdmin(admin.ModelAdmin):
-    fields = ("user", "split_business_id", "input_business_id",
-              "korean_dedup_business_id", "idedup_business_id",
-            "task_package", "business_type", "business_stage",
-              "task_status", "credits",
-              "remark", "assigned_at", "completed_at", "c_t")
+    fields = ("user",
+              "split_business_id",
+              "input_business_id",
+              "korean_dedup_business_id",
+              "idedup_business_id",
+              "task_package",
+              "business_type",
+              "business_stage",
+              "task_status",
+              "credits",
+              "remark",
+              "assigned_at",
+              "completed_at",
+              "c_t"
+              )
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
@@ -48,8 +59,6 @@ class VariantsSplitAdmin(admin.ModelAdmin):
 class CreditsRedeemAdmin(admin.ModelAdmin):
     list_display = ("applied_by", "accepted_by", "c_t", "completed_by", "accepted_at", "completed_at",
                     "reward_name", "cost_credits", "status", "remark")
-
-
 
 
 admin.site.register(Diaries, DiaryAdmin)
