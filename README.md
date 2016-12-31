@@ -109,3 +109,14 @@ lqhanzi/ # 项目代码路径
     ├── tests.py
     └── views.py
 ```
+##同步主库信息
+`
+    git remote -v
+`
+
+origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (fetch)
+origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (push)
+
+如没有upstream，执行下面命令
+
+git remote add upstream ssh://git@gitlab.lqdzj.cn:9022/lqdzj/lqhanzi.git
