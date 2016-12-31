@@ -84,3 +84,24 @@ $(function(){
         });
     });
 });
+// 筛选：更多多选项
+$(function(){
+    var flag=true;
+    $(".expand-ft .more").click(function(){
+        if(flag){
+            $(".expand-items").css({
+                "height":"auto",
+                "overflow":"auto"
+            });
+            $(this).find('span').text('收起').siblings('i').removeClass('icon-down-arrow').addClass('icon-up-arrow');
+            flag = false;
+        }else  {
+            $(".expand-items").css({
+                "height":"36px",
+                "overflow":"hidden"
+            });
+            $(this).find('span').text('更多').siblings('i').removeClass('icon-up-arrow').addClass('icon-down-arrow');
+            flag = true;
+        }
+    });
+});

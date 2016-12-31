@@ -10,7 +10,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-blue">
             <!-- /.box-header -->
             <div class="box-header">
               <div class="box-header-inner">
@@ -67,14 +67,42 @@
                     </div>
                   </div>
                   <div class="btns">
-                    <button class="btn btn-primary btn-sm z-btn-sm">搜索</button>
+                    <button class="btn btn-blue btn-sm z-btn-sm">搜索</button>
                     <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
                     <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="sel-more"><a class="sel-more-btn show-layer" data-show-layer="hw-layer" role="button">+ 多选</a></div>
+            <!-- 筛选 -->
+            <div class="expand-mode multi-mode">
+              <div class="expand-hd">
+                <p><span>筛选：</span></p>
+              </div>
+              <div class="expand-bd">
+                  <div class="expand-items">
+                    <div class="items-inner">
+                      <label><input type="checkbox">高丽图片字</label>
+                      <label><input type="checkbox" checked="checked">重复台湾字/初次</label>
+                      <label><input type="checkbox" checked="checked">重复台湾字/初次</label>
+                      <label><input type="checkbox">重复台湾字/初次</label>
+                      <label><input type="checkbox" checked="checked">初次=回查</label>
+                      <label><input type="checkbox" checked="checked">回查=审查</label>
+                      <label><input type="checkbox">是否审核</label>
+                      <label><input type="checkbox" checked="checked">是否入库</label>
+                      <label><input type="checkbox" checked="checked">更新时段</label>
+                    </div>
+                    <div class="btns">
+                      <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
+                      <button class="btn btn-default btn-sm z-btn-sm z-reset">取消</button>
+                    </div>
+                  </div>
+              </div>
+              <div class="expand-ft">
+                <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
+              </div>
+            </div>
+            <!-- 筛选 -->
             <div class="box-body table-responsive z-table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -161,29 +189,4 @@
         </div>
         <!-- /.col -->
       </div>
-      <!--遮罩层-->
-      <div class="hw-overlay" id="hw-layer">
-        <div class="hw-layer-wrap">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <div class="checkboxs">
-                <label><input type="checkbox">高丽图片字</label>
-                <label><input type="checkbox" checked="checked">重复台湾字/初次</label>
-                <label><input type="checkbox" checked="checked">重复台湾字/初次</label>
-                <label><input type="checkbox">重复台湾字/初次</label>
-                <label><input type="checkbox" checked="checked">初次=回查</label>
-                <label><input type="checkbox" checked="checked">回查=审查</label>
-                <label><input type="checkbox">是否审核</label>
-                <label><input type="checkbox" checked="checked">是否入库</label>
-                <label><input type="checkbox" checked="checked">更新时段</label>
-              </div>
-              <div class="btns">
-                <button class="btn btn-primary btn-sm z-btn-sm hwLayer-ok">确定</button>
-                <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--/.遮罩层-->
 {% endblock %}
