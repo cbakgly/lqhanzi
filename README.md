@@ -37,7 +37,7 @@ OR
 # 创建表 (凡是数据表更新过，都需要跑一下以下的migration命令)
 > . bin/activate
 (lqhanzi)> cd lqhanzi/project
-(lqhanzi)> ./manage.py makemigration
+(lqhanzi)> ./manage.py makemigrations
 (lqhanzi)> ./manage.py migrate
 
 # 初始化数据
@@ -109,3 +109,14 @@ lqhanzi/ # 项目代码路径
     ├── tests.py
     └── views.py
 ```
+##同步主库信息
+`
+    git remote -v
+`
+
+origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (fetch)
+origin	ssh://git@gitlab.lqdzj.cn:9022/yuwangjun/lqhanzi.git (push)
+
+如没有upstream，执行下面命令
+
+git remote add upstream ssh://git@gitlab.lqdzj.cn:9022/lqdzj/lqhanzi.git

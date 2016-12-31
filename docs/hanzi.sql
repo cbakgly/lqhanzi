@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS hanzi_set (
   stroke_serial varchar(128) DEFAULT NULL, -- '部件序列'
 
   remark varchar(128) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS variants_split (
 
 
   remark varchar(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 /* 异体字录入业务表 */
@@ -147,8 +147,8 @@ CREATE TABLE IF NOT EXISTS variants_input (
 
 
   remark varchar(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 /* 高丽异体字字典 */
@@ -204,8 +204,8 @@ CREATE TABLE IF NOT EXISTS korean_dedup (
   korean_dup_hanzi varchar(32) DEFAULT NULL, -- '异体字字典内部重复编码'
 
   remark VARCHAR(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 
@@ -216,8 +216,8 @@ CREATE TABLE IF NOT EXISTS korean_dup_characters (
   unicode VARCHAR(32) NOT NULL,  -- '与字头字形相同/相近的Unicode'
   relation SMALLINT DEFAULT NULL,  -- '二者关系：形码均相同，形似码相同，形同码不同，无相同字形'
   remark VARCHAR(128) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 
@@ -246,8 +246,8 @@ CREATE TABLE IF NOT EXISTS inter_dict_dedup (
   is_submitted tinyint DEFAULT 0, — '是否入hanzi库'
 
   remark varchar(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL,
-  u_t DATATIME NOT NULL
+  c_t DATETIME NOT NULL,
+  u_t DATETIME NOT NULL
 );
 
 /* 任务池 */
@@ -262,10 +262,10 @@ CREATE TABLE IF NOT EXISTS tasks (
   task_status tinyint DEFAULT NULL, -- '任务状态'
   credits SMALLINT DEFAULT NULL, -- '积分'
   remark VARCHAR(128) DEFAULT NULL, -- '备注'
-  assigned_at INT NOT NULL, -- '分配时间'
-  completed_at INT NOT NULL,  -- '完成时间'
-  c_t DATATIME NOT NULL, -- '创建时间'
-  u_t DATATIME NOT NULL -- '修改时间'
+  assigned_at DATETIME DEFAULT NULL, -- '分配时间'
+  completed_at DATETIME DEFAULT NULL,  -- '完成时间'
+  c_t DATETIME NOT NULL, -- '创建时间'
+  u_t DATETIME NOT NULL -- '修改时间'
 );
 
 /* 任务包 */
@@ -279,9 +279,9 @@ CREATE TABLE IF NOT EXISTS task_packages (
   daily_plan smallint DEFAULT NULL, -- '日计划工作量'
   due_date INT DEFAULT NULL, -- '预计完成时间'
   completed_num smallint DEFAULT NULL, -- '已完成数量'
-  completed_at INT NOT NULL,  -- '完成时间'
-  c_t DATATIME NOT NULL, -- '领取时间'
-  u_t DATATIME NOT NULL -- '修改时间'
+  completed_at DATETIME DEFAULT NULL,  -- '完成时间'
+  c_t DATETIME NOT NULL, -- '领取时间'
+  u_t DATETIME NOT NULL -- '修改时间'
 );
 
 /* 积分兑换表 */
@@ -290,14 +290,14 @@ CREATE TABLE IF NOT EXISTS credits_redeem (
   applied_by int DEFAULT NULL, -- '申请人的用户id'
   accepted_by int DEFAULT NULL, -- '受理人的用户id'
   completed_by int DEFAULT NULL, -- '完成人的用户id'
-  accepted_at INT DEFAULT NULL, -- '受理时间'
-  completed_at INT DEFAULT NULL,  -- '完成时间'
+  accepted_at DATETIME DEFAULT NULL, -- '受理时间'
+  completed_at DATETIME DEFAULT NULL,  -- '完成时间'
   reward_name varchar(64) DEFAULT NULL, -- '奖品名称'
   cost_credits int DEFAULT NULL, -- '所用积分'
   status tinyint DEFAULT NULL, -- '状态：申请中，已受理，已完成'
   remark varchar(64) DEFAULT NULL, -- '备注'
-  c_t DATATIME NOT NULL, -- '申请时间'
-  u_t DATATIME NOT NULL -- '修改时间'
+  c_t DATETIME NOT NULL, -- '申请时间'
+  u_t DATETIME NOT NULL -- '修改时间'
 );
 
 /* 日记 */
@@ -309,8 +309,8 @@ CREATE TABLE IF NOT EXISTS diaries (
   work_types varchar(64) DEFAULT NULL, -- '工作类型'
   work_brief varchar(512) DEFAULT NULL, -- '工作摘要，如：【拆字x个，去重y页，录入z个。】'
   content text DEFAULT NULL, -- '打卡日记'
-  c_t DATATIME NOT NULL, -- '创建时间'
-  u_t DATATIME NOT NULL -- '修改时间'
+  c_t DATETIME NOT NULL, -- '创建时间'
+  u_t DATETIME NOT NULL -- '修改时间'
 );
 
 

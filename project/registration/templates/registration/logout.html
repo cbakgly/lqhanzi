@@ -4,5 +4,13 @@
 {% block title %}{% trans "Logged out" %}{% endblock %}
 
 {% block content %}
-<p>{% trans "Successfully logged out" %}.</p>
+    <div class="login-box-body">
+        <p class="login-box-msg">{% trans "Successfully logged out" %}.</p>
+
+        <div class="social-auth-links text-center">
+            <a href="#" class="btn btn-block btn-danger">
+            {% trans "Logged out" %}</a>
+        </div>
+        <!-- /.social-auth-links -->
+    </div>
 {% endblock %}

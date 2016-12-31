@@ -1,0 +1,21 @@
+{% extends "registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Activation email sent" %}{% endblock %}
+
+{% block content %}
+    <div class="login-box-body">
+        <p class="login-box-msg">{% trans "Successfully logged out" %}~</p>
+
+        <div class="social-auth-links text-center">
+            <a href="#" class="btn btn-block btn-danger">
+            {% trans "Please check your email to complete the registration process." %}    返回首页</a>
+        </div>
+        <!-- /.social-auth-links -->
+    </div>
+    <!-- /.login-box-body -->
+{% endblock %}
+
+{% comment %}
+**registration_form.html**
+{% endcomment %}
