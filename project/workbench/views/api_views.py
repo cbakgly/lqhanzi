@@ -25,6 +25,7 @@ class DiaryViewSet(viewsets.ModelViewSet):
 
     ordering = ('c_t')
 
+
 class CreditViewSet(viewsets.ModelViewSet):
     """
     积分
@@ -43,6 +44,7 @@ class CreditViewSet(viewsets.ModelViewSet):
         serializer = CreditSerializer(user_credits, many=True)
 
         return Response(serializer.data)
+
 
 def index(request):
     return render(request, 'index.html')

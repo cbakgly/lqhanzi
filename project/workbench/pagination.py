@@ -48,4 +48,3 @@ class NumberPagination(pagination.PageNumberPagination):
 
 class LimitOffsetPagination(pagination.LimitOffsetPagination):
     default_limit = 5
-
