@@ -47,6 +47,12 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def to_representation(self, instance):
+        ret = super(TaskPackagesSerializer, self).to_representation(instance)
+        ret['business_type_display'] = instance.get_business_type_display()
+        ret['business_stage_display'] = instance.get_business_stage_display()
+        return ret
+
 
 class TaskPackagesFilter(filters.FilterSet):
     c_t = filters.DateFromToRangeFilter()

@@ -28,6 +28,12 @@ class TasksSerializer(serializers.ModelSerializer):
 
         return instance
 
+    def to_representation(self, instance):
+        ret = super(TasksSerializer, self).to_representation(instance)
+        ret['business_type_display'] = instance.get_business_type_display()
+        ret['business_stage_display'] = instance.get_business_stage_display()
+        ret['task_status_display'] = instance.get_task_status_display()
+        return ret
 
 class TasksFilter(filters.FilterSet):
     assigned_at = filters.DateFromToRangeFilter()

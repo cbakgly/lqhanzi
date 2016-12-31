@@ -22,6 +22,11 @@ class DiariesSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         return instance
 
+    def to_representation(self, instance):
+        ret = super(DiariesSerializer, self).to_representation(instance)
+        ret['tag_choices_display'] = instance.get_tag_choices_display()
+        return ret
+
 
 class DiariesFilter(filters.FilterSet):
     c_t = filters.DateFromToRangeFilter()
