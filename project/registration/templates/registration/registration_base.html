@@ -9,47 +9,47 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{% static '' %}css/bootstrap-969213113b.css">
+    <link rel="stylesheet" href="{% static '' %}css/bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static '' %}css/AdminLTE.min.css">
-    <link rel="stylesheet" href="{% static '' %}css/blue-10cfa6dd22.css">
-
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static '' %}css/font-awesome-2cc3ab6c0c.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{% static '' %}css/ionicons.min.css">
-
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static '' %}js//plugins/iCheck/square/blue.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="{% static '' %}js/html5shiv-692922fc2c.js"></script>
-    <script src="{% static '' %}js/respond-376af54f8d.src.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 <body class="hold-transition register-page">
 <div class="login-box">
-<div id="header">
+    <div class="register-logo">
+        <a href="{% url 'm2.home-page' %}"><b>{% trans 'Long Quan Hanzi Lib' %}</b></a>
+    </div>
+    <div id="header">
     {% block header %}
     <a href="{% url 'index' %}">{% trans "Home" %}</a> |
 
     {% if user.is_authenticated %}
     {% trans "Logged in" %}: {{ user.username }}
-    (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
-    <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
+    <a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> | <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>
     {% else %}
     <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
     {% endif %}
     <hr/>
     {% endblock %}
-</div>
+    </div>
 
 {% block content %}
 
 {% endblock %}
 </div>
 <!-- jQuery 2.2.3 -->
-<script src="{% static '' %}js/jquery.min.js"></script>
+<script src="{% static '' %}js/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{% static '' %}js/bootstrap.min.js"></script>
 <!-- iCheck -->
