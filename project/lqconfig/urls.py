@@ -38,7 +38,7 @@ urlpatterns = [
 
     # Maintainer: xianduan <quqinglei@icloud.com>
     url(r'^api/(?P<version>)\w+/sysadmin/', include('sysadmin.api_urls')),
-    url(r'^api/(?P<version>)\w+/', include('sysadmin.api_tasks_urls')),
+    url(r'^api/', include('sysadmin.api_tasks_urls')),
     url(r'^api/(?P<version>)\w+/', include('sysadmin.api_task_packages_urls')),
 
     url(r'^accounts/', include('registration.backends.default.urls')),

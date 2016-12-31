@@ -8,6 +8,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 import rest_framework_filters as filters
+import django_filters
 
 from workbench.models import TaskPackages, Tasks
 from api_tasks import TasksSerializer
@@ -54,13 +55,21 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         return ret
 
 
+class NumberInFilter(django_filters.filters.BaseInFilter, django_filters.NumberFilter):
+    pass
+
+
 class TaskPackagesFilter(filters.FilterSet):
     c_t = filters.DateFromToRangeFilter()
     completed_at = filters.DateFromToRangeFilter()
+    business_type_in = NumberInFilter(name='business_type', lookup_expr='in')
 
     class Meta:
         model = TaskPackages
-        fields = '__all__'
+        fields = ["user__username",
+                  "business_type_in",
+                  'c_t',
+                  'completed_at']
 
 
 class TaskPackagesViewSet(viewsets.ModelViewSet):

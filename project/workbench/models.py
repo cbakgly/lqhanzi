@@ -11,51 +11,58 @@ hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 
 
 class VariantsSplit(models.Model):
-    source = models.SmallIntegerField(u'来源', null=True)
-    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True)
-    hanzi_char = models.CharField(u'文字', null=True, max_length=8)
-    hanzi_pic_id = models.CharField(u'图片字编码', null=True, max_length=32)
-    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
-    std_hanzi = models.CharField(u'所属正字', null=True, max_length=64)
-    as_std_hanzi = models.CharField(u'兼正字号', null=True, max_length=32)
-    seq_id = models.CharField(u'字的位置统一编码', null=True, max_length=32)
-    is_redundant = models.SmallIntegerField(u'是否多余', null=True)
+    source = models.SmallIntegerField(u'来源', null=True, blank=True)
+    hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
+    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
+    hanzi_char = models.CharField(u'文字', null=True, blank=True, max_length=8)
+    hanzi_pic_id = models.CharField(u'图片字编码', null=True, blank=True, max_length=32)
+    variant_type_choices = (
+    (0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'),
+    (8, '其他不入库类型'), (9, '其他入库类型'))
+    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True, blank=True)
+    std_hanzi = models.CharField(u'所属正字', null=True, blank=True, max_length=64)
+    as_std_hanzi = models.CharField(u'兼正字号', null=True, blank=True, max_length=32)
+    seq_id = models.CharField(u'字的位置统一编码', null=True, blank=True, max_length=32)
+    is_redundant = models.SmallIntegerField(u'是否多余', null=True, blank=True)
 
-    skip_num_draft = models.SmallIntegerField(u'太难跳过次数', null=True)
-    init_split_draft = models.CharField(u'初步拆分', max_length=128, null=True)
-    other_init_split_draft = models.CharField(u'其它初步拆分', max_length=128, null=True)
-    deform_split_draft = models.CharField(u'调笔拆分', max_length=128, null=True)
-    similar_parts_draft = models.CharField(u'相似部件', max_length=64, null=True)
-    dup_id_draft = models.CharField(u'重复ID', max_length=32, null=True)
+    skip_num_draft = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
+    init_split_draft = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
+    other_init_split_draft = models.CharField(u'其它初步拆分', max_length=128, null=True, blank=True)
+    deform_split_draft = models.CharField(u'调笔拆分', max_length=128, null=True, blank=True)
+    similar_parts_draft = models.CharField(u'相似部件', max_length=64, null=True, blank=True)
+    dup_id_draft = models.CharField(u'重复ID', max_length=32, null=True, blank=True)
 
-    skip_num_review = models.SmallIntegerField(u'太难跳过次数', null=True)
-    init_split_review = models.CharField(u'初步拆分', max_length=128, null=True)
-    other_init_split_review = models.CharField(u'其它初步拆分', max_length=128, null=True)
-    deform_split_review = models.CharField(u'调笔拆分', max_length=128, null=True)
-    similar_parts_review = models.CharField(u'相似部件', max_length=64, null=True)
-    dup_id_review = models.CharField(u'重复ID', max_length=32, null=True)
+    skip_num_review = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
+    init_split_review = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
+    other_init_split_review = models.CharField(u'其它初步拆分', max_length=128, null=True, blank=True)
+    deform_split_review = models.CharField(u'调笔拆分', max_length=128, null=True, blank=True)
+    similar_parts_review = models.CharField(u'相似部件', max_length=64, null=True, blank=True)
+    dup_id_review = models.CharField(u'重复ID', max_length=32, null=True, blank=True)
 
-    skip_num_final = models.SmallIntegerField(u'太难跳过次数', null=True)
-    init_split_final = models.CharField(u'初步拆分', max_length=128, null=True)
-    other_init_split_final = models.CharField(u'其它初步拆分', max_length=128, null=True)
-    deform_split_final = models.CharField(u'调笔拆分', max_length=128, null=True)
-    similar_parts_final = models.CharField(u'相似部件', max_length=64, null=True)
-    dup_id_final = models.CharField(u'重复ID', max_length=32, null=True)
+    skip_num_final = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
+    init_split_final = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
+    other_init_split_final = models.CharField(u'其它初步拆分', max_length=128, null=True, blank=True)
+    deform_split_final = models.CharField(u'调笔拆分', max_length=128, null=True, blank=True)
+    similar_parts_final = models.CharField(u'相似部件', max_length=64, null=True, blank=True)
+    dup_id_final = models.CharField(u'重复ID', max_length=32, null=True, blank=True)
 
-    is_draft_equals_review = models.SmallIntegerField(u'初次回查是否相等', null=True)
-    is_review_equals_final = models.SmallIntegerField(u'回查审查是否相等', null=True)
+    is_draft_equals_review = models.SmallIntegerField(u'初次回查是否相等', null=True, blank=True)
+    is_review_equals_final = models.SmallIntegerField(u'回查审查是否相等', null=True, blank=True)
     is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
     is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
-    remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, blank=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, blank=True, auto_now=True)
 
     class Meta:
         db_table = 'lq_variants_split'
 
+    def __unicode__(self):
+        return self.hanzi_char
+
 
 class VariantsInput(models.Model):
-    volume_num = models.SmallIntegerField(u'册', null=True)
+    volume_num = models.SmallIntegerField(u'册', null=True, blank=True)
     page_num = models.IntegerField(u'页码', null=True)
 
     seq_num_draft = models.SmallIntegerField(u'序号', null=True)
@@ -190,8 +197,9 @@ business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
 status_choices = ((0, u'进行中'), (1, u'已完成'))
 
 
+
 class TaskPackages(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_tps")  # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
     size = models.SmallIntegerField(u'工作包大小', null=False, default=100)
@@ -221,14 +229,38 @@ class TaskTypes(models.Model):
 
 
 class Tasks(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)  # 用户，拆字员
-    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
-    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
+    #business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
+    split_business_id = models.ForeignKey(VariantsSplit, models.SET_NULL, related_name="split_task", null=True, blank=True)
+    input_business_id = models.ForeignKey(VariantsInput, models.SET_NULL, related_name="input_task", null=True, blank=True)
+    korean_dedup_business_id = models.ForeignKey(KoreanDedup, models.SET_NULL, related_name="korean_dedup_task", null=True, blank=True)
+    idedup_business_id = models.ForeignKey(InterDictDedup, models.SET_NULL, related_name="inter_dedup_task", null=True, blank=True)
+
+
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True,
+                                     null=True)
+
+    business_type_choices = (
+        (0, u'录入'),
+        (1, u'去重'),
+        (2, u'拆字'),
+    )
+
+    business_stage_choices = (
+        (0, u'初次'),
+        (1, u'回查'),
+        (2, u'审查')
+    )
+
+    status_choices = (
+        (0, u'进行中'),
+        (1, u'已完成')
+    )
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=status_choices, null=True)
     credits = models.SmallIntegerField(u'积分', null=True)
-    remark = models.CharField(u'备注', max_length=128, null=True)
+    remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
     assigned_at = models.DateTimeField(u'分配时间', null=True, default=timezone.now)
     completed_at = models.DateTimeField(u'完成时间', null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
@@ -238,23 +270,30 @@ class Tasks(models.Model):
         db_table = 'lq_tasks'
 
     def __unicode__(self):
-        return str(self.id)
+        return "#"+self.business_type_choices[self.business_type][1] +\
+               self.business_stage_choices[self.business_stage][1] + str(self.id)
 
 
 class CreditsRedeem(models.Model):
-    redeem_status_choices = ((0, '申请中'), (1, '已受理'), (2, '已完成'))
+    redeem_status_choices = (
+        (0, '申请中'),
+        (1, '已受理'),
+        (2, '已完成')
+    )
 
-    applied_by = models.IntegerField(u'申请人的用户id', null=True)
-    accepted_by = models.IntegerField(u'受理人的用户id', null=True)
-    completed_by = models.IntegerField(u'完成人的用户id', null=True)
-    accepted_at = models.DateTimeField(u'接受时间', null=True)
+    applied_by = models.ForeignKey(User, verbose_name="申请人", related_name="applier")
+    accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor")
+    completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor")
+    accepted_at = models.DateTimeField(u'受理时间', null=True)
     completed_at = models.DateTimeField(u'完成时间', null=True)
     reward_name = models.CharField(u'奖品名称', max_length=64, null=True)
     cost_credits = models.IntegerField(u'所用积分', null=True)
+
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', choices=redeem_status_choices, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    created = models.CharField(max_length=45)
 
     class Meta:
         db_table = 'lq_credits_redeem'
@@ -303,3 +342,4 @@ class Credits(models.Model):
 
     def __unicode__(self):
         return self.sort.credit_sort
+
