@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import list_route
 import django_filters
 
-from ..pagination import NumberPagination
+from ..pagination import NumberPagination, LimitOffsetPagination
 from ..serializer import DiarySerializer, CreditSerializer, RedeemSerializer, VariantsSplitSerializer
 
 from .. import wb_filter
@@ -23,6 +23,8 @@ class DiaryViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
+    ordering = ('c_t')
+
 
 class CreditViewSet(viewsets.ModelViewSet):
     """
@@ -32,8 +34,16 @@ class CreditViewSet(viewsets.ModelViewSet):
     serializer_class = CreditSerializer
     filter_class = wb_filter.CreditFilter
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    pagination_class = NumberPagination
+    pagination_class = LimitOffsetPagination
     versioning_class = AllVersioning
+
+    @list_route()
+    def certain_user_credits(self, request):
+        user = request.user
+        user_credits = user.user_credits.all()
+        serializer = CreditSerializer(user_credits, many=True)
+
+        return Response(serializer.data)
 
 
 def index(request):

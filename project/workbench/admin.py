@@ -49,10 +49,10 @@ class VariantsSplitAdmin(admin.ModelAdmin):
         ['Main', {
             'fields': ("source", "hanzi_type", "hanzi_char"),
         }],
-    ['Advance', {
-        'classes': ('collapse',),
-        'fields': ("skip_num_draft", "init_split_draft", "other_init_split_draft"),
-    }]
+        ['Advance', {
+            'classes': ('collapse',),
+            'fields': ("skip_num_draft", "init_split_draft", "other_init_split_draft"),
+        }]
     )
 
 
