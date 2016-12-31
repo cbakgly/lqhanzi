@@ -67,6 +67,7 @@ class TaskPackagesFilter(filters.FilterSet):
     class Meta:
         model = TaskPackages
         fields = ["user__username",
+                  "business_type",
                   "business_type_in",
                   'c_t',
                   'completed_at']

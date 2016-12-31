@@ -65,7 +65,7 @@ class CreditSerializer(serializers.ModelSerializer):
     class Meta:
         model = Credits
         fields = ("id", "user", "credit", "sort", "rank")
-        depth = 0
+        depth = 1
 
     def get_rank(self, obj):
         ranks = {}
