@@ -27,10 +27,10 @@ class TasksInline(admin.TabularInline):
 
 class TasksAdmin(admin.ModelAdmin):
     fields = ("user",
-              "split_business_id",
-              "input_business_id",
-              "korean_dedup_business_id",
-              "idedup_business_id",
+              "variant_split",
+              "variant_input",
+              "korean_dedup",
+              "interdict_dedup",
               "task_package",
               "business_type",
               "business_stage",

@@ -48,7 +48,7 @@ class TasksFilter(filters.FilterSet):
 
     class Meta:
         model = Tasks
-        fields = ['split_business_id__hanzi_char']
+        fields = ['variant_split__hanzi_char']
 
 
 class TasksViewSet(viewsets.ModelViewSet):
