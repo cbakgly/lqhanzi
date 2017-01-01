@@ -4,6 +4,8 @@ import pdb
 import random
 import os
 import binascii
+from django.core.urlresolvers import reverse
+
 from django.test import TestCase
 from backend.models import User
 from backend.models import Operation
@@ -14,7 +16,7 @@ class OperationTestCase(TestCase):
         # SetUp will execute everytime before each test case
         print "<Test sysadmin apps...>"
         print "-----------------------------------\n"
-        self.url = "/api/v1/sysadmin/operation/"
+        self.url = reverse('operation-list', kwargs={"version": 'v1'})
         # Create tmp user
         self.tmp_msg = binascii.b2a_hex(os.urandom(15))
         self.tmp_username = self.tmp_msg[:5]
@@ -55,7 +57,7 @@ class OperationTestCase(TestCase):
 
     def test_delete_one_record_operation(self):
         id = Operation.objects.all().values()[0]['id']
-        response = self.client.delete("/api/v1/sysadmin/operation/{0}/".format(id))
+        response = self.client.delete(reverse('operation-detail', kwargs={"version": "v1", "pk": id}))
         print "test_delete_one_record_operation: {0} {1}".format(response.status_code, response.content)
         self.assertGreater(response.status_code, 200)
 
@@ -64,7 +66,7 @@ class OperationTestCase(TestCase):
                    "email": "xianer@gmail.com", "is_active": 1, "gender": 1, "mb": "15899990045",
                    "qq": "375944090", "address": "Lq"}
 
-        response = self.client.post("/api/v1/sysadmin/user/", payload)
+        response = self.client.post(reverse('user-list', kwargs={'version': 'v1'}), payload)
         print "test_add_user: {0}, {1}".format(response.status_code, response.content)
         self.assertEqual(response.status_code, 201)
         return response
@@ -83,14 +85,14 @@ class OperationTestCase(TestCase):
         self.assertEqual(success_count, add_user_num)
 
     def test_get_all_users(self):
-        url = "/api/v1/sysadmin/user/"
+        url = reverse('user-list', kwargs={'version': 'v1'})
         response = self.client.get(url)
         print "test_get_all_users: {0}, {1}".format(response.status_code, response.content)
         self.assertEqual(response.status_code, 200)
 
     def test_reset_password(self):
         user_id = User.objects.all()[0].pk
-        url = "/api/v1/sysadmin/user/{0}/set_password/".format(user_id)
+        url = reverse('user-set-password', kwargs={'version': 'v1', 'pk': user_id})
         print url
         payload = {"password": "amituofo", "confirm_password": "amituofo"}
         pdb.set_trace()
