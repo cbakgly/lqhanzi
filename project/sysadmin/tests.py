@@ -5,8 +5,8 @@ import random
 import os
 import binascii
 from django.test import TestCase
-from sysadmin.models import User
-from sysadmin.models import Operation
+from backend.models import User
+from backend.models import Operation
 
 
 class OperationTestCase(TestCase):

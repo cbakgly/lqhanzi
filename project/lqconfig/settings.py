@@ -27,7 +27,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["*", ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'hanzi',
     'sysadmin',
     'workbench',
+    'backend',
 ]
 
 MIDDLEWARE = [
@@ -81,14 +81,6 @@ WSGI_APPLICATION = 'lqconfig.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'test_default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -122,55 +114,49 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
-
-LANGUAGE_CODE = 'zh-Hans'
-
-TIME_ZONE = 'Asia/Shanghai'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-STATIC_URL = '/static/'
-STATICFILES_DIRS = ['static/']
-
-# User uploaded files
-MEDIA_ROOT = 'static/uploads/'
-
-# Rest framework paging setting added by @xianduan
-REST_FRAMEWORK = {
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
-    'PAGE_SIZE': 10,
-    'DEFAULT_VERSION': 'v1',
-    'ALLOWED_VERSIONS': ['v1', 'v2'],
-    'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_filters.backends.DjangoFilterBackend',
-    ),
-}
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend'
 )
 
 # For abstract user
-AUTH_USER_MODEL = 'sysadmin.User'
+AUTH_USER_MODEL = 'backend.User'
 
 # For customized user model, guardian must be tuned
 GUARDIAN_MONKEY_PATCH = False
-
 INTERNAL_IPS = ('127.0.0.1',)
 
+# Internationalization
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+STATIC_URL = '/static/'
+STATICFILES_DIRS = ['static/']
+# User uploaded files
+MEDIA_ROOT = 'static/uploads/'
+
+# Rest framework paging setting added by @xianduan
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'PAGE_SIZE': 10,
+    'DEFAULT_VERSION': 'v1',
+    'ALLOWED_VERSIONS': ['v1', None],
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_filters.backends.DjangoFilterBackend',
+    ),
+}
+
+# Registration Settings
 # If True, users can register
 REGISTRATION_OPEN = True
 # One-week activation window; you may, of course, use a different value.
-ACCOUNT_ACTIVATION_DAYS = 1
+ACCOUNT_ACTIVATION_DAYS = 3
 # If True, the user will be automatically logged in.
 REGISTRATION_AUTO_LOGIN = False
 # The page you want users to arrive at after they successfully log in
@@ -185,11 +171,12 @@ DEFAULT_FROM_EMAIL = 'alqdzj@126.com'
 # 原始密码同aws密码
 EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
-# Host for sending email.
 EMAIL_HOST = 'smtp.126.com'
-# Port for sending email.
 EMAIL_PORT = 25
+# Registration Settings end
 
+
+# Redis Cache Settings
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -202,3 +189,4 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+# Redis Cache Settings end

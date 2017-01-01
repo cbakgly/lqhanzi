@@ -7,10 +7,9 @@ from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
-import rest_framework_filters as filters
-import django_filters
+import django_filters as filters
 
-from workbench.models import TaskPackages, Tasks
+from ..models import TaskPackages, Tasks
 from api_tasks import TasksSerializer
 from workbench.enums import getenum_business_status
 
@@ -55,7 +54,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         return ret
 
 
-class NumberInFilter(django_filters.filters.BaseInFilter, django_filters.NumberFilter):
+class NumberInFilter(filters.filters.BaseInFilter, filters.NumberFilter):
     pass
 
 

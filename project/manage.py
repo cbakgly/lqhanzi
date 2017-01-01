@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -14,11 +15,13 @@ if __name__ == "__main__":
         # exceptions on Python 2.
         try:
             import django
+
+            django.VERSION  # In order to pass lint check
         except ImportError:
             raise ImportError(
-                "Couldn't import Django. Are you sure it's installed and "
-                "available on your PYTHONPATH environment variable? Did you "
-                "forget to activate a virtual environment?"
+                    "Couldn't import Django. Are you sure it's installed and "
+                    "available on your PYTHONPATH environment variable? Did you "
+                    "forget to activate a virtual environment?"
             )
         raise
     execute_from_command_line(sys.argv)

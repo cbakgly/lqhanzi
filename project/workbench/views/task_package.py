@@ -2,10 +2,10 @@
 from django.shortcuts import render
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
-from ..models import TaskPackages
 from ..cache_keys import getcachekey_today_completed_task_num
 from ..enums import getenum_business_status
 from .common import get_today_credits
+from backend.models import TaskPackages
 
 
 @login_required
