@@ -10,4 +10,3 @@ def getcachekey_today_completed_task_num(user_id, business_type):
 
 def getcachekey_today_credits(user_id):
     return 'user:' + str(user_id) + ':today_credits'
-

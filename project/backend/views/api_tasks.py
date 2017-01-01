@@ -6,10 +6,10 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-# import rest_framework_filters as filters
+import rest_framework_filters as drf_filters
 import django_filters as filters
-from workbench.models import Tasks
-from workbench.serializer import VariantsSplitSerializer
+from ..models import Tasks
+from api_variants_split import VariantsSplitSerializer
 
 
 # Task Packages management
@@ -40,8 +40,8 @@ class TasksSerializer(serializers.ModelSerializer):
         return ret
 
 
-class TasksFilter(filters.FilterSet):
-    assigned_at = filters.DateFromToRangeFilter()
+class TasksFilter(drf_filters.FilterSet):
+    assigned_at = drf_filters.DateFromToRangeFilter()
     completed_at = filters.DateFromToRangeFilter()
     c_t = filters.DateFromToRangeFilter()
     u_t = filters.DateFromToRangeFilter()

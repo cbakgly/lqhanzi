@@ -1,6 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
-from sysadmin.models import User
+from ..models import User
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.decorators import detail_route
@@ -67,7 +67,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['post', 'get'])
     def set_password(self, request, *args, **kwargs):
         if request.method == 'GET':
-            serializer_class = PasswordSerializer
+            # serializer_class = PasswordSerializer
             return Response({'key': 'test'})
 
         serializer = PasswordSerializer(data=request.data)

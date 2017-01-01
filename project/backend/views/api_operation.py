@@ -1,6 +1,6 @@
 # encoding: utf-8
 from __future__ import unicode_literals
-from sysadmin.models import Operation
+from ..models import Operation
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication

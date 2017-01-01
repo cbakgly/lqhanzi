@@ -33,17 +33,9 @@ urlpatterns = [
     url(r'^api-token-verify/', verify_jwt_token),
     # url(r'^sysadmin/', include('sysadmin.urls')),
     url(r'^workbench/', include('workbench.urls')),
-    url(r'^api/workbench/', include('workbench.api_urls')),
-    # url(r'^api/(?P<version>)\w+/hanzi/', include('hanzi.api_urls')),
-
-    # Maintainer: xianduan <quqinglei@icloud.com>
-    url(r'^api/(?P<version>)\w+/sysadmin/', include('sysadmin.api_urls')),
-    url(r'^api/', include('sysadmin.api_tasks_urls')),
-    url(r'^api/(?P<version>)\w+/', include('sysadmin.api_task_packages_urls')),
-
+    url(r'^api/(?P<version>\w+)/', include('backend.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^$', index, name='index'),
-    # url(r'^$', include('hanzi.urls'))
 ]
 
 if settings.DEBUG:
