@@ -91,7 +91,7 @@
             <span>欢迎您使用龙泉字库用户工作台!</span>
           </li>
           <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle">
+            <a href="{% url 'm2.credits-ranking' %}" class="dropdown-toggle">
               <i class="icon-score"></i><span class="label label-success">{{ today_credits|default:0 }}</span>
             </a>
           </li>
@@ -102,7 +102,7 @@
             </a>
           </li> -->
           <li class="dropdown tasks-menu">
-            <a href="pages/scoreSort.html" class="dropdown-toggle">
+            <a href="{% url 'm2.diaries' %}" class="dropdown-toggle">
               <i class="icon-clock"></i><span class="label label-danger circle"> </span>
             </a>
           </li>
