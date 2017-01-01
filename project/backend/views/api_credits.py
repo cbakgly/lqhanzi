@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
 from rest_framework import serializers
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 import django_filters.rest_framework
 
 from ..models import Credits
@@ -55,6 +57,9 @@ class CreditViewSet(viewsets.ModelViewSet):
     """
     积分
     """
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     queryset = Credits.objects.all()
     serializer_class = CreditSerializer
     filter_class = CreditFilter
