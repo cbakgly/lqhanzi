@@ -176,6 +176,7 @@ CREATE TABLE IF NOT EXISTS hanzi_radicals (
   id INT PRIMARY KEY,
   radical varchar(16) DEFAULT NULL, -- '部首'
   strokes tinyint DEFAULT NULL  -- '笔画数'
+  is_enabled tinyint DEFAULT 0  -- '启用、禁用'
 );
 
 /* 高丽异体字内部去重-待去重郑码表 */
@@ -327,5 +328,14 @@ CREATE TABLE IF NOT EXISTS hanzi_parts (
   replace_parts varchar(64) DEFAULT NULL, -- '代替部件'
   strokes tinyint DEFAULT NULL, -- '笔画数'
   stroke_order varchar(64) DEFAULT NULL, -- '笔顺'
+  remark varchar(64) DEFAULT NULL, -- '备注'
+);
+
+
+/* 任务类型 */
+CREATE TABLE IF NOT EXISTS task_types (
+  id INT PRIMARY KEY,
+  name varchar(8) DEFAULT NULL, -- '任务名称'
+  is_enabled tinyint DEFAULT NULL, -- '状态'
   remark varchar(64) DEFAULT NULL, -- '备注'
 );
