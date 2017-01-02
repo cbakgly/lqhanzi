@@ -1,7 +1,11 @@
 /**
  * Created by wangwei on 16-12-20.
  */
-var credits_arr = new Array("总积分", "拆字积分", "去重积分", "录入积分", "互助积分")
+var credits_arr = new Array("总积分",
+    "拆字积分",
+    "去重积分",
+    "录入积分",
+    "互助积分")
 var indexOf = function (value) {
     for (var i = 0, vlen = credits_arr.length; i < vlen; i++) {
         if (credits_arr[i] == value) {
@@ -9,12 +13,13 @@ var indexOf = function (value) {
         }
     }
 }
-var vm = new Vue({
+//var username = "ww";
+var appvm = new Vue({
     delimiters: ["#[", "]"],
     el: '#app',
     data: {
-        username: "",
-        selected: 0,
+        //username: "wangwei",
+        selected: 1,
         cdata: [],
         //pagination: {},
         //page_size: 10,
@@ -24,51 +29,54 @@ var vm = new Vue({
         mycredit: 0,
         myrank: 1,
     },
+    watch:{
+
+    },
     methods: {
+        //trim: function(stri) {
+        //    return stri.replace(/(^\s*)|(\s*$)/g, ""); },
         gen_url: function () {
 
-            var base_url = "/api/workbench/credits/?"
-            if (vm.username == "") {
-                var username = document.getElementsByClassName("hidden-xs")[0].innerHTML
-                vm.username = vm.trim(username)
-            }
-            base_url += "&user__username=" + vm.username
-            base_url += "&sort=" + vm.selected
-            return base_url
+            var username = document.getElementsByClassName("hidden-xs")[0].innerHTML
+            username = appvm.trim(username)
+
+            //base_url += "&user__username=" + username
+            //base_url +=
+            //return base_url
         },
-        get_offset: function () {
+        /*get_offset: function () {
             var url = this.gen_url()
-            $.ajax({
+            var app = this
+            axios({
+                method:"get",
                 url: url,
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
+                xsrfCookieName: 'csrftoken',
+                xsrfHeaderName: 'X-CSRFToken'
+            })
+                .then(function(data){
                     for (var i = 0; i < data.length; i++) {
-                        if (indexof(data[i].sort) == vm.selected) {
-                            vm.offset = data[i].rank - 2
+                        if (indexof(data[i].sort) == app.selected) {
+                            app.offset = data[i].rank - 2
                             break
                         }
                     }
-                    //vm.pagination = data.pagination
-                },
-                error: function (xhr, status, err) {
-                    console.log('error');
-                }
+                }).catch(function(error){
+                    console.log(error);
             })
-
-        },
+        },*/
         load_pages: function () {
             //this.current_page = page_num
-            vm.get_offset()
-            url = this.gen_url()
-            var url = url + "&offset=" + vm.offset
+            //appvm.get_offset()
+            var url = "/api/v1/credits/?sort=" + appvm.selected
+            //var url = "/api/workbench/credits/certain_user_credits/"
+            //url = url + "&offset=" + appvm.offset
             $.ajax({
                 url: url,
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    vm.cdata = data
-                    //vm.pagination = data.pagination
+                    appvm.cdata = data
+                    //appvm.pagination = data.pagination
                 },
                 error: function (xhr, status, err) {
                     console.log('error');
@@ -76,7 +84,7 @@ var vm = new Vue({
             })
         },
         get_login_user: function () {
-            var base_url = "/api/workbench/credits/certain_user_credits/"
+            var base_url = "/api/v1/credits/certain_user_credits/"
 
             //console.log(username)
             //var url = base_url+"&user__username="+username+"&sort=1"
@@ -85,11 +93,11 @@ var vm = new Vue({
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    vm.cdata = data
+                    appvm.cdata = data
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].sort == "总积分") {
-                            vm.mycredit = data[i].credit
-                            vm.myrank = data[i].rank
+                            appvm.mycredit = data[i].credit
+                            appvm.myrank = data[i].rank
                             break
                         }
                     }
@@ -99,11 +107,7 @@ var vm = new Vue({
                 }
             })
         },
-        goto_pages: function (evt) {
-            this.load_pages(evt.target.value)
-        },
-
     }
 });
-vm.get_login_user();
+appvm.get_login_user();
 

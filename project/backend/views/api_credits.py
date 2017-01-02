@@ -12,12 +12,12 @@ from ..pagination import LimitOffsetPagination
 
 class CreditSerializer(serializers.ModelSerializer):
     rank = serializers.SerializerMethodField()
-    sort = serializers.SerializerMethodField()
+    sort_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Credits
-        fields = ("id", "user", "credit", "sort", "rank")
-        depth = 1
+        fields = "__all__"
+        depth = 0
 
     def get_rank(self, obj):
         ranks = {}
@@ -35,7 +35,7 @@ class CreditSerializer(serializers.ModelSerializer):
             ranks[i].reverse()
         return ranks[obj.sort].index(obj.credit) + 1
 
-    def get_sort(self, obj):
+    def get_sort_name(self, obj):
         for sc in Credits.sort_choices:
             if obj.sort == sc[0]:
                 return sc[1]
@@ -48,7 +48,7 @@ class CreditFilter(django_filters.FilterSet):
 
     class Meta:
         model = Credits
-        fields = ["id", "user", "sort", "user__username"]
+        fields = ["id", "user", "sort", "credit", "user__username"]
 
 
 class CreditViewSet(viewsets.ModelViewSet):
