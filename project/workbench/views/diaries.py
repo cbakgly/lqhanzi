@@ -1,7 +1,8 @@
 # -*- coding:utf8 -*-
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .common import get_today_credits
+from django.shortcuts import render
+
+from backend.utils import get_today_credits
 
 
 @login_required

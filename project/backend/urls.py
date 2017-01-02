@@ -11,13 +11,13 @@ from backend.views.api_credits import CreditViewSet
 from backend.views.api_variants_split import VariantsSplitViewSet
 
 router = SimpleRouter()
-router.register(r'operation', OperationViewSet)
-router.register(r'user', UserViewSet)
-router.register(r'diaries', DiariesViewSet)
-router.register(r'tasks', TasksViewSet)
-router.register(r'task_packages', TaskPackagesViewSet)
+router.register(r'operations', OperationViewSet, base_name='operations')
+router.register(r'users', UserViewSet, base_name='user')
+router.register(r'diaries', DiariesViewSet, base_name='diaries')
+router.register(r'tasks', TasksViewSet, base_name='tasks')
+router.register(r'task-packages', TaskPackagesViewSet, base_name='task-packages')
 router.register(r'diaries', DiaryViewSet, base_name='diaries')
 router.register(r'credits', CreditViewSet, base_name='credits')
-router.register(r"redeems", RedeemViewSet)
-router.register(r"split_task", VariantsSplitViewSet)
+router.register(r"redeems", RedeemViewSet, base_name='redeems')
+router.register(r"splits", VariantsSplitViewSet)
 urlpatterns = router.urls

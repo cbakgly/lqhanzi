@@ -1,10 +1,11 @@
 # -*- coding:utf8 -*-
-from django.shortcuts import render
-from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
-from ..cache_keys import getcachekey_today_completed_task_num
-from ..enums import getenum_business_status
-from .common import get_today_credits
+from django.core.cache import cache
+from django.shortcuts import render
+
+from backend.cache_keys import getcachekey_today_completed_task_num
+from backend.utils import get_today_credits
+from backend.enums import getenum_business_status
 from backend.models import TaskPackages
 
 
