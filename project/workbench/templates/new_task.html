@@ -78,7 +78,7 @@
         var completed_at = null;
 
         $.ajax({
-                url: '{% url 'taskpackages-list' version='v1' %}',
+                url: '{% url 'task-packages-list' version='v1' %}',
                 type: 'POST',
                 data: {"user": user.id,
                 "business_type": business_type,
