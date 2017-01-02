@@ -54,13 +54,14 @@ class TasksFilter(drf_filters.FilterSet):
 class TasksViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
+
     filter_backends = (filters.rest_framework.DjangoFilterBackend,)
     serializer_class = TasksSerializer
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
 
     @list_route()
-    def split_tasks(self, request):
+    def split_tasks(self, request, *args, **kwargs):
         split_task = Tasks(pk=1).split_task.all()
         serializer = VariantsSplitSerializer(split_task, many=True)
 

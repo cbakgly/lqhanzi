@@ -117,6 +117,9 @@ class DiaryViewSet(viewsets.ModelViewSet):
     """
     允许查看打卡记录的API endpoint
     """
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     queryset = Diaries.objects.all()
     serializer_class = DiarySerializer
     filter_class = DiaryFilter

@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import list_route
 from rest_framework import serializers
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 import django_filters
 
 from ..pagination import NumberPagination
@@ -29,6 +31,9 @@ class VariantsSplitFilter(django_filters.FilterSet):
 
 
 class VariantsSplitViewSet(viewsets.ModelViewSet):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
     queryset = VariantsSplit.objects.all()
     filter_class = VariantsSplitFilter
     filter_backends = (DjangoFilterBackend,)
@@ -42,7 +47,7 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
             return RedeemSerializerVersion1'''
 
     @list_route()
-    def some_split_tasks(self, request):
+    def some_split_tasks(self, request, *args, **kwargs):
         tasks = Tasks.objects.filter(business_type=2)
         split_tasks = tasks.split_task.all()
         serializer = RedeemSerializer(split_tasks, many=True)
