@@ -12,7 +12,7 @@
 	<div class="col-xs-12">
 	  <div class="box box-blue">
 	    <div class="box-body">
-	      <table class="table table-bordered">
+	      <table class="table table-bordered" id="package-table">
 	        <thead>
 	          <tr>
 	            <!--<th style="width: 43px">序号</th>-->
@@ -65,7 +65,7 @@
                     {% elif item.business_type == 2 %}
                     <a href="{% url 'm2.task-dedup' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-dedup-list' %}">查看</a>&nbsp;&nbsp;
                     {% endif %}
-                    <a class="show-layer" data-show-layer="hw-layer" role="button">修改</a></td>
+                    <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}" role="button">修改</a></td>
 	          </tr>
             {% endfor %}
 	        </tbody>
@@ -96,23 +96,30 @@
   </div>
 <!--/.遮罩层-->
 <script type="text/javascript">
+
     var dialog = new Vue({
         delimiters: ["#[", "]"],
         el: '#hw-layer',
         data: {
             daily_plan: 0,
+            id: 0,
         },
         methods: {
             confirm: function() {
                 if(this.daily_plan % 5 != 0) {
                     alert("Please input number of multiple of 5.");
                 } else {
-                    $.ajax({ //TODO: need real id to replace 1 below
-                        url: '{% url 'taskpackages-detail' version='v1' pk=1 %}',
+                    if(this.id == 0) {
+                        console.log("Row id should not be 0!");
+                        return;
+                    }
+                    $.ajax({
+                        url: '{% url 'task-packages-list' version='v1' %}' + this.id + '/',
                         type: 'PUT',
-                        data: {"daily_plan": daily_plan},
+                        data: {"daily_plan": this.daily_plan},
                         success: function(data) {
                             console.log("{% trans "New task sent." %}");
+							location.reload();
                         },
                         error: function(jqXHR, status, error) {
                             console.log(error);
@@ -121,7 +128,13 @@
                 }
             }
         }
-
     });
+
+$(function(){
+    $('.show-layer').on('click', function() {
+        dialog.id = $(this).data("row-id")
+    });
+
+});
 </script>
 {% endblock %}
