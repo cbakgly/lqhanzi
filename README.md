@@ -14,6 +14,12 @@ Lqhanzi project
 
 # 启动mysql
 > mysql.server start
+
+# 安装redis
+> brew install redis
+
+# 启动redis
+> redis-server &
 # OSX环境结束
 
 
@@ -63,6 +69,33 @@ OR
 # 退出环境
 (lqhanzi)> deactivate
 
+```
+
+每次启动电脑后，运行的步骤
+--------
+
+```
+# 1 启动mysql
+# 2 启动redis-server
+# 3 进入python的虚拟环境：source ./bin/activate
+# 4 ./manage.py runserver
+```
+
+遇到models变化后，runserver时给出各种错误信息，解决不了的步骤
+--------
+
+```
+# 1 保存数据库数据
+# 2 > mysql -uroot -p
+# 3 > drop databases lqhanzi;
+# 4 重复上面的创建过程
+# 5 > ./manage.py makemigrations  
+# 6 > ./manage.py migrate
+# 7 > ./manage.py runserver
+
+第5步对于django来说，每次models有变化都有运行以便环境有记录。
+第6步是django把变化更新到mysql中。
+一般这两步连在一起做。
 ```
 
 相关文档
