@@ -9,6 +9,8 @@ from backend.views.api_diaries import DiaryViewSet
 from backend.views.api_redeem import RedeemViewSet
 from backend.views.api_credits import CreditViewSet
 from backend.views.api_variants_split import VariantsSplitViewSet
+from backend.views.api_variants_input import VariantsInputViewSet
+from backend.views.api_variants_dedup import InterDictDedupViewSet, KoreanDedupViewSet
 
 router = SimpleRouter()
 router.register(r'operations', OperationViewSet, base_name='operations')
@@ -20,4 +22,7 @@ router.register(r'diaries', DiaryViewSet, base_name='diaries')
 router.register(r'credits', CreditViewSet, base_name='credits')
 router.register(r"redeems", RedeemViewSet, base_name='redeems')
 router.register(r"splits", VariantsSplitViewSet)
+router.register(r"inputs", VariantsInputViewSet)
+router.register(r"interdict-dedups", InterDictDedupViewSet)
+router.register(r"korean-dedups", KoreanDedupViewSet)
 urlpatterns = router.urls
