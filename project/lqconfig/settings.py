@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'guardian',
+    'storages',
     'debug_toolbar',
     # 'crispy_forms',
     'registration',
@@ -193,3 +194,18 @@ CACHES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 # Redis Cache Settings end
+
+
+# http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', '')
+AWS_STORAGE_BUCKET_NAME = 'lqhanzi-static'
+AWS_AUTO_CREATE_BUCKET= True
+AWS_QUERYSTRING_AUTH = False
+# see http://developer.yahoo.com/performance/rules.html#expires
+# AWS_HEADERS = {
+#     'Expires': 'Thu, 15 Apr 2010 20:00:00 GMT',
+#     'Cache-Control': 'max-age=86400',
+# }
