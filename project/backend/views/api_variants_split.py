@@ -34,4 +34,3 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
     filter_class = VariantsSplitFilter
     pagination_class = NumberPagination
     serializer_class = VariantsSplitSerializer
-

@@ -1,15 +1,12 @@
 # -*- coding:utf8 -*-
 from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import list_route
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
 from ..pagination import NumberPagination
-from ..models import VariantsInput, Tasks
-from .api_redeem import RedeemSerializer
+from ..models import VariantsInput
 
 
 class VariantsInputSerializer(serializers.ModelSerializer):
