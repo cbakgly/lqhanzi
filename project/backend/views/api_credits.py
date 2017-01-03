@@ -6,7 +6,7 @@ from rest_framework.decorators import list_route
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-import django_filters.rest_framework
+import django_filters
 
 from ..models import Credits
 from ..pagination import LimitOffsetPagination
@@ -63,13 +63,11 @@ class CreditViewSet(viewsets.ModelViewSet):
     queryset = Credits.objects.all()
     serializer_class = CreditSerializer
     filter_class = CreditFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     pagination_class = LimitOffsetPagination
 
     @list_route()
     def certain_user_credits(self, request, *args, **kwargs):
         user = request.user
         user_credits = user.user_credits.all()
-        serializer = CreditSerializer(user_credits, many=True)
-
+        serializer = self.serializer_class(user_credits, many=True)
         return Response(serializer.data)

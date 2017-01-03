@@ -3,7 +3,6 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
 from rest_framework import serializers
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
@@ -36,7 +35,6 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
 
     queryset = VariantsSplit.objects.all()
     filter_class = VariantsSplitFilter
-    filter_backends = (DjangoFilterBackend,)
     pagination_class = NumberPagination
     serializer_class = VariantsSplitSerializer
 
