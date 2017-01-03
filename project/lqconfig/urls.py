@@ -20,7 +20,8 @@ from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
-from . import settings
+
+from settings import DEBUG, MEDIA_ROOT, MEDIA_URL
 from hanzi.views.hanzi import index
 
 admin.autodiscover()
@@ -38,8 +39,10 @@ urlpatterns = [
     url(r'^$', index, name='index'),
 ]
 
-if settings.DEBUG:
+if DEBUG:
     import debug_toolbar
+    from django.conf.urls.static import static
+
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]
+    ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

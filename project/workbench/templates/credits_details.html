@@ -1,5 +1,5 @@
 {% extends "m2_base.html" %}
-{% load staticfiles %}
+
 {% block content %}
 <!--
 1. 载入界面显示“总积分”的查询结果
@@ -54,5 +54,5 @@
     </div>
   </div>
 </div>
-<script src="{% static '' %}js/workbench/credits-details.js"></script>
+<script src="{{STATIC_URL}}js/workbench/credits-details.js"></script>
 {% endblock %}

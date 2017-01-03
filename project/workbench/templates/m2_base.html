@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+
 {% load i18n %}
 <html>
 <head>
@@ -9,23 +9,23 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="{% static '' %}css/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.css" type="text/css"/>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{% static '' %}css/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}css/daterangepicker/daterangepicker.css">
   <!--skins-->
-  <link rel="stylesheet" href="{% static '' %}css/skins/skin-blue.min.css"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}css/skins/skin-blue.min.css"/>
   <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="{% static '' %}css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!--my font-->
-  <link rel="stylesheet" href="{% static '' %}css/myFont.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}css/myFont.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{% static '' %}css/AdminLTE.css"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}css/AdminLTE.css"/>
   <!--自定义样式-->
-  <link rel="stylesheet" href="{% static '' %}css/ImproveAdminLTE.css"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}css/ImproveAdminLTE.css"/>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -37,20 +37,20 @@
   <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
   <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
   <!-- jQuery 2.2.3 -->
-  <script src="{% static '' %}js/jquery-2.2.3.min.js"></script>
+  <script src="{{STATIC_URL}}js/jquery-2.2.3.min.js"></script>
   <!-- Bootstrap 3.3.6 -->
-  <script src="{% static '' %}js/bootstrap.min.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
   <!-- Bootstrap WYSIHTML5 -->
-  <script src="{% static '' %}js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+  <script src="{{STATIC_URL}}js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
   <!-- date-range-picker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-  <script src="{% static '' %}js/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="{{STATIC_URL}}js/plugins/daterangepicker/daterangepicker.js"></script>
   <!-- AdminLTE App -->
-  <script src="{% static '' %}js/AdminLTE/app.js"></script>
+  <script src="{{STATIC_URL}}js/AdminLTE/app.js"></script>
   <!--m2-template-specific js-->
-  <script src="{% static '' %}js/m2-template-specific.js"></script>
+  <script src="{{STATIC_URL}}js/m2-template-specific.js"></script>
   <!--m2-template-specific js-->
-  <script src="{% static '' %}js/js.cookie.js"></script>
+  <script src="{{STATIC_URL}}js/js.cookie.js"></script>
   <script type="text/javascript">
       // expose user info in javascript context.
       var user={
@@ -111,7 +111,7 @@
             <!-- Menu Toggle Button -->
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="{% static '' %}img/user.jpg" class="user-image" alt="User Image">
+              <img src="{{STATIC_URL}}img/user.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">
                 {% if user.is_authenticated %}
@@ -124,7 +124,7 @@
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="{% static '' %}img/user.jpg" class="img-circle" alt="User Image">
+                <img src="{{STATIC_URL}}img/user.jpg" class="img-circle" alt="User Image">
                 <p>{% if user.is_authenticated %}
                   {{ user.username }}
                   <small>{% trans 'Last login' %} {{ user.last_login }}</small>
