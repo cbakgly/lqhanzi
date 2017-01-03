@@ -3,9 +3,10 @@
 bin/
 include/
 lib/
+share/
 project/static/uploads/
 bower_components/
 pip-selfcheck.json
-.DS_Store
 dump.rdb
-migrations
+migrations/
+lqhanzi-assets/
