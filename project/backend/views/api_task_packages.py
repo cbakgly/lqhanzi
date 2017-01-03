@@ -1,17 +1,18 @@
 # encoding: utf-8
 from __future__ import unicode_literals
+
+import django_filters
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
-import django_filters as filters
+from rest_framework.permissions import IsAuthenticated
 
-from ..models import TaskPackages, Tasks
 from api_tasks import TasksSerializer
-from workbench.enums import getenum_business_status
+from backend.enums import getenum_business_status
+from ..models import TaskPackages, Tasks
 
 
 # Task Packages management
@@ -54,22 +55,24 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         return ret
 
 
-class NumberInFilter(filters.filters.BaseInFilter, filters.NumberFilter):
+class NumberInFilter(django_filters.filters.BaseInFilter, django_filters.filters.NumberFilter):
     pass
 
 
-class TaskPackagesFilter(filters.FilterSet):
-    c_t = filters.DateFromToRangeFilter()
-    completed_at = filters.DateFromToRangeFilter()
+class TaskPackagesFilter(django_filters.FilterSet):
+    c_t = django_filters.DateFromToRangeFilter()
+    completed_at = django_filters.DateFromToRangeFilter()
     business_type_in = NumberInFilter(name='business_type', lookup_expr='in')
+    ordering = django_filters.OrderingFilter(fields=('id',))
 
     class Meta:
         model = TaskPackages
-        fields = ["user__username",
+        fields = ["user_id",
                   "business_type",
                   "business_type_in",
                   'c_t',
-                  'completed_at']
+                  'completed_at',
+                  'status', ]
 
 
 class TaskPackagesViewSet(viewsets.ModelViewSet):
@@ -78,4 +81,10 @@ class TaskPackagesViewSet(viewsets.ModelViewSet):
 
     serializer_class = TaskPackagesSerializer
     filter_class = TaskPackagesFilter
-    queryset = TaskPackages.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        # TODO: will return object basing on user's group(role)
+        if user.is_superuser == 1:
+            return TaskPackages.objects.all()
+        return TaskPackages.objects.filter(user_id=self.request.user.id)

@@ -6,7 +6,6 @@ from rest_framework.decorators import list_route
 from rest_framework import viewsets
 from rest_framework import serializers
 
-from django_filters.rest_framework import DjangoFilterBackend
 import django_filters
 
 from ..pagination import NumberPagination
@@ -45,7 +44,6 @@ class RedeemViewSet(viewsets.ModelViewSet):
 
     queryset = CreditsRedeem.objects.all()
     filter_class = RedeemFilter
-    filter_backends = (DjangoFilterBackend,)
     pagination_class = NumberPagination
     serializer_class = RedeemSerializer
 

@@ -6,8 +6,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from django.utils.timezone import now, timedelta
 
-import django_filters.rest_framework
-import rest_framework_filters as drf_filters
+import django_filters
 import datetime
 
 from backend.models import Diaries, User
@@ -33,9 +32,9 @@ class DiariesSerializer(serializers.ModelSerializer):
         return ret
 
 
-class DiariesFilter(drf_filters.FilterSet):
-    c_t = drf_filters.DateFromToRangeFilter()
-    u_t = drf_filters.DateFromToRangeFilter()
+class DiariesFilter(django_filters.FilterSet):
+    c_t = django_filters.filters.DateFromToRangeFilter()
+    u_t = django_filters.filters.DateFromToRangeFilter()
 
     class Meta:
         model = Diaries
@@ -102,11 +101,12 @@ class DiarySerializer(serializers.ModelSerializer):
         return instance
 
 
-class DiaryFilter(drf_filters.FilterSet):
+class DiaryFilter(django_filters.FilterSet):
     """
     根据用户id和时间来筛选
     """
-    c_t = drf_filters.DateFromToRangeFilter()
+    c_t = django_filters.filters.DateFromToRangeFilter()
+    ordering = django_filters.OrderingFilter(fields=('c_t',))
 
     class Meta:
         model = Diaries
@@ -124,6 +124,3 @@ class DiaryViewSet(viewsets.ModelViewSet):
     serializer_class = DiarySerializer
     filter_class = DiaryFilter
     pagination_class = NumberPagination
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-
-    ordering = ('c_t')

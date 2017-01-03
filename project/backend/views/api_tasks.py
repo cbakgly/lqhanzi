@@ -6,10 +6,10 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-import rest_framework_filters as drf_filters
-import django_filters as filters
+import django_filters
+
 from ..models import Tasks
-from api_variants_split import VariantsSplitSerializer
+from ..enums import getenum_business_type
 
 
 # Task Packages management
@@ -40,11 +40,10 @@ class TasksSerializer(serializers.ModelSerializer):
         return ret
 
 
-class TasksFilter(drf_filters.FilterSet):
-    assigned_at = drf_filters.DateFromToRangeFilter()
-    completed_at = filters.DateFromToRangeFilter()
-    c_t = filters.DateFromToRangeFilter()
-    u_t = filters.DateFromToRangeFilter()
+class TasksFilter(django_filters.FilterSet):
+    assigned_at = django_filters.DateFromToRangeFilter()
+    completed_at = django_filters.DateFromToRangeFilter()
+    ordering = django_filters.OrderingFilter(fields=('id',))
 
     class Meta:
         model = Tasks
@@ -55,14 +54,36 @@ class TasksViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
-    filter_backends = (filters.rest_framework.DjangoFilterBackend,)
     serializer_class = TasksSerializer
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
 
     @list_route()
-    def split_tasks(self, request, *args, **kwargs):
-        split_task = Tasks(pk=1).split_task.all()
-        serializer = VariantsSplitSerializer(split_task, many=True)
+    def split(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_superuser == 1:
+            queryset = Tasks.objects.filter(business_type=getenum_business_type('split'))
+        else:
+            queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=getenum_business_type('split'))
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
+    @list_route()
+    def input(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_superuser == 1:
+            queryset = Tasks.objects.filter(business_type=getenum_business_type('input'))
+        else:
+            queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=getenum_business_type('input'))
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    @list_route()
+    def dedup(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_superuser == 1:
+            queryset = Tasks.objects.filter(business_type=getenum_business_type('dedup'))
+        else:
+            queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=getenum_business_type('dedup'))
+        serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
