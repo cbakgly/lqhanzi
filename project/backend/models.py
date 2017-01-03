@@ -283,6 +283,9 @@ class TaskTypes(models.Model):
 
 
 class Tasks(models.Model):
+    business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
+    business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
+    status_choices = ((0, u'进行中'), (1, u'已完成'))
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
     variant_split = models.ForeignKey(VariantsSplit, models.SET_NULL, related_name="split_task", null=True, blank=True)
     variant_input = models.ForeignKey(VariantsInput, models.SET_NULL, related_name="input_task", null=True, blank=True)
