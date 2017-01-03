@@ -30,6 +30,12 @@ textarea{
     resize:none;
 }
 /*reset*/
+@media(min-width: 768px){
+    .sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+        top: 41px;
+        margin-left: 0;
+    }
+}
 .content-header {
     padding: 0 0 10px 0;
 }
