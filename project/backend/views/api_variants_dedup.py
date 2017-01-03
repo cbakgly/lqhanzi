@@ -13,7 +13,7 @@ class KoreanDedupSerializer(serializers.ModelSerializer):
     class Meta:
         model = KoreanDedup
         fields = "__all__"
-        depth = 2
+        depth = 0
 
 
 class KoreanDedupFilter(django_filters.FilterSet):

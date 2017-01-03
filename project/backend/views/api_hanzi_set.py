@@ -6,31 +6,31 @@ from rest_framework.permissions import IsAuthenticated
 import django_filters
 
 from ..pagination import NumberPagination
-from ..models import VariantsInput
+from ..models import HanziSet
 
 
-class VariantsInputSerializer(serializers.ModelSerializer):
+class HanziSetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = VariantsInput
+        model = HanziSet
         fields = "__all__"
         depth = 0
 
 
-class VariantsInputFilter(django_filters.FilterSet):
+class HanziSetFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
 
     class Meta:
-        model = VariantsInput
+        model = HanziSet
         fields = ("__all__")
 
 
-class VariantsInputViewSet(viewsets.ModelViewSet):
+class HanziSetViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
-    queryset = VariantsInput.objects.all()
-    filter_class = VariantsInputFilter
+    queryset = HanziSet.objects.all()
+    filter_class = HanziSetFilter
     pagination_class = NumberPagination
-    serializer_class = VariantsInputSerializer
+    serializer_class = HanziSetSerializer
