@@ -6,37 +6,38 @@
 {% block content %}
 <div class="row">
     <div class="col-xs-12">
-        <div class="box">
+        <div class="box box-blue">
             <!-- /.box-header -->
             <div class="box-header">
                 <div class="box-header-inner">
                     <h3 class="box-title">积分排行:</h3>
-                    <div id="test" class="input-group">
-                        <span class="input-group-addon">姓名:</span>
-
-                        <input v-model.lazy="username" type="text" class="form-control" placeholder="请输入姓名">
-
-                    </div>
+                    
                     <div id="app" class="ser-bd">
-                        <div class="ser-left z-ser-left">
-                            <div class="input-group">
-                                <span class="input-group-addon">类型:</span>
-                                <!-- select -->
-                                <div class="form-group">
-                                    <select v-model="selected" class="form-control">
-                                        <option value=1>总积分</option>
-                                        <option value=2>拆字积分</option>
-                                        <option value=3>去重积分</option>
-                                        <option value=4>录入积分</option>
-                                        <option value=5>互助积分</option>
-                                    </select>
+                        <div class="z-ser z1-ser">
+                            <div class="col col-md-4 col-sm-6 col-xs-12">
+                                <div id="test" class="input-group">
+                                    <span class="input-group-addon">姓名:</span>
+                                    <input v-model.lazy="username" type="text" class="form-control" placeholder="请输入姓名">
                                 </div>
                             </div>
-
+                            <div class="col col-md-4 col-sm-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">类型:</span>
+                                    <!-- select -->
+                                    <div class="form-group">
+                                        <select v-model="selected" class="form-control">
+                                            <option value=1>总积分</option>
+                                            <option value=2>拆字积分</option>
+                                            <option value=3>去重积分</option>
+                                            <option value=4>录入积分</option>
+                                            <option value=5>互助积分</option>
+                                        </select>
+                                    </div>
+                                </div>
+                           </div>
                         </div>
-                        <div class="input-group">
-                            <button v-on:click="load_pages()" class="btn btn-primary btn-sm">查询</button>
-
+                        <div class="btns">
+                            <button v-on:click="load_pages()" class="btn btn-blue btn-sm">查询</button>
                         </div>
                         <div class="z-info">
                             <a class="z-score" href="/workbench/credits-details" title="查看积分详情">我的总积分：<b>#[mycredit]</b></a>
@@ -68,8 +69,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div><!-- /.box -->
 {% load staticfiles %}
