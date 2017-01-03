@@ -59,13 +59,10 @@ modify__hanzi_set
 > 使用方式如下：
 
 ```
-from sysadmin.models import RbacAction
+from backend.models import RbacAction
+from backend.models import User
 action = RbacAction.objects.get(code="op")
-
-# 查找某个用户的记录, 这里user是sys_admin
-from sysadmin.models import User
-user = User.objects.get(id=5) 
-
+user = User.objects.get(id=5) # 查找某个用户的记录
 user.has_perm('op_task', action)
 > False
 
