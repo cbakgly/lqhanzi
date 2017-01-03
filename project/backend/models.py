@@ -51,7 +51,6 @@ class HanziSet(models.Model):
     is_korean_redundant = models.SmallIntegerField(u'是否多余高丽异体字', null=True)
     is_inter_dict_redundant = models.SmallIntegerField(u'是否多余台湾高丽异体字', null=True)
 
-    skip_num = models.SmallIntegerField(u'跳过次数，多的话算难字', null=True)
     structure = models.CharField(u'结构', max_length=16, null=True)
     min_split = models.CharField(u'跳过次数，多的话算难字', max_length=255, null=True)
     max_split = models.CharField(u'最大拆分', max_length=512, null=True)
@@ -214,7 +213,7 @@ class KoreanDedup(models.Model):
 
 class KoreanDupCharacters(models.Model):
     korean_variant = models.CharField(u'高丽字头', max_length=32, null=True)
-    unicode_of_korean = models.CharField(u'与字头字形相同/相近的Unicode', max_length=32, null=True)
+    unicode = models.CharField(u'与字头字形相同/相近的Unicode', max_length=32, null=True)
     relation = models.SmallIntegerField(u'二者关系：形码均相同，形似码相同，形同码不同，无相同字形', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)

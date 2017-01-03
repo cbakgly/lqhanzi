@@ -6,31 +6,31 @@ from rest_framework.permissions import IsAuthenticated
 import django_filters
 
 from ..pagination import NumberPagination
-from ..models import VariantsInput
+from ..models import KoreanDupCharacters
 
 
-class VariantsInputSerializer(serializers.ModelSerializer):
+class KoreanDupCharactersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = VariantsInput
+        model = KoreanDupCharacters
         fields = "__all__"
         depth = 0
 
 
-class VariantsInputFilter(django_filters.FilterSet):
+class KoreanDupCharactersFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
 
     class Meta:
-        model = VariantsInput
+        model = KoreanDupCharacters
         fields = ("__all__")
 
 
-class VariantsInputViewSet(viewsets.ModelViewSet):
+class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
-    queryset = VariantsInput.objects.all()
-    filter_class = VariantsInputFilter
+    queryset = KoreanDupCharacters.objects.all()
+    filter_class = KoreanDupCharactersFilter
     pagination_class = NumberPagination
-    serializer_class = VariantsInputSerializer
+    serializer_class = KoreanDupCharactersSerializer
