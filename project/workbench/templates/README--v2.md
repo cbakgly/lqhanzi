@@ -18,7 +18,7 @@
 
 | task_dedup.html | 继续去重任务页 |     添加  2016/12/31
 | task_input.html | 继续录入任务页 |     添加  2016/12/31
-| task_split.html | 继续拆分任务页 |  暂无
+| task_split.html | 继续拆分任务页 |     添加  2017/01/04
 
 ###字库检索
 | lqzk_search.html | 龙泉字库 |  有
@@ -32,6 +32,6 @@
 ###讨论区
 
 | forum.html | 讨论区 |    添加   2016／12/31
-| help.html | 我的求助 |	  
-| follow.html | 我的关注 | 
-| del.html | 回收站 |	  
+| help.html | 我的求助 |	  添加   2017/01/04
+| follow.html | 我的关注 | 添加   2017/01/04
+| del.html | 回收站 |	  添加   2017/01/04
