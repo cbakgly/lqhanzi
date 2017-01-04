@@ -27,7 +27,7 @@ class User(AbstractUser, GuardianUserMixin):
 variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
 hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 source = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
-boolean_choices = ((0, u'是'), (1, u'否'))
+boolean_choices = ((0, u'否'), (1, u'是'))
 
 
 class HanziSet(models.Model):
@@ -50,8 +50,8 @@ class HanziSet(models.Model):
     dup_count = models.SmallIntegerField(u'重复次数', null=True)
     inter_dict_dup_hanzi = models.CharField(u'异体字字典间重复编码', null=True, max_length=64)
     korean_dup_hanzi = models.CharField(u'高丽异体字字典内部重复编码', null=True, max_length=32)
-    is_korean_redundant = models.BooleanField(u'是否多余高丽异体字', default=True)
-    is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', default=True)
+    is_korean_redundant = models.BooleanField(u'是否多余高丽异体字', default=False)
+    is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', default=False)
 
     structure = models.CharField(u'结构', max_length=16, null=True)
     min_split = models.CharField(u'跳过次数，多的话算难字', max_length=255, null=True)
@@ -79,7 +79,7 @@ class VariantsSplit(models.Model):
     std_hanzi = models.CharField(u'所属正字', null=True, blank=True, max_length=64)
     as_std_hanzi = models.CharField(u'兼正字号', null=True, blank=True, max_length=32)
     seq_id = models.CharField(u'字的位置统一编码', null=True, blank=True, max_length=32)
-    is_redundant = models.BooleanField(u'是否多余', default=True)
+    is_redundant = models.BooleanField(u'是否多余', default=False)
 
     skip_num_draft = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
     init_split_draft = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
