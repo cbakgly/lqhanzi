@@ -27,6 +27,7 @@ class User(AbstractUser, GuardianUserMixin):
 variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
 hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
 source = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
+boolean_choices = ((0, u'是'), (1, u'否'))
 
 
 class HanziSet(models.Model):
@@ -49,8 +50,8 @@ class HanziSet(models.Model):
     dup_count = models.SmallIntegerField(u'重复次数', null=True)
     inter_dict_dup_hanzi = models.CharField(u'异体字字典间重复编码', null=True, max_length=64)
     korean_dup_hanzi = models.CharField(u'高丽异体字字典内部重复编码', null=True, max_length=32)
-    is_korean_redundant = models.SmallIntegerField(u'是否多余高丽异体字', null=True)
-    is_inter_dict_redundant = models.SmallIntegerField(u'是否多余台湾高丽异体字', null=True)
+    is_korean_redundant = models.BooleanField(u'是否多余高丽异体字', default=True)
+    is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', default=True)
 
     structure = models.CharField(u'结构', max_length=16, null=True)
     min_split = models.CharField(u'跳过次数，多的话算难字', max_length=255, null=True)
@@ -78,7 +79,7 @@ class VariantsSplit(models.Model):
     std_hanzi = models.CharField(u'所属正字', null=True, blank=True, max_length=64)
     as_std_hanzi = models.CharField(u'兼正字号', null=True, blank=True, max_length=32)
     seq_id = models.CharField(u'字的位置统一编码', null=True, blank=True, max_length=32)
-    is_redundant = models.SmallIntegerField(u'是否多余', null=True, blank=True)
+    is_redundant = models.BooleanField(u'是否多余', default=True)
 
     skip_num_draft = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
     init_split_draft = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
@@ -101,10 +102,10 @@ class VariantsSplit(models.Model):
     similar_parts_final = models.CharField(u'相似部件', max_length=64, null=True, blank=True)
     dup_id_final = models.CharField(u'重复ID', max_length=32, null=True, blank=True)
 
-    is_draft_equals_review = models.SmallIntegerField(u'初次回查是否相等', null=True, blank=True)
-    is_review_equals_final = models.SmallIntegerField(u'回查审查是否相等', null=True, blank=True)
-    is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
-    is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', default=False)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', default=False)
+    is_checked = models.BooleanField(u'是否人工审核', default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', default=False)
     remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, blank=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, blank=True, auto_now=True)
@@ -126,7 +127,7 @@ class VariantsInput(models.Model):
     variant_type_draft = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
     std_hanzi_draft = models.CharField(u'所属正字', max_length=64, null=True)
     notes_draft = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_draft = models.SmallIntegerField(u'是否删除', null=True)
+    is_del_draft = models.BooleanField(u'是否删除', default=False)
 
     seq_num_review = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_review = models.CharField(u'文字', max_length=8, null=True)
@@ -134,7 +135,7 @@ class VariantsInput(models.Model):
     variant_type_review = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
     std_hanzi_review = models.CharField(u'所属正字', max_length=64, null=True)
     notes_review = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_review = models.SmallIntegerField(u'是否删除', null=True)
+    is_del_review = models.BooleanField(u'是否删除', default=False)
 
     seq_num_final = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_final = models.CharField(u'文字', max_length=8, null=True)
@@ -142,12 +143,12 @@ class VariantsInput(models.Model):
     variant_type_final = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
     std_hanzi_final = models.CharField(u'所属正字', max_length=64, null=True)
     notes_final = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_final = models.SmallIntegerField(u'是否删除', null=True)
+    is_del_final = models.BooleanField(u'是否删除', default=False)
 
-    is_draft_equals_review = models.SmallIntegerField(u'初次回查是否相等', null=True)
-    is_review_equals_final = models.SmallIntegerField(u'回查审查是否相等', null=True)
-    is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
-    is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', default=False)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', default=False)
+    is_checked = models.BooleanField(u'是否人工审核', default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', default=False)
 
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
@@ -235,10 +236,10 @@ class InterDictDedup(models.Model):
     inter_dict_dup_hanzi_draft = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
     inter_dict_dup_hanzi_review = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
     inter_dict_dup_hanzi_final = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
-    is_draft_equals_review = models.SmallIntegerField(u'初次回查是否相等', null=True)
-    is_review_equals_final = models.SmallIntegerField(u'回查审查是否相等', null=True)
-    is_checked = models.SmallIntegerField(u'是否人工审核', default=0)
-    is_submitted = models.SmallIntegerField(u'是否入hanzi库', default=0)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', default=True)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', default=True)
+    is_checked = models.BooleanField(u'是否人工审核', default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', default=False)
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
@@ -276,7 +277,7 @@ class TaskTypes(models.Model):
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_name = models.CharField(u'任务名称', max_length=64, null=True)
     credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.SmallIntegerField(u'是否启用', default=1)
+    is_active = models.BooleanField(u'是否启用', default=True)
 
     class Meta:
         db_table = 'lq_task_types'
