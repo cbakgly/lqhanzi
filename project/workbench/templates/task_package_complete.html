@@ -88,7 +88,7 @@ var app = new Vue({
 	    tasks: [],
 	    result: [],
         param: {'status': 1},
-        url: '/api/v1/task_packages/',
+        url: '{% url 'task-packages-list' version='v1' %}',
         map_type: {0: '录入', 1: '拆字', 2: '去重', 3: '互助'},
         map_stage: {0: '初次', 1: '回查', 2: '审查'},
     },
