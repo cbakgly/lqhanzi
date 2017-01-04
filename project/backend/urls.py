@@ -1,5 +1,4 @@
 from rest_framework.routers import SimpleRouter
-from django.conf.urls import url
 
 from backend.views.api_diaries import DiariesViewSet
 from backend.views.api_user import UserViewSet
@@ -14,7 +13,6 @@ from backend.views.api_variants_input import VariantsInputViewSet
 from backend.views.api_variants_dedup import InterDictDedupViewSet, KoreanDedupViewSet
 from backend.views.api_korean_dup_characters import KoreanTaiwanDupCharactersViewSet
 from backend.views.api_hanzi_set import HanziSetViewSet
-from backend.views import view_test
 
 router = SimpleRouter()
 router.register(r'operations', OperationViewSet, base_name='operations')
