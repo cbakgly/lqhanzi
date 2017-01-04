@@ -34,3 +34,4 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
     filter_class = VariantsInputFilter
     pagination_class = NumberPagination
     serializer_class = VariantsInputSerializer
+

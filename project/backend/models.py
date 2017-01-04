@@ -302,7 +302,7 @@ class Tasks(models.Model):
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
 
     assigned_at = models.DateTimeField(u'分配时间', null=True, default=timezone.now)
-    completed_at = models.DateTimeField(u'完成时间', null=True)
+    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
