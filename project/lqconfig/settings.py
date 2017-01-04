@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'guardian',
-    'storages',
+    # 'storages',
     'debug_toolbar',
     # 'crispy_forms',
     'registration',
