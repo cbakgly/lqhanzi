@@ -509,7 +509,7 @@ next_url:下一页链接
 *Method GET*
 
 
-`/api/v1/workbench/tasks?user_id=&business_type=2&task_status=1&page=&page_size=&hanzi=&source=&split=&similar_parts=&task_package_id=`
+`/api/v1/workbench/tasks?user_id=&business_type=1&task_status=1&page=&page_size=&hanzi=&source=&split=&similar_parts=&task_package_id=`
 
 *Parameters*
 
