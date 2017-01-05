@@ -10,7 +10,7 @@ def task_split(request):
 
 @login_required
 def task_input(request):
-    return render(request, 'task_iput.html')
+    return render(request, 'task_input.html')
 
 
 @login_required
