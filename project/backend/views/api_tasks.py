@@ -65,7 +65,7 @@ class TasksViewSet(viewsets.ModelViewSet):
         user = request.user
         if user.is_superuser == 1:
             queryset = Tasks.objects.filter(business_type=getenum_business_type('split'))
-            #queryset = Tasks.objects.filter(task_package=request.query_params['task_package'])
+            # queryset = Tasks.objects.filter(task_package=request.query_params['task_package'])
         else:
             queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=getenum_business_type('split'))
         serializer = self.serializer_class(queryset, many=True)
@@ -111,7 +111,7 @@ class ChoiceTasksViewSet(viewsets.ModelViewSet):
             for t in tasks:
                 q1.children.append(('id', t.variant_split.id))
             queryset = self.api_choice(q1)
-            #queryset = tasks.prefetch_related('variant_split')
+            # queryset = tasks.prefetch_related('variant_split')
         else:
             tasks = Tasks.objects.filter(user_id=user.id).filter(task_package=self.request.query_params['task_package'])
             for t in tasks:

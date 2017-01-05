@@ -4,7 +4,7 @@ from backend.views.api_diaries import DiariesViewSet
 from backend.views.api_user import UserViewSet
 from backend.views.api_operation import OperationViewSet
 from backend.views.api_task_packages import TaskPackagesViewSet
-from backend.views.api_tasks import TasksViewSet, SplitTasksViewSet, InputTasksViewSet, KoreanDedupTasksViewSet, InterDictDedupTasksViewSet
+from backend.views.api_tasks import TasksViewSet, SplitTasksViewSet, InputTasksViewSet, InterDictDedupTasksViewSet
 from backend.views.api_diaries import DiaryViewSet
 from backend.views.api_redeem import RedeemViewSet
 from backend.views.api_credits import CreditViewSet
