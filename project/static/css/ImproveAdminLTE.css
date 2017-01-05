@@ -154,13 +154,44 @@ input[type="radio"], input[type="checkbox"]{
     padding: 5px 20px;
 }
 .timeline > li > .timeline-item{
-    -webkit-box-shadow:none ;
-     box-shadow: none ;
-     border-radius: 0;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
 }
 .timeline > li > .timeline-item > .timeline-header{
     font-size:12px;
     border-bottom:0 none;
+}
+.diary-con{
+    position: relative;
+}
+.diary-con .text{
+    padding:0 80px 0 60px;
+}
+.diary-con .text p{
+    margin-bottom: 10px;
+}
+.diary-con .text p span{
+    margin-right: 25px;
+}
+.diary-con .title{
+    position: absolute;
+    left:10px;
+    top:0;
+}
+.diary-con .timer{
+    position: absolute;
+    right:10px;
+    top:0;
+}
+.words{
+    padding:10px;
+}
+.words textarea{
+    width:100%;
+    min-height:100px;
+    border:none 0;
+    border:1px solid #ddd;
+    padding:5px;
 }
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]{
     position: relative;
@@ -685,11 +716,12 @@ input[type="radio"], input[type="checkbox"]{
 }
 .btn-blue{
     background-color: #4abfec;
-    border:1px solid #4abfec;
+    border:1px solid #02a6d0;
     color:#fff;
 }
 .btn-blue:hover, .btn-blue:focus, .btn-blue.focus{
     color:#fff;
+    background:#06bae6;
 }
 .post .btns button:first-child{
     margin-right:0;
@@ -876,8 +908,11 @@ thead th .checkbox{
 tbody tr th{
     font-weight:normal;
 }
+.split-btns{
+    margin:20px 0 8px 0;
+}
 .split-btns button:first-child,.split-btns button:nth-child(2){
-    margin-right:5px;
+    margin-right:0;
 }
 .composition{
     height:40px;
