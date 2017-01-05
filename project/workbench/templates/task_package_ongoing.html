@@ -84,7 +84,7 @@
           <p>请尽量按最初的计划进行，不要随意修改每日计划。</p>
           <div class="input-group">
             <span class="input-group-addon">每日计划:</span>
-            <input type="text" class="form-control" placeholder="请输入5的倍数" v-model="daily_plan">
+            <input type="text" class="form-control" placeholder="请输入5的倍数" v-model.number="daily_plan">
           </div>
           <div class="btns">
             <button class="btn btn-blue btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
@@ -114,7 +114,7 @@
                         return;
                     }
                     $.ajax({
-                        url: '{% url 'task-packages-list' version='v1' %}' + this.id + '/',
+                        url: "{% url 'task-packages-list' version='v1' %}" + this.id + '/',
                         type: 'PUT',
                         data: {"daily_plan": this.daily_plan},
                         success: function(data) {
