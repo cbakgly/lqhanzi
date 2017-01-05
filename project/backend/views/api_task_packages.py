@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from api_tasks import TasksSerializer
 from backend.enums import getenum_business_status
+from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks
 
 
@@ -53,10 +54,6 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         ret['business_type_display'] = instance.get_business_type_display()
         ret['business_stage_display'] = instance.get_business_stage_display()
         return ret
-
-
-class NumberInFilter(django_filters.filters.BaseInFilter, django_filters.filters.NumberFilter):
-    pass
 
 
 class TaskPackagesFilter(django_filters.FilterSet):

@@ -202,7 +202,7 @@ SESSION_CACHE_ALIAS = "default"
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', '')
 AWS_STORAGE_BUCKET_NAME = 'lqhanzi-static'
-AWS_AUTO_CREATE_BUCKET= True
+AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
 # see http://developer.yahoo.com/performance/rules.html#expires
 # AWS_HEADERS = {
