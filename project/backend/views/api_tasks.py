@@ -11,7 +11,7 @@ from django.db.models import Q
 
 from ..models import Tasks, VariantsSplit, VariantsInput, KoreanDedup, InterDictDedup
 from ..enums import getenum_business_type
-import api_variants_split, api_variants_input, api_variants_dedup
+from ..views import api_variants_split, api_variants_input, api_variants_dedup
 
 
 # Task Packages management
