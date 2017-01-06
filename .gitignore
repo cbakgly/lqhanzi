@@ -5,8 +5,10 @@ include/
 lib/
 share/
 project/static/uploads/
+project/static/**/*.png
+project/static/**/*.jpg
+**/migrations/0*
+
 bower_components/
 pip-selfcheck.json
 dump.rdb
-lqhanzi-assets/
-**/migrations/0*

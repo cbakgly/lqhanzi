@@ -13,7 +13,7 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
     class Meta:
         model = VariantsSplit
         fields = "__all__"
-        depth = 2
+        depth = 0
 
 
 class VariantsSplitFilter(django_filters.FilterSet):
