@@ -8,5 +8,5 @@ project/static/uploads/
 bower_components/
 pip-selfcheck.json
 dump.rdb
-migrations/
 lqhanzi-assets/
+**/migrations/0*
