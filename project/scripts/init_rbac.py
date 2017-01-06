@@ -1,7 +1,7 @@
-from sysadmin.models import User
+from backend.models import User
 from django.contrib.auth.models import Group
 from guardian.shortcuts import assign_perm
-from sysadmin.models import RbacAction
+from backend.models import RbacAction
 import traceback
 
 
