@@ -1,746 +1,361 @@
-{% extends "m2_base.html" %}
-
-{% block content %}
-	<div class="content-header">
-        <ol class="breadcrumb">
-          <li><a href="javascript:;">我的任务</a></li>
-          <li class="active">拆字</li>
-        </ol>
-      </div>
-      <div class="row">
-          <div class="col-md-7">
-            <div class="box box-blue">
-              <!-- /.box-header -->
-              <div class="box-header">
-                <div class="split-top">
-                  <div class="header-img pull-left">
-                    <div class="zi">
-                      <div class="single-zi">庆</div>
+{% extends "m2_base.html" %} {% load staticfiles %} {% block content %} {% verbatim %}
+<!-- component template -->
+<script type="text/x-template" id="parts-template">
+    <div class="box box-blue">
+        <div class="box-header">
+            <div class='box-inner'>
+                <div class="input-item-group">
+                    <span class="input-item-header"><span class="input-item-header">结构:</span></span>
+                    <div class="input-item-content ">
+                        <span v-for="item in structs" class="component-item m-t-10" :class="is_flipx(item.input) ? 'flipx' : ''" :data-value="item.input" @click="input_it">
+                    {{item.display}}</span>
                     </div>
-                  </div>
-                  <div class="hanzi-info pull-left">
-                    <p class="hanzi-origin">来源：<em>台湾异体字字典</em></p>
-                    <p class="hanzi-code">编码：<a href="#">A00109-001</a></p>
-                  </div>
                 </div>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
+                <div class="input-item-group">
+                    <span class="input-item-header" style='height: 158px;line-height: 158px;'>部件:</span>
+                    <div class="input-item-content">
+                        <div class="input-group input-group-sm m-t-10">
+                            <input type="text" class="form-control" placeholder="请输入笔画、笔顺检索部件..." v-model="searchQuery">
+                            <span class="input-group-btn">
+                        <button type="button" class="btn btn-flat"><i class="fa fa-search"></button>
+                      </span>
+                            <div class="input-group-btn">
+                                <a class="btn" title="帮助" href="/article/component-help" target="blank"> <i class="fa fa-question-circle" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class='row' style='margin: 0'>
+                            <div class='input-item-header2'>
+                                <span>笔画:</span>
+                            </div>
+                            <div class='input-item-content2'>
+                                <div v-for="key in parts" class='btn btn-circle' :class="is_actived(key) ? 'active' : ''" @click="input_bishu_search(key)">{{display(key)}}</div>
+                            </div>
+                        </div>
+                        <div class='row' style='margin: 0'>
+                            <div class='input-item-header2'>
+                                <span>笔顺:</span>
+                            </div>
+                            <div class='input-item-content2'>
+                                <div v-for="item in bishus" class='btn btn-circle' :data-value="item.input" @click="input_search">{{item.display}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-10 col-md-offset-1'>
+                        <div class="tabs-content">
+                            <span v-for="item in search_result" class='component-item' :class="hint_item(item) ? 'hint-item' : ''" :data-value="item.input" @click="input_it">
+                  {{item_display(item)}}<img v-if="is_image(item)" class='component-img' :src="image_path(item)" :data-value="item.input"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+{% endverbatim %}
+<div id="hanzi-split" class='row'>
+    <div class='col-md-7 col-xm-12'>
+        <div class="box box-blue">
+            <div class="box-header">
+                <div class="hanzi-content">
+                    <a href="#" class="pull-right dropdown-toggle">
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </a>
+                    <div class="split-top">
+                        <div class="header-img pull-left">
+                            <div class="zi">
+                                <div class="single-zi">庆</div>
+                            </div>
+                        </div>
+                        <div class="hanzi-info pull-left">
+                            <p class="hanzi-origin">来源：<em>台湾异体字字典</em></p>
+                            <p class="hanzi-code">编码：<a href="#">A00109-001</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
                 <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>
-                        <div class="checkbox">
-                          <label><input type="checkbox">初次</label>
-                        </div>
-                      </th>
-                      <th>
-                        <div class="checkbox">
-                          <label><input type="checkbox">回查</label>
-                        </div>
-                      </th>
-                      <th>
-                        <div class="checkbox">
-                          <!--如果无权限，则为不可选 disabled-->
-                          <label><input type="checkbox" disabled="disabled">审查</label>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <th>重复值</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>初步拆分一</th>
-                    <td>⿰⿰亻丨⿱厶夫</td>
-                    <td>⿰⿰亻丨⿱厶夫</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>初步拆分二</th>
-                    <td>⿰⿰亻丨⿱厶夫</td>
-                    <td>⿰⿰亻丨⿱厶夫</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>调笔拆分</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>相似部件</th>
-                    <td>小</td>
-                    <td>小</td>
-                    <td></td>
-                  </tr>
-                  </tbody>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" checked>初次
+                                    </label>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" disabled>回查
+                                    </label>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" disabled>审查
+                                    </label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>重复值</td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="若能输入该图字，请填写，不须继续拆分" autofocus @click="set_main_input">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>初步拆分一</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>初步拆分二</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>调笔拆分</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>相似部件</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
                 </table>
                 <div class="btn-group btns-tr split-btns pull-right">
-                  <button class="btn btn-blue btn-sm z-btn-sm">存疑提交</button>
-                  <button class="btn btn-blue btn-sm z-btn-sm">下一页</button>
-                  <button class="btn btn-blue btn-sm z-btn-sm">太难跳过</button>
+                    <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
+                    <button class="btn btn-blue btn-sm z-btn-sm">提交并转下一条</button>
+                    <button class="btn btn-blue btn-sm z-btn-sm">太难跳过</button>
                 </div>
-              </div>
-              <!-- /.box-body -->
             </div>
-            <!-- /.box -->
-          </div>
-          <div class="col-md-5">
-            <div class="box box-blue ">
-              <div class="box-body">
-                <!--结构-->
-                <div class="composition">
-                  结构：
-                  <span>⿰</span>
-                  <span>⿱</span>
-                  <span>⿴</span>
-                  <span>⿵</span>
-                  <span>⿶</span>
-                  <span>⿷</span>
-                  <span>⿸</span>
-                  <span>⿹</span>
-                  <span>⿺</span>
-                  <span>⿻</span>
-                  <i class="icon-query"></i>
-                </div>
-                <!--部件-->
-                <div class="input-group add-on">
-                  <span class="input-group-addon">部件：</span>
-                  <input type="text" class="form-control" placeholder="请输入笔画及笔顺">
-                </div>
-                <!--结果-->
-                <div class="output">
-                  <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs pull-left">
-                      <li class="active"><a href="#all" data-toggle="tab">All</a></li>
-                      <li><a href="#one" data-toggle="tab">1</a></li>
-                      <li><a href="#two" data-toggle="tab">2</a></li>
-                      <li><a href="#three" data-toggle="tab">3</a></li>
-                      <li><a href="#four" data-toggle="tab">4</a></li>
-                      <li><a href="#five" data-toggle="tab">5</a></li>
-                      <li><a href="#six" data-toggle="tab">6</a></li>
-                      <li><a href="#seven" data-toggle="tab">7</a></li>
-                      <li><a href="#eight" data-toggle="tab">8</a></li>
-                      <li><a href="#nine" data-toggle="tab">9</a></li>
-                      <li><a href="#ten" data-toggle="tab">10</a></li>
-                      <li><a href="#eleven" data-toggle="tab">11</a></li>
-                      <li><a href="#twelve" data-toggle="tab">12</a></li>
-                      <li><a href="#thirteen" data-toggle="tab">13</a></li>
-                      <li><a href="#fourteen" data-toggle="tab">14</a></li>
-                      <li><a href="#fifteen" data-toggle="tab">15</a></li>
-                      <li><a href="#sixteen" data-toggle="tab">16</a></li>
-                      <li><a href="#seveteen" data-toggle="tab">17</a></li>
-                    </ul>
-                    <div class="tab-content">
-                      <div class="active tab-pane" id="all">
-                        <span class="stock-item">1</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="stock-item">2</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="stock-item">3</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="stock-item">4</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">5</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">6</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">7</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">8</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">9</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">10</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">11</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="stock-item">12</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">13</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="stock-item">14</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="stock-item">15</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="stock-item">16</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="stock-item">17</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="one">
-                        <span class="stock-item">1</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="two">
-                        <span class="stock-item">2</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="three">
-                        <span class="stock-item">3</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="four">
-                        <span class="stock-item">4</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="five">
-                        <span class="stock-item">5</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="six">
-                        <span class="stock-item">6</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="seven">
-                        <span class="stock-item">7</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="eight">
-                        <span class="stock-item">8</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="nine">
-                        <span class="stock-item">9</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="ten">
-                        <span class="stock-item">10</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="eleven">
-                        <span class="stock-item">11</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="twelve">
-                        <span class="stock-item">12</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="thirteen">
-                        <span class="stock-item">13</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="fourteen">
-                        <span class="stock-item">14</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="fifteen">
-                        <span class="stock-item">15</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="sixteen">
-                        <span class="stock-item">16</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="seveteen">
-                        <span class="stock-item">17</span>
-                        <span class="component-item">丶</span>
-                        <span class="component-item">一</span>
-                        <span class="component-item">丨</span>
-                        <span class="component-item">丿</span>
-                        <span class="component-item">乀</span>
-                        <span class="component-item">⺄</span>
-                        <span class="component-item">㇀</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                        <span class="component-item">𠄌</span>
-                        <span class="component-item">𡿨</span>
-                        <span class="component-item">乙</span>
-                        <span class="component-item">𠃉</span>
-                        <span class="component-item">㇇</span>
-                        <span class="component-item">㇉</span>
-                        <span class="component-item">𠃌</span>
-                        <span class="component-item">亅</span>
-                      </div>
-                      <!-- /.tab-pane -->
-                    </div>
-                    <!-- /.tab-content -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
+        </div>
+    </div>
+    <div class='col-md-5 col-xm-12'>
+        <div>
+            <parts-inputmethod :data="hanziComponents" :parts=" _.range(0, 18)">
+            </parts-inputmethod>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %} {% block footerjs %}
+<script src="{% static '' %}js/plugins/parts_component/parts_component.js"></script>
+<script type="text/javascript">
+// register the parts-inputmethod component
+Vue.component('parts-inputmethod', {
+    template: '#parts-template',
+    props: {
+        data: Array,
+        parts: Array,
+    },
+    data: function() {
+        var grp_parts = {}
+        var that = this;
+        var bishus = [{
+            "display": "一",
+            "input": "h",
+            "search": ""
+        }, {
+            "display": "丨",
+            "input": "s",
+            "search": ""
+        }, {
+            "display": "丿",
+            "input": "p",
+            "search": ""
+        }, {
+            "display": "乀",
+            "input": "n",
+            "search": ""
+        }, {
+            "display": "⺄",
+            "input": "z",
+            "search": ""
+        }, ];
+        this.parts.forEach(function(key) {
+            grp_parts[key] = that.data.filter(function(item) {
+                var replace = "^" + key + "[hspnz]*$";
+                var re = new RegExp(replace);
+                if (item.search.trim().match(re)) {
+                    return item
+                }
+            })
+        })
+        grp_parts[0] = this.data.filter(function(item) {
+            var replace = "^[0-9]+[hspnz]*$";
+            var re = new RegExp(replace);
+            if (item.search.trim().match(re)) {
+                return item
+            }
+        });
+        return {
+            sortKey: '',
+            grp_parts: grp_parts,
+            selected: 1,
+            search_result: [],
+            searchQuery: '',
+            mainInput: {},
+            bishus: bishus
+        }
+
+    },
+    watch: {
+        searchQuery: function() {
+            if (typeof(this.searchQuery) == 'number') {
+                this.search_result = this.grp_parts[this.selected]
+                return;
+            }
+            if (this.searchQuery == '') {
+                this.search_result = this.grp_parts[0]
+                return;
+            }
+            var that = this;
+            this.search_result = this.data.filter(function(item) {
+                var replace = that.searchQuery + "[hspnz]*$";
+                var re = new RegExp(replace);
+                if (item.search.trim().match(re)) {
+                    return item
+                }
+            })
+        }
+    },
+    created: function() {
+        this.active_tab(0)
+    },
+    computed: {
+        structs: function() {
+            var structs = this.data.filter(function(item) {
+                if (item.search.trim().match(/^0(.*)$/)) {
+                    return item
+                }
+            })
+            return structs
+        },
+    },
+    filters: {
+        capitalize: function(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1)
+        }
+    },
+    methods: {
+        is_flipx: function(input) {
+            return input[0] == '~'
+        },
+        is_actived: function(key) {
+            return this.selected == key
+        },
+        active_tab: function(key) {
+            this.selected = key
+            this.search_result = this.grp_parts[this.selected]
+        },
+        image_path: function(item) {
+            return "/static/img/components/" + item.display + ".png"
+        },
+        item_display: function(item) {
+            if (this.uniLen(item) == 1 || item.input == "") {
+                return item.display
+            }
+        },
+        hint_item: function(item) {
+            return item.input == ''
+        },
+        is_image: function(item) {
+            if (item.input == "")
+                return false
+            if (this.uniLen(item) != 1)
+                return true
+            return false
+        },
+        display: function(key) {
+            if (key == 0) {
+                return "All"
+            }
+            return key
+        },
+        uniLen: function(p) {
+            var str = p.display;
+            var total = 0,
+                c, i, len, sub;
+
+            for (i = 0, len = str.length; i < len; i++) {
+                sub = str.substr(i);
+                c = sub.charCodeAt(0);
+                if ((c >= 0xD800) && (c <= 0xDBFF)) c = ((c - 0xD800) << 10) + sub.charCodeAt(1) + 0x2400;
+
+                total += 1;
+                if (c >= 0x20000) {
+                    i++;
+                }
+            }
+            return total;
+        },
+        input_it: function(evt) {
+            var ele = $(evt.target);
+            this.$parent.$emit('emit-part', ele.data('value'))
+        },
+        input_search: function(evt) {
+            var ele = $(evt.target);
+            this.searchQuery = this.searchQuery + ele.data('value')
+        },
+        input_bishu_search: function(key) {
+            this.selected = key
+            if (key == 0) {
+                this.searchQuery = ''
+                return
+            }
+            this.searchQuery = key
+        }
+    }
+})
+
+var part_input = new Vue({
+    el: '#hanzi-split',
+    data: {
+        searchQuery: '',
+        hanziComponents: hanziComponents,
+        mainInput: $('#hanzi-split input[type=text]:first'),
+    },
+    methods: {
+        set_main_input: function(evt) {
+            this.mainInput = $(evt.target);
+        },
+    },
+    created: function() {
+        var that = this;
+        this.$on('emit-part', function(a) {
+            part_input.mainInput.val(part_input.mainInput.val() + a)
+        })
+    },
+    mounted: function() {
+        $("input[type=checkbox]").iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        })
+    }
+})
+</script>
 {% endblock %}
