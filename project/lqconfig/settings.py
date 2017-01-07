@@ -96,7 +96,8 @@ DATABASES = {
         'USER': 'lq',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'}
     }
 }
 
@@ -192,7 +193,7 @@ CACHES = {
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+# SESSION_CACHE_ALIAS = "default"
 # Redis Cache Settings end
 
 
