@@ -274,16 +274,6 @@ class TaskPackages(models.Model):
         return str(self.id)
 
 
-class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
-    business_name = models.CharField(u'任务名称', max_length=64, null=True)
-    credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.BooleanField(u'是否启用', choices=boolean_choices, default=True)
-
-    class Meta:
-        db_table = 'lq_task_types'
-
-
 class Tasks(models.Model):
     business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
     business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
