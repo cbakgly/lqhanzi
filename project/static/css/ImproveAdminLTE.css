@@ -1041,11 +1041,11 @@ tbody tr th{
 
 .split-step {
     border-radius: 6px !important;
-    border-color: green;
+    border-color: #ddd;
 }
 
 .m-t-10 {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .m-r-5 {
@@ -1057,25 +1057,28 @@ tbody tr th{
 }
 
 .component-item {
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
     display: inline-flex;
+    width: 24px;
+    height: 24px;
     border: 1px solid #eef;
+    line-height:20px;
+    font-size: 20px;
     vertical-align: middle;
     padding: 0px;
     border-collapse: collapse;
     cursor: pointer;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: center;
+    margin-right: 4px;
+    margin-bottom: 4px;
 }
 
 .component-img {
-    width: 29px;
-    height: 29px;
+    width: 20px;
+    height: 20px;
     font-size: 20px;
     display: inline-flex;
-    border-bottom: 1px solid #eef;
+    /*border-bottom: 1px solid #eef;*/
     vertical-align: middle;
     border-collapse: collapse;
     cursor: pointer;
@@ -1156,17 +1159,17 @@ tbody tr th{
 
 .box-inner {
     background-color: white;
-    min-width: 340px;
+    /*min-width: 340px;*/
 }
 .input-item-content {
-    overflow: auto;
+    overflow: hidden;
     background-color: white;
-    margin-left: 60px;
+    margin-left: 45px;
 }
 
 .input-item-group {
     display: block;
-    min-height: 50px;
+    min-height: 40px;
     background: #fff;
     width: 100%;
     box-shadow:  1px 1px 1px 1px rgba(0, 0, 0, 0.1);
@@ -1181,13 +1184,13 @@ tbody tr th{
     border-bottom-left-radius: 2px;
     display: block;
     float: left;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 38px;
     text-align: center;
     font-size: 12px;
-    line-height: 50px;
+    line-height: 40px;
     background: #eee;
-    border-right: 1px dotted #222;
+    border-right: 1px dotted #c5c5c5;
 }
 
 .input-item-btn {
@@ -1198,10 +1201,9 @@ tbody tr th{
 
 .input-item-header2 {
     float:left;
-    width: 10%;
+    width: 32px;
     margin: 10px 0 0 5px;
 }
-
 .input-item-content2 {
     float:left;
     width: 80%;
@@ -1210,4 +1212,7 @@ tbody tr th{
 
 .hint-item {
     color: red;
+}
+.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn{
+    border-radius:0;
 }
