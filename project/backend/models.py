@@ -118,13 +118,14 @@ class VariantsSplit(models.Model):
 
 
 class VariantsInput(models.Model):
+    variant_type_choices = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))
     volume_num = models.SmallIntegerField(u'册', null=True, blank=True)
     page_num = models.IntegerField(u'页码', null=True)
 
     seq_num_draft = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_draft = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_draft = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_draft = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
+    variant_type_draft = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
     std_hanzi_draft = models.CharField(u'所属正字', max_length=64, null=True)
     notes_draft = models.CharField(u'注释信息', max_length=64, null=True)
     is_del_draft = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
@@ -132,7 +133,7 @@ class VariantsInput(models.Model):
     seq_num_review = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_review = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_review = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_review = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
+    variant_type_review = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
     std_hanzi_review = models.CharField(u'所属正字', max_length=64, null=True)
     notes_review = models.CharField(u'注释信息', max_length=64, null=True)
     is_del_review = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
@@ -140,7 +141,7 @@ class VariantsInput(models.Model):
     seq_num_final = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_final = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_final = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_final = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
+    variant_type_final = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
     std_hanzi_final = models.CharField(u'所属正字', max_length=64, null=True)
     notes_final = models.CharField(u'注释信息', max_length=64, null=True)
     is_del_final = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
