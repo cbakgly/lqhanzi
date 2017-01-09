@@ -21,8 +21,8 @@ class TaskPackagesAdmin(admin.ModelAdmin):
               "c_t")
 
 
-class TasksInline(admin.TabularInline):
-    model = Tasks
+# class TasksInline(admin.TabularInline):
+#     model = Tasks
 
 
 class TasksAdmin(admin.ModelAdmin):
@@ -44,7 +44,7 @@ class TasksAdmin(admin.ModelAdmin):
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
-    inlines = [TasksInline]
+    # inlines = [TasksInline]
     fieldsets = (
         ['Main', {
             'fields': ("source", "hanzi_type", "hanzi_char"),
