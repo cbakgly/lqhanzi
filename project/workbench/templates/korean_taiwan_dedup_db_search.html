@@ -183,20 +183,20 @@
             </div><!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-if="paging.previous_url"><a :href="paging.previous_url">«</a></li>
+                <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a></li>
                 <li v-else><a>«</a></li>
                 <li v-for="item in paging.page_links">
-                    <span v-if="item[2]">
-                        <a>#[ item[1] ]]</a>
+                    <span href="javascript:void(0);" v-if="item[2]">
+                        <a href="javascript:void(0);">#[ item[1] ]]</a>
                     </span>
                     <span v-else-if="item[3]">
-                        <a>....</a>
+                        <a href="javascript:void(0);">....</a>
                     </span>
                     <span v-else>
-                        <a :href="item[0]">#[ item[1] ]]</a>
+                        <a href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
                     </span>
                 </li>
-                <li v-if="paging.next_url"><a :href="paging.next_url">»</a></li>
+                <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
                 <li v-else><a>»</a></li>
               </ul>
             </div>
@@ -207,9 +207,11 @@
       </div>
 
 <script type="text/javascript">
-    function dedup_search(cond) {
+    var search_url = '{% url "inter-dict-dedups-list" version="v1" %}';
+
+    function dedup_search(url, cond) {
         $.ajax({
-            url: '{% url "inter-dict-dedups-list" version="v1" %}',
+            url: url,
             type: 'GET',
             data: cond,
             success: function(data) {
@@ -245,7 +247,7 @@
                 if (this.is_review_equals_final) cond["revew_eq_final"] = this.review_eq_final;
                 if (this.is_submitted) cond["is_submitted"] = this.is_submitted;
 
-                dedup_search(cond);
+                dedup_search(search_url, cond);
             },
 
             reset_search: function() {
@@ -284,12 +286,16 @@
                 if (code == 1) dirname = 'variant1/';
                 if (code == 2) dirname = 'variant2/';
                 return dirname + filename;
+            },
+
+            goto_page: function(url) {
+                dedup_search(url, null);
             }
         }
     });
 
     $(function(){
-        dedup_search();
+        dedup_search(search_url, null);
     })
 </script>
 {% endblock %}

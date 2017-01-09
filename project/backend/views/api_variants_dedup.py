@@ -48,36 +48,39 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         ret = super(InterDictDedupSerializer, self).to_representation(instance)
         code = ret['hanzi_pic_id'][-1] if ret['hanzi_pic_id'] else False
-        ret['hanzi_pic_path'] = get_korean_char_pic_variant_path(code) + 'kr' + ret['hanzi_pic_id'] + ('.png') if code else ''
+        ret['hanzi_pic_path'] = get_korean_char_pic_variant_path(code) + ret['hanzi_pic_id'] + ('.png') if code else ''
         ret['source_display'] = instance.get_source_display()
         ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
         ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
         ret['is_checked_display'] = instance.get_is_checked_display()
         ret['is_submitted_display'] = instance.get_is_submitted_display()
 
-        if ret['inter_dict_dup_hanzi_draft'] and len(ret['inter_dict_dup_hanzi_draft'].decode('utf-8')) == 1:
+        tw_hanzi = ret['inter_dict_dup_hanzi_draft']
+        if tw_hanzi and len(tw_hanzi.decode('utf-8')) == 1:
             ret['is_draft_pic'] = 0
-            row = HanziSet.objects.get(hanzi_char=ret['inter_dict_dup_hanzi_draft'], source=getenum_source('tw'))
+            row = HanziSet.objects.get(hanzi_char=tw_hanzi, source=getenum_source('tw'))
             ret['inter_dict_dup_hanzi_draft_seq_id'] = row.seq_id
         else:
             ret['is_draft_pic'] = 1
-            ret['inter_dict_dup_hanzi_draft_path'] = get_taiwan_char_pic_path() + 'tw' + ret['inter_dict_dup_hanzi_draft'] + '.png' if ret['inter_dict_dup_hanzi_draft'] else ''
+            ret['inter_dict_dup_hanzi_draft_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
 
-        if ret['inter_dict_dup_hanzi_review'] and len(ret['inter_dict_dup_hanzi_review'].decode('utf-8')) == 1:
+        tw_hanzi = ret['inter_dict_dup_hanzi_review']
+        if tw_hanzi and len(tw_hanzi.decode('utf-8')) == 1:
             ret['is_review_pic'] = 0
-            row = HanziSet.objects.get(hanzi_char=ret['inter_dict_dup_hanzi_review'], source=getenum_source('tw'))
+            row = HanziSet.objects.get(hanzi_char=tw_hanzi, source=getenum_source('tw'))
             ret['inter_dict_dup_hanzi_review_seq_id'] = row.seq_id
         else:
             ret['is_review_pic'] = 1
-            ret['inter_dict_dup_hanzi_review_path'] = get_taiwan_char_pic_path() + 'tw' + ret['inter_dict_dup_hanzi_review'] + '.png' if ret['inter_dict_dup_hanzi_review'] else ''
+            ret['inter_dict_dup_hanzi_review_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
 
-        if ret['inter_dict_dup_hanzi_final'] and len(ret['inter_dict_dup_hanzi_final'].decode('utf-8')) == 1:
+        tw_hanzi = ret['inter_dict_dup_hanzi_final']
+        if tw_hanzi and len(tw_hanzi.decode('utf-8')) == 1:
             ret['is_final_pic'] = 0
-            row = HanziSet.objects.get(hanzi_char=ret['inter_dict_dup_hanzi_final'], source=getenum_source('tw'))
+            row = HanziSet.objects.get(hanzi_char=tw_hanzi, source=getenum_source('tw'))
             ret['inter_dict_dup_hanzi_final_seq_id'] = row.seq_id
         else:
             ret['is_final_pic'] = 1
-            ret['inter_dict_dup_hanzi_final_path'] = get_taiwan_char_pic_path() + 'tw' + ret['inter_dict_dup_hanzi_final'] + '.png' if ret['inter_dict_dup_hanzi_final'] else ''
+            ret['inter_dict_dup_hanzi_final_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
 
         return ret
 
