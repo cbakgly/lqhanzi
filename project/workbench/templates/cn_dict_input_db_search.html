@@ -1,9 +1,6 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-    <!-- TODOs
-    1. 查询超过10个结果的翻页功能
-    -->
 	<!-- Content Header-->
     <div class="content-header">
         <ol class="breadcrumb">
@@ -12,7 +9,7 @@
         </ol>
       </div>
     <div id="search" class="row">
-        <div id="hanziinput" class="col-xs-12">
+        <div class="col-xs-12">
           <div class="box box-blue">
             <!-- /.box-header -->
             <div class="box-header">
@@ -44,7 +41,7 @@
                         <div class="form-group">
                           <select v-model="params.variant_type_draft" class="form-control">
                             <option>请选择</option>
-                            <option v-for="option in options_type" v-bind:value="option.value">#[option.text]</option>
+                            <option v-for="option in options_type" v-bind:value="option.value">#[option.text]]</option>
                           </select>
                         </div>
                       </div>
@@ -117,7 +114,7 @@
                   </div>
                   <div class="btns">
                     <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
-                    <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
+                    <!-- <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button> -->
                     <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
                   </div>
                 </div>
@@ -132,9 +129,9 @@
                   <div class="expand-items">
                     <div class="items-inner">
                       <label v-for="title in titles" v-if="title.show">
-                          <input type="checkbox" checked="checked" @click="title.show=false">#[title.text]
+                          <input type="checkbox" checked="checked" @click="title.show=false">#[title.text]]
                       </label>
-                      <label v-else><input type="checkbox" @click="title.show=true">#[title.text]</label>
+                      <label v-else><input type="checkbox" @click="title.show=true">#[title.text]]</label>
                     </div>
                   </div>
               </div>
@@ -147,37 +144,37 @@
               <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th v-for="title in titles" v-if="title.show">#[title.text]</th>
+                    <th v-for="title in titles" v-if="title.show">#[title.text]]</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in models">
-                  <td>#[item.id]</td>
-                  <td v-show="titles[1]['show']">#[item.volume_num]</td>
-                  <td v-show="titles[2]['show']">#[item.page_num]</td>
-                  <td v-show="titles[3]['show']">#[item.seq_num_draft]</td>
-                  <td v-show="titles[4]['show']">#[item.hanzi_char_draft]</td>
-                  <td v-show="titles[5]['show']">#[item.hanzi_pic_id_draft]</td>
-                  <td v-show="titles[6]['show']">#[item.variant_type_draft]</td>
-                  <td v-show="titles[7]['show']">#[item.std_hanzi_draft]</td>
-                  <td v-show="titles[8]['show']">#[item.notes_draft]</td>
-                  <td v-show="titles[9]['show']">#[item.seq_num_review]</td>
-                  <td v-show="titles[10]['show']">#[item.hanzi_char_review]</td>
-                  <td v-show="titles[11]['show']">#[item.hanzi_pic_id_review]</td>
-                  <td v-show="titles[12]['show']">#[item.variant_type_review]</td>
-                  <td v-show="titles[13]['show']">#[item.std_hanzi_review]</td>
-                  <td v-show="titles[14]['show']">#[item.notes_review]</td>
-                  <td v-show="titles[15]['show']">#[item.seq_num_review]</td>
-                  <td v-show="titles[16]['show']">#[item.hanzi_char_review]</td>
-                  <td v-show="titles[17]['show']">#[item.hanzi_pic_id_review]</td>
-                  <td v-show="titles[18]['show']">#[item.variant_type_review]</td>
-                  <td v-show="titles[19]['show']">#[item.std_hanzi_review]</td>
-                  <td v-show="titles[20]['show']">#[item.notes_review]</td>
-                  <td v-show="titles[21]['show']">#[item.is_draft_equals_review]</td>
-                  <td v-show="titles[22]['show']">#[item.is_review_equals_final]</td>
-                  <td v-show="titles[23]['show']">#[item.is_checked]</td>
-                  <td v-show="titles[24]['show']">#[item.u_t]</td>
-                  <td v-show="titles[25]['show']">#[item.remark]</td>
+                  <td>#[item.id]]</td>
+                  <td v-show="titles[1]['show']">#[item.volume_num]]</td>
+                  <td v-show="titles[2]['show']">#[item.page_num]]</td>
+                  <td v-show="titles[3]['show']">#[item.seq_num_draft]]</td>
+                  <td v-show="titles[4]['show']">#[item.hanzi_char_draft]]</td>
+                  <td v-show="titles[5]['show']">#[item.hanzi_pic_id_draft]]</td>
+                  <td v-show="titles[6]['show']">#[item.variant_type_draft]]</td>
+                  <td v-show="titles[7]['show']">#[item.std_hanzi_draft]]</td>
+                  <td v-show="titles[8]['show']">#[item.notes_draft]]</td>
+                  <td v-show="titles[9]['show']">#[item.seq_num_review]]</td>
+                  <td v-show="titles[10]['show']">#[item.hanzi_char_review]]</td>
+                  <td v-show="titles[11]['show']">#[item.hanzi_pic_id_review]]</td>
+                  <td v-show="titles[12]['show']">#[item.variant_type_review]]</td>
+                  <td v-show="titles[13]['show']">#[item.std_hanzi_review]]</td>
+                  <td v-show="titles[14]['show']">#[item.notes_review]]</td>
+                  <td v-show="titles[15]['show']">#[item.seq_num_review]]</td>
+                  <td v-show="titles[16]['show']">#[item.hanzi_char_review]]</td>
+                  <td v-show="titles[17]['show']">#[item.hanzi_pic_id_review]]</td>
+                  <td v-show="titles[18]['show']">#[item.variant_type_review]]</td>
+                  <td v-show="titles[19]['show']">#[item.std_hanzi_review]]</td>
+                  <td v-show="titles[20]['show']">#[item.notes_review]]</td>
+                  <td v-show="titles[21]['show']">#[item.is_draft_equals_review_display]]</td>
+                  <td v-show="titles[22]['show']">#[item.is_review_equals_final_display]]</td>
+                  <td v-show="titles[23]['show']">#[item.is_checked_display]]</td>
+                  <td v-show="titles[24]['show']">#[item.u_t]]</td>
+                  <td v-show="titles[25]['show']">#[item.remark]]</td>
                   <td><a href="#">查看</a></td>
                 </tr>
                 </tbody>
@@ -185,21 +182,21 @@
             </div><!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-if="context.previous_url"><a :href="context.previous_url">«</a></li>
-                <li v-else><a>«</a></li>
-{#                <li v-for="item in context.page_links">#}
-{#                    <span v-if="item[2]">#}
-{#                        <a>#[ item ]</a>#}
-{#                    </span>#}
-{#                    <span v-else-if="item[3]">#}
-{#                        <a>....</a>#}
-{#                    </span>#}
-{#                    <span v-else>#}
-{#                        <a :href="item[0]">#[ item[1] ]</a>#}
-{#                    </span>#}
+                <li v-if="context.previous_url"><a v-on:click="gotoPage(context.previous_url)">«</a></li>
+                <li v-else><a href="javascript:void(0);">«</a></li>
+                <li v-for="item in context.page_links">
+                    <span v-if="item[2]">
+                        <a href="javascript:void(0);">#[ item[1] ]]</a>
+                    </span>
+                    <span v-else-if="item[3]">
+                        <a href="javascript:void(0);">....</a>
+                    </span>
+                    <span v-else>
+                        <a href="javascript:void(0);" v-on:click="gotoPage(item[0])">#[ item[1] ]]</a>
+                    </span>
                 </li>
-                <li v-if="context.next_url"><a :href="context.next_url">»</a></li>
-                <li v-else><a>»</a></li>
+                <li v-if="context.next_url"><a href="javascript:void(0);" v-on:click="gotoPage(context.next_url)">»</a></li>
+                <li v-else><a href="javascript:void(0);">»</a></li>
               </ul>
             </div>
           </div>
@@ -208,7 +205,7 @@
         <!-- /.col -->
       </div>
       <script type="text/javascript">
-            var url = "{% url 'inputs-list' version='v1' %}";
+            var search_url = "{% url 'inputs-list' version='v1' %}";
       </script>
-      <script type="text/javascript"  src="{{STATIC_URL}}js/workbench/cn-dict-input-db-search.js"/>
+      <script type="text/javascript"  src="{{STATIC_URL}}js/workbench/cn-dict-input-db-search.js"></script>
 {% endblock %}

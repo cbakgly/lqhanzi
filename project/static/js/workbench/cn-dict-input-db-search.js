@@ -24,11 +24,11 @@ AjaxHelper.prototype.get = function(url, data, callback) {
 
 var ajaxHelper = new AjaxHelper();
 
-var hanziinput = new Vue({
-    delimiters: ["#[", "]"],
+var hanzi_input = new Vue({
+    delimiters: ["#[", "]]"],
     el: "#search",
     data: {
-        urls: url,
+        urls: search_url,
         params: {
             'page_num': '',
             'stage': 0,
@@ -39,13 +39,13 @@ var hanziinput = new Vue({
             'std_hanzi_draft': '',
             'notes_draft': '',
 
-            'is_draft_equals_review': '',
-            'is_review_equals_final': '',
-            'is_checked': '',
-            'is_submitted': '',
+            'is_draft_equals_review': 0,
+            'is_review_equals_final': 0,
+            'is_checked': 0,
+            'is_submitted': 0,
         },
-        models: '',
-        context: '',
+        models: [],
+        context: {},
         bool: [
           {text: '否', value: 0},
           {text: '是', value: 1},
@@ -102,19 +102,16 @@ var hanziinput = new Vue({
         ]
     },
     created: function() {
-        var vm = this
-        callback = function(data) {
-            vm.context = data.html_context
-        }
-        ajaxHelper.get(vm.urls, callback)
+        var vm = this;
+        ajaxHelper.get(vm.urls, null, function(data) {
+            vm.context = data.html_context;
+            vm.models = data.models;
+        })
     },
     methods: {
         searchResult: function() {
-            var vm = this
-            callback = function(data) {
-                vm.models = data.models
-                vm.context = data.html_context
-            }
+            var vm = this;
+
             for (keyname in vm.params) {
                 if (vm.params[keyname] === '请选择' || vm.params[keyname] === '') {
                     delete vm.params[keyname]
@@ -130,7 +127,18 @@ var hanziinput = new Vue({
                 }
             }
             delete vm.params['stage']
-            ajaxHelper.get(vm.urls, vm.params, callback)
+            ajaxHelper.get(vm.urls, vm.params, function(data) {
+                vm.models = data.models;
+                vm.context = data.html_context;
+            })
+        },
+
+        gotoPage: function(url) {
+            var vm = this;
+            ajaxHelper.get(url, null, function(data){
+                vm.models = data.models;
+                vm.context = data.html_context;
+            })
         }
     }
 })

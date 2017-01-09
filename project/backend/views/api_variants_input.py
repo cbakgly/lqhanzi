@@ -16,6 +16,20 @@ class VariantsInputSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 0
 
+    def to_representation(self, instance):
+        ret = super(VariantsInputSerializer, self).to_representation(instance)
+        ret['variant_type_draft'] = instance.get_variant_type_draft_display()
+        ret['is_del_draft'] = instance.get_is_del_draft_display()
+        ret['variant_type_review'] = instance.get_variant_type_review_display()
+        ret['is_del_review'] = instance.get_is_del_review_display()
+        ret['variant_type_final'] = instance.get_variant_type_final_display()
+        ret['is_del_final'] = instance.get_is_del_final_display()
+        ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
+        ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
+        ret['is_checked_display'] = instance.get_is_checked_display()
+        ret['is_submitted_display'] = instance.get_is_submitted_display()
+        return ret
+
 
 class VariantsInputFilter(django_filters.FilterSet):
     """
