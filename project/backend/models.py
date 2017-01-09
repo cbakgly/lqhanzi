@@ -249,12 +249,11 @@ class InterDictDedup(models.Model):
         db_table = 'lq_inter_dict_dedup'
 
 
-business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
-business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
-status_choices = ((0, u'进行中'), (1, u'已完成'))
-
-
 class TaskPackages(models.Model):
+    business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
+    business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
+    status_choices = ((0, u'进行中'), (1, u'已完成'))
+
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_tps")  # 用户，拆字员
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
@@ -274,30 +273,18 @@ class TaskPackages(models.Model):
         return str(self.id)
 
 
-class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
-    business_name = models.CharField(u'任务名称', max_length=64, null=True)
-    credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.BooleanField(u'是否启用', choices=boolean_choices, default=True)
-
-    class Meta:
-        db_table = 'lq_task_types'
-
-
 class Tasks(models.Model):
     business_type_choices = ((0, u'录入'), (1, u'拆字'), (2, u'去重'), (3, u'互助'))
     business_stage_choices = ((0, u'初次'), (1, u'回查'), (2, u'审查'))
     status_choices = ((0, u'进行中'), (1, u'已完成'))
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
-    variant_split = models.ForeignKey(VariantsSplit, models.SET_NULL, related_name="split_task", null=True, blank=True)
-    variant_input = models.ForeignKey(VariantsInput, models.SET_NULL, related_name="input_task", null=True, blank=True)
-    korean_dedup = models.ForeignKey(KoreanDedup, models.SET_NULL, related_name="korean_dedup_task", null=True, blank=True)
-    interdict_dedup = models.ForeignKey(InterDictDedup, models.SET_NULL, related_name="inter_dedup_task", null=True, blank=True)
-    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
 
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.CASCADE, blank=True, null=True)
+    task_status = models.SmallIntegerField(u'任务状态', choices=status_choices, null=True)
+
+    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
-    task_status = models.SmallIntegerField(u'任务状态', choices=status_choices, null=True)
 
     credits = models.SmallIntegerField(u'积分', null=True)
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
