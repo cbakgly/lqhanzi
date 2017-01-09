@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'guardian',
     # 'storages',
-    'debug_toolbar',
+    # 'debug_toolbar',
     # 'crispy_forms',
     'registration',
     'hanzi',
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'lqconfig.urls'
