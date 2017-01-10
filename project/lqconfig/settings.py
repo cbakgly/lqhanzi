@@ -26,6 +26,9 @@ SECRET_KEY = 'nej4uf&$0-18*bb)--qjx3vc6-ahsxt!c!z92g^h$qjl4036*x'
 DEBUG = True
 ALLOWED_HOSTS = ["*", ]
 
+# Use S3 path to get hanzi pictures
+USE_S3_HANZI_PICTURE = True
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
