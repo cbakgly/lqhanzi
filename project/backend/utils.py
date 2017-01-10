@@ -1,7 +1,7 @@
 from django.core.cache import cache
 
 from backend.cache_keys import getcachekey_today_credits
-from lqconfig.settings import STATIC_URL
+from lqconfig.settings import STATIC_URL, USE_S3_HANZI_PICTURE
 
 
 def get_today_credits(user_id):
@@ -14,7 +14,10 @@ def get_source_path_mapping(source):
 
 
 def get_hanzi_assets_path():
-    return STATIC_URL + 'img/'
+    if not USE_S3_HANZI_PICTURE:
+        return STATIC_URL + 'img/'
+    else:
+        return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/'
 
 
 def get_dunhuang_dict_path():
