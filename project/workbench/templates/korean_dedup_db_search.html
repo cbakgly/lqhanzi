@@ -10,92 +10,64 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="box box-blue">
+        <div id="search" class="box box-blue">
           <!-- /.box-header -->
           <div class="box-header">
             <div class="box-header-inner">
               <div class="ser-bd">
                 <div class="z-ser z2-ser">
-                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="col col-md-6 col-sm-6 col-xs-12">
                     <div class="input-group">
                       <span class="input-group-addon">郑码:</span>
-                      <input type="text" class="form-control" placeholder="请输入">
+                      <input type="text" class="form-control" v-model="params.zheng_code" placeholder="请输入">
                     </div>
                   </div>
-                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="col col-md-6 col-sm-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">是否重复:</span>
                         <!-- select -->
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>是</option>
-                            <option>否</option>
-                          </select>
+                        <div class="radios">
+                          <label><input type="radio" v-model="params.korean_dup_hanzi" value="1">是</label>
+                          <label><input type="radio" v-model="params.korean_dup_hanzi" value="0">否</label>
+                          <label><input type="radio" v-model="params.korean_dup_hanzi">都可以</label>
                         </div>
                       </div>
-
                   </div>
-                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="col col-md-6 col-sm-6 col-xs-12">
                     <div class="input-group">
-                      <span class="input-group-addon">文字:</span>
-                      <input type="text" class="form-control" placeholder="请输入">
+                      <span class="input-group-addon">正字:</span>
+                      <input type="text" class="form-control" v-model="params.std_hanzi" placeholder="请输入">
                     </div>
                   </div>
-                  <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="col col-md-6 col-sm-6 col-xs-12">
                     <div class="input-group">
                       <span class="input-group-addon">图片字编码:</span>
-                      <input type="text" class="form-control" placeholder="请输入">
+                      <input type="text" class="form-control" v-model="params.hanzi_pic_id" placeholder="请输入">
                     </div>
                   </div>
+
                 </div>
                 <div class="btns">
-                  <button class="btn btn-blue btn-sm z-btn-sm">搜索</button>
-                  <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
-                  <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
+                  <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
+                  <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="box-body">
+          <div v-show="models" class="box-body">
             <div class="gaoli-ser-results">
-              <div class="res-item">
+              <div class="res-item" v-for="(item, index) in models">
                 <div class="z1-info">
-                  <h3 class="box-title">郑码: <span>BUGQ</span></h3>
+                  <h3 class="box-title">郑码: <span v-text="index"></span></h3>
                 </div>
-                <ul class="item-lists">
+                <ul class="item-lists" v-for="element in item">
                   <li>
                     <div class="item-left pull-left">
-                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
-                      <p class="txt"><em>熱</em><em>1</em></p>
-                    </div>
-                    <div class="item-right pull-right" style="display:none;">
-                      <p class="txt">熱<em></em><em>1</em></p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="res-item">
-                <div class="z1-info">
-                  <h3 class="box-title">郑码: <span>BZB</span></h3>
-                </div>
-                <ul class="item-lists">
-                  <li>
-                    <div class="item-left pull-left">
-                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
-                      <p class="txt"><em>熱</em><em>1</em></p>
+                      <p class="img"><img src="getImage(element.hanzi_pic_id)" alt=""></p>
+                      <p class="txt">#[ element.hanzi_pic_id.substr(2) ]<em></em></p>
                     </div>
                     <div class="item-right pull-right">
-                      <p class="txt">熱<em></em><em>1</em></p>
-                    </div>
-                  </li>
-                  <li class="show-layer" data-show-layer="hw-layer" role="button">
-                    <div class="item-left pull-left">
-                      <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
-                      <p class="txt"><em>熱</em><em>1</em></p>
-                    </div>
-                    <div class="item-right pull-right">
-                      <p class="txt">熱<em></em><em>1</em></p>
+                      <p class="txt">站位<em></em><em>1</em></p>
                     </div>
                   </li>
                 </ul>
@@ -104,12 +76,25 @@
           </div><!-- /.box-body -->
           <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">
-              <li><a href="#">«</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">»</a></li>
-            </ul>
+{#                <li v-if="paging.previous_url">#}
+{#                    <a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>#}
+{#                    #[ paging.next_url ]#}
+{#                </li>#}
+{#                <li v-else><a>«</a></li>#}
+{#                <li v-for="item in paging.page_links">#}
+{#                    <span href="javascript:void(0);" v-if="item[2]">#}
+{#                        <a href="javascript:void(0);">item</a>#}
+{#                    </span>#}
+{#                    <span v-else-if="item[3]">#}
+{#                        <a href="javascript:void(0);">....</a>#}
+{#                    </span>#}
+{#                    <span v-else>#}
+{#                        <a href="javascript:void(0);" v-on:click="goto_page(item[0])"></a>#}
+{#                    </span>#}
+{#                </li>#}
+                <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+                <li v-else><a>»</a></li>
+              </ul>
           </div>
         </div><!-- /.box -->
       </div>
@@ -138,7 +123,7 @@
       </div>
     </div>
     <!--/.遮罩层-->
-    <script>
+    <script type="text/javascript">
     //弹出层
       $(function () {
           //展示层
@@ -180,5 +165,94 @@
               }
           });
       });
+
+    $(function () {
+        var $choices = $('.z-ser .col:lt(4)');
+        $choices.show();
+    });
+
+    function AjaxHelper() {
+        this.ajax = function (url, data, callback) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                cache: false,
+                dataType: 'json',
+                data: data,
+                tranditional: true,
+                success: callback,
+                error: function (xhr, status, err) {
+                    console.log(err);
+                }
+            })
+        }
+    }
+
+    AjaxHelper.prototype.get = function(url, data, callback) {
+        this.ajax(url, data, callback)
+    };
+
+    var ajaxHelper = new AjaxHelper();
+    var url = "{% url 'korean-dedups-list' version='v1' %}"
+
+
+    var app = new Vue({
+        delimiters: ["#[", "]"],
+        el: '#search',
+        data: {
+            params: {
+                'zheng_code': '',
+                'korean_dup_hanzi': '',
+                'std_hanzi': '',
+                'hanzi_pic_id': ''
+            },
+            models: '',
+            paging: '',
+            urls: url
+        },
+        methods: {
+            searchResult: function () {
+                var vm = this;
+                for (keyname in vm.params) {
+                    if (vm.params[keyname] === '') {
+                        delete vm.params[keyname];
+                    }
+                }
+                ajaxHelper.get(vm.urls, vm.params, function (data) {
+                    vm.paging = data.html_context;
+                    r = data.models;
+                    a = {};
+                    for (item in r) {
+                        zc = r[item]['zheng_code']
+                        if (zc in a) {
+                            a[zc].push(r[item])
+                        } else {
+                            a[zc] = []
+                            a[zc].push(r[item])
+                        }
+                    }
+                    vm.models = a
+                })
+            },
+            clearAllResult: function() {
+                this.params.zheng_code = '';
+                this.params.korean_dup_hanzi = '';
+                this.params.std_hanzi = '';
+                this.params.hanzi_pic_id = '';
+            },
+            goto_page: function(url) {
+                ajaxHelper.get(url, {}, function (data) {
+                    app.paging = data.html_context;
+                    app.models = data.models;
+        })
+            }
+        },
+    });
+
+    $(function(){
+        ajaxHelper.get(url, {}, function (data) {
+            app.paging = data.html_context
+        })
+    })
     </script>
 {% endblock %}

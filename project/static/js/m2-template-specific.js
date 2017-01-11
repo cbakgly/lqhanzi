@@ -105,3 +105,8 @@ $(function(){
         }
     });
 });
+
+$(function () {
+    var $choices = $('.z-ser .col:lt(4)');
+    $choices.show();
+});
