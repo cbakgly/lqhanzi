@@ -7,7 +7,7 @@ import django_filters
 
 from ..pagination import NumberPagination
 from ..models import KoreanDedup, InterDictDedup, HanziSet
-from ..utils import get_korean_char_pic_variant_path, get_taiwan_char_pic_path
+from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
 from ..enums import getenum_source
 
@@ -47,8 +47,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super(InterDictDedupSerializer, self).to_representation(instance)
-        code = ret['hanzi_pic_id'][-1] if ret['hanzi_pic_id'] else False
-        ret['hanzi_pic_path'] = get_korean_char_pic_variant_path(code) + ret['hanzi_pic_id'] + ('.png') if code else ''
+        ret['hanzi_pic_path'] = get_pic_url_by_source_pic_name(getenum_source('korean'), ret['hanzi_pic_id'])
         ret['source_display'] = instance.get_source_display()
         ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
         ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
@@ -58,29 +57,29 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         tw_hanzi = ret['inter_dict_dup_hanzi_draft']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_draft_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('tw'))
+            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
             ret['inter_dict_dup_hanzi_draft_seq_id'] = row[0].seq_id if row else ''
         else:
             ret['is_draft_pic'] = 1
-            ret['inter_dict_dup_hanzi_draft_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
+            ret['inter_dict_dup_hanzi_draft_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)
 
         tw_hanzi = ret['inter_dict_dup_hanzi_review']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_review_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('tw'))
+            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
             ret['inter_dict_dup_hanzi_review_seq_id'] = row[0].seq_id if row else ''
         else:
             ret['is_review_pic'] = 1
-            ret['inter_dict_dup_hanzi_review_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
+            ret['inter_dict_dup_hanzi_review_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)
 
         tw_hanzi = ret['inter_dict_dup_hanzi_final']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_final_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('tw'))
+            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
             ret['inter_dict_dup_hanzi_final_seq_id'] = row[0].seq_id if row else ''
         else:
             ret['is_final_pic'] = 1
-            ret['inter_dict_dup_hanzi_final_path'] = get_taiwan_char_pic_path() + tw_hanzi[:2] + '/' + tw_hanzi + '.png' if tw_hanzi else ''
+            ret['inter_dict_dup_hanzi_final_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)
 
         return ret
 
