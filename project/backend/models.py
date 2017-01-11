@@ -54,7 +54,7 @@ class HanziSet(models.Model):
     is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', choices=boolean_choices, default=False)
 
     structure = models.CharField(u'结构', max_length=16, null=True)
-    min_split = models.CharField(u'跳过次数，多的话算难字', max_length=255, null=True)
+    min_split = models.CharField(u'初步拆分', max_length=255, null=True)
     max_split = models.CharField(u'最大拆分', max_length=512, null=True)
     mix_split = models.CharField(u'混合拆分', max_length=512, null=True)
     deform_split = models.CharField(u'调笔拆分', max_length=255, null=True)

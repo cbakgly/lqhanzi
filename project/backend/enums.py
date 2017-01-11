@@ -14,5 +14,5 @@ def getenum_business_type(name):
 
 
 def getenum_source(name):
-    list = {'unicode': 1, 'tw': 2, 'hy': 3, 'gl': 4, 'dh': 5}
+    list = {'unicode': 1, 'taiwan': 2, 'hanyu': 3, 'korean': 4, 'dunhuang': 5}
     return list[name]

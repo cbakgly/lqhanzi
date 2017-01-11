@@ -200,13 +200,13 @@
                 <li v-else><a>»</a></li>
               </ul>
             </div>
+          </div><!-- /.content-box -->
           </div><!-- /.box -->
-          </div>
         </div>
         <!-- /.col -->
       </div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
     var search_url = '{% url "inter-dict-dedups-list" version="v1" %}';
 
     function dedup_search(url, cond) {
@@ -216,8 +216,8 @@
             data: cond,
             success: function(data) {
                 console.log(data);
-                data_box.models = data.models;
-                data_box.paging = data.html_context;
+                content_box.models = data.models;
+                content_box.paging = data.html_context;
             },
             error: function(jqXHR, status, error) {
                 console.log(error);
@@ -262,7 +262,7 @@
         }
     });
 
-    var data_box = new Vue({
+    var content_box = new Vue({
         delimiters: ["#[", "]]"],
         el: '#content-box',
         data: {
@@ -279,15 +279,6 @@
             filter_update_time: true,
         },
         methods: {
-            location: function(name) {
-                code = name.slice(-1);
-                filename = name + '.png';
-                dirname = 'standard/';
-                if (code == 1) dirname = 'variant1/';
-                if (code == 2) dirname = 'variant2/';
-                return dirname + filename;
-            },
-
             goto_page: function(url) {
                 dedup_search(url, null);
             }
