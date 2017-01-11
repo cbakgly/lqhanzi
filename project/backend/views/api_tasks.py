@@ -89,6 +89,13 @@ class TasksViewSet(viewsets.ModelViewSet):
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
 
+    def retrieve_task(self, user, business_type, business_stage):
+        if user.is_superuser == 1:
+            queryset = Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage)
+        else:
+            queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(business_stage=business_stage)
+        serializer = self.serializer_class(queryset, many=True)
+
     @list_route()
     def split(self, request, *args, **kwargs):
         user = request.user
