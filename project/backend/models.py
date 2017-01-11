@@ -77,6 +77,68 @@ task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
 task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
 
 
+class TaskPackages(models.Model):
+    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_tps")  # 用户，拆字员
+    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
+    size = models.SmallIntegerField(u'工作包大小', null=False, default=100)
+    status = models.SmallIntegerField(u'工作包状态', choices=task_package_status_choices, default=0)
+    daily_plan = models.SmallIntegerField(u'日计划工作量', null=False, default=5)
+    due_date = models.DateTimeField(u'预计完成时间', null=True, blank=True)
+    completed_num = models.SmallIntegerField(u'已完成数量', default=0)
+    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'lq_task_packages'
+
+    def __unicode__(self):
+        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.size) + str(self.id)
+
+
+class TaskTypes(models.Model):
+    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
+    business_name = models.CharField(u'任务名称', max_length=64, null=True)
+    credits = models.SmallIntegerField(u'单个任务积分', default=0)
+    is_active = models.BooleanField(u'是否启用', default=True)
+
+    class Meta:
+        db_table = 'lq_task_types'
+
+
+class Tasks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
+    task_status = models.SmallIntegerField(u'任务状态', choices=task_status_choices, null=True, blank=True)
+
+    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
+
+    credits = models.SmallIntegerField(u'积分', null=True, blank=True)
+    remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
+
+    assigned_at = models.DateTimeField(u'分配时间', null=True, blank=True)
+    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
+    # object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = GenericForeignKey('content_type', 'business_id')
+
+    class Meta:
+        db_table = 'lq_tasks'
+        ordering = ['id']
+
+    def __unicode__(self):
+        if self.task_status is None:
+            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + "未分配" + str(self.id)
+        else:
+            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.id)
+
+
 class VariantsSplit(models.Model):
     source = models.SmallIntegerField(u'来源', choices=source, null=True, blank=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
@@ -257,68 +319,6 @@ class InterDictDedup(models.Model):
 
     class Meta:
         db_table = 'lq_inter_dict_dedup'
-
-
-class TaskPackages(models.Model):
-    user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_tps")  # 用户，拆字员
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
-    size = models.SmallIntegerField(u'工作包大小', null=False, default=100)
-    status = models.SmallIntegerField(u'工作包状态', choices=task_package_status_choices, default=0)
-    daily_plan = models.SmallIntegerField(u'日计划工作量', null=False, default=5)
-    due_date = models.DateTimeField(u'预计完成时间', null=True, blank=True)
-    completed_num = models.SmallIntegerField(u'已完成数量', default=0)
-    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
-
-    class Meta:
-        db_table = 'lq_task_packages'
-
-    def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.size) + str(self.id)
-
-
-class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
-    business_name = models.CharField(u'任务名称', max_length=64, null=True)
-    credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.BooleanField(u'是否启用', default=True)
-
-    class Meta:
-        db_table = 'lq_task_types'
-
-
-class Tasks(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
-    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
-    task_status = models.SmallIntegerField(u'任务状态', choices=task_status_choices, null=True, blank=True)
-
-    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
-
-    credits = models.SmallIntegerField(u'积分', null=True, blank=True)
-    remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
-
-    assigned_at = models.DateTimeField(u'分配时间', null=True, blank=True)
-    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
-    # object_id = models.PositiveIntegerField(null=True, blank=True)
-    content_object = GenericForeignKey('content_type', 'business_id')
-
-    class Meta:
-        db_table = 'lq_tasks'
-        ordering = ['id']
-
-    def __unicode__(self):
-        if self.task_status is None:
-            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + "未分配" + str(self.id)
-        else:
-            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.id)
 
 
 class CreditsRedeem(models.Model):
