@@ -1,24 +1,39 @@
 # encoding: utf-8
 from __future__ import unicode_literals
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework import serializers
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
-from django.db.models import Q
 
+from ..pagination import NumberPagination
 from ..models import Tasks, VariantsSplit, VariantsInput, KoreanDedup, InterDictDedup
 from ..enums import getenum_business_type
-from ..views import api_variants_split, api_variants_input, api_variants_dedup
+import api_variants_input
+import api_variants_dedup
+import api_variants_split
+from task_func import assign_task
+
+
+def reset_task(task):
+    task.task_package = None
+    task.assigned_at = None
+    task.user = None
+    task.task_status = 0
+    task.save()
+
+    return task
 
 
 # Task Packages management
 class TasksSerializer(serializers.ModelSerializer):
+    task_ele = serializers.SerializerMethodField()
+
     class Meta:
         model = Tasks
-        fields = '__all__'
+        fields = "__all__"
 
     def create(self, validated_data):
         task = Tasks.objects.create(**validated_data)
@@ -26,7 +41,8 @@ class TasksSerializer(serializers.ModelSerializer):
         return task
 
     def update(self, instance, validated_data):
-        for key in ['business_id', 'business_type', 'user', 'business_stage', 'task_status', 'credits', 'remark', 'completed_at', 'task_package']:
+        for key in ['business_id', 'business_type', 'user', 'business_stage', 'task_status',
+                    'credits', 'remark', 'completed_at', 'task_package']:
             if validated_data.get(key) is not None:  # Only Set values which is put.
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
 
@@ -41,6 +57,19 @@ class TasksSerializer(serializers.ModelSerializer):
         ret['task_status_display'] = instance.get_task_status_display()
         return ret
 
+    def get_task_ele(self, obj):
+        task_ele = obj.content_object
+        if isinstance(task_ele, VariantsInput):
+            ele_serializer = api_variants_input.VariantsInputSerializer
+        elif isinstance(task_ele, VariantsSplit):
+            ele_serializer = api_variants_split.VariantsSplitSerializer
+        elif isinstance(task_ele, KoreanDedup) or isinstance(task_ele, InterDictDedup):
+            ele_serializer = api_variants_dedup
+        else:
+            pass
+        serialized_data = ele_serializer(task_ele).data
+        return serialized_data
+
 
 class TasksFilter(django_filters.FilterSet):
     assigned_at = django_filters.DateFromToRangeFilter()
@@ -49,13 +78,13 @@ class TasksFilter(django_filters.FilterSet):
 
     class Meta:
         model = Tasks
-        fields = ('__all__')
+        fields = "__all__"
 
 
 class TasksViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
-
+    pagination_class = NumberPagination
     serializer_class = TasksSerializer
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
@@ -65,7 +94,6 @@ class TasksViewSet(viewsets.ModelViewSet):
         user = request.user
         if user.is_superuser == 1:
             queryset = Tasks.objects.filter(business_type=getenum_business_type('split'))
-            # queryset = Tasks.objects.filter(task_package=request.query_params['task_package'])
         else:
             queryset = Tasks.objects.filter(user_id=user.id).filter(business_type=getenum_business_type('split'))
         serializer = self.serializer_class(queryset, many=True)
@@ -91,66 +119,29 @@ class TasksViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
+    # 太难跳过，仅拆字
+    @detail_route(methods=["PATCH", "GET", "PUT"])
+    def skip_task(self, request, *args, **kwargs):
+        origin_task = self.get_object()
+        work_ele = origin_task.content_object
 
-class ChoiceTasksViewSet(viewsets.ModelViewSet):
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
-    queryset = Tasks.objects.all()
-    serializer_class = None
-    filter_class = None
+        business_type = origin_task.business_type
+        business_stage = origin_task.business_stage
+        user = origin_task.user
+        task_package = origin_task.task_package
 
-    def api_choice(self, sql_code):
-        pass
-
-    def get_queryset(self, *args, **kwargs):
-        user = self.request.user
-        q1 = Q()
-        q1.connector = "OR"
-        if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(task_package=self.request.query_params['task_package'])
-            for t in tasks:
-                q1.children.append(('id', t.variant_split.id))
-            queryset = self.api_choice(q1)
-            # queryset = tasks.prefetch_related('variant_split')
+        if business_stage is 0:
+            work_ele.skip_num_draft += 1
+        elif business_stage is 1:
+            work_ele.skip_num_review += 1
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(task_package=self.request.query_params['task_package'])
-            for t in tasks:
-                q1.children.append(('id', t.variant_split.id))
-            queryset = self.api_choice(q1)
-        return queryset
+            work_ele.skip_num_final += 1
+        work_ele.save()
+        reset_task(origin_task)
 
-
-class SplitTasksViewSet(ChoiceTasksViewSet):
-    serializer_class = api_variants_split.VariantsSplitSerializer
-    filter_class = api_variants_split.VariantsSplitFilter
-
-    def api_choice(self, sql_code):
-        queryset = VariantsSplit.objects.filter(sql_code)
-        return queryset
-
-
-class InputTasksViewSet(ChoiceTasksViewSet):
-    serializer_class = api_variants_input.VariantsInputSerializer
-    filter_class = api_variants_input.VariantsInputFilter
-
-    def api_choice(self, sql_code):
-        queryset = VariantsInput.objects.filter(sql_code)
-        return queryset
-
-
-class KoreanDedupTasksViewSet(ChoiceTasksViewSet):
-    serializer_class = api_variants_dedup.KoreanDedupSerializer
-    filter_class = api_variants_dedup.KoreanDedupFilter
-
-    def api_choice(self, sql_code):
-        queryset = KoreanDedup.objects.filter(sql_code)
-        return queryset
-
-
-class InterDictDedupTasksViewSet(ChoiceTasksViewSet):
-    serializer_class = api_variants_dedup.InterDictDedupSerializer
-    filter_class = api_variants_dedup.InterDictDedupFilter
-
-    def api_choice(self, sql_code):
-        queryset = InterDictDedup.objects.filter(sql_code)
-        return queryset
+        new_task = assign_task(business_type, business_stage, task_package, user)
+        if new_task:
+            serializer = api_variants_split.VariantsSplitSerializer(new_task.content_object)
+            return Response(serializer.data)
+        else:
+            return Response(u"没有更多任务了，明天再来吧！", status=status.HTTP_204_NO_CONTENT)

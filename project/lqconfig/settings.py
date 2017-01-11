@@ -135,7 +135,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-LANGUAGE_CODE = 'zh-Hans'
+LANGUAGE_CODE = 'zh-CN'
 TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 USE_L10N = True

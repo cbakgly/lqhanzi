@@ -11,6 +11,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 
 from api_tasks import TasksSerializer
+from task_func import assign_task
 from backend.enums import getenum_business_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks
@@ -33,11 +34,21 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_id = validated_data['user'].id
         biz_type = validated_data['business_type']
+        biz_stage = validated_data['business_stage']
         exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_business_status('ongoing'))
         if exist:
             raise ValidationError(_("Only one package per type per stage can it be created."))
+
+        due_days = validated_data['size'] / validated_data['daily_plan']
+        c_t = timezone.now()
+        due_date = c_t + timezone.timedelta(days=due_days)
+        validated_data['due_date'] = due_date
+        validated_data['c_t'] = c_t
         task_package = TaskPackages.objects.create(**validated_data)
         task_package.save()
+
+        # 分配第一个任务
+        assign_task(biz_type, biz_stage, task_package, validated_data['user'])
         return task_package
 
     def update(self, instance, validated_data):
@@ -45,7 +56,9 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
                     'due_date', 'completed_num', 'completed_at', 'c_t', 'u_t'):
             if validated_data.get(key) is not None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
-
+        due_days = validated_data['size'] / validated_data['daily_plan']
+        c_t = timezone.now()
+        setattr(instance, "due_date", c_t + timezone.timedelta(days=due_days))
         instance.save()
         return instance
 

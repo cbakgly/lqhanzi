@@ -4,6 +4,8 @@ from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
 
 from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet
+
+
 # VariantsInput, KoreanDedup, InterDictDedup
 
 
@@ -27,10 +29,6 @@ class TaskPackagesAdmin(admin.ModelAdmin):
 
 class TasksAdmin(admin.ModelAdmin):
     fields = ("user",
-              "variant_split",
-              "variant_input",
-              "korean_dedup",
-              "interdict_dedup",
               "task_package",
               "business_type",
               "business_stage",
@@ -39,21 +37,59 @@ class TasksAdmin(admin.ModelAdmin):
               "remark",
               "assigned_at",
               "completed_at",
-              "c_t"
+              "c_t",
+              "content_type",
+              "business_id",
               )
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
-    # inlines = [TasksInline]
-    fieldsets = (
-        ['Main', {
-            'fields': ("source", "hanzi_type", "hanzi_char"),
-        }],
-        ['Advance', {
-            'classes': ('collapse',),
-            'fields': ("skip_num_draft", "init_split_draft", "other_init_split_draft"),
-        }]
-    )
+    fieldsets = [
+        ('基础信息', {'fields':
+                    [
+                      'source',
+                       'hanzi_type',
+                       'hanzi_char',
+                       'hanzi_pic_id',
+                       'variant_type',
+                       'std_hanzi',
+                       'as_std_hanzi',
+                       'seq_id',
+                       'is_redundant',
+                       ]}),
+        ('初次', {'fields':
+                    [
+                        'skip_num_draft',
+                         'init_split_draft',
+                         'other_init_split_draft',
+                         'deform_split_draft',
+                         'similar_parts_draft',
+                         'dup_id_draft',
+                     ]}),
+        ('回查', {'fields':
+                    ['skip_num_review',
+                     'init_split_review',
+                     'other_init_split_review',
+                     'deform_split_review',
+                     'similar_parts_review',
+                     'dup_id_review',
+                     ]}),
+        ('审查', {'fields':
+                    ['skip_num_final',
+                     'init_split_final',
+                     'other_init_split_final',
+                     'deform_split_final',
+                     'similar_parts_final',
+                     'dup_id_final',
+                     ]}),
+        ('比较', {'fields':
+                    ['is_draft_equals_review',
+                     'is_review_equals_final',
+                     'is_checked',
+                     'is_submitted',
+                     'remark',
+                     ]}),
+    ]
 
 
 class CreditsRedeemAdmin(admin.ModelAdmin):
