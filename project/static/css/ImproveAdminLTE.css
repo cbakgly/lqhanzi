@@ -1216,3 +1216,18 @@ tbody tr th{
 .input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn{
     border-radius:0;
 }
+.radios label{
+    position: relative;
+    top:3px;
+}
+.title-info .img img{
+    width:50px;
+    height:50px;
+}
+.title-info p{
+    margin-bottom: 5px;
+    text-align: center;
+}
+.title-info p.txt{
+    margin-top: 5px;
+}
