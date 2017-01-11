@@ -1,10 +1,9 @@
 from rest_framework.routers import SimpleRouter
-
 from backend.views.api_diaries import DiariesViewSet
 from backend.views.api_user import UserViewSet
 from backend.views.api_operation import OperationViewSet
 from backend.views.api_task_packages import TaskPackagesViewSet
-from backend.views.api_tasks import TasksViewSet, SplitTasksViewSet, InputTasksViewSet, InterDictDedupTasksViewSet
+from backend.views.api_tasks import TasksViewSet
 from backend.views.api_diaries import DiaryViewSet
 from backend.views.api_redeem import RedeemViewSet
 from backend.views.api_credits import CreditViewSet
@@ -29,8 +28,4 @@ router.register(r"interdict-dedups", InterDictDedupViewSet, base_name='inter-dic
 router.register(r"korean-taiwan-dup-charaters", KoreanTaiwanDupCharactersViewSet, base_name='korean-taiwan-dup-characters')
 router.register(r"korean-dedups", KoreanDedupViewSet, base_name='korean-dedups')
 router.register(r"hanzi-set", HanziSetViewSet, base_name='hanzi-set')
-router.register(r"st", SplitTasksViewSet, base_name="st")
-router.register(r"ip", InputTasksViewSet, base_name="ip")
-router.register(r"de", KoreanDedupViewSet, base_name="de")
-router.register(r"ide", InterDictDedupTasksViewSet, base_name="ide")
 urlpatterns = router.urls

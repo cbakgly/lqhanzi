@@ -4,12 +4,12 @@
 
 
 def getenum_business_status(name):
-    status = {"ongoing": 0, "completed": 1}
+    status = {"closed": 0, "to_be_arranged": 1, "ongoing": 2, "completed": 3}
     return status[name]
 
 
 def getenum_business_type(name):
-    type = {"input": 0, "split": 1, "dedup": 2, "help": 3}
+    type = {"input": 1, "split": 0, "dedup": 2, "help": 3}
     return type[name]
 
 
