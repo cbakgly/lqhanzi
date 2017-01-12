@@ -175,28 +175,30 @@ Vue.component('parts-inputmethod', {
         var grp_parts = {}
         var that = this;
         var structs = [
-            { value: "⿰",
-              image_url: "/static/img/structs/1.gif" },
-            { value: "⿵",
-              image_url: "/static/img/structs/2.gif" },
             { value: "⿱",
-              image_url: "/static/img/structs/3.gif" },
+              image_url: "/static/img/structs/01.gif" },
+            { value: "⿰",
+              image_url: "/static/img/structs/02.gif" },
+            { value: "⿵",
+              image_url: "/static/img/structs/03.gif" },
             { value: "⿶",
-              image_url: "/static/img/structs/4.gif" },
+              image_url: "/static/img/structs/04.gif" },
             { value: "⿷",
-              image_url: "/static/img/structs/5.gif" },
-            { value: "⿴",
-              image_url: "/static/img/structs/6.gif" },
-            { value: "～⿷",
-              image_url: "/static/img/structs/7.gif" },
-            { value: "⿹",
-              image_url: "/static/img/structs/8.gif" },
+              image_url: "/static/img/structs/05.gif" },
+            { value: "~⿷",
+              image_url: "/static/img/structs/06.gif" },
             { value: "⿺",
-              image_url: "/static/img/structs/9.gif" },
-            { value: "～⿺",
-              image_url: "/static/img/structs/10.gif" },
+              image_url: "/static/img/structs/07.gif" },
+            { value: "~⿺",
+              image_url: "/static/img/structs/08.gif" },
+            { value: "⿹",
+              image_url: "/static/img/structs/09.gif" },
+            { value: "~⿹",
+              image_url: "/static/img/structs/10.png" },
             { value: "⿻",
               image_url: "/static/img/structs/11.gif" },
+            { value: "⿴",
+              image_url: "/static/img/structs/12.gif" },
         ]
         var bishus = [{
             "display": "一",
@@ -255,8 +257,8 @@ Vue.component('parts-inputmethod', {
             }
             var that = this;
             var query = String(this.searchQuery)
-            if ((/^(\d*)[hspnz.*]*(\d*)$/i).test(query)) {
-                result = query.match(/^(\d*)[hspnz.*]*(\d*)$/i)
+            if ((/^(\d*)[hspnz+.*]*(\d*)$/i).test(query)) {
+                result = query.match(/^(\d*)[hspnz+.*]*(\d*)$/i)
                 this.input_error = false
                 if (result[1].length!=0 && result[2].length!=0) {
                     this.search_result = []

@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': 'lqhanzi',
         'USER': 'lq',
         'PASSWORD': '123456',
-        'HOST': '192.168.16.3',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'}
     }
