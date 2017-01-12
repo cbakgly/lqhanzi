@@ -480,4 +480,3 @@ class LqHanziPart(models.Model):
     @property
     def input(self):
         return self.part_char
-
