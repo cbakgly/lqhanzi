@@ -3,7 +3,11 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
 
+<<<<<<< Updated upstream
 from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward
+=======
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet
+>>>>>>> Stashed changes
 
 
 # VariantsInput, KoreanDedup, InterDictDedup
@@ -30,20 +34,19 @@ class TaskPackagesAdmin(admin.ModelAdmin):
 
 
 class TasksAdmin(admin.ModelAdmin):
-    fields = (
-        "user",
-        "task_package",
-        "business_type",
-        "business_stage",
-        "task_status",
-        "credits",
-        "remark",
-        "assigned_at",
-        "completed_at",
-        "c_t",
-        "content_type",
-        "business_id",
-    )
+    fields = ("user",
+              "task_package",
+              "business_type",
+              "business_stage",
+              "task_status",
+              "credits",
+              "remark",
+              "assigned_at",
+              "completed_at",
+              "c_t",
+              "content_type",
+              "object_id",
+              )
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
