@@ -18,6 +18,13 @@ class KoreanDedupSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 0
 
+    def to_representation(self, instance):
+        ret = super(KoreanDedupSerializer, self).to_representation(instance)
+        ret['hanzi_pic_path'] = get_pic_url_by_source_pic_name(getenum_source('korean'), ret['hanzi_pic_id'])
+        ret['variant_type_display'] = instance.get_variant_type_display()
+        ret['hanzi_type'] = instance.get_hanzi_type_display()
+        return ret
+
 
 class KoreanDedupFilter(django_filters.FilterSet):
     """
