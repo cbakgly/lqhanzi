@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/iCheck/all.css"/>
   <!--自定义样式-->
   <link rel="stylesheet" href="{{STATIC_URL}}css/ImproveAdminLTE.css"/>
+  {% block headercss %}
+  {% endblock %}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -36,6 +38,7 @@
   <!-- REQUIRED JS SCRIPTS -->
   <script src="https://unpkg.com/vue@2.1.0/dist/vue.js"></script>
   <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+  <script src="{{STATIC_URL}}/js/plugins/lodash/lodash_4.17.min.js"></script>
   <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
   <!-- jQuery 2.2.3 -->
   <script src="{{STATIC_URL}}js/jquery-2.2.3.min.js"></script>

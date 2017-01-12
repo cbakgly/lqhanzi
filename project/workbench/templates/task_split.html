@@ -1,53 +1,53 @@
-{% extends "m2_base.html" %} {% load staticfiles %} {% block content %} {% verbatim %}
+{% extends "m2_base.html" %}
+{% block headercss %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/hanzi_parts.css" type="text/css"/>
+{% endblock %}
+{% load staticfiles %} {% block content %} {% verbatim %}
+
 <!-- component template -->
 <script type="text/x-template" id="parts-template">
-    <div class="box box-blue">
+    <div class="box box-blue con-right">
         <div class="box-header">
             <div class='box-inner'>
-                <div class="input-item-group">
-                    <span class="input-item-header"><span class="input-item-header">结构:</span></span>
-                    <div class="input-item-content ">
-                        <span v-for="item in structs" class="component-item m-t-10" :class="is_flipx(item.input) ? 'flipx' : ''" :data-value="item.input" @click="input_it">
-                    {{item.display}}</span>
-                    </div>
-                </div>
-                <div class="input-item-group">
-                    <span class="input-item-header" style='height: 186px;line-height: 186px;'>部件:</span>
-                    <div class="input-item-content">
-                        <div class="input-group input-group-sm m-t-10">
-                            <input type="text" class="form-control" placeholder="请输入笔画、笔顺检索部件..." v-model="searchQuery">
-                            <span class="input-group-btn">
-                        <button type="button" class="btn btn-flat"><i class="fa fa-search"></button>
-                      </span>
-                            <div class="input-group-btn">
-                                <a class="btn" title="帮助" href="/article/component-help" target="blank"> <i class="fa fa-question-circle" aria-hidden="true"></i></a>
-                            </div>
+                    <div class="compontent clearfix">
+                        <div class="compontent-hd">
+                            <span>结构：</span>
                         </div>
-                        <div class='row' style='margin: 0'>
-                            <div class='input-item-header2'>
-                                <span>笔画:</span>
-                            </div>
-                            <div class='input-item-content2'>
-                                <div v-for="key in parts" class='btn btn-circle' :class="is_actived(key) ? 'active' : ''" @click="input_bishu_search(key)">{{display(key)}}</div>
-                            </div>
-                        </div>
-                        <div class='row' style='margin: 0'>
-                            <div class='input-item-header2'>
-                                <span>笔顺:</span>
-                            </div>
-                            <div class='input-item-content2'>
-                                <div v-for="item in bishus" class='btn btn-circle' :data-value="item.input" @click="input_search">{{item.display}}</div>
-                            </div>
+                        <div class="compontent-bd">
+                            <span v-for="item in structs" class='component-item'  :data-value="item.value" @click="input_it"><img :src="item.image_url" alt="" :data-value="item.value"></span>
                         </div>
                     </div>
-                </div>
-                <div class='row'>
-                    <div class='col-md-10 col-md-offset-1'>
-                        <div class="tabs-content">
-                            <span v-for="item in search_result" class='component-item' :class="hint_item(item) ? 'hint-item' : ''" :data-value="item.input" @click="input_it">
-                  {{item_display(item)}}<img v-if="is_image(item)" class='component-img' :src="image_path(item)" :data-value="item.input"/></span>
+                 <div class="parts">
+                        <div class="parts-top clearfix">
+                            <div class="parts-hd">
+                                <span>部件：</span>
+                            </div>
+                            <div class="parts-bd">
+                                <div class="parts-ser">
+                                    <input class="input-ser fl" type="text" placeholder="请输入笔画或笔顺"  v-model="searchQuery">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <span v-if="input_error" class='hint-item'>输入无效，请输入数字或hspnz</span>
+                                </div>
+                                <!--笔画-->
+                                <div class="stroke">
+
+                                 <span class="stroke-hd">笔画：</span>
+                                    <div class="stroke-bd">
+                                    <span v-for="key in parts" class='btn btn-circle' :class="is_actived(key) ? 'active' : ''" @click="input_bishu_search(key)">{{display(key)}}</span>
+                                    </div>
+                                </div>
+                                <!--笔顺-->
+                                <div class="stroke">
+                                    <span class="stroke-hd">笔顺：</span>
+                                    <div class="stroke-bd">
+                                        <span v-for="item in bishus" class='btn btn-circle' :data-value="item.input"  @click="input_search">{{item.display}}<img v-if="is_image(item)" class='component-img' :src="image_path(item)" :data-value="item.input"/></span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
+                <div class="parts-results">
+                    <span v-for="item in rebuild_result(search_result)" class="result-item" :class="item.input=='' ? 'result-stoke' : ''" :data-value="item.input" @click="input_it">{{item_display(item)}}</span>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
 </script>
 {% endverbatim %}
 <div id="hanzi-split" class='row'>
-    <div class='col-md-7 col-xm-12'>
+    <div class='col-md-5 col-xm-12'>
         <div class="box box-blue">
             <div class="box-header">
                 <div class="hanzi-content">
@@ -154,64 +154,77 @@
             </div>
         </div>
     </div>
-    <div class='col-md-5 col-xm-12'>
+    <div class='col-md-7 col-xm-12'>
         <div>
-            <parts-inputmethod :data="hanziComponents" :parts=" _.range(0, 18)">
+            <parts-inputmethod :data="hanziComponents">
             </parts-inputmethod>
         </div>
     </div>
 </div>
 </div>
 {% endblock %} {% block footerjs %}
-<script src="{% static '' %}js/plugins/parts_component/parts_component.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 <script type="text/javascript">
 // register the parts-inputmethod component
 Vue.component('parts-inputmethod', {
     template: '#parts-template',
     props: {
-        data: Array,
-        parts: Array,
+        data: Array
     },
     data: function() {
         var grp_parts = {}
         var that = this;
+        var structs = [
+            { value: "⿰",
+              image_url: "/static/img/structs/1.gif" },
+            { value: "⿵",
+              image_url: "/static/img/structs/2.gif" },
+            { value: "⿱",
+              image_url: "/static/img/structs/3.gif" },
+            { value: "⿶",
+              image_url: "/static/img/structs/4.gif" },
+            { value: "⿷",
+              image_url: "/static/img/structs/5.gif" },
+            { value: "⿴",
+              image_url: "/static/img/structs/6.gif" },
+            { value: "～⿷",
+              image_url: "/static/img/structs/7.gif" },
+            { value: "⿹",
+              image_url: "/static/img/structs/8.gif" },
+            { value: "⿺",
+              image_url: "/static/img/structs/9.gif" },
+            { value: "～⿺",
+              image_url: "/static/img/structs/10.gif" },
+            { value: "⿻",
+              image_url: "/static/img/structs/11.gif" },
+        ]
         var bishus = [{
             "display": "一",
             "input": "h",
-            "search": ""
+            "strokes": 1,
+            "stroke_hspnz": ""
         }, {
             "display": "丨",
             "input": "s",
-            "search": ""
+            "strokes": 1,
+            "stroke_hspnz": ""
         }, {
             "display": "丿",
             "input": "p",
-            "search": ""
+            "strokes": 1,
+            "stroke_hspnz": ""
         }, {
             "display": "乀",
             "input": "n",
-            "search": ""
+            "strokes": 1,
+            "stroke_hspnz": ""
         }, {
             "display": "⺄",
             "input": "z",
-            "search": ""
+            "strokes": 1,
+            "stroke_hspnz": ""
         }, ];
-        this.parts.forEach(function(key) {
-            grp_parts[key] = that.data.filter(function(item) {
-                var replace = "^" + key + "[hspnz]*$";
-                var re = new RegExp(replace);
-                if (item.search.trim().match(re)) {
-                    return item
-                }
-            })
-        })
-        grp_parts[0] = this.data.filter(function(item) {
-            var replace = "^[0-9]+[hspnz]*$";
-            var re = new RegExp(replace);
-            if (item.search.trim().match(re)) {
-                return item
-            }
-        });
+
         return {
             sortKey: '',
             grp_parts: grp_parts,
@@ -219,42 +232,69 @@ Vue.component('parts-inputmethod', {
             search_result: [],
             searchQuery: '',
             mainInput: {},
-            bishus: bishus
+            bishus: bishus,
+            structs: structs,
+            input_error: false
         }
 
     },
     watch: {
         searchQuery: function() {
             if (typeof(this.searchQuery) == 'number') {
-                this.search_result = this.grp_parts[this.selected]
-                return;
+                var that = this
+                this.search_result =  this.data.filter(function(item) {
+                    if (item.strokes == that.searchQuery) {
+                        return item;
+                    }
+                })
+                return
             }
             if (this.searchQuery == '') {
-                this.search_result = this.grp_parts[0]
+                this.search_result = this.data
                 return;
             }
             var that = this;
-            this.search_result = this.data.filter(function(item) {
-                var replace = that.searchQuery + "[hspnz]*$";
-                var re = new RegExp(replace);
-                if (item.search.trim().match(re)) {
-                    return item
+            var query = String(this.searchQuery)
+            if ((/^(\d*)[hspnz.*]*(\d*)$/i).test(query)) {
+                result = query.match(/^(\d*)[hspnz.*]*(\d*)$/i)
+                this.input_error = false
+                if (result[1].length!=0 && result[2].length!=0) {
+                    this.search_result = []
+                } else {
+                    var replace = query.replace(/\d*/g, '') ;
+                    var expression = "^" + replace + ".*$";
+                    result_1 = this.data.filter(function(item) {
+                        var re = new RegExp(expression, 'i');
+                        if (item.stroke_hspnz && item.stroke_hspnz.trim().match(re)) {
+                            return item
+                        }
+                    })
+                    var bishu = result[1] + result[2];
+                    if (bishu.length!=0) {
+                        this.search_result = result_1.filter(function(item) {
+                            if (String(item.strokes) == bishu) {
+                                return item
+                            }
+                        })
+                    } else {
+                        this.search_result = result_1
+                    }
                 }
-            })
+            } else {
+                this.input_error = true
+            }
+
         }
     },
     created: function() {
-        this.active_tab(0)
+
     },
     computed: {
-        structs: function() {
-            var structs = this.data.filter(function(item) {
-                if (item.search.trim().match(/^0(.*)$/)) {
-                    return item
-                }
-            })
-            return structs
-        },
+        parts: function(){
+            var ret = _.uniqBy(this.data, 'strokes').map(function(t){ return t.strokes})
+            ret.unshift(0)
+            return ret
+        }
     },
     filters: {
         capitalize: function(str) {
@@ -328,6 +368,20 @@ Vue.component('parts-inputmethod', {
                 return
             }
             this.searchQuery = key
+        },
+        rebuild_result: function(result) {
+            var parts = _.cloneDeep(result)
+            var part_index = _.uniqBy(parts, 'strokes').map(function(t){ return t.strokes})
+
+            _(part_index).forEach(function(i){
+              var item = {"display": i,
+                        "input": "",
+                        "strokes": i,
+                        "stroke_hspnz": ""}
+              var pos = _.findIndex(parts, function(t){return t.strokes==i})
+              parts.splice(pos, 0, item)
+            })
+            return parts
         }
     }
 })
@@ -336,7 +390,7 @@ var part_input = new Vue({
     el: '#hanzi-split',
     data: {
         searchQuery: '',
-        hanziComponents: hanziComponents,
+        hanziComponents: [],
         mainInput: $('#hanzi-split input[type=text]:first'),
     },
     methods: {
@@ -349,6 +403,12 @@ var part_input = new Vue({
         this.$on('emit-part', function(a) {
             part_input.mainInput.val(part_input.mainInput.val() + a)
         })
+         this.$http.get('/api/v1/parts/?is_split_part=1').then((response) => {
+            // success callback
+            part_input.hanziComponents = response.data
+          }, (response) => {
+            // error callback
+          });
     },
     mounted: function() {
         $("input[type=checkbox]").iCheck({

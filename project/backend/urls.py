@@ -12,6 +12,7 @@ from backend.views.api_variants_input import VariantsInputViewSet
 from backend.views.api_variants_dedup import InterDictDedupViewSet, KoreanDedupViewSet
 from backend.views.api_korean_dup_characters import KoreanTaiwanDupCharactersViewSet
 from backend.views.api_hanzi_set import HanziSetViewSet
+from backend.views.api_hanzi_parts import HanziPartViewSet
 
 router = SimpleRouter()
 router.register(r'operations', OperationViewSet, base_name='operations')
@@ -23,6 +24,7 @@ router.register(r'diaries', DiaryViewSet, base_name='diaries')
 router.register(r'credits', CreditViewSet, base_name='credits')
 router.register(r"redeems", RedeemViewSet, base_name='redeems')
 router.register(r"splits", VariantsSplitViewSet, base_name='splits')
+router.register(r"parts", HanziPartViewSet, base_name="hanzi-parts")
 router.register(r"inputs", VariantsInputViewSet, base_name='inputs')
 router.register(r"interdict-dedups", InterDictDedupViewSet, base_name='inter-dict-dedups')
 router.register(r"korean-taiwan-dup-charaters", KoreanTaiwanDupCharactersViewSet, base_name='korean-taiwan-dup-characters')

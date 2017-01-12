@@ -6,7 +6,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 }
 body{
     font-size:12px;
-    font-family: 'myFont', 'KaiXinSong', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-family: 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 table{
     border-collapse:collapse;
@@ -1057,20 +1057,11 @@ tbody tr th{
 }
 
 .component-item {
-    display: inline-flex;
-    width: 24px;
-    height: 24px;
-    border: 1px solid #eef;
-    line-height:20px;
-    font-size: 20px;
-    vertical-align: middle;
-    padding: 0px;
-    border-collapse: collapse;
-    cursor: pointer;
-    /*align-items: center;*/
-    justify-content: center;
-    margin-right: 4px;
-    margin-bottom: 4px;
+    display:inline-block;
+    width:26px;
+    height:26px;
+    margin:0 10px;
+    cursor:pointer;
 }
 
 .component-img {
@@ -1208,10 +1199,17 @@ tbody tr th{
     float:left;
     width: 80%;
     margin: 5px 0 5px 0;
+
 }
 
 .hint-item {
     color: red;
+    margin-left: 10px;
+    border-radius: 2px;
+    background: #eee;
+    padding: 8px 10px;
+    border: 1px dotted #c5c5c5;
+
 }
 .input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn{
     border-radius:0;
