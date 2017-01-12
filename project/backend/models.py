@@ -450,3 +450,34 @@ class TaskCredit(models.Model):
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
     business_credit = models.SmallIntegerField(u'任务积分')
+
+
+class LqHanziPart(models.Model):
+    cancan_choices = ((0, '不可'), (1, '可'))
+    hspnz_hash = {'1': 'h', '2': 's', '3': 'p', '4': 'n', '5': 'z'}
+
+    part_char = models.CharField(u'部首文字', null=True, max_length=8)
+    is_split_part = models.SmallIntegerField(u'可拆分', choices=cancan_choices, null=True, blank=True)
+    is_search_part = models.SmallIntegerField(u'可搜索', choices=cancan_choices, null=True, blank=True)
+    replace_parts = models.CharField(u'替换部件', max_length=64, null=True, blank=True)
+    strokes = models.SmallIntegerField(u'笔画数', null=True, blank=True)
+    stroke_order = models.CharField(u'笔顺', max_length=64, null=True)
+    remark = models.CharField(u'备注', max_length=64, null=True)
+    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    class Meta:
+        db_table = 'lq_hanzi_parts'
+
+    @property
+    def stroke_hspnz(self):
+        return ''.join(map(lambda x: LqHanziPart.hspnz_hash[x], self.stroke_order))
+
+    @property
+    def display(self):
+        return self.part_char
+
+    @property
+    def input(self):
+        return self.part_char
+
