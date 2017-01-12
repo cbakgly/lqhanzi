@@ -1,0 +1,173 @@
+{% extends "m3_base.html" %}
+
+{% block content %}
+    <div class="content-header">
+      <h1>
+        
+        <small>后台管理/打卡管理</small>
+      </h1>
+    </div>
+        
+    <div class="row">
+      <div class="col-md-11" style="margin-left: 20px;">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li><a href="#tab_1" data-toggle="tab">查询</a></li>
+            <li class="active treeview"><a href="#tab_2" data-toggle="tab" id="tabTwo">统计</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane" id="tab_1">
+              <form class="form-horizontal  col-sm-12" style="margin-bottom: 70px;">
+                <div class="box-body  col-sm-12">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-1 control-label">用户：</label>
+
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" placeholder="请输入用户名">
+                    </div>
+
+                    <label for="inputEmail3" class="col-sm-1 control-label">内容：</label>
+
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" placeholder="请输入内容">
+                    </div>
+
+                    <label for="inputEmail3" class="col-md-1 control-label">时间：</label>
+
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control pull-right" id="datepicker" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="box-footer  col-sm-12">
+                  <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                  <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+                </div>
+              </form>
+              <div class="box-body" style="margin-top: 20px;">
+                  <table id="example1" class="table table-bordered">
+                    <thead style="background-color: #f4f4f4;">
+                      <tr>
+                        <td>ID</td>
+                        <td>用户</td>
+                        <td>时间</td>
+                        <td>内容</td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>牛师兄</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>贤二</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>贤一</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>李某某</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>朱某某</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      
+                      </tbody>
+                      
+                  </table>
+
+                  <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin col-md-12">
+                      <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                      <li><a href="#" class="active">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                      <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                      <li>跳至</li>
+                      <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+            <div class="tab-pane  active" id="tab_2">
+
+                <div class="form-group col-sm-12"  style="margin: 20px 40px;">
+                    <label for="inputEmail3" class="col-sm-1 control-label">用户：</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" placeholder="请输入用户名">
+                    </div>
+
+                    <label for="inputEmail3" class="col-md-1 control-label">时间：</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control pull-right" id="datepicker" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                    </div>
+                </div>
+                <div class="box-footer  col-sm-12">
+                  <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                  <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+                </div>
+                <div class="form-group col-sm-12">
+                    <div class="col-md-12">
+                        <label for="inputPassword3" class="col-sm-12 center-label">打卡人数</label>
+                        <div class="box-body col-sm-12">
+                          <div class="chart" id="line-chart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+              <div style="clear:both;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+  $(function () {
+    $(".select2").select2();
+
+    $('input[id^=datepicker]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+    $('input[id^=datepickerAll]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+    //Date picker
+    // $('input[id^=datepicker]').datepicker({autoclose: true});
+    $('#lowAll').click(function(){
+        $('#leave').toggle();
+    })
+
+    var line = new Morris.Line({
+      element: 'line-chart',
+      resize: true,
+      data: [
+        {y: '2011 Q1', item1: 6810},
+        {y: '2011 Q2', item1: 2778},
+        {y: '2011 Q3', item1: 10687},
+        {y: '2011 Q4', item1: 3767},
+        {y: '2012 Q1', item1: 6810},
+        {y: '2012 Q2', item1: 5670},
+        {y: '2012 Q3', item1: 4820}
+      ],
+      xkey: 'y',
+      ykeys: ['item1'],
+      labels: ['打卡人数'],
+      lineColors: ['#fd9903'],
+      hideHover: 'auto'
+    });
+
+  });
+</script>
+{% endblock %}  

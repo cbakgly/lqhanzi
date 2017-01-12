@@ -1,0 +1,445 @@
+{% extends "m3_base.html" %}
+
+{% block content %}
+    <div class="content-header">
+      <h1>
+        <small>后台管理/任务管理</small>
+      </h1>
+    </div>
+    <div class="row">
+      <div class="col-md-11" style="margin-left: 20px;">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li><a href="#tab_1" data-toggle="tab">查询</a></li>
+            <li  class="active treeview"><a href="#tab_2" data-toggle="tab" id="tabTwo">统计</a></li>
+            <li><a href="#tab_3" data-toggle="tab">操作日志</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane" id="tab_1">
+              <form class="form-horizontal  col-sm-12" style="margin-bottom: 70px;">
+                <div class="box-body  col-sm-12">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-1 control-label">用户：</label>
+
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" placeholder="请输入用户名">
+                    </div>
+                    <label for="inputPassword3" class="col-sm-1 control-label">类型：</label>
+
+                    <div class="col-sm-2">
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">选择类型</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                      </select>
+                    </div>
+                    <label for="inputPassword3" class="col-sm-1 control-label">阶段：</label>
+
+                    <div class="col-sm-2">
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">选择阶段</option>
+                        <option>阶段一</option>
+                        <option>阶段一</option>
+                        <option>阶段一</option>
+                        <option>阶段一</option>
+                        <option>阶段一</option>
+                        <option>阶段一</option>
+                      </select>
+                    </div>
+                    <label for="inputPassword3" class="control-label text-green" id="lowAll">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多搜索 <i class="fa fa-angle-down"></i></label>
+                  </div>
+
+                  <div style="display:none;" id="leave">
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-md-2 col-sm-pull-1 control-label">任务ID：</label>
+
+                          <div class="col-sm-2 col-sm-pull-1">
+                            <input type="text" class="form-control" placeholder="请输入任务ID">
+                          </div>
+                          <label for="inputPassword3" class="col-sm-1 col-sm-pull-1 control-label">状态：</label>
+
+                          <div class="col-sm-2 col-sm-pull-1">
+                            <select class="form-control select2" style="width: 100%;">
+                              <option selected="selected">选择状态</option>
+                              <option>类型一</option>
+                              <option>类型一</option>
+                              <option>类型一</option>
+                              <option>类型一</option>
+                              <option>类型一</option>
+                              <option>类型一</option>
+                            </select>
+                          </div>
+                          <label for="inputPassword3" class="col-md-2 col-sm-pull-2 control-label">领取时间：</label>
+
+                          <div class="col-sm-2 col-sm-pull-2">
+                              <input type="text" class="form-control pull-right" id="datepicker" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                          </div>
+                          
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-md-2 col-sm-pull-1 control-label">完成时间：</label>
+
+                          <div class="col-sm-2 col-sm-pull-1">
+                              <input type="text" class="form-control pull-right" id="datepicker" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                          </div>
+                          
+                        </div>
+                  </div>
+                  
+
+                </div>
+                <div class="box-footer  col-sm-12">
+                  <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                  <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+                </div>
+              </form>
+              <div class="box-body" style="margin-top: 20px;">
+                  <table id="example1" class="table table-bordered">
+                    <thead style="background-color: #f4f4f4;">
+                      <tr>
+                        <td>ID</td>
+                        <td>用户</td>
+                        <td>类型</td>
+                        <td>阶段</td>
+                        <td>大小</td>
+                        <td>状态</td>
+                        <td>每日计划</td>
+                        <td>今日完成</td>
+                        <td>总完成</td>
+                        <td>领取时间</td>
+                        <td>预计完成时间</td>
+                        <td>实际完成时间</td>
+                        <td>操作</td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>牛师兄</td>
+                        <td>拆字</td>
+                        <td>初次</td>
+                        <td>100页</td>
+                        <td>已完成</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td><span class="text-green col-sm-7">查看</span><span class="text-red">删除</span></td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>贤二</td>
+                        <td>录入</td>
+                        <td>初次</td>
+                        <td>20字</td>
+                        <td>已完成</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td><span class="text-green col-sm-7">查看</span><span class="text-red">删除</span></td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>贤一</td>
+                        <td>去重</td>
+                        <td>回查</td>
+                        <td>100页</td>
+                        <td>已完成</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td><span class="text-green col-sm-7">查看</span><span class="text-red">删除</span></td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>李某某</td>
+                        <td>拆字</td>
+                        <td>审查</td>
+                        <td>20字</td>
+                        <td>已完成</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td><span class="text-green col-sm-7">查看</span><span class="text-red">删除</span></td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>朱某某</td>
+                        <td>拆字</td>
+                        <td>审查</td>
+                        <td>20字</td>
+                        <td>已完成</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>20字</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td>2016-12-03</td>
+                        <td><span class="text-green col-sm-7">查看</span><span class="text-red">删除</span></td>
+                      </tr>
+                      
+                      </tbody>
+                      
+                  </table>
+
+                  <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin col-md-12">
+                      <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                      <li><a href="#" class="active">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                      <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                      <li>跳至</li>
+                      <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+            <div class="tab-pane  active" id="tab_2">
+
+                <div class="form-group col-sm-12"  style="margin: 20px 40px;">
+                    <label for="inputPassword3" class="col-sm-1 control-label">类型：</label>
+                    <div class="col-sm-3">
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">选择类型</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                        <option>类型一</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box-body chart-responsive  col-sm-4">
+                          <div class="centerT">初次</div>
+                          <div id="donut-chart" style="height: 300px;"></div>
+                        </div>
+                        <div class="box-body chart-responsive  col-sm-4">
+                          <div class="centerT">回查</div>
+                          <div id="donut-chart2" style="height: 300px;"></div>
+                        </div>
+                        <div class="box-body chart-responsive  col-sm-4">
+                          <div class="centerT">审查</div>
+                          <div id="donut-chart3" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                      <!-- <div class="box-body">
+                        <canvas id="pieChart" style="height:250px"></canvas>
+                      </div> -->
+                </div>
+              <div style="clear:both;"></div>
+            </div>
+            <div class="tab-pane" id="tab_3">
+              <form class="form-horizontal  col-sm-12" style="margin-bottom: 70px;">
+                <div class="box-body  col-sm-12">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-1 control-label">用户：</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" placeholder="请输入用户名">
+                    </div>
+                    <label for="inputEmail3" class="col-sm-1 control-label">日志：</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" placeholder="请输入日志">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-md-1 control-label">时间：</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control pull-right" id="datepickerAll" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                    </div>
+                  </div>
+                </div>
+                <div class="box-footer  col-sm-12">
+                  <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                  <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+                </div>
+              </form>
+              <div class="box-body" style="margin-top: 20px;">
+                  <table id="example1" class="table table-bordered">
+                    <thead style="background-color: #f4f4f4;">
+                      <tr>
+                        <td class="col-md-1">ID</td>
+                        <td class="col-md-1">用户</td>
+                        <td class="col-md-2">时间</td>
+                        <td class="col-md-6">日志</td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>贤一</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>贤二</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>贤一</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>李某某</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>朱某某</td>
+                        <td>2016/11/11 11:30:32</td>
+                        <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                      </tr>
+                      </tbody>
+                      
+                  </table>
+
+                  <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin col-md-12">
+                      <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                      <li><a href="#" class="active">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                      <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                      <li>跳至</li>
+                      <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        $(function () {
+            $(".select2").select2();
+
+            $('input[id^=datepicker]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A',singleDatePicker:true});
+            $('input[id^=datepickerAll]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+            //Date picker
+            // $('input[id^=datepicker]').datepicker({autoclose: true});
+            $('#lowAll').click(function(){
+                $('#leave').toggle();
+            })
+
+            $('input[class^=buttonR]').click(function(){
+                if($(this).hasClass('btn-success')){
+                }else{
+                    $('input[name=radio2]').removeClass('btn-success');
+                    $('input[name=radio1]').removeClass('btn-success');
+                    $(this).addClass('btn-success');
+                }
+            })
+
+            $('#xinzheng').click(function(){
+                  $('.modal').show();
+            })
+
+            $('span[id^=exampleModal]').click(function(){
+                  $('.modal').hide();
+            })
+
+            var donutData = [
+              {label: "已完成", data: 65, color: "#06c367"},
+              {label: "未完成", data: 35, color: "#fd9800"}
+            ];
+            $.plot("#donut-chart", donutData, {
+              series: {
+                pie: {
+                  show: true,
+                  radius: 1,
+                  innerRadius: 0.5,
+                  label: {
+                    show: true,
+                    radius: 2 / 3,
+                    formatter: labelFormatter,
+                    threshold: 0.1
+                  }
+
+                }
+              },
+              legend: {
+                show: false
+              }
+            });
+            var donutData2 = [
+              {label: "已完成", data: 65, color: "#06c367"},
+              {label: "未完成", data: 35, color: "#fd9800"}
+            ];
+            $.plot("#donut-chart2", donutData2, {
+              series: {
+                pie: {
+                  show: true,
+                  radius: 1,
+                  innerRadius: 0.5,
+                  label: {
+                    show: true,
+                    radius: 2 / 3,
+                    formatter: labelFormatter,
+                    threshold: 0.1
+                  }
+
+                }
+              },
+              legend: {
+                show: false
+              }
+            });
+            var donutData3 = [
+              {label: "已完成", data: 65, color: "#06c367"},
+              {label: "未完成", data: 35, color: "#fd9800"}
+            ];
+            $.plot("#donut-chart3", donutData3, {
+              series: {
+                pie: {
+                  show: true,
+                  radius: 1,
+                  innerRadius: 0.5,
+                  label: {
+                    show: true,
+                    radius: 2 / 3,
+                    formatter: labelFormatter,
+                    threshold: 0.1
+                  }
+
+                }
+              },
+              legend: {
+                show: false
+              }
+            });
+            function labelFormatter(label, series) {
+            return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+                + label
+                + "<br>"
+                + Math.round(series.percent) + "%</div>";
+            }
+
+          });
+    </script>
+{% endblock %} 
