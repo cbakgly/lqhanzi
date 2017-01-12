@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
 
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward
 
 
 # VariantsInput, KoreanDedup, InterDictDedup
@@ -108,6 +108,14 @@ class VariantsSplitAdmin(admin.ModelAdmin):
     ]
 
 
+class CreditRedeemInline(admin.TabularInline):
+    model = CreditsRedeem
+
+
+class RewardAdmin(admin.ModelAdmin):
+    inlines = [CreditRedeemInline]
+
+
 class CreditsRedeemAdmin(admin.ModelAdmin):
     list_display = (
         "applied_by", "accepted_by", "c_t", "completed_by", "accepted_at", "completed_at",
@@ -124,3 +132,4 @@ admin.site.register(CreditsRedeem, CreditsRedeemAdmin)
 admin.site.register(User, GuardedModelAdmin)
 admin.site.register(Permission, GuardedModelAdmin)
 admin.site.register(HanziSet)
+admin.site.register(Reward, RewardAdmin)

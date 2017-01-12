@@ -112,7 +112,7 @@ class Tasks(models.Model):
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=task_status_choices, null=True, blank=True)
 
-    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
+    #business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
 
@@ -125,8 +125,8 @@ class Tasks(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
-    # object_id = models.PositiveIntegerField(null=True, blank=True)
-    content_object = GenericForeignKey('content_type', 'business_id')
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         db_table = 'lq_tasks'
@@ -321,24 +321,39 @@ class InterDictDedup(models.Model):
         db_table = 'lq_inter_dict_dedup'
 
 
+class Reward(models.Model):
+    reward_name = models.CharField(u'奖品名称',max_length=64)
+    reward_quantity = models.SmallIntegerField(u'奖品数量')
+    reward_pic = models.ImageField(u'奖品图片', upload_to='reward')
+    need_credits = models.SmallIntegerField(u'所需积分')
+
+    class Meta:
+        verbose_name = "奖品"
+        verbose_name_plural = "奖品"
+
+    def __unicode__(self):
+        return self.reward_name
+
+
 class CreditsRedeem(models.Model):
     redeem_status_choices = ((0, '申请中'), (1, '已受理'), (2, '已完成'))
 
     applied_by = models.ForeignKey(User, verbose_name="申请人", related_name="applier")
-    accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor")
-    completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor")
-    accepted_at = models.DateTimeField(u'受理时间', null=True)
-    completed_at = models.DateTimeField(u'完成时间', null=True)
-    reward_name = models.CharField(u'奖品名称', max_length=64, null=True)
+    accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor", null=True, blank=True)
+    completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor", null=True, blank=True)
+    accepted_at = models.DateTimeField(u'受理时间', null=True, blank=True, default=timezone.now)
+    completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
+    reward_name = models.ForeignKey(Reward, related_name="reward", verbose_name="奖品")
     cost_credits = models.IntegerField(u'所用积分', null=True)
 
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', choices=redeem_status_choices, null=True)
-    remark = models.CharField(u'备注', max_length=64, null=True)
+    remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
         db_table = 'lq_credits_redeem'
+        verbose_name = verbose_name_plural = "积分兑换"
 
 
 class Diaries(models.Model):

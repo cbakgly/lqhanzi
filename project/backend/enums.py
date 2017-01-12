@@ -14,5 +14,10 @@ def getenum_business_type(name):
 
 
 def getenum_source(name):
-    list = {'unicode': 1, 'taiwan': 2, 'hanyu': 3, 'korean': 4, 'dunhuang': 5}
-    return list[name]
+    lists = {'unicode': 1, 'taiwan': 2, 'hanyu': 3, 'korean': 4, 'dunhuang': 5}
+    return lists[name]
+
+
+def getenum_business_stage(name):
+    stage = {'init': 0, 'review': 1, 'final': 2}
+    return stage[name]
