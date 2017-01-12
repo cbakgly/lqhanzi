@@ -22,8 +22,6 @@ class RedeemFilter(django_filters.FilterSet):
         fields = ["applied_by__username", "status"]
 
 
-
-
 class RedeemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreditsRedeem

@@ -112,7 +112,7 @@ class Tasks(models.Model):
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=task_status_choices, null=True, blank=True)
 
-    #business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
+    # business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
 
@@ -322,7 +322,7 @@ class InterDictDedup(models.Model):
 
 
 class Reward(models.Model):
-    reward_name = models.CharField(u'奖品名称',max_length=64)
+    reward_name = models.CharField(u'奖品名称', max_length=64)
     reward_quantity = models.SmallIntegerField(u'奖品数量')
     reward_pic = models.ImageField(u'奖品图片', upload_to='reward')
     need_credits = models.SmallIntegerField(u'所需积分')
