@@ -67,6 +67,7 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
 
 class VariantsSplitFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """

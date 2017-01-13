@@ -13,6 +13,7 @@ from ..enums import getenum_source
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = KoreanDedup
         fields = "__all__"
@@ -27,6 +28,7 @@ class KoreanDedupSerializer(serializers.ModelSerializer):
 
 
 class KoreanDedupFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
@@ -47,6 +49,7 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
 
 
 class InterDictDedupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = InterDictDedup
         fields = "__all__"
@@ -92,19 +95,21 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
 
 
 class InterDictDedupFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
     inter_dict_dup_hanzi = django_filters.CharFilter(name=["inter_dict_dup_hanzi_draft", "inter_dict_dup_hanzi_review", "inter_dict_dup_hanzi_final"], method=fields_or_filter_method)
+    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
 
     class Meta:
         model = InterDictDedup
-        fields = ("hanzi_pic_id", "inter_dict_dup_hanzi", "std_hanzi", "is_draft_equals_review", "is_review_equals_final", "is_checked", "is_submitted")
+        fields = "__all__"
 
 
 class InterDictDedupViewSet(viewsets.ModelViewSet):
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (SessionAuthentication, BasicAuthentication)
+    # permission_classes = (IsAuthenticated,)
 
     queryset = InterDictDedup.objects.exclude(inter_dict_dup_hanzi_final='', inter_dict_dup_hanzi_review='', inter_dict_dup_hanzi_draft='')
     filter_class = InterDictDedupFilter

@@ -17,3 +17,4 @@ flake8
 ipython==5.1.0
 django-storages==1.5.1
 boto
+pillow
