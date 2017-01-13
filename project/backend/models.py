@@ -71,7 +71,7 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-business_type_choices = ((1, u'录入'), (0, u'拆字'), (2, u'去重'), (3, u'互助'))
+business_type_choices = ((0, u'拆字'), (1, u'录入'), (2, u'去重'), (3, u'互助'))
 business_stage_choices = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
 task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -94,7 +94,7 @@ class TaskPackages(models.Model):
         db_table = 'lq_task_packages'
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.size) + str(self.id)
+        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage-1][1] + str(self.size) + str(self.id)
 
 
 class TaskTypes(models.Model):
@@ -133,10 +133,7 @@ class Tasks(models.Model):
         ordering = ['id']
 
     def __unicode__(self):
-        if self.task_status is None:
-            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + "未分配" + str(self.id)
-        else:
-            return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage][1] + str(self.id)
+        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage-1][1] + str(self.id)
 
 
 class VariantsSplit(models.Model):
@@ -343,7 +340,8 @@ class CreditsRedeem(models.Model):
     completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor", null=True, blank=True)
     accepted_at = models.DateTimeField(u'受理时间', null=True, blank=True, default=timezone.now)
     completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
-    reward_name = models.ForeignKey(Reward, related_name="reward", verbose_name="奖品")
+    reward_name = models.CharField("奖品", max_length=64)
+    reward_id = models.ForeignKey(Reward, related_name="reward", verbose_name="奖品")
     cost_credits = models.IntegerField(u'所用积分', null=True)
 
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', choices=redeem_status_choices, null=True)

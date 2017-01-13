@@ -12,7 +12,7 @@ import django_filters
 
 from ..pagination import NumberPagination
 from ..models import Tasks, VariantsSplit, VariantsInput, KoreanDedup, InterDictDedup
-from ..enums import getenum_business_type
+from ..enums import getenum_business_type, getenum_business_status, getenum_business_stage
 import api_variants_input
 import api_variants_dedup
 import api_variants_split
@@ -101,16 +101,16 @@ class TasksViewSet(viewsets.ModelViewSet):
         task_package = request.query_params["task_package"]
         business_type = getenum_business_type("split")
         if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=0).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=0).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
         split_variants = [v["task_ele"] for v in serializer.data]
         business_stage = serializer.data[0]["business_stage"]
-        if business_stage == 1:
+        if business_stage == getenum_business_stage("init"):
             similar_parts_comp = "similar_parts_draft"
-        elif business_stage == 2:
+        elif business_stage == getenum_business_stage("review"):
             similar_parts_comp = "similar_parts_review"
         else:
             similar_parts_comp = "similar_parts_final"
@@ -172,17 +172,17 @@ class TasksViewSet(viewsets.ModelViewSet):
         task_package = request.query_params["task_package"]
         business_type = getenum_business_type("input")
         if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=0).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=0).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
         input_variants = [v["task_ele"] for v in serializer.data]
         business_stage = serializer.data[0]["business_stage"]
-        if business_stage == 1:
+        if business_stage == getenum_business_stage("init"):
             hanzi_char_comp = "hanzi_char_draft"
             variant_type_comp = 'variant_type_draft'
-        elif business_stage == 2:
+        elif business_stage == getenum_business_stage("review"):
             hanzi_char_comp = "hanzi_char_review"
             variant_type_comp = 'variant_type_review'
         else:
@@ -271,9 +271,9 @@ def skip_task(self, request, *args, **kwargs):
     user = origin_task.user
     task_package = origin_task.task_package
 
-    if business_stage is 0:
+    if business_stage == getenum_business_stage("init"):
         work_ele.skip_num_draft += 1
-    elif business_stage is 1:
+    elif business_stage == getenum_business_stage("review"):
         work_ele.skip_num_review += 1
     else:
         work_ele.skip_num_final += 1

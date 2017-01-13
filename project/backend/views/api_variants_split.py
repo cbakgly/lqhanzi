@@ -12,6 +12,7 @@ import django_filters
 from ..pagination import NumberPagination
 from ..models import VariantsSplit
 from task_func import assign_task
+from ..enums import getenum_business_status
 
 
 class VariantsSplitSerializer(serializers.ModelSerializer):
@@ -84,24 +85,24 @@ def update_tasks_status(variants_split):
     review = task_dict[1]
     final = task_dict[2]
     origin_task = draft
-    if draft.task_status == 2:
-        draft.task_status = 3
+    if draft.task_status == getenum_business_status("ongoing"):
+        draft.task_status = getenum_business_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status = 1
+        review.task_status =  getenum_business_status("to_be_arranged")
         variants_split.save()
         draft.save()
         review.save()
-    elif review.task_status == 2:
-        review.task_status = 3
+    elif review.task_status == getenum_business_status("ongoing"):
+        review.task_status = getenum_business_status("completed")
         review.completed_at = timezone.now()
-        final.task_status = 1
+        final.task_status = getenum_business_status("to_be_arranged")
         variants_split.is_draft_equals_review = variants_split.init_split_draft is variants_split.init_split_review
         variants_split.save()
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == 2:
-        final.task_status = 3
+    elif final.task_status == getenum_business_status("ongoing"):
+        final.task_status = getenum_business_status("completed")
         final.completed_at = timezone.now()
         variants_split.is_review_equals_final = variants_split.init_split_final is variants_split.init_split_review
         variants_split.save()
