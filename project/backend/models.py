@@ -94,7 +94,7 @@ class TaskPackages(models.Model):
         db_table = 'lq_task_packages'
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage-1][1] + str(self.size) + str(self.id)
+        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage - 1][1] + str(self.size) + str(self.id)
 
 
 class TaskTypes(models.Model):
@@ -133,7 +133,7 @@ class Tasks(models.Model):
         ordering = ['id']
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage-1][1] + str(self.id)
+        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage - 1][1] + str(self.id)
 
 
 class VariantsSplit(models.Model):
@@ -313,6 +313,7 @@ class InterDictDedup(models.Model):
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    task = GenericRelation(Tasks, related_query_name="dedup_task")
 
     class Meta:
         db_table = 'lq_inter_dict_dedup'
