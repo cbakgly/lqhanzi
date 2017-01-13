@@ -55,6 +55,8 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         for key in validated_data.keys():
             if validated_data.get(key) is not None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
+
+
         due_days = instance.size / validated_data['daily_plan']
         c_t = timezone.now()
         setattr(instance, "due_date", c_t + timezone.timedelta(days=due_days))
