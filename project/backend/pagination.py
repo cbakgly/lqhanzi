@@ -29,7 +29,7 @@ class StandardPagination(pagination.PageNumberPagination):
                 'total_pages': self.page.paginator.num_pages,
                 'page': self.page.number,
             },
-            'model': data,
+            'models': data,
         })
 
 
@@ -42,7 +42,7 @@ class NumberPagination(pagination.PageNumberPagination):
     def get_paginated_response(self, data):
         return Response({
             'html_context': self.get_html_context(),
-            'model': data,
+            'models': data,
         })
 
 

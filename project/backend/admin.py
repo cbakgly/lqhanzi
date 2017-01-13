@@ -2,12 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
-
-<<<<<<< Updated upstream
 from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward
-=======
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet
->>>>>>> Stashed changes
 
 
 # VariantsInput, KoreanDedup, InterDictDedup
