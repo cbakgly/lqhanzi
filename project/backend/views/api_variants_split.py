@@ -19,9 +19,6 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VariantsSplit
-        fields = "__all__"
-        depth = 0
-
         # fields = ["split_task"]
         fields = ['source',
                   'hanzi_type',

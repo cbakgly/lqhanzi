@@ -47,7 +47,20 @@ class RedeemViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = RedeemSerializer
 
-    '''def get_serializer_class(self):
+    '''def create(self, validated_data):
+        task = CreditsRedeem.objects.create(**validated_data)
+        task.save()
+        return task
+
+    def update(self, instance, validated_data):
+        for key in validated_data.init_data.keys():
+            if validated_data.get(key) is not None:  # Only Set values which is put.
+                setattr(instance, key, validated_data.get(key, getattr(instance, key)))
+
+            instance.save()
+
+        return instance
+    def get_serializer_class(self):
         if self.request.version == "v1":
             return RedeemSerializer
         else:

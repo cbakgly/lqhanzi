@@ -2,8 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
-
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward
 
 
 # VariantsInput, KoreanDedup, InterDictDedup
@@ -30,20 +29,19 @@ class TaskPackagesAdmin(admin.ModelAdmin):
 
 
 class TasksAdmin(admin.ModelAdmin):
-    fields = (
-        "user",
-        "task_package",
-        "business_type",
-        "business_stage",
-        "task_status",
-        "credits",
-        "remark",
-        "assigned_at",
-        "completed_at",
-        "c_t",
-        "content_type",
-        "business_id",
-    )
+    fields = ("user",
+              "task_package",
+              "business_type",
+              "business_stage",
+              "task_status",
+              "credits",
+              "remark",
+              "assigned_at",
+              "completed_at",
+              "c_t",
+              "content_type",
+              "object_id",
+              )
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
@@ -108,6 +106,14 @@ class VariantsSplitAdmin(admin.ModelAdmin):
     ]
 
 
+class CreditRedeemInline(admin.TabularInline):
+    model = CreditsRedeem
+
+
+class RewardAdmin(admin.ModelAdmin):
+    inlines = [CreditRedeemInline]
+
+
 class CreditsRedeemAdmin(admin.ModelAdmin):
     list_display = (
         "applied_by", "accepted_by", "c_t", "completed_by", "accepted_at", "completed_at",
@@ -124,3 +130,4 @@ admin.site.register(CreditsRedeem, CreditsRedeemAdmin)
 admin.site.register(User, GuardedModelAdmin)
 admin.site.register(Permission, GuardedModelAdmin)
 admin.site.register(HanziSet)
+admin.site.register(Reward, RewardAdmin)
