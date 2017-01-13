@@ -28,12 +28,12 @@ class User(AbstractUser, GuardianUserMixin):
 
 variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
 hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
-source = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
+source_choices = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
 boolean_choices = ((0, u'否'), (1, u'是'))
 
 
 class HanziSet(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source, null=True)
+    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
     hanzi_char = models.CharField(u'文字', null=True, max_length=8)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, max_length=32)
@@ -140,7 +140,7 @@ class Tasks(models.Model):
 
 
 class VariantsSplit(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source, null=True, blank=True)
+    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True, blank=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
     hanzi_char = models.CharField(u'文字', null=True, blank=True, max_length=8)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, blank=True, max_length=32)
@@ -270,7 +270,7 @@ class KoreanDupZhengCodes(models.Model):
 
 
 class KoreanDedup(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source, null=True)
+    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id = models.CharField(u'图片字编码', max_length=32, null=True)
@@ -299,7 +299,7 @@ class KoreanDupCharacters(models.Model):
 
 
 class InterDictDedup(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source, null=True)
+    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id = models.CharField(u'图片字编码', max_length=32, null=True)
