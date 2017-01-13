@@ -227,37 +227,36 @@
 
     var search_box = new Vue({
         data: {
-            hanzi_pic_id: null,
-            inter_dict_dup_hanzi: null,
-            std_char: null,
-            is_draft_equals_review: 0,
-            is_checked: 0,
-            is_review_equals_final: 0,
-            is_submitted: 0,
+            hanzi_pic_id: "",
+            inter_dict_dup_hanzi: "",
+            std_char: "",
+            is_draft_equals_review: "",
+            is_checked: "",
+            is_review_equals_final: "",
+            is_submitted: "",
         },
         el: '#search-box',
         methods: {
             search: function() {
                 var cond = {};
-                if (this.hanzi_pic_id) cond['hanzi_pic_id'] = this.hanzi_pic_id;
-                if (this.inter_dict_dup_hanzi) cond["inter_dict_dup_hanzi"] = this.inter_dict_dup_hanzi;
-                if (this.std_hanzi) cond["std_hanzi"] = this.std_char;
-                if (this.is_draft_equals_review) cond["draft_eq_review"] = this.draft_eq_review;
-                if (this.is_checked) cond["is_final"] = this.is_final;
-                if (this.is_review_equals_final) cond["revew_eq_final"] = this.review_eq_final;
-                if (this.is_submitted) cond["is_submitted"] = this.is_submitted;
+                for(var key in this.$data) {
+                  if (key.slice(-1) == '_') continue;
+                  if (this.$data[key] != "") cond[key] = this.$data[key];
+                }
+                var date_span = $('#reservationtime').val().split('-');
+                cond['u_t_span_0'] = (new Date(date_span[0])).toJSON();
+                cond['u_t_span_1'] = (new Date(date_span[1])).toJSON();
 
+                console.log(cond);
                 dedup_search(search_url, cond);
             },
 
             reset_search: function() {
-                this.hanzi_pic_id = null;
-                this.inter_dict_dup_hanzi = null;
-                this.std_char = null;
-                this.is_draft_equals_review = 0;
-                this.is_checked = 0;
-                this.is_review_equals_final = 0;
-                this.is_submitted = 0;
+                for(var key in this.$data) {
+                  if (key.slice(-1) == '_') continue;
+                  this.$data[key] = "";
+                }
+                $('#reservationtime').val("");
             }
         }
     });
@@ -282,11 +281,10 @@
             goto_page: function(url) {
                 dedup_search(url, null);
             }
+        },
+        created: function() {
+            dedup_search(search_url, null);
         }
     });
-
-    $(function(){
-        dedup_search(search_url, null);
-    })
 </script>
 {% endblock %}
