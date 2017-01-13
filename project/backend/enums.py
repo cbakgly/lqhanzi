@@ -19,5 +19,5 @@ def getenum_source(name):
 
 
 def getenum_business_stage(name):
-    stage = {'init': 0, 'review': 1, 'final': 2}
+    stage = {'init': 1, 'review': 2, 'final': 3}
     return stage[name]
