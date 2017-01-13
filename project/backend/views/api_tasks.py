@@ -11,7 +11,7 @@ import django_filters
 # from django.db.models import Q
 
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, VariantsInput, KoreanDedup, InterDictDedup
+from ..models import Tasks, VariantsSplit, VariantsInput, KoreanDedup
 from ..enums import getenum_business_type, getenum_business_status, getenum_business_stage
 import api_variants_input
 import api_variants_dedup

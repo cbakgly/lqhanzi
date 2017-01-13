@@ -106,6 +106,7 @@ class InterDictDedupFilter(django_filters.FilterSet):
         model = InterDictDedup
         fields = "__all__"
 
+
 class InterDictDedupViewSet(viewsets.ModelViewSet):
     # authentication_classes = (SessionAuthentication, BasicAuthentication)
     # permission_classes = (IsAuthenticated,)

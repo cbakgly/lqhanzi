@@ -67,6 +67,7 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
 
 class VariantsSplitFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
@@ -88,7 +89,7 @@ def update_tasks_status(variants_split):
     if draft.task_status == getenum_business_status("ongoing"):
         draft.task_status = getenum_business_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status =  getenum_business_status("to_be_arranged")
+        review.task_status = getenum_business_status("to_be_arranged")
         variants_split.save()
         draft.save()
         review.save()
