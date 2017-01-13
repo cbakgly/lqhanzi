@@ -61,8 +61,9 @@ class TasksSerializer(serializers.ModelSerializer):
 
     def get_task_ele(self, obj):
         task_ele = obj.content_object
-        ele_serializer = api_variants_input.VariantsInputSerializer
-        if isinstance(task_ele, VariantsSplit):
+        if isinstance(task_ele, VariantsInput):
+            ele_serializer = api_variants_input.VariantsInputSerializer
+        elif isinstance(task_ele, VariantsSplit):
             ele_serializer = api_variants_split.VariantsSplitSerializer
         elif isinstance(task_ele, KoreanDedup):
             ele_serializer = api_variants_dedup.KoreanDedupSerializer
