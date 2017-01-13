@@ -19,17 +19,25 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
-            <label><input type="radio" name="business_type" data-val="0" checked="checked" class="minimal">拆字</label>
-            <label><input type="radio" name="business_type" data-val="1">录入</label>
-            <label><input type="radio" name="business_type" data-val="2" class="minimal">去重</label>
+            {% for key, value in business_type_choices %}
+                {% if value == '拆字' %}
+                    <label><input type="radio" name="business_type" data-val="{{key}}" checked="checked">拆字</label>
+                {% elif value == '录入' %}
+                    <label><input type="radio" name="business_type" data-val="{{key}}">录入</label>
+                {% elif value == '去重' %}
+                    <label><input type="radio" name="business_type" data-val="{{key}}">去重</label>
+                {% endif %}
+            {% endfor %}
             </div>
           </div>
           <div class="task-item">
             <div class="task-name fl">任务阶段：</div>
             <div class="radio fl">
-            <label><input type="radio" name="business_stage" data-val="1" checked="checked">初次</label>
-            <label><input type="radio" name="business_stage" data-val="2">回查</label>
-            <label><input type="radio" name="business_stage" data-val="3" class="minimal">审查</label>
+            {% for key,value in business_stage_choices %}
+                <label><input type="radio" name="business_stage" data-val="{{key}}"
+                {% if key == 1 %} checked="checked" {% endif %}
+                >{{value}}</label>
+            {% endfor %}
             </div>
           </div>
           <div class="task-item">
@@ -80,13 +88,14 @@
         $.ajax({
                 url: '{% url 'task-packages-list' version='v1' %}',
                 type: 'POST',
-                data: {"user": user.id,
-                "business_type": business_type,
-                "business_stage": business_stage,
-                "size": package_size,
-                "status": package_status,
-                "daily_plan": package_plan,
-                "due_date": due_date.toJSON(),
+                data: {
+                    "user": user.id,
+                    "business_type": business_type,
+                    "business_stage": business_stage,
+                    "size": package_size,
+                    "status": package_status,
+                    "daily_plan": package_plan,
+                    "due_date": due_date.toJSON(),
                 },
                 success: function(data) {
                     console.log(data);

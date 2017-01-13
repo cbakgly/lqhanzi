@@ -71,7 +71,7 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-business_type_choices = ((1, u'台湾异体字拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'高丽台湾异体字去重'), (6, u'高丽异体字拆字'), (7, u'互助'))
+business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (7, u'互助'))
 business_stage_choices = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
 task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
