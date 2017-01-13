@@ -61,9 +61,8 @@ class TasksSerializer(serializers.ModelSerializer):
 
     def get_task_ele(self, obj):
         task_ele = obj.content_object
-        if isinstance(task_ele, VariantsInput):
-            ele_serializer = api_variants_input.VariantsInputSerializer
-        elif isinstance(task_ele, VariantsSplit):
+        ele_serializer = api_variants_input.VariantsInputSerializer
+        if isinstance(task_ele, VariantsSplit):
             ele_serializer = api_variants_split.VariantsSplitSerializer
         elif isinstance(task_ele, KoreanDedup):
             ele_serializer = api_variants_dedup.KoreanDedupSerializer
@@ -120,7 +119,6 @@ class TasksViewSet(viewsets.ModelViewSet):
         key_list = {
             1: [
                 "id",
-                "task_package",
                 'skip_num_draft',
                 'init_split_draft',
                 'other_init_split_draft',
@@ -130,7 +128,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             ],
             2: [
                 "id",
-                "task_package",
                 'skip_num_review',
                 'init_split_review',
                 'other_init_split_review',
@@ -140,7 +137,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             ],
             3: [
                 "id",
-                "task_package",
                 'skip_num_final',
                 'init_split_final',
                 'other_init_split_final',
@@ -151,17 +147,19 @@ class TasksViewSet(viewsets.ModelViewSet):
         }
 
         for split_variant in split_variants:
-            if split_variant["source"] == int(source) \
-                    or hanzi_char in split_variant["hanzi_char"] \
-                    or similar_parts in split_variant[similar_parts_comp]:
-                split_variant["task_package"] = int(task_package)
+            if split_variant["source"] == int(source) and (hanzi_char in split_variant["hanzi_char"] or similar_parts in split_variant[similar_parts_comp]):
                 results.append(split_variant)
         for result in results:
             tmp = {}
             for key in key_list[business_stage]:
                 tmp[key] = result[key]
             staged_result.append(tmp)
-        return Response({"model": staged_result})
+        return_dict = {
+            "task_package": int(task_package),
+            "models": staged_result
+        }
+
+        return Response(return_dict)
 
     @list_route()
     def ongoing_input(self, request, *args, **kwargs):
@@ -182,19 +180,21 @@ class TasksViewSet(viewsets.ModelViewSet):
         business_stage = serializer.data[0]["business_stage"]
         if business_stage == getenum_business_stage("init"):
             hanzi_char_comp = "hanzi_char_draft"
-            variant_type_comp = 'variant_type_draft'
+            variant_type_comp = "variant_type_draft"
+            notes_comp = "notes_draft"
         elif business_stage == getenum_business_stage("review"):
             hanzi_char_comp = "hanzi_char_review"
-            variant_type_comp = 'variant_type_review'
+            variant_type_comp = "variant_type_review"
+            notes_comp = "notes_review"
         else:
             hanzi_char_comp = "hanzi_char_final"
-            variant_type_comp = 'variant_type_final'
+            variant_type_comp = "variant_type_final"
+            notes_comp = "notes_final"
         results = []
         staged_result = []
         key_list = {
             1: [
                 "id",
-                "task_package",
                 'page_num',
                 'seq_num_draft',
                 'hanzi_char_draft',
@@ -206,7 +206,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             ],
             2: [
                 "id",
-                "task_package",
                 'page_num',
                 'seq_num_review',
                 'hanzi_char_review',
@@ -218,7 +217,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             ],
             3: [
                 "id",
-                "task_package",
                 'page_num',
                 'seq_num_final',
                 'hanzi_char_final',
@@ -231,59 +229,68 @@ class TasksViewSet(viewsets.ModelViewSet):
         }
 
         for input_variant in input_variants:
-            if input_variant["page_num"] == int(page_num) \
-                    or hanzi_char in input_variant[hanzi_char_comp] \
-                    or note in input_variant[note]\
-                    and variant_type == input_variant[variant_type_comp]:
-                input_variant["task_package"] = int(task_package)
-                results.append(input_variant)
+            if page_num:
+                page_num = int(page_num)
+                if variant_type in input_variant[variant_type_comp] and int(page_num) == input_variant["page_num"] and (note in str(input_variant[notes_comp]) or hanzi_char in input_variant[hanzi_char_comp]):
+                    results.append(input_variant)
+            else:
+                if variant_type in input_variant[variant_type_comp] and (note in str(input_variant[notes_comp]) or hanzi_char in input_variant[hanzi_char_comp]):
+                    results.append(input_variant)
+
         for result in results:
             tmp = {}
             for key in key_list[business_stage]:
                 tmp[key] = result[key]
             staged_result.append(tmp)
-        return Response({"results": staged_result})
+        return_dict = {
+            "task_package": int(task_package),
+            "models": staged_result
+        }
 
+        return Response(return_dict)
 
-'''
-# 录入
-@list_route()
-def input(self, request, *args, **kwargs):
-    serializer = retrieve_task(request, "input")
-    return Response(serializer.data)
+    @list_route()
+    def ongoing_dedup(self, request, *args, **kwargs):
+        user = self.request.user
+        task_package = request.query_params["task_package"]
+        business_type = getenum_business_type("dedup")
+        if user.is_superuser == 1:
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+        else:
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
 
+        serializer = self.serializer_class(tasks, many=True)
+        dedup_variants = [v["task_ele"] for v in serializer.data]
+        return_dict = {
+            "task_package": int(task_package),
+            "models": dedup_variants
+        }
 
-# 去重
-@list_route()
-def dedup(self, request, *args, **kwargs):
-    serializer = retrieve_task(request, "dedup")
-    return Response(serializer.data)
-'''
+        return Response(return_dict)
 
+    # 太难跳过，仅拆字
+    @detail_route(methods=["PATCH", "GET", "PUT"])
+    def skip_task(self, request, *args, **kwargs):
+        origin_task = self.get_object()
+        work_ele = origin_task.content_object
 
-# 太难跳过，仅拆字
-@detail_route(methods=["PATCH", "GET", "PUT"])
-def skip_task(self, request, *args, **kwargs):
-    origin_task = self.get_object()
-    work_ele = origin_task.content_object
+        business_type = origin_task.business_type
+        business_stage = origin_task.business_stage
+        user = origin_task.user
+        task_package = origin_task.task_package
 
-    business_type = origin_task.business_type
-    business_stage = origin_task.business_stage
-    user = origin_task.user
-    task_package = origin_task.task_package
+        if business_stage == getenum_business_stage("init"):
+            work_ele.skip_num_draft += 1
+        elif business_stage == getenum_business_stage("review"):
+            work_ele.skip_num_review += 1
+        else:
+            work_ele.skip_num_final += 1
+        work_ele.save()
+        reset_task(origin_task)
 
-    if business_stage == getenum_business_stage("init"):
-        work_ele.skip_num_draft += 1
-    elif business_stage == getenum_business_stage("review"):
-        work_ele.skip_num_review += 1
-    else:
-        work_ele.skip_num_final += 1
-    work_ele.save()
-    reset_task(origin_task)
-
-    new_task = assign_task(business_type, business_stage, task_package, user)
-    if new_task:
-        serializer = api_variants_split.VariantsSplitSerializer(new_task.content_object)
-        return Response(serializer.data)
-    else:
-        return Response(u"没有更多任务了，明天再来吧！", status=status.HTTP_204_NO_CONTENT)
+        new_task = assign_task(business_type, business_stage, task_package, user)
+        if new_task:
+            serializer = api_variants_split.VariantsSplitSerializer(new_task.content_object)
+            return Response(serializer.data)
+        else:
+            return Response(u"没有更多任务了，明天再来吧！", status=status.HTTP_204_NO_CONTENT)
