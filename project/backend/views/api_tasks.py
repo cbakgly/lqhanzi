@@ -65,10 +65,11 @@ class TasksSerializer(serializers.ModelSerializer):
             ele_serializer = api_variants_input.VariantsInputSerializer
         elif isinstance(task_ele, VariantsSplit):
             ele_serializer = api_variants_split.VariantsSplitSerializer
-        elif isinstance(task_ele, KoreanDedup) or isinstance(task_ele, InterDictDedup):
-            ele_serializer = api_variants_dedup
+        elif isinstance(task_ele, KoreanDedup):
+            ele_serializer = api_variants_dedup.KoreanDedupSerializer
         else:
-            pass
+            ele_serializer = api_variants_dedup.InterDictDedupSerializer
+
         serialized_data = ele_serializer(task_ele).data
         return serialized_data
 

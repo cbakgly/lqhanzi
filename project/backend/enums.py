@@ -9,7 +9,7 @@ def getenum_business_status(name):
 
 
 def getenum_business_type(name):
-    type = {"input": 1, "split": 0, "dedup": 2, "help": 3}
+    type = {"input": 2, "split": 1, "dedup": 5, "help": 7}
     return type[name]
 
 
