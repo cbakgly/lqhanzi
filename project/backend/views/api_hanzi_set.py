@@ -15,7 +15,6 @@ class HanziSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = HanziSet
         fields = "__all__"
-        depth = 0
 
     def to_representation(self, instance):
         ret = super(HanziSetSerializer, self).to_representation(instance)
@@ -32,10 +31,11 @@ class HanziSetFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
+    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
 
     class Meta:
         model = HanziSet
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class HanziSetViewSet(viewsets.ModelViewSet):

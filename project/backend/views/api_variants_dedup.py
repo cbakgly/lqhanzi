@@ -17,7 +17,6 @@ class KoreanDedupSerializer(serializers.ModelSerializer):
     class Meta:
         model = KoreanDedup
         fields = "__all__"
-        depth = 0
 
     def to_representation(self, instance):
         ret = super(KoreanDedupSerializer, self).to_representation(instance)
@@ -32,10 +31,11 @@ class KoreanDedupFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
+    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
 
     class Meta:
         model = KoreanDedup
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class KoreanDedupViewSet(viewsets.ModelViewSet):
@@ -53,7 +53,6 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterDictDedup
         fields = "__all__"
-        depth = 0
 
     def to_representation(self, instance):
         ret = super(InterDictDedupSerializer, self).to_representation(instance)
