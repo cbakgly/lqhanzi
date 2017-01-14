@@ -48,7 +48,7 @@ def get_hanyu_char_pic_path(pic_name):
 
 
 def get_taiwan_char_pic_path(pic_name):
-    return get_hanzi_assets_path() + 'glyphs/tw/' + pic_name[:2] + '/' + pic_name + '.png' if len(pic_name) <= 2 else ''
+    return get_hanzi_assets_path() + 'glyphs/tw/' + pic_name[:2] + '/' + pic_name + '.png' if len(pic_name) >= 2 else ''
 
 
 def get_pic_url_by_source_pic_name(source, pic_name):
@@ -62,5 +62,5 @@ def get_pic_url_by_source_pic_name(source, pic_name):
         5: get_dunhuang_char_pic_path
     }
 
-    func = switcher.get(source, lambda name: "")
+    func = switcher.get(int(source), lambda name: "")
     return func(pic_name)

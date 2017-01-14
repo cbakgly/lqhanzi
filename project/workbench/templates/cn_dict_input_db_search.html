@@ -185,15 +185,9 @@
                 <li v-if="context.previous_url"><a v-on:click="gotoPage(context.previous_url)">«</a></li>
                 <li v-else><a href="javascript:void(0);">«</a></li>
                 <li v-for="item in context.page_links">
-                    <span v-if="item[2]">
-                        <a href="javascript:void(0);">#[ item[1] ]]</a>
-                    </span>
-                    <span v-else-if="item[3]">
-                        <a href="javascript:void(0);">....</a>
-                    </span>
-                    <span v-else>
-                        <a href="javascript:void(0);" v-on:click="gotoPage(item[0])">#[ item[1] ]]</a>
-                    </span>
+                  <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+                  <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+                  <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
                 </li>
                 <li v-if="context.next_url"><a href="javascript:void(0);" v-on:click="gotoPage(context.next_url)">»</a></li>
                 <li v-else><a href="javascript:void(0);">»</a></li>

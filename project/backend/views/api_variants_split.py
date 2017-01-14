@@ -13,6 +13,8 @@ from ..pagination import NumberPagination
 from ..models import VariantsSplit
 from task_func import assign_task
 from ..enums import getenum_task_business_status, getenum_business_stage
+from ..utils import get_pic_url_by_source_pic_name
+from ..filters import fields_or_filter_method
 
 
 class VariantsSplitSerializer(serializers.ModelSerializer):
@@ -20,42 +22,8 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VariantsSplit
-        fields = ['source',
-                  'hanzi_type',
-                  'hanzi_char',
-                  'hanzi_pic_id',
-                  'variant_type',
-                  'std_hanzi',
-                  'as_std_hanzi',
-                  'seq_id',
-                  'is_redundant',
-                  'skip_num_draft',
-                  'init_split_draft',
-                  'other_init_split_draft',
-                  'deform_split_draft',
-                  'similar_parts_draft',
-                  'dup_id_draft',
-                  'skip_num_review',
-                  'init_split_review',
-                  'other_init_split_review',
-                  'deform_split_review',
-                  'similar_parts_review',
-                  'dup_id_review',
-                  'skip_num_final',
-                  'init_split_final',
-                  'other_init_split_final',
-                  'deform_split_final',
-                  'similar_parts_final',
-                  'dup_id_final',
-                  'is_draft_equals_review',
-                  'is_review_equals_final',
-                  'is_checked',
-                  'is_submitted',
-                  'remark',
-                  'c_t',
-                  'u_t',
-                  'task'
-                  ]
+        # fields = ["split_task"]
+        fields = "__all__"
 
     def get_task(self, obj):
         tasks = list(obj.task.all())
@@ -64,15 +32,36 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
             task_dic[t.business_stage] = t.id
         return task_dic
 
+    def to_representation(self, instance):
+        ret = super(VariantsSplitSerializer, self).to_representation(instance)
+        ret['hanzi_pic_path'] = get_pic_url_by_source_pic_name(ret['source'], ret['hanzi_pic_id'])
+        ret['variant_type_display'] = instance.get_variant_type_display()
+        ret['hanzi_type_display'] = instance.get_hanzi_type_display()
+        ret['source_display'] = instance.get_source_display()
+        ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
+        ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
+        ret['is_checked_display'] = instance.get_is_checked_display()
+        ret['is_submitted_display'] = instance.get_is_submitted_display()
+        return ret
+
 
 class VariantsSplitFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
+    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
+    split = django_filters.CharFilter(name=["init_split_draft", "other_init_split_draft", "deform_split_draft", "init_split_review", "other_init_split_review", "deform_split_review", "init_split_final", "other_init_split_final", "deform_split_final"], method=fields_or_filter_method)
+    split_draft = django_filters.CharFilter(name=["init_split_draft", "other_init_split_draft", "deform_split_draft"], method=fields_or_filter_method)
+    split_review = django_filters.CharFilter(name=["init_split_review", "other_init_split_review", "deform_split_review"], method=fields_or_filter_method)
+    split_final = django_filters.CharFilter(name=["init_split_final", "other_init_split_final", "deform_split_final"], method=fields_or_filter_method)
+    similar_parts = django_filters.CharFilter(name=["similar_parts_draft", "similar_parts_review", "similar_parts_final"], method=fields_or_filter_method)
+    dup_id = django_filters.CharFilter(name=["dup_id_draft", "dup_id_review", "dup_id_final"], method=fields_or_filter_method)
+    skip_num = django_filters.CharFilter(name=["skip_num_draft", "skip_num_review", "skip_num_final"], method=fields_or_filter_method)
 
     class Meta:
         model = VariantsSplit
-        fields = ("__all__")
+        fields = "__all__"
 
 
 def update_tasks_status(variants_split):
@@ -116,36 +105,7 @@ class SingleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VariantsSplit
-        fields = [
-            'id',
-            'source',
-            'hanzi_type',
-            'hanzi_char',
-            'hanzi_pic_id',
-            'variant_type',
-            'std_hanzi',
-            'as_std_hanzi',
-            'seq_id',
-            'is_redundant',
-            'skip_num_draft',
-            'init_split_draft',
-            'other_init_split_draft',
-            'deform_split_draft',
-            'similar_parts_draft',
-            'dup_id_draft',
-            'skip_num_review',
-            'init_split_review',
-            'other_init_split_review',
-            'deform_split_review',
-            'similar_parts_review',
-            'dup_id_review',
-            'skip_num_final',
-            'init_split_final',
-            'other_init_split_final',
-            'deform_split_final',
-            'similar_parts_final',
-            'dup_id_final',
-        ]
+        fields = "__all__"
 
 
 class VariantsSplitViewSet(viewsets.ModelViewSet):
