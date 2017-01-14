@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from django.utils.translation import ugettext_lazy as _
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
@@ -20,4 +21,4 @@ def assign_task(business_type, business_stage, task_package, user):
         task.save()
         return task
     else:
-        return Response("没有更多的任务了，明天再来吧！", status=status.HTTP_204_NO_CONTENT)
+        return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)

@@ -1,6 +1,5 @@
 # encoding: utf-8
-
-from __future__ import unicode_literals
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import viewsets, status
 from rest_framework import serializers
 from rest_framework.decorators import list_route, detail_route
@@ -294,4 +293,4 @@ class TasksViewSet(viewsets.ModelViewSet):
             serializer = api_variants_split.VariantsSplitSerializer(new_task.content_object)
             return Response(serializer.data)
         else:
-            return Response(u"没有更多任务了，明天再来吧！", status=status.HTTP_204_NO_CONTENT)
+            return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
