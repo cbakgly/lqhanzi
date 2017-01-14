@@ -147,6 +147,7 @@ def update_tasks_status(variants_dedup):
         pass
     return origin_task
 
+
 class InterDictDedupViewSet(viewsets.ModelViewSet):
     # authentication_classes = (SessionAuthentication, BasicAuthentication)
     # permission_classes = (IsAuthenticated,)
