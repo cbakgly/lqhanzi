@@ -3,506 +3,498 @@
 {% block content %}
 <!-- Content Header-->
 <div class="content-header">
-    <ol class="breadcrumb">
-        <li><a href="javascript:;">字库检索</a></li>
-        <li class="active">龙泉字库</li>
-    </ol>
+  <ol class="breadcrumb">
+    <li><a href="javascript:;">字库检索</a></li>
+    <li class="active">龙泉字库</li>
+  </ol>
 </div>
 <div class="row">
-    <div class="col-xs-12">
-        <div class="box box-blue">
-            <!-- /.box-header -->
-            <div class="box-header" id="search-box">
-                <div class="box-header-inner">
-                    <div class="ser-bd">
-                        <div class="z-ser z2-ser">
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">来源:</span>
-                                    <select class="form-control" v-model="selected_source">
-                                        <option value="">请选择</option>
-                                        <option v-for="opt in source_options_" v-bind:value="opt.value">#[ opt.text ]]
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">正异类型:</span>
-                                    <!-- select -->
-                                    <div class="form-group">
-                                        <select class="form-control" v-model="selected_variant_type">
-                                            <option value="">请选择</option>
-                                            <option v-for="opt in variant_type_options_" v-bind:value="opt.value">#[
-                                                opt.text ]]
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">文字:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="hanzi_char">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">拆分信息:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="split">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">图片字编码:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="hanzi_pic_id">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">相似部件:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="similar_parts">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">字型类型:</span>
-                                    <select class="form-control" v-model="hanzi_type">
-                                        <option value="">请选择</option>
-                                        <option v-for="opt in hanzi_type_options_" v-bind:value="opt.value">#[ opt.text
-                                            ]]
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">所属正字:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="std_hanzi">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">是否多余:</span>
-                                    <select class="form-control" v-model="is_redundant">
-                                        <option value="">请选择</option>
-                                        <option value="1">是</option>
-                                        <option value="0">否</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">笔画:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="strokes">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">重复次数:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="dup_count">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">部首:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="radical">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">备注:</span>
-                                    <input type="text" class="form-control" placeholder="请输入" v-model="remark">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">更新时段:</span>
-                                    <i class="fa fa-calendar"></i>
-                                    <input type="text" class="form-control pull-right" id="reservationtime">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btns">
-                            <button class="btn btn-blue btn-sm z-btn-sm" v-on:click="search">搜索</button>
-                            <button class="btn btn-default btn-sm z-btn-sm z-reset" v-on:click="reset_search">重置
-                            </button>
-                            <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
-                        </div>
-                    </div>
+  <div class="col-xs-12">
+    <div class="box box-blue">
+      <!-- /.box-header -->
+      <div class="box-header" id="search-box">
+        <div class="box-header-inner">
+          <div class="ser-bd">
+            <div class="z-ser z2-ser">
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">来源:</span>
+                  <select class="form-control" v-model="source">
+                    <option value="">请选择</option>
+                    <option v-for="opt in source_options_" v-bind:value="opt.value">#[ opt.text ]]
+                    </option>
+                  </select>
                 </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">正异类型:</span>
+                  <!-- select -->
+                  <div class="form-group">
+                    <select class="form-control" v-model="variant_type">
+                      <option value="">请选择</option>
+                      <option v-for="opt in variant_type_options_" v-bind:value="opt.value">#[
+                        opt.text ]]
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">文字:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="hanzi_char">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">拆分信息:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="split">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">图片字编码:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="hanzi_pic_id">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">相似部件:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="similar_parts">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">字型类型:</span>
+                  <select class="form-control" v-model="hanzi_type">
+                    <option value="">请选择</option>
+                    <option v-for="opt in hanzi_type_options_" v-bind:value="opt.value">#[ opt.text
+                      ]]
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">所属正字:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="std_hanzi">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">是否多余:</span>
+                  <select class="form-control" v-model="is_redundant">
+                    <option value="">请选择</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">笔画:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="strokes">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">重复次数:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="dup_count">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">部首:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="radical">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">备注:</span>
+                  <input type="text" class="form-control" placeholder="请输入" v-model="remark">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">更新时段:</span>
+                  <i class="fa fa-calendar"></i>
+                  <input type="text" class="form-control pull-right" id="reservationtime">
+                </div>
+              </div>
             </div>
-            <!-- 筛选 -->
-            <div id="content-box">
-                <div class="expand-mode multi-mode">
-                    <div class="expand-hd">
-                        <p><span>筛选：</span></p>
-                    </div>
-                    <div class="expand-bd">
-                        <div class="expand-items">
-                            <div class="items-inner">
-                                <label><input type="checkbox" v-model="filter_hanzi">文字</label>
-                                <label><input type="checkbox" v-model="filter_pic_char">图片字</label>
-                                <label><input type="checkbox" v-model="filter_source">来源</label>
-                                <label><input type="checkbox" v-model="filter_variant_type">正异类型</label>
-                                <label><input type="checkbox" v-model="filter_std_hanzi">所属正字</label>
-                                <label><input type="checkbox" v-model="filter_seq_id">位置编码</label>
-                                <label><input type="checkbox" v-model="filter_min_split">初步拆分</label>
-                                <label><input type="checkbox" v-model="filter_deform_split">调笔拆分</label>
-                                <label><input type="checkbox" v-model="filter_mix_split">混合拆分</label>
-                                <label><input type="checkbox" v-model="filter_max_split">最大拆分</label>
-                                <label><input type="checkbox" v-model="filter_similar_parts">相似部件</label>
-                                <label><input type="checkbox" v-model="filter_stroke_serial">部件序列</label>
-                                <label><input type="checkbox" v-model="filter_dup_count">重复次数</label>
-                                <label><input type="checkbox" v-model="filter_inter_dict_dup_hanzi">字典间重复编码</label>
-                                <label><input type="checkbox" v-model="filter_is_inter_dict_redundant">字典间是否多余</label>
-                                <label><input type="checkbox" v-model="filter_korean_dup_hanzi">高丽内重复编码</label>
-                                <label><input type="checkbox" v-model="filter_is_korean_redundant">高丽内是否多余</label>
-                                <label><input type="checkbox" v-model="filter_pinyin">拼音</label>
-                                <label><input type="checkbox" v-model="filter_radical">部首</label>
-                                <label><input type="checkbox" v-model="filter_stroke">笔画</label>
-                                <label><input type="checkbox" v-model="filter_zheng_code">郑码</label>
-                                <label><input type="checkbox" v-model="filter_wubi">五笔</label>
-                                <label><input type="checkbox" v-model="filter_remark">备注</label>
-                                <label><input type="checkbox" v-model="filter_u_t">更新时间</label>
-                            </div>
-                            <!-- <div class="btns">
-                              <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
-                              <button class="btn btn-default btn-sm z-btn-sm z-reset">取消</button>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="expand-ft">
-                        <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
-                    </div>
-                </div>
-                <!-- 筛选 -->
-                <div class="box-body table-responsive z-table-responsive">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th v-show="filter_hanzi">文字</th>
-                            <th v-show="filter_pic_char">图片字</th>
-                            <th v-show="filter_source">来源</th>
-                            <th v-show="filter_variant_type">正异类型</th>
-                            <th v-show="filter_std_hanzi">所属正字</th>
-                            <th v-show="filter_seq_id">位置编码</th>
-                            <th v-show="filter_min_split">初步拆分</th>
-                            <th v-show="filter_deform_split">调笔拆分</th>
-                            <th v-show="filter_mix_split">混合拆分</th>
-                            <th v-show="filter_max_split">最大拆分</th>
-                            <th v-show="filter_similar_parts">相似部件</th>
-                            <th v-show="filter_stroke_serial">部件序列</th>
-                            <th v-show="filter_dup_count">重复次数</th>
-                            <th v-show="filter_inter_dict_dup_hanzi">字典间重复编码</th>
-                            <th v-show="filter_is_inter_dict_redundant">字典间是否多余</th>
-                            <th v-show="filter_korean_dup_hanzi">高丽内重复编码</th>
-                            <th v-show="filter_is_korean_redundant">高丽内是否多余</th>
-                            <th v-show="filter_pinyin">拼音</th>
-                            <th v-show="filter_radical">部首</th>
-                            <th v-show="filter_stroke">笔画</th>
-                            <th v-show="filter_zheng_code">郑码</th>
-                            <th v-show="filter_wubi">五笔</th>
-                            <th v-show="filter_remark">备注</th>
-                            <th v-show="filter_u_t">更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in models">
-                            <td>#[ item.id ]]</td>
-                            <td v-show="filter_hanzi">#[ item.hanzi_char ]]</td>
-                            <td v-show="filter_pic_char"><img :src="item.hanzi_pic_path"></td>
-                            <td v-show="filter_source">#[ item.source_display ]]</td>
-                            <td v-show="filter_variant_type">#[ item.variant_type_display ]]</td>
-                            <td v-show="filter_std_hanzi">#[ item.std_hanzi ]]</td>
-                            <td v-show="filter_seq_id">#[ item.seq_id ]]</td>
-                            <td v-show="filter_min_split">#[ item.min_split ]]</td>
-                            <td v-show="filter_deform_split">#[ item.deform_split ]]</td>
-                            <td v-show="filter_mix_split">#[ item.mix_split ]]</td>
-                            <td v-show="filter_max_split">#[ item.max_split ]]</td>
-                            <td v-show="filter_similar_parts">#[ item.similar_parts ]]</td>
-                            <td v-show="filter_stroke_serial">#[ item.stroke_serial ]]</td>
-                            <td v-show="filter_dup_count">#[ item.dup_count ]]</td>
-                            <td v-show="filter_inter_dict_dup_hanzi">#[ item.inter_dict_dup_hanzi ]]</td>
-                            <td v-show="filter_is_inter_dict_redundant">#[ item.is_inter_dict_redundant_display ]]</td>
-                            <td v-show="filter_korean_dup_hanzi">#[ item.korean_dup_hanzi ]]</td>
-                            <td v-show="filter_is_korean_redundant">#[ item.is_korean_redundant_display ]]</td>
-                            <td v-show="filter_pinyin">#[ item.pinyin ]]</td>
-                            <td v-show="filter_radical">#[ item.radical ]]</td>
-                            <td v-show="filter_stroke">#[ item.stroke ]]</td>
-                            <td v-show="filter_zheng_code">#[ item.zheng_code ]]</td>
-                            <td v-show="filter_wubi">#[ item.wubi ]]</td>
-                            <td v-show="filter_remark">#[ item.remark ]]</td>
-                            <td v-show="filter_u_t">#[ new Date(item.u_t).toLocaleString() ]]</td>
-                            <td><a v-on:click="show_detail(item)" href="javascript:void(0);">查看</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li v-if="paging.previous_url"><a href="javascript:void(0);"
-                                                          v-on:click="goto_page(paging.previous_url)">«</a></li>
-                        <li v-else><a>«</a></li>
-                        <li v-for="item in paging.page_links">
-                    <span href="javascript:void(0);" v-if="item[2]">
-                        <a href="javascript:void(0);">#[ item[1] ]]</a>
-                    </span>
-                            <span v-else-if="item[3]">
-                        <a href="javascript:void(0);">....</a>
-                    </span>
-                            <span v-else>
-                        <a href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
-                    </span>
-                        </li>
-                        <li v-if="paging.next_url"><a href="javascript:void(0);"
-                                                      v-on:click="goto_page(paging.next_url)">»</a></li>
-                        <li v-else><a>»</a></li>
-                    </ul>
-                </div>
-            </div><!-- /.content-box -->
-            <!--遮罩层-->
-            <div id="detail-box" style="display: none;">
-                <!-- /.box-header -->
-                <div class="box-header">
-                    <p class="img-detail">
-                    <span v-if="item.hanzi_type == 1">
-                      <h3>#[ item.hanzi_char ]]</h3>
-                    </span>
-                    <span v-if="item.hanzi_type != 1">
-                      <img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id">
-                    </span>
-                    </p>
-                    <div style="float: right; font-size: 2em" @click="hide()"><a>[X]</a></div>
-                </div>
-                <div class="box-body table-responsive">
-                    <div class="infos-box base-info">
-                        <div class="z1-info">
-                            <h3 class="box-title">基本信息</h3>
-                        </div>
-                        <ul class="infos">
-                            <li>
-                                <p><span>来源:</span><span>#[ item.source_display ]]</span></p>
-                                <p><span>正异类型:</span><span>#[ item.variant_type_display ]]</span></p>
-                                <p><span>位置编码:</span><span>#[ item.seq_id ]]</span></p>
-                                <p><span>部首:</span><span>#[ item.radical ]]</span></p>
-                                <p><span>郑码:</span><span>#[ item.zheng_code ]]</span></p>
-                            </li>
-                            <li>
-                                <p><span>图片字编码:</span><span>#[ item.hanzi_pic_id ]]</span></p>
-                                <p><span>所属正字:</span><span>#[ item.std_hanzi ]]</span></p>
-                                <p><span>拼音:</span><span>#[ item.pinyin ]]</span></p>
-                                <p><span>笔画:</span><span>#[ item.strokes ]]</span></p>
-                                <p><span>五笔:</span><span>#[ item.wubi ]]</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="infos-box base-info">
-                        <div class="z1-info">
-                            <h3 class="box-title">拆字信息</h3>
-                        </div>
-                        <ul class="infos">
-                            <li>
-                                <p><span>太难跳过次数:</span><span>0</span></p>
-                                <p><span>调笔拆分:</span><span>#[ item.deform_split ]]</span></p>
-                                <p><span>混合拆分:</span><span>#[ item.mix_split ]]</span></p>
-                                <p><span>部件序列:</span><span>#[ item.stroke_serial ]]</span></p>
-                            </li>
-                            <li>
-                                <p><span>初步拆分:</span><span>#[ item.min_split ]]</span></p>
-                                <p><span>最大拆分:</span><span>#[ item.max_split ]]</span></p>
-                                <p><span>相似部件:</span><span>#[ item.similar_parts ]]</span></p>
-                                <p><span>笔画:</span><span>#[ item.strokes ]]</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="infos-box base-info">
-                        <div class="z1-info">
-                            <h3 class="box-title">去重信息</h3>
-                        </div>
-                        <ul class="infos">
-                            <li>
-                                <p><span>重复次数:</span><span>#[ item.dup_count ]]</span></p>
-                                <p><span class="fb">字典间去重</span></p>
-                                <p><span>重复编码:</span><span>#[ item.inter_dict_dup_hanzi ]]</span></p>
-                                <p><span class="fb">高丽内去重</span></p>
-                                <p><span>重复编码:</span><span>#[ item.korean_dup_hanzi ]]</span></p>
-                            </li>
-                            <li>
-                                <p></p>
-                                <p></p>
-                                <p><span>是否多余:</span><span>#[ item.is_inter_dict_redundant ]]</span></p>
-                                <p></p>
-                                <p><span>是否多余:</span><span>#[ item.is_korean_redundant ]]</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="infos-box base-info">
-                        <div class="z1-info">
-                            <h3 class="box-title">时间信息</h3>
-                        </div>
-                        <ul class="infos">
-                            <li>
-                                <p><span>入库时间:</span><span>#[ new Date(item.c_t).toLocaleString() ]]</span></p>
-                            </li>
-                            <li>
-                                <p><span>更新时间:</span><span>#[ new Date(item.u_t).toLocaleString() ]]</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div><!-- /.box-body -->
+            <div class="btns">
+              <button class="btn btn-blue btn-sm z-btn-sm" v-on:click="search">搜索</button>
+              <button class="btn btn-default btn-sm z-btn-sm z-reset" v-on:click="reset_search">重置
+              </button>
+              <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
             </div>
-            <!--/.遮罩层-->
-        </div><!-- /.box -->
-    </div>
-    <!-- /.col -->
+          </div>
+        </div>
+      </div>
+      <!-- 筛选 -->
+      <div id="content-box">
+        <div class="expand-mode multi-mode">
+          <div class="expand-hd">
+            <p><span>筛选：</span></p>
+          </div>
+          <div class="expand-bd">
+            <div class="expand-items">
+              <div class="items-inner">
+                <label><input type="checkbox" v-model="filter_hanzi">文字</label>
+                <label><input type="checkbox" v-model="filter_pic_char">图片字</label>
+                <label><input type="checkbox" v-model="filter_source">来源</label>
+                <label><input type="checkbox" v-model="filter_variant_type">正异类型</label>
+                <label><input type="checkbox" v-model="filter_std_hanzi">所属正字</label>
+                <label><input type="checkbox" v-model="filter_seq_id">位置编码</label>
+                <label><input type="checkbox" v-model="filter_min_split">初步拆分</label>
+                <label><input type="checkbox" v-model="filter_deform_split">调笔拆分</label>
+                <label><input type="checkbox" v-model="filter_mix_split">混合拆分</label>
+                <label><input type="checkbox" v-model="filter_max_split">最大拆分</label>
+                <label><input type="checkbox" v-model="filter_similar_parts">相似部件</label>
+                <label><input type="checkbox" v-model="filter_stroke_serial">部件序列</label>
+                <label><input type="checkbox" v-model="filter_dup_count">重复次数</label>
+                <label><input type="checkbox" v-model="filter_inter_dict_dup_hanzi">字典间重复编码</label>
+                <label><input type="checkbox" v-model="filter_is_inter_dict_redundant">字典间是否多余</label>
+                <label><input type="checkbox" v-model="filter_korean_dup_hanzi">高丽内重复编码</label>
+                <label><input type="checkbox" v-model="filter_is_korean_redundant">高丽内是否多余</label>
+                <label><input type="checkbox" v-model="filter_pinyin">拼音</label>
+                <label><input type="checkbox" v-model="filter_radical">部首</label>
+                <label><input type="checkbox" v-model="filter_stroke">笔画</label>
+                <label><input type="checkbox" v-model="filter_zheng_code">郑码</label>
+                <label><input type="checkbox" v-model="filter_wubi">五笔</label>
+                <label><input type="checkbox" v-model="filter_remark">备注</label>
+                <label><input type="checkbox" v-model="filter_u_t">更新时间</label>
+              </div>
+              <!-- <div class="btns">
+                <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
+                <button class="btn btn-default btn-sm z-btn-sm z-reset">取消</button>
+              </div> -->
+            </div>
+          </div>
+          <div class="expand-ft">
+            <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
+          </div>
+        </div>
+        <!-- 筛选 -->
+        <div class="box-body table-responsive z-table-responsive">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th v-show="filter_hanzi">文字</th>
+              <th v-show="filter_pic_char">图片字</th>
+              <th v-show="filter_source">来源</th>
+              <th v-show="filter_variant_type">正异类型</th>
+              <th v-show="filter_std_hanzi">所属正字</th>
+              <th v-show="filter_seq_id">位置编码</th>
+              <th v-show="filter_min_split">初步拆分</th>
+              <th v-show="filter_deform_split">调笔拆分</th>
+              <th v-show="filter_mix_split">混合拆分</th>
+              <th v-show="filter_max_split">最大拆分</th>
+              <th v-show="filter_similar_parts">相似部件</th>
+              <th v-show="filter_stroke_serial">部件序列</th>
+              <th v-show="filter_dup_count">重复次数</th>
+              <th v-show="filter_inter_dict_dup_hanzi">字典间重复编码</th>
+              <th v-show="filter_is_inter_dict_redundant">字典间是否多余</th>
+              <th v-show="filter_korean_dup_hanzi">高丽内重复编码</th>
+              <th v-show="filter_is_korean_redundant">高丽内是否多余</th>
+              <th v-show="filter_pinyin">拼音</th>
+              <th v-show="filter_radical">部首</th>
+              <th v-show="filter_stroke">笔画</th>
+              <th v-show="filter_zheng_code">郑码</th>
+              <th v-show="filter_wubi">五笔</th>
+              <th v-show="filter_remark">备注</th>
+              <th v-show="filter_u_t">更新时间</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in models">
+              <td>#[ item.id ]]</td>
+              <td v-show="filter_hanzi">#[ item.hanzi_char ]]</td>
+              <td v-show="filter_pic_char"><img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id"></td>
+              <td v-show="filter_source">#[ item.source_display ]]</td>
+              <td v-show="filter_variant_type">#[ item.variant_type_display ]]</td>
+              <td v-show="filter_std_hanzi">#[ item.std_hanzi ]]</td>
+              <td v-show="filter_seq_id">#[ item.seq_id ]]</td>
+              <td v-show="filter_min_split">#[ item.min_split ]]</td>
+              <td v-show="filter_deform_split">#[ item.deform_split ]]</td>
+              <td v-show="filter_mix_split">#[ item.mix_split ]]</td>
+              <td v-show="filter_max_split">#[ item.max_split ]]</td>
+              <td v-show="filter_similar_parts">#[ item.similar_parts ]]</td>
+              <td v-show="filter_stroke_serial">#[ item.stroke_serial ]]</td>
+              <td v-show="filter_dup_count">#[ item.dup_count ]]</td>
+              <td v-show="filter_inter_dict_dup_hanzi">#[ item.inter_dict_dup_hanzi ]]</td>
+              <td v-show="filter_is_inter_dict_redundant">#[ item.is_inter_dict_redundant_display ]]</td>
+              <td v-show="filter_korean_dup_hanzi">#[ item.korean_dup_hanzi ]]</td>
+              <td v-show="filter_is_korean_redundant">#[ item.is_korean_redundant_display ]]</td>
+              <td v-show="filter_pinyin">#[ item.pinyin ]]</td>
+              <td v-show="filter_radical">#[ item.radical ]]</td>
+              <td v-show="filter_stroke">#[ item.stroke ]]</td>
+              <td v-show="filter_zheng_code">#[ item.zheng_code ]]</td>
+              <td v-show="filter_wubi">#[ item.wubi ]]</td>
+              <td v-show="filter_remark">#[ item.remark ]]</td>
+              <td v-show="filter_u_t">#[ new Date(item.u_t).toLocaleString() ]]</td>
+              <td><a v-on:click="show_detail(item)" href="javascript:void(0);">查看</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <ul class="pagination pagination-sm no-margin pull-right">
+            <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a></li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+                <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+                <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+                <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
+          </ul>
+        </div>
+      </div><!-- /.content-box -->
+      <!--遮罩层-->
+      <div id="detail-box" style="display: none;">
+        <!-- /.box-header -->
+        <div class="box-header">
+          <p class="img-detail">
+          <span v-if="item.hanzi_type == 1">
+            <h3>#[ item.hanzi_char ]]</h3>
+          </span>
+          <span v-if="item.hanzi_type != 1">
+            <img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id">
+          </span>
+          </p>
+          <div style="float: right; font-size: 2em" @click="hide()"><a>[X]</a></div>
+        </div>
+        <div class="box-body table-responsive">
+          <div class="infos-box base-info">
+            <div class="z1-info">
+              <h3 class="box-title">基本信息</h3>
+            </div>
+            <ul class="infos">
+              <li>
+                <p><span>来源:</span><span>#[ item.source_display ]]</span></p>
+                <p><span>正异类型:</span><span>#[ item.variant_type_display ]]</span></p>
+                <p><span>位置编码:</span><span>#[ item.seq_id ]]</span></p>
+                <p><span>部首:</span><span>#[ item.radical ]]</span></p>
+                <p><span>郑码:</span><span>#[ item.zheng_code ]]</span></p>
+              </li>
+              <li>
+                <p><span>图片字编码:</span><span>#[ item.hanzi_pic_id ]]</span></p>
+                <p><span>所属正字:</span><span>#[ item.std_hanzi ]]</span></p>
+                <p><span>拼音:</span><span>#[ item.pinyin ]]</span></p>
+                <p><span>笔画:</span><span>#[ item.strokes ]]</span></p>
+                <p><span>五笔:</span><span>#[ item.wubi ]]</span></p>
+              </li>
+            </ul>
+          </div>
+          <div class="infos-box base-info">
+            <div class="z1-info">
+              <h3 class="box-title">拆字信息</h3>
+            </div>
+            <ul class="infos">
+              <li>
+                <p><span>太难跳过次数:</span><span>0</span></p>
+                <p><span>调笔拆分:</span><span>#[ item.deform_split ]]</span></p>
+                <p><span>混合拆分:</span><span>#[ item.mix_split ]]</span></p>
+                <p><span>部件序列:</span><span>#[ item.stroke_serial ]]</span></p>
+              </li>
+              <li>
+                <p><span>初步拆分:</span><span>#[ item.min_split ]]</span></p>
+                <p><span>最大拆分:</span><span>#[ item.max_split ]]</span></p>
+                <p><span>相似部件:</span><span>#[ item.similar_parts ]]</span></p>
+                <p><span>笔画:</span><span>#[ item.strokes ]]</span></p>
+              </li>
+            </ul>
+          </div>
+          <div class="infos-box base-info">
+            <div class="z1-info">
+              <h3 class="box-title">去重信息</h3>
+            </div>
+            <ul class="infos">
+              <li>
+                <p><span>重复次数:</span><span>#[ item.dup_count ]]</span></p>
+                <p><span class="fb">字典间去重</span></p>
+                <p><span>重复编码:</span><span>#[ item.inter_dict_dup_hanzi ]]</span></p>
+                <p><span class="fb">高丽内去重</span></p>
+                <p><span>重复编码:</span><span>#[ item.korean_dup_hanzi ]]</span></p>
+              </li>
+              <li>
+                <p></p>
+                <p></p>
+                <p><span>是否多余:</span><span>#[ item.is_inter_dict_redundant ]]</span></p>
+                <p></p>
+                <p><span>是否多余:</span><span>#[ item.is_korean_redundant ]]</span></p>
+              </li>
+            </ul>
+          </div>
+          <div class="infos-box base-info">
+            <div class="z1-info">
+              <h3 class="box-title">时间信息</h3>
+            </div>
+            <ul class="infos">
+              <li>
+                <p><span>入库时间:</span><span>#[ new Date(item.c_t).toLocaleString() ]]</span></p>
+              </li>
+              <li>
+                <p><span>更新时间:</span><span>#[ new Date(item.u_t).toLocaleString() ]]</span></p>
+              </li>
+            </ul>
+          </div>
+        </div><!-- /.box-body -->
+      </div>
+      <!--/.遮罩层-->
+    </div><!-- /.box -->
+  </div>
+  <!-- /.col -->
 </div>
 
 <script type="text/javascript">
-    var search_url = '{% url "hanzi-set-list" version="v1" %}';
+  var search_url = '{% url "hanzi-set-list" version="v1" %}';
 
-    function hanzi_search(url, cond) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: cond,
-            success: function(data) {
-                console.log(data);
-                content_box.models = data.models;
-                content_box.paging = data.html_context;
-            },
-            error: function(jqXHR, status, error) {
-                console.log(error);
-            }
-        });
+  function hanzi_search(url, cond) {
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: cond,
+      success: function(data) {
+        console.log(data);
+        content_box.models = data.models;
+        content_box.paging = data.html_context;
+      },
+      error: function(jqXHR, status, error) {
+        console.log(error);
+      }
+    });
+  }
+
+  var search_box = new Vue({
+    delimiters: ["#[", "]]"],
+    data: {
+      source: '',
+      source_options_: [
+        {% for key, value in source_choices %}
+        {text: "{{value}}", value: "{{key}}"},
+        {% endfor %}
+      ],
+      variant_type: "",
+      variant_type_options_: [
+        {% for key, value in variant_type_choices %}
+        {text: "{{value}}", value: "{{key}}"},
+        {% endfor %}
+      ],
+      hanzi_char: "",
+      hanzi_pic_id: "",
+      split: "",
+      similar_parts: "",
+      hanzi_type: "",
+      hanzi_type_options_: [
+        {% for key, value in hanzi_type_choices %}
+        {text: "{{value}}", value: "{{key}}"},
+        {% endfor %}
+      ],
+      std_hanzi: "",
+      is_redundant: "",
+      strokes: "",
+      dup_count: "",
+      radical: "",
+      remark: "",
+    },
+    el: '#search-box',
+    methods: {
+      search: function() {
+        var cond = {};
+        for(var key in this.$data) {
+          if (key.slice(-1) == '_') continue;
+          if (this.$data[key] != "") cond[key] = this.$data[key];
+        }
+        var date_span = $('#reservationtime').val().split('-');
+        if (date_span.length > 1) {
+          var d0 = new Date(date_span[0]);
+          var d1 = new Date(date_span[1]);
+          cond['u_t_span_0'] = d0.getUTCFullYear() + '-' + (d0.getUTCMonth()+1) + '-' + d0.getUTCDate() + ' ' + d0.getUTCHours() + ':' + (d0.getUTCMinutes()<10?'0'+d0.getUTCMinutes():d0.getUTCMinutes());
+          cond['u_t_span_1'] = d1.getUTCFullYear() + '-' + (d1.getUTCMonth()+1) + '-' + d1.getUTCDate() + ' ' + d1.getUTCHours() + ':' + (d1.getUTCMinutes()<10?'0'+d1.getUTCMinutes():d1.getUTCMinutes());
+        }
+
+        console.log(cond);
+        hanzi_search(search_url, cond);
+      },
+
+      reset_search: function() {
+        for(var key in this.$data) {
+        if (key.slice(-1) == '_') continue;
+        this.$data[key] = "";
+        }
+        $('#reservationtime').val('');
+      }
     }
+  });
 
-    var search_box = new Vue({
-        delimiters: ["#[", "]]"],
-        data: {
-            selected_source: '',
-            source_options_: [
-              {% for key, value in source_choices %}
-              {text: "{{value}}", value: "{{key}}"},
-              {% endfor %}
-            ],
-            selected_variant_type: "",
-            variant_type_options_: [
-              {% for key, value in variant_type_choices %}
-              {text: "{{value}}", value: "{{key}}"},
-              {% endfor %}
-            ],
-            hanzi_char: "",
-            hanzi_pic_id: "",
-            split: "",
-            similar_parts: "",
-            hanzi_type: "",
-            hanzi_type_options_: [
-              {% for key, value in hanzi_type_choices %}
-              {text: "{{value}}", value: "{{key}}"},
-              {% endfor %}
-            ],
-            std_hanzi: "",
-            is_redundant: "",
-            strokes: "",
-            dup_count: "",
-            radical: "",
-            remark: "",
-        },
-        el: '#search-box',
-        methods: {
-            search: function() {
-                var cond = {};
-                for(var key in this.$data) {
-                  if (key.slice(-1) == '_') continue;
-                  if (this.$data[key] != "") cond[key] = this.$data[key];
-                }
-                var date_span = $('#reservationtime').val().split('-');
-                if (date_span.length > 1) {
-                  var d0 = new Date(date_span[0]);
-                  var d1 = new Date(date_span[1]);
-                  cond['u_t_span_0'] = d0.getUTCFullYear() + '-' + (d0.getUTCMonth()+1) + '-' + d0.getUTCDate() + ' ' + d0.getUTCHours() + ':' + (d0.getUTCMinutes()<10?'0'+d0.getUTCMinutes():d0.getUTCMinutes());
-                  cond['u_t_span_1'] = d1.getUTCFullYear() + '-' + (d1.getUTCMonth()+1) + '-' + d1.getUTCDate() + ' ' + d1.getUTCHours() + ':' + (d1.getUTCMinutes()<10?'0'+d1.getUTCMinutes():d1.getUTCMinutes());
-                }
+  var detail_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#detail-box',
+    data: {
+      item: {}
+    },
+    methods: {
+      show: function() {
+      $('#content-box').fadeOut();
+      $('#detail-box').fadeIn();
+      },
+      hide: function() {
+      $('#detail-box').fadeOut();
+      $('#content-box').fadeIn();
+      }
+    }
+  })
 
-                console.log(cond);
-                hanzi_search(search_url, cond);
-            },
+  var content_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#content-box',
+    data: {
+      models: [],
+      paging: {},
+      filter_hanzi: true,
+      filter_pic_char: true,
+      filter_source: true,
+      filter_variant_type: true,
+      filter_std_hanzi: false,
+      filter_seq_id: true,
+      filter_min_split: false,
+      filter_deform_split: true,
+      filter_mix_split: true,
+      filter_max_split: true,
+      filter_similar_parts: true,
+      filter_stroke_serial: true,
+      filter_dup_count: true,
+      filter_inter_dict_dup_hanzi: true,
+      filter_is_inter_dict_redundant: true,
+      filter_korean_dup_hanzi: true,
+      filter_is_korean_redundant: false,
+      filter_pinyin: false,
+      filter_radical: true,
+      filter_stroke: true,
+      filter_zheng_code: true,
+      filter_wubi: true,
+      filter_remark: true,
+      filter_u_t: true
+    },
+    methods: {
+      show_detail: function(item) {
+        detail_box.item = item;
+        detail_box.show();
+      },
 
-            reset_search: function() {
-              for(var key in this.$data) {
-                if (key.slice(-1) == '_') continue;
-                this.$data[key] = "";
-              }
-              $('#reservationtime').val('');
-            }
-        }
-    });
-
-    var detail_box = new Vue({
-        delimiters: ["#[", "]]"],
-        el: '#detail-box',
-        data: {
-          item: {}
-        },
-        methods: {
-          show: function() {
-            $('#content-box').fadeOut();
-            $('#detail-box').fadeIn();
-          },
-          hide: function() {
-            $('#detail-box').fadeOut();
-            $('#content-box').fadeIn();
-          }
-        }
-    })
-
-    var content_box = new Vue({
-        delimiters: ["#[", "]]"],
-        el: '#content-box',
-        data: {
-            models: [],
-            paging: {},
-            filter_hanzi: true,
-            filter_pic_char: true,
-            filter_source: true,
-            filter_variant_type: true,
-            filter_std_hanzi: false,
-            filter_seq_id: true,
-            filter_min_split: false,
-            filter_deform_split: true,
-            filter_mix_split: true,
-            filter_max_split: true,
-            filter_similar_parts: true,
-            filter_stroke_serial: true,
-            filter_dup_count: true,
-            filter_inter_dict_dup_hanzi: true,
-            filter_is_inter_dict_redundant: true,
-            filter_korean_dup_hanzi: true,
-            filter_is_korean_redundant: false,
-            filter_pinyin: false,
-            filter_radical: true,
-            filter_stroke: true,
-            filter_zheng_code: true,
-            filter_wubi: true,
-            filter_remark: true,
-            filter_u_t: true
-        },
-        methods: {
-            show_detail: function(item) {
-                detail_box.item = item;
-                detail_box.show();
-            },
-
-            goto_page: function(url) {
-                hanzi_search(url, null);
-            }
-        },
-        created: function() {
-          hanzi_search(search_url, null);
-        }
-    });
+      goto_page: function(url) {
+        hanzi_search(url, null);
+      }
+    },
+    created: function() {
+      hanzi_search(search_url, null);
+    }
+  });
 </script>
 {% endblock %}

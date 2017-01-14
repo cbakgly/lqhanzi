@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-from backend.models import variant_type_choices, hanzi_type_choices, source_choices
+from backend.models import variant_type_choices, hanzi_type_choices, source_choices, business_stage_choices
 
 
 @login_required
@@ -21,7 +21,11 @@ def lq_hanzi_db_search(request):
 @login_required
 def lq_split_db_search(request):
     if request.user.is_staff == 1:
-        return render(request, 'lq_split_db_search.html')
+        return render(request, 'lq_split_db_search.html',
+                      {
+                          "source_choices": source_choices,
+                          "business_stage_choices": business_stage_choices
+                      })
     return HttpResponse('Unauthorized', status=401)
 
 

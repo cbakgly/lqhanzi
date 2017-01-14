@@ -3,208 +3,202 @@
 
 {% block content %}
 	<!-- Content Header-->
-      <div class="content-header">
-        <ol class="breadcrumb">
-          <li><a href="javascript:;">字库检索</a></li>
-          <li class="active">高台去重库</li>
-        </ol>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box box-blue">
-            <!-- /.box-header -->
-            <div class="box-header" id="search-box">
-              <div class="box-header-inner">
-                <div class="ser-bd">
-                  <div class="z-ser z2-ser">
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">高丽图片字:</span>
-                        <input type="text" class="form-control" placeholder="请输入图片字编码" v-model="hanzi_pic_id">
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">重复台湾异体字编码:</span>
-                        <input type="text" class="form-control" placeholder="请输入" v-model="inter_dict_dup_hanzi">
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">所属正字:</span>
-                        <input type="text" class="form-control" placeholder="请输入" v-model="std_char">
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">初次=回查:</span>
-                        <div class="radios">
-                          <label><input type="radio" v-model="is_draft_equals_review" value="1">是</label>
-                          <label><input type="radio" v-model="is_draft_equals_review" value="0">否</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">是否审核:</span>
-                        <div class="radios">
-                          <label><input type="radio" v-model="is_checked" value="1">是</label>
-                          <label><input type="radio" v-model="is_checked" value="0">否</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">回查＝审查:</span>
-                         <div class="radios">
-                          <label><input type="radio" v-model="is_review_equals_final" value="1">是</label>
-                          <label><input type="radio" v-model="is_review_equals_final" value="0">否</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">是否入库:</span>
-                         <div class="radios">
-                          <label><input type="radio" v-model="is_submitted" value="1">是</label>
-                          <label><input type="radio" v-model="is_submitted" value="0">否</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col col-md-4 col-sm-6 col-xs-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">更新时段:</span>
-                        <i class="fa fa-calendar"></i>
-                        <input type="text" class="form-control pull-right" id="reservationtime">
-                      </div>
+  <div class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="javascript:;">字库检索</a></li>
+      <li class="active">高台去重库</li>
+    </ol>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-blue">
+        <!-- /.box-header -->
+        <div class="box-header" id="search-box">
+          <div class="box-header-inner">
+            <div class="ser-bd">
+              <div class="z-ser z2-ser">
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">高丽图片字:</span>
+                    <input type="text" class="form-control" placeholder="请输入图片字编码" v-model="hanzi_pic_id">
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">重复台湾异体字编码:</span>
+                    <input type="text" class="form-control" placeholder="请输入" v-model="inter_dict_dup_hanzi">
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">所属正字:</span>
+                    <input type="text" class="form-control" placeholder="请输入" v-model="std_char">
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">初次=回查:</span>
+                    <div class="radios">
+                      <label><input type="radio" v-model="is_draft_equals_review" value="1">是</label>
+                      <label><input type="radio" v-model="is_draft_equals_review" value="0">否</label>
                     </div>
                   </div>
-                  <div class="btns">
-                    <button class="btn btn-blue btn-sm z-btn-sm" v-on:click="search">搜索</button>
-                    <button class="btn btn-default btn-sm z-btn-sm z-reset" v-on:click="reset_search">重置</button>
-                    <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">是否审核:</span>
+                    <div class="radios">
+                      <label><input type="radio" v-model="is_checked" value="1">是</label>
+                      <label><input type="radio" v-model="is_checked" value="0">否</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">回查＝审查:</span>
+                     <div class="radios">
+                      <label><input type="radio" v-model="is_review_equals_final" value="1">是</label>
+                      <label><input type="radio" v-model="is_review_equals_final" value="0">否</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">是否入库:</span>
+                     <div class="radios">
+                      <label><input type="radio" v-model="is_submitted" value="1">是</label>
+                      <label><input type="radio" v-model="is_submitted" value="0">否</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-md-4 col-sm-6 col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">更新时段:</span>
+                    <i class="fa fa-calendar"></i>
+                    <input type="text" class="form-control pull-right" id="reservationtime">
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- 筛选 -->
-            <div id="content-box">
-            <div class="expand-mode multi-mode" id="filter-box">
-              <div class="expand-hd">
-                <p><span>筛选：</span></p>
-              </div>
-              <div class="expand-bd">
-                  <div class="expand-items">
-                    <div class="items-inner">
-                      <label><input type="checkbox" v-model="filter_pic_char">高丽图片字</label>
-                      <label><input type="checkbox" v-model="filter_draft">重复台湾字/初次</label>
-                      <label><input type="checkbox" v-model="filter_review">重复台湾字/回查</label>
-                      <label><input type="checkbox" v-model="filter_final">重复台湾字/审查</label>
-                      <label><input type="checkbox" v-model="filter_draft_eq_review">初次=回查</label>
-                      <label><input type="checkbox" v-model="filter_review_eq_final">回查=审查</label>
-                      <label><input type="checkbox" v-model="filter_checked">是否审核</label>
-                      <label><input type="checkbox" v-model="filter_submitted">是否入库</label>
-                      <label><input type="checkbox" v-model="filter_update_time">更新时段</label>
-                    </div>
-                    <!--<div class="btns">-->
-                      <!--<button class="btn btn-blue btn-sm z-btn-sm">提交</button>-->
-                      <!--<button class="btn btn-default btn-sm z-btn-sm z-reset">取消</button>-->
-                    <!--</div>-->
-                  </div>
-              </div>
-              <div class="expand-ft">
-                <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
+              <div class="btns">
+                <button class="btn btn-blue btn-sm z-btn-sm" v-on:click="search">搜索</button>
+                <button class="btn btn-default btn-sm z-btn-sm z-reset" v-on:click="reset_search">重置</button>
+                <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
               </div>
             </div>
-            <!-- 筛选 -->
-            <div class="box-body table-responsive z-table-responsive" id="data-box">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>序号</th>
-                  <th v-show="filter_pic_char">高丽图片字</th>
-                  <th v-show="filter_draft">重复台湾字/初次</th>
-                  <th v-show="filter_review">重复台湾字/回查</th>
-                  <th v-show="filter_final">重复台湾字/审查</th>
-                  <th>所属正字</th>
-                  <th v-show="filter_draft_eq_review">初次=回查</th>
-                  <th v-show="filter_review_eq_final">回查=审查</th>
-                  <th v-show="filter_checked">是否审核</th>
-                  <th v-show="filter_submitted">是否入库</th>
-                  <th>更新时间</th>
-                  <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="item in models">
-                  <td>#[ item.id ]]</td>
-                  <td v-show="filter_pic_char">
-                    <span class="pic"><img :src="item.hanzi_pic_path" alt=""></span>
-                    <span class="small"><em>#[ item.hanzi_pic_id ]]</em></span>
-                  </td>
-                  <td v-show="filter_draft">
-                      <span v-if="item.is_draft_pic">
-                        <span class="pic"><img :src="item.inter_dict_dup_hanzi_draft_path" alt=""></span>
-                        <span class="small"><em>#[ item.inter_dict_dup_hanzi_draft ]]</em></span>
-                      </span>
-                      <span v-else>
-                        <span class="hanzi">#[ item.inter_dict_dup_hanzi_draft ]]</span><span>#[ item.inter_dict_dup_hanzi_draft_seq_id ]]</span>
-                      </span>
-                  </td>
-                  <td v-show="filter_review">
-                      <span v-if="item.is_review_pic">
-                        <span class="pic"><img :src="item.inter_dict_dup_hanzi_review_path" alt=""></span>
-                        <span class="small"><em>#[ item.inter_dict_dup_hanzi_review ]]</em></span>
-                      </span>
-                      <span v-else>
-                        <span class="hanzi">#[ item.inter_dict_dup_hanzi_review ]]</span><span>#[ item.inter_dict_dup_hanzi_review_seq_id ]]</span>
-                      </span>
-                  </td>
-                  <td v-show="filter_final">
-                      <span v-if="item.is_final_pic">
-                        <span class="pic"><img :src="item.inter_dict_dup_hanzi_final_path" alt=""></span>
-                        <span class="small"><em>#[ item.inter_dict_dup_hanzi_final ]]</em></span>
-                      </span>
-                      <span v-else>
-                        <span class="hanzi">#[ item.inter_dict_dup_hanzi_final ]]</span><span>#[ item.inter_dict_dup_hanzi_final_seq_id ]]</span>
-                      </span>
-                  </td>
-                  <td>#[item.std_char]]</td>
-                  <td v-show="filter_draft_eq_review">#[ item.is_draft_equals_review_display ]]</td>
-                  <td v-show="filter_review_eq_final">#[ item.is_review_equals_final_display ]]</td>
-                  <td v-show="filter_checked">#[ item.is_checked_display ]]</td>
-                  <td v-show="filter_submitted">#[ item.is_submitted_display ]]</td>
-                  <td v-show="filter_update_time">#[ item.u_t ]]</td>
-                  <!--// TODO: add real url-->
-                  <td><a href="#">查看</a></td>
-                </tr>
-                </tbody>
-              </table>
-            </div><!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a></li>
-                <li v-else><a>«</a></li>
-                <li v-for="item in paging.page_links">
-                    <span href="javascript:void(0);" v-if="item[2]">
-                        <a href="javascript:void(0);">#[ item[1] ]]</a>
-                    </span>
-                    <span v-else-if="item[3]">
-                        <a href="javascript:void(0);">....</a>
-                    </span>
-                    <span v-else>
-                        <a href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
-                    </span>
-                </li>
-                <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
-                <li v-else><a>»</a></li>
-              </ul>
-            </div>
-          </div><!-- /.content-box -->
-          </div><!-- /.box -->
+          </div>
         </div>
-        <!-- /.col -->
-      </div>
+        <!-- 筛选 -->
+        <div id="content-box">
+        <div class="expand-mode multi-mode" id="filter-box">
+          <div class="expand-hd">
+            <p><span>筛选：</span></p>
+          </div>
+          <div class="expand-bd">
+              <div class="expand-items">
+                <div class="items-inner">
+                  <label><input type="checkbox" v-model="filter_pic_char">高丽图片字</label>
+                  <label><input type="checkbox" v-model="filter_draft">重复台湾字/初次</label>
+                  <label><input type="checkbox" v-model="filter_review">重复台湾字/回查</label>
+                  <label><input type="checkbox" v-model="filter_final">重复台湾字/审查</label>
+                  <label><input type="checkbox" v-model="filter_draft_eq_review">初次=回查</label>
+                  <label><input type="checkbox" v-model="filter_review_eq_final">回查=审查</label>
+                  <label><input type="checkbox" v-model="filter_checked">是否审核</label>
+                  <label><input type="checkbox" v-model="filter_submitted">是否入库</label>
+                  <label><input type="checkbox" v-model="filter_update_time">更新时段</label>
+                </div>
+                <!--<div class="btns">-->
+                  <!--<button class="btn btn-blue btn-sm z-btn-sm">提交</button>-->
+                  <!--<button class="btn btn-default btn-sm z-btn-sm z-reset">取消</button>-->
+                <!--</div>-->
+              </div>
+          </div>
+          <div class="expand-ft">
+            <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
+          </div>
+        </div>
+        <!-- 筛选 -->
+        <div class="box-body table-responsive z-table-responsive" id="data-box">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th v-show="filter_pic_char">高丽图片字</th>
+              <th v-show="filter_draft">重复台湾字/初次</th>
+              <th v-show="filter_review">重复台湾字/回查</th>
+              <th v-show="filter_final">重复台湾字/审查</th>
+              <th>所属正字</th>
+              <th v-show="filter_draft_eq_review">初次=回查</th>
+              <th v-show="filter_review_eq_final">回查=审查</th>
+              <th v-show="filter_checked">是否审核</th>
+              <th v-show="filter_submitted">是否入库</th>
+              <th>更新时间</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in models">
+              <td>#[ item.id ]]</td>
+              <td v-show="filter_pic_char">
+                <span class="pic"><img :src="item.hanzi_pic_path" alt=""></span>
+                <span class="small"><em>#[ item.hanzi_pic_id ]]</em></span>
+              </td>
+              <td v-show="filter_draft">
+                  <span v-if="item.is_draft_pic">
+                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_draft_path" alt=""></span>
+                    <span class="small"><em>#[ item.inter_dict_dup_hanzi_draft ]]</em></span>
+                  </span>
+                  <span v-else>
+                    <span class="hanzi">#[ item.inter_dict_dup_hanzi_draft ]]</span><span>#[ item.inter_dict_dup_hanzi_draft_seq_id ]]</span>
+                  </span>
+              </td>
+              <td v-show="filter_review">
+                  <span v-if="item.is_review_pic">
+                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_review_path" alt=""></span>
+                    <span class="small"><em>#[ item.inter_dict_dup_hanzi_review ]]</em></span>
+                  </span>
+                  <span v-else>
+                    <span class="hanzi">#[ item.inter_dict_dup_hanzi_review ]]</span><span>#[ item.inter_dict_dup_hanzi_review_seq_id ]]</span>
+                  </span>
+              </td>
+              <td v-show="filter_final">
+                  <span v-if="item.is_final_pic">
+                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_final_path" alt=""></span>
+                    <span class="small"><em>#[ item.inter_dict_dup_hanzi_final ]]</em></span>
+                  </span>
+                  <span v-else>
+                    <span class="hanzi">#[ item.inter_dict_dup_hanzi_final ]]</span><span>#[ item.inter_dict_dup_hanzi_final_seq_id ]]</span>
+                  </span>
+              </td>
+              <td>#[item.std_char]]</td>
+              <td v-show="filter_draft_eq_review">#[ item.is_draft_equals_review_display ]]</td>
+              <td v-show="filter_review_eq_final">#[ item.is_review_equals_final_display ]]</td>
+              <td v-show="filter_checked">#[ item.is_checked_display ]]</td>
+              <td v-show="filter_submitted">#[ item.is_submitted_display ]]</td>
+              <td v-show="filter_update_time">#[ item.u_t ]]</td>
+              <!--// TODO: add real url-->
+              <td><a href="#">查看</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <ul class="pagination pagination-sm no-margin pull-right">
+            <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a></li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+              <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+              <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+              <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
+          </ul>
+        </div>
+      </div><!-- /.content-box -->
+      </div><!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
 
   <script type="text/javascript">
     var search_url = '{% url "inter-dict-dedups-list" version="v1" %}';

@@ -72,7 +72,7 @@ var hanzi_input = new Vue({
           {text: '其他入库类型', value: 9}
         ],
         titles: [
-            {text: '#', show: true},
+            {text: '序号', show: true},
             {text: '册', show: false},
             {text: '页码', show: true},
             {text: '序号/初次', show: true},
@@ -98,7 +98,7 @@ var hanzi_input = new Vue({
             {text: '是否审核', show: true},
             {text: '是否入库', show: true},
             {text: '更新时段', show: true},
-            {text: '备注', show: true}
+            {text: '操作', show: true}
         ]
     },
     created: function() {

@@ -8,6 +8,7 @@ import django_filters
 from ..pagination import NumberPagination
 from ..models import HanziSet
 from ..utils import get_pic_url_by_source_pic_name
+from ..filters import fields_or_filter_method
 
 
 class HanziSetSerializer(serializers.ModelSerializer):
@@ -22,7 +23,8 @@ class HanziSetSerializer(serializers.ModelSerializer):
         ret['is_inter_dict_redundant_display'] = instance.get_is_inter_dict_redundant_display()
         ret['is_korean_redundant_display'] = instance.get_is_korean_redundant_display()
         ret['variant_type_display'] = instance.get_variant_type_display()
-        ret['hanzi_type'] = instance.get_hanzi_type_display()
+        ret['hanzi_type_display'] = instance.get_hanzi_type_display()
+        ret['source_display'] = instance.get_source_display()
         return ret
 
 
@@ -32,6 +34,7 @@ class HanziSetFilter(django_filters.FilterSet):
     异体字拆字过滤器
     """
     u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
+    split = django_filters.CharFilter(name=["min_split", "max_split", "mix_split", "deform_split"], method=fields_or_filter_method)
 
     class Meta:
         model = HanziSet
