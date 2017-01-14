@@ -15,7 +15,7 @@ from task_func import assign_task
 from backend.enums import getenum_task_package_business_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks
-
+from django.utils.translation import ugettext_lazy as _
 
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):

@@ -15,7 +15,7 @@ from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
 from ..enums import getenum_source, getenum_task_business_status, getenum_business_stage
 from task_func import assign_task
-
+from django.utils.translation import ugettext_lazy as _
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
 
@@ -172,7 +172,7 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(task_ele)
             return Response(serializer.data)
         else:
-            return Response("数据错误！")
+            return Response(_("Inputdata Error!"))
 
             # 提交并转下一条
 
@@ -203,4 +203,4 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
                     return Response(u"没有更多任务了！", status=status.HTTP_204_NO_CONTENT)
             else:
                 return Response(u"该任务包已完成，请领取新任务包。", status=status.HTTP_100_CONTINUE)
-        return Response("数据错误！")
+        return Response(_("Inputdata Error!"))
