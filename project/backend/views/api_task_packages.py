@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from api_tasks import TasksSerializer
 from task_func import assign_task
-from backend.enums import getenum_business_status
+from backend.enums import getenum_task_package_business_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks
 
@@ -35,9 +35,9 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         user_id = validated_data['user'].id
         biz_type = validated_data['business_type']
         biz_stage = validated_data['business_stage']
-        exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_business_status('ongoing'))
+        exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_task_package_business_status('ongoing'))
         if exist:
-            raise ValidationError(_("Only one package per type per stage can it be created."))
+            raise ValidationError(_("Only one task package per type and stage can be created."))
 
         due_days = validated_data['size'] / validated_data['daily_plan']
         c_t = timezone.now()
@@ -55,7 +55,6 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         for key in validated_data.keys():
             if validated_data.get(key) is not None:
                 setattr(instance, key, validated_data.get(key, getattr(instance, key)))
-
 
         due_days = instance.size / validated_data['daily_plan']
         c_t = timezone.now()

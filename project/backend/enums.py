@@ -3,7 +3,12 @@
 # 集中将业务上的枚举类型的工具函数写在这里
 
 
-def getenum_business_status(name):
+def getenum_task_package_business_status(name):
+    status = {"ongoing": 0, "completed": 1}
+    return status[name]
+
+
+def getenum_task_business_status(name):
     status = {"closed": 0, "to_be_arranged": 1, "ongoing": 2, "completed": 3}
     return status[name]
 
