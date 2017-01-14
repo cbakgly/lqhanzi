@@ -5,14 +5,19 @@ from django.shortcuts import render
 
 from backend.cache_keys import getcachekey_today_completed_task_num
 from backend.utils import get_today_credits
-from backend.enums import getenum_business_status
+from backend.enums import getenum_task_business_status
 from backend.models import TaskPackages, business_stage_choices, business_type_choices
 
 
 @login_required
 def new_task_page(request):
     today_credits = get_today_credits(request.user.id)
-    return render(request, 'new_task.html', {"today_credits": today_credits, "business_type_choices": business_type_choices, "business_stage_choices": business_stage_choices})
+    return render(request, 'new_task.html', {
+        "today_credits": today_credits,
+        "business_type_choices": business_type_choices,
+        "business_stage_choices": business_stage_choices,
+        "business_status_ongoing": getenum_task_business_status('ongoing')
+    })
 
 
 @login_required
@@ -42,7 +47,7 @@ def task_package_complete(request):
 @login_required
 def task_package_ongoing(request):
     user_id = request.user.id
-    data = TaskPackages.objects.filter(user_id=user_id).filter(status=getenum_business_status('ongoing'))
+    data = TaskPackages.objects.filter(user_id=user_id).filter(status=getenum_task_business_status('ongoing'))
     task_packages = []
     for counter, item in enumerate(data):
         i = item.__dict__

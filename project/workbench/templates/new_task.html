@@ -78,7 +78,7 @@
         if (package_plan == 0) package_plan = $('#custom_plan').data('val');
         if (package_plan == 0 || package_plan%5 != 0) alert('Please input valid plan number.');
 
-        var package_status = 0;
+        var package_status = {{business_status_ongoing}};
 
         var t = new Date();
         var due_date = new Date(Date.now() + package_size/package_plan*24*3600*1000 - 8*3600*1000);

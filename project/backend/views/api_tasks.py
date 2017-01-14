@@ -11,8 +11,8 @@ import django_filters
 # from django.db.models import Q
 
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, KoreanDedup
-from ..enums import getenum_business_type, getenum_business_status, getenum_business_stage
+from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput
+from ..enums import getenum_business_type, getenum_task_business_status, getenum_business_stage
 import api_variants_input
 import api_variants_dedup
 import api_variants_split
@@ -102,9 +102,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         task_package = request.query_params["task_package"]
         business_type = getenum_business_type("split")
         if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
         split_variants = [v["task_ele"] for v in serializer.data]
@@ -172,9 +172,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         task_package = request.query_params["task_package"]
         business_type = getenum_business_type("input")
         if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
         input_variants = [v["task_ele"] for v in serializer.data]
@@ -256,9 +256,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         task_package = request.query_params["task_package"]
         business_type = getenum_business_type("dedup")
         if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_business_status("ongoing")).filter(task_package=task_package)
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
         dedup_variants = [v["task_ele"] for v in serializer.data]
