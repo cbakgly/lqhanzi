@@ -1,13 +1,14 @@
 # -*- coding:utf8 -*-
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-import django_filters
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import status
+import django_filters
 
 from ..pagination import NumberPagination
 from ..models import KoreanDedup, InterDictDedup, HanziSet
@@ -15,7 +16,7 @@ from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
 from ..enums import getenum_source, getenum_task_business_status, getenum_business_stage
 from task_func import assign_task
-from django.utils.translation import ugettext_lazy as _
+
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
 
