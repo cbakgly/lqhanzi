@@ -6,13 +6,13 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 import django_filters
 
 from ..pagination import NumberPagination
 from ..models import VariantsSplit
 from task_func import assign_task
-from ..enums import getenum_task_business_status
+from ..enums import getenum_task_business_status, getenum_business_stage
 
 
 class VariantsSplitSerializer(serializers.ModelSerializer):
@@ -20,7 +20,6 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VariantsSplit
-        # fields = ["split_task"]
         fields = ['source',
                   'hanzi_type',
                   'hanzi_char',
@@ -81,9 +80,9 @@ def update_tasks_status(variants_split):
     task_dict = {}
     for t in tasks:
         task_dict[t.business_stage] = t
-    draft = task_dict[0]
-    review = task_dict[1]
-    final = task_dict[2]
+    draft = task_dict[getenum_business_stage('init')]
+    review = task_dict[getenum_business_stage('review')]
+    final = task_dict[getenum_business_stage('final')]
     origin_task = draft
     if draft.task_status == getenum_task_business_status("ongoing"):
         draft.task_status = getenum_task_business_status("completed")
@@ -111,6 +110,42 @@ def update_tasks_status(variants_split):
     else:
         pass
     return origin_task
+
+
+class SingleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VariantsSplit
+        fields = [
+            'id',
+            'source',
+            'hanzi_type',
+            'hanzi_char',
+            'hanzi_pic_id',
+            'variant_type',
+            'std_hanzi',
+            'as_std_hanzi',
+            'seq_id',
+            'is_redundant',
+            'skip_num_draft',
+            'init_split_draft',
+            'other_init_split_draft',
+            'deform_split_draft',
+            'similar_parts_draft',
+            'dup_id_draft',
+            'skip_num_review',
+            'init_split_review',
+            'other_init_split_review',
+            'deform_split_review',
+            'similar_parts_review',
+            'dup_id_review',
+            'skip_num_final',
+            'init_split_final',
+            'other_init_split_final',
+            'deform_split_final',
+            'similar_parts_final',
+            'dup_id_final',
+        ]
 
 
 class VariantsSplitViewSet(viewsets.ModelViewSet):
@@ -169,3 +204,12 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response("数据错误！")
+
+    @list_route(methods=["GET"])
+    def single_split(self, request, *args, **kwargs):
+        id = self.request.query_params["id"]
+        qs = VariantsSplit.objects.filter(pk=int(id))
+        data = list(qs)[0]
+        return Response(data)
+
+

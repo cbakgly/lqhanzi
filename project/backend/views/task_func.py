@@ -8,7 +8,7 @@ from ..enums import getenum_task_business_status
 
 # 分配新任务
 def assign_task(business_type, business_stage, task_package, user):
-    tasks = list(Tasks.objects.filter(business_type=business_type).filter(assigned_at=None).filter(business_stage=business_stage).filter(task_status=1))
+    tasks = list(Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage).filter(task_status=getenum_task_business_status("to_be_arranged")))
     if len(tasks):
         task = tasks[0]
         task.user = user
