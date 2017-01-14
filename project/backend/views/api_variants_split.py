@@ -211,5 +211,3 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
         qs = VariantsSplit.objects.filter(pk=int(id))
         data = list(qs)[0]
         return Response(data)
-
-
