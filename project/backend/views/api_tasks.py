@@ -1,6 +1,5 @@
 # encoding: utf-8
 from django.utils.translation import ugettext_lazy as _
-from __future__ import unicode_literals
 from rest_framework import viewsets, status
 from rest_framework import serializers
 from rest_framework.decorators import list_route, detail_route
