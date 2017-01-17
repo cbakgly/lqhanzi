@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>字典</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--font.css-->
+    <link rel="stylesheet" href="css/myfont.css">
+    <!--base.css-->
+    <link rel="stylesheet" href="css/base.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/sidebar.css">
+    <!--main.css-->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.2.3 -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/sidebar.js"></script>
+</head>
+<body class="sidebar-mini">
+<div class="wrapper">
+    <div class="dictionary-header">
+        <div class="shortcut clearfix">
+            <div class="home fl nav-tab">
+                <ul class="tabs clearfix">
+                    <li>
+                        <a class="home-icon" href="hanzi_stroke.html"></a>
+                    </li>
+                    <li class="dropdown">
+                        <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
+                        <!--未登录前-->
+                        <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="img/login-ahead.jpg" class="img-circle" alt="User Image">
+                                <p>未登录</p>
+                            </li>
+                            <li class="user-footer clearfix">
+                                <div class="fl">
+                                    <a href="#" class="btn btn-default btn-flat">注册</a>
+                                </div>
+                                <div class="fr">
+                                    <a href="#" class="btn btn-default btn-flat">登录</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--./未登录-->
+                        <!--登录后-->
+                        <!-- The user image in the nav-->
+                        <!--<a href="javascript:;">-->
+                            <!--<img src="img/user-login.jpg" class="user-image" alt="头像">-->
+                            <!--<span>贤二</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li class="user-header">-->
+                                <!--<img src="img/user-login.jpg" class="img-circle" alt="头像">-->
+                                <!--<p>贤二</p>-->
+                            <!--</li>-->
+                            <!--<li class="user-footer clearfix">-->
+                                <!--<div class="fl">-->
+                                    <!--<a href="#" class="btn btn-default btn-flat">修改密码</a>-->
+                                <!--</div>-->
+                                <!--<div class="fr">-->
+                                    <!--<a href="#" class="btn btn-default btn-flat">退出登录</a>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--./登录后-->
+                    </li>
+                </ul>
+            </div>
+            <div class="dict-tabs fr">
+                <ul class="clearfix dict-tabs-nav">
+                    <li class="active">台湾异体字字典</li>
+                    <li>高丽异体字字典</li>
+                    <li>汉语大字典</li>
+                    <li>敦煌俗字典</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dictionary-content">
+        <aside class="main-sidebar">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="icon-sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+            <ul class="tab-nav-custom clearfix">
+                <li class="active">部首索引</li>
+                <li>目录索引</li>
+            </ul>
+            <div class="tab-con">
+                <section class="sidebar tab-panel showing">
+                    <!-- Sidebar Menu -->
+                    <ul class="sidebar-menu">
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type1">一画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type2">二画</i>
+                                <span class="pull-right-container">
+                                      <i class="fa icon-l-arrow2 pull-right"></i>
+                                    </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type3">三画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type4">四画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type5">五画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type6">六画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type7">七画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type8">八画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type9">九画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type10">十画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type11">十一画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type12">十二画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type13">十三画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type14">十四画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <i class="type type15">十五画</i>
+                                <span class="pull-right-container">
+                                  <i class="fa icon-l-arrow2 pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu clearfix">
+                                <li class="hanzi-item">丨</li>
+                                <li class="hanzi-item">亅</li>
+                                <li class="hanzi-item">丿</li>
+                                <li class="hanzi-item">乛</li>
+                                <li class="hanzi-item">乙</li>
+                                <li class="hanzi-item">乙</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- /.sidebar-menu -->
+                </section>
+                <section class="sidebar tab-panel">
+                    <!-- catalog Menu -->
+                        目录索引
+                    <!-- /.catalog-menu -->
+                </section>
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!--浮层-->
+        <div class="popup">
+            <span class="toggler"><i class="icon-l-arrow"></i></span>
+            <div class="popup-hd clearfix">
+                <!-- <span class="close">关闭</span> -->
+                <p class="fl"><span>请选择剩余笔画</span>部首为<em>一</em>的汉字(共<em>928</em>字)</p>
+                <!--搜索-->
+                <div class="parts-ser fl clearfix">
+                    <input class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
+                    <button type="submit" class="btn btn-default fl"><i class="icon-ser"></i></button>
+                </div>
+
+            </div>
+            <ul class="strokes-lists">
+                <li class="strokes-item">
+                    <span class="num">一画</span>
+                    <div class="strokes-item-bd clearfix">
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                    </div>
+                </li>
+                <li class="strokes-item">
+                    <span class="num">二画</span>
+                    <div class="strokes-item-bd clearfix">
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                    </div>
+                </li>
+                <li class="strokes-item">
+                    <span class="num">三画</span>
+                    <div class="strokes-item-bd clearfix">
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                    </div>
+                </li>
+                <li class="strokes-item">
+                    <span class="num">四画</span>
+                    <div class="strokes-item-bd clearfix">
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item">八</span>
+                        <span class="hanzi-item"><img src="img/200C9.gif" alt=""></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="pages-box fr clearfix">
+                <ul class="pagination fl">
+                    <li><a href="#"><</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">></a></li>
+                </ul>
+                <div class="search-page fl">
+                            <span class="page-go">
+                                <em>跳至:</em>
+                                <input type="text">
+                                <em>页</em>
+                            </span>
+                    <span class="page-btn">GO</span>
+                </div>
+            </div>
+        </div>
+        <!--./浮层-->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper tab-con">
+            <!-- Main content -->
+            <section class="content-wrapper-inner tab-panel showing">
+                1
+            </section>
+            <section class="content-wrapper-inner tab-panel">
+                2
+            </section>
+            <section class="content-wrapper-inner tab-panel">
+                3
+            </section>
+            <section class="content-wrapper-inner tab-panel">
+                4
+            </section>
+            <!-- /.content -->
+        </div>
+    </div>
+</div>
+<script>
+    // user dropdownmenu
+    $(function(){
+        $(".nav-tab .dropdown").mouseenter(function() {
+            if(!$(this).children(".dropdown-menu").is(":animated")){
+                $(this).children(".dropdown-menu").fadeIn(600);
+            }
+        });
+        $(".nav-tab .dropdown").mouseleave(function() {
+            $(this).children(".dropdown-menu").fadeOut(600);
+        });
+    });
+    //tab切换
+    $(function(){
+        $(".main-sidebar .tab-nav-custom li").click(function(){
+            var $this = $(this),
+                index = $this.index();
+            $this.addClass("active").siblings("li").removeClass("active");
+            $(".main-sidebar .tab-con .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
+        });
+        $(".dict-tabs-nav li").click(function(){
+            var $this = $(this),
+                index = $this.index();
+            $this.addClass("active").siblings("li").removeClass("active");
+            $(".content-wrapper .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
+        });
+    });
+
+    $(function(){
+        $(".treeview-menu li").each(function(index,el){
+            $(this).click(function(){
+                $(".popup").show();
+            })
+        })
+        $(".toggler").click(function(){
+            $(".popup").hide();
+        })
+    });
+</script>
+</body>
+</html>

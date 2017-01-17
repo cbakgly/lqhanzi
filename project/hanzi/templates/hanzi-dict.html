@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>首页-异体字检字法</title>
+    <!--font.css-->
+    <link rel="stylesheet" href="css/myfont.css">
+    <!--base.css-->
+    <link rel="stylesheet" href="css/base.css">
+    <!--main.css-->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.2.3 -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <!--header-->
+        <div class="header">
+            <div class="shortcut">
+                <div class="shortcut-inner">
+                    <div class="nav-tab nav-tab-r fr">
+                        <ul class="tabs clearfix">
+                            <li><a href="hanzi_stroke.html">部件笔画检字法</a></li>
+                            <li><a href="dictionary.html">字典</a></li>
+                            <li class="dropdown">
+                                <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
+                                <!--未登录前-->
+                                <a href="javascript:;" class="dropdown-toggle"><i class="icon-user1"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li class="user-header">
+                                        <img src="img/login-ahead.jpg" class="img-circle" alt="User Image">
+                                        <p class="status">未登录</p>
+                                    </li>
+                                    <li class="user-footer clearfix">
+                                        <div class="fl">
+                                            <a href="#" class="btn btn-default btn-flat">注册</a>
+                                        </div>
+                                        <div class="fr">
+                                            <a href="#" class="btn btn-default btn-flat">登录</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!--./未登录-->
+                                <!--登录后-->
+                                <!-- The user image in the nav-->
+                                <!--<a href="javascript:;">-->
+                                <!--<img src="img/user-login.jpg" class="user-image" alt="头像">-->
+                                <!--<span>贤二</span>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                <!--<li class="user-header">-->
+                                <!--<img src="img/user-login.jpg" class="img-circle" alt="头像">-->
+                                <!--<p>贤二</p>-->
+                                <!--</li>-->
+                                <!--<li class="user-footer clearfix">-->
+                                <!--<div class="fl">-->
+                                <!--<a href="#" class="btn btn-default btn-flat">修改密码</a>-->
+                                <!--</div>-->
+                                <!--<div class="fr">-->
+                                <!--<a href="#" class="btn btn-default btn-flat">退出登录</a>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--./登录后-->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="w">
+                <div class="search-box clearfix">
+                    <div class="logo fl">
+                        <h1 style="background:url(img/logo2.png) no-repeat">
+                            <a href="hanzi_stroke.html">龙泉字库</a>
+                        </h1>
+                    </div>
+                    <div class="search fl">
+                        <div class="search-top">
+                            <input class="ser-input" type="text" placeholder="请输入您所查文字或图片字编码">
+                            <span class="ser-btn" id="search-btn">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="help"><i class="icon-help"></i></div>
+            </div>
+        </div>
+        <!--./header-->
+        <!--content-->
+        <div class="dict-content">
+            <div class="w">
+                <div class="dict-con-inner">
+                    <!--说明：此页面不跳页，默认显示no-result,数据请求回来则显示results-->
+                    <div class="no-result hide">
+                        <p class="tip">请先输入您所查文字或图片字编码</p>
+                    </div>
+                    <!--有数据-->
+                    <div class="dict-results clearfix">
+                        <ul class="dict-result-lists fl">
+                            <li class="dict-result-item">
+                                <h3 class="dict-title">《龙泉异体字字典》</h3>
+                                <p class="hanzi-normal"><a href="#">[<span class="keyword">菩</span>]</a></p>
+                                <div class="hanzi-variants">
+                                    <a href="#"><span><img src="img/GL-核-2.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/GL-核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-2.jpg" alt=""></span></a>
+                                </div>
+                            </li>
+                            <li class="dict-result-item">
+                                <h3 class="dict-title">《台湾异体字字典》</h3>
+                                <p class="hanzi-normal"><a href="#">[<span>菩</span>]</a></p>
+                                <div class="hanzi-variants">
+                                    <a href="#"><span><img src="img/GL-核-2.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/GL-核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-2.jpg" alt=""></span></a>
+                                    <a href="#"><span class="normal">䔒</span></a>
+                                </div>
+                            </li>
+                            <li class="dict-result-item">
+                                <h3 class="dict-title">《高丽异体字字典》</h3>
+                                <p class="hanzi-normal"><a href="#">[<span>菩</span>]</a></p>
+                                <div class="hanzi-variants">
+                                    <a href="#"><span><img src="img/GL-核-2.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/GL-核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-1.jpg" alt=""></span></a>
+                                    <a href="#"><span><img src="img/TW-狭核-2.jpg" alt=""></span></a>
+                                    <a href="#"><span>䔒</span></a>
+                                    <a href="#"><span class="variant">䔒</span></a>
+                                </div>
+                            </li>
+                            <li class="dict-result-item">
+                                <h3 class="dict-title">《汉语大字典》</h3>
+                                <div class="desc"><a href="#">第3452页 第8字</a></div>
+                            </li>
+                            <li class="dict-result-item">
+                                <h3 class="dict-title">《敦煌俗字典》</h3>
+                                <div class="desc"><a href="#">第309页</a></div>
+                            </li>
+                        </ul>
+                        <div class="instruction fr">
+                            <p><span>[ ]</span><span>正字</span></p>
+                            <p><span></span><span>检索关键字</span></p>
+                            <p><span></span><span>狭义异体字</span></p>
+                            <p><span></span><span>广义且正字</span></p>
+                            <p><span></span><span>广义异体字</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--./content-->
+        <!-- loading:数据请求时动画-->
+        <div class="loading">
+            <div class="spinner">
+                <div class="spinner-container container1">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container2">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container3">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $(".nav-tab .dropdown").mouseenter(function() {
+                if(!$(this).children(".dropdown-menu").is(":animated")){
+                    $(this).children(".dropdown-menu").fadeIn(600);
+                }
+            });
+            $(".nav-tab .dropdown").mouseleave(function() {
+                $(this).children(".dropdown-menu").fadeOut(600);
+            });
+        });
+    </script>
+</body>
+</html>
