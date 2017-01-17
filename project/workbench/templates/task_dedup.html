@@ -136,9 +136,13 @@
                 </div>
               </div>
 
-              <div class="btns btns-tr">
+             <!--  <div class="btns btns-tr">
                 <button class="btn btn-blue btn-sm next-page">提交</button>
                 <button class="btn btn-blue btn-sm next-page">提交并转下一页</button>
+              </div> -->
+              <div class="btn-group btns-tr split-btns pull-right">
+                  <button class="btn btn-blue btn-sm z-btn-sm">存疑提交</button>
+                  <button class="btn btn-blue btn-sm z-btn-sm">下一页</button>
               </div>
             </div><!-- /.box-body -->
           </div><!-- /.box -->
@@ -154,21 +158,22 @@
 {#                   <button type="button" class="close" data-dismiss="modal" @click="displayModal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>#}
 {#                   <h4 class="modal-title" id="myModalLabel">Modal title</h4>#}
 {#                 </div>#}
-                 <div class="modal-body">
+                 <div class="modal-body" style="display:none;">
 
                  </div>
-                 <div class="modal-footer">
-                   <div class="input-group" style="padding-bottom: 15px"><span
-                           class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高丽异体字:</span>
-                       <img src="" alt="">
+                 <div class="modal-footer" style="text-align:left;">
+                   <div class="input-group" style="padding-bottom: 15px;"><span
+                           class="input-group-addon">高丽异体字:</span>
+                       <img src="img/font-img7.jpg" alt="">
                      </div>
                    <div class="input-group" style="padding-bottom: 15px"><span
                            class="input-group-addon">重复的台湾异体字:</span>
-                       <input type="text" placeholder="请输入" class="form-control">
+                       <input type="text" placeholder="请输入与高丽异体字重复的台湾异体字编号" class="form-control">
                    </div>
-
-                   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" @click="displayModal">Close</button>
-                   <button type="button" class="btn btn-blue btn-sm next-page">Save changes</button>
+                   <div class="btns">
+                      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" @click="displayModal">取消</button>
+                      <button type="button" class="btn btn-blue btn-sm">确定</button>
+                   </div>
                  </div>
                </div>
              </div>

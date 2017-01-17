@@ -794,6 +794,7 @@ input[type="radio"], input[type="checkbox"]{
     height:90px;
     margin-right:30px;
     margin-bottom:20px;
+    cursor:pointer;
 }
 .dedup-left{
     border-right:1px solid #ddd;
@@ -1228,4 +1229,13 @@ tbody tr th{
 }
 .title-info p.txt{
     margin-top: 5px;
+}
+@media (min-width: 768px){
+    .modal-dialog {
+        width:500px;
+        margin-top: 200px;
+    }
+}
+.modal-footer .input-group .form-control{
+    border-radius:3px;
 }
