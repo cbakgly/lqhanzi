@@ -4,7 +4,7 @@ m1模板对应产品图，说明如下:
 | File | Desc |
 |----|----:|
 ####部件检字法
-| ihanzi_stroke.html | 部件检字法--首页 |
+| hanzi_stroke.html | 部件检字法--首页 |
 
 | hanzi-sets-details.html | 部件检字法--结果详情页 |
 ####异体字检索 
