@@ -6,8 +6,8 @@
     display:flex;
     display:-webkit-flex;
     background-color: #fff;
-    box-shadow:0 1px 5px rgba(0,0,0,.3);
-    -webkit-box-shadow:0 1px 6px rgba(0,0,0,.2);
+    box-shadow:0 1px 5px rgba(0,0,0,.2);
+    -webkit-box-shadow:0 1px 5px rgba(0,0,0,.2);
     margin-bottom:10px;
 }
 .compontent .compontent-hd{
@@ -19,7 +19,7 @@
 }
 .compontent .compontent-bd{
     flex:1;
-    margin-top:18px;
+    margin-top:4px;
 }
 .compontent-bd .compontent-item{
     display:inline-block;
@@ -61,10 +61,12 @@
     border:1px solid #ddd;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    outline:none;
 }
 .parts-ser button{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    outline:none;
 }
 .parts-bd .stroke{
     margin:15px 0;

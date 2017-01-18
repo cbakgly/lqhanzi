@@ -890,7 +890,7 @@ input[type="radio"], input[type="checkbox"]{
     background: url(../img/font-bg.gif) no-repeat;
     background-size: 70px 70px;
     text-align: center;
-    line-height: 70px;
+    line-height: 60px;
 }
 .split-top .zi .single-zi{
     font-size:54px;
@@ -1040,8 +1040,9 @@ tbody tr th{
 }
 
 .split-step {
-    border-radius: 6px !important;
+    border-radius: 3px !important;
     border-color: #ddd;
+    height:30px;
 }
 
 .m-t-10 {
@@ -1060,7 +1061,7 @@ tbody tr th{
     display:inline-block;
     width:26px;
     height:26px;
-    margin:0 10px;
+    margin:5px 10px;
     cursor:pointer;
 }
 
@@ -1233,7 +1234,8 @@ tbody tr th{
 .box-highlight {
     background: #ddf9ff;
     border: 1px solid #ddf9ff;
-}@media (min-width: 768px){
+}
+@media (min-width: 768px){
     .modal-dialog {
         width:500px;
         margin-top: 200px;
