@@ -1,4 +1,4 @@
-G/*我的自定义样式*/
+/*我的自定义样式*/
 /*reset*/
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{
     margin:0;
@@ -128,7 +128,6 @@ input[type="radio"], input[type="checkbox"]{
     margin-top:3px;
 }
 .task-item .z-other{
-    border:none;
     background:none 0;
     background-color: #fff;
     border:1px solid #ddd;
