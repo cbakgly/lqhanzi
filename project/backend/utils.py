@@ -64,3 +64,11 @@ def get_pic_url_by_source_pic_name(source, pic_name):
 
     func = switcher.get(int(source), lambda name: "")
     return func(pic_name)
+
+
+def is_search_request(search_param, *keywords):
+    for key in keywords:
+        ret = search_param.get(key, False)
+        if ret:
+            return True
+    return False

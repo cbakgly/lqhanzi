@@ -20,3 +20,13 @@ def fields_or_filter_method(qs, fields, value):
         exp.add((field, value), 'OR')
 
     return qs.filter(exp)
+
+
+class NotEmptyFilter(django_filters.NumberFilter):
+    def filter(self, qs, value):
+        if value is not None:
+            if value == 1:
+                return qs.exclude(**{'%s__isnull' % self.name: True}).exclude(**{'%s__exact' % self.name: ""})
+            elif value == 0:
+                return qs.filter(Q(**{'%s__isnull' % self.name: True}) | Q(**{'%s__exact' % self.name: ""}))
+        return qs
