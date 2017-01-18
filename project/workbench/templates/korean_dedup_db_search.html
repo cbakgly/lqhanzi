@@ -1,240 +1,228 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-    <!-- TODOs
-    1. bug: 加载首页，点击右下方的页码栏里的数字'3'报Uncaught (in promise) DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-    2. 页码栏的实现与产品设计图不一致
-    3. 点击字体出现的弹框功能的html代码不起作用
-    -->
-    <!-- Content Header-->
-    <div class="content-header">
-      <ol class="breadcrumb">
-        <li><a href="javascript:;">字库检索</a></li>
-        <li class="active">高丽去重库</li>
-      </ol>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <div id="search" class="box box-blue">
-          <!-- /.box-header -->
-          <div class="box-header">
-            <div class="box-header-inner">
-              <div class="ser-bd">
-                <div class="z-ser z2-ser">
-                  <div class="col col-md-6 col-sm-6 col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon">郑码:</span>
-                      <input type="text" class="form-control" v-model="params.zheng_code" placeholder="请输入">
-                    </div>
-                  </div>
-                  <div class="col col-md-6 col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">是否重复:</span>
-                        <!-- select -->
-                        <div class="radios">
-                          <label><input type="radio" v-model="params.korean_dup_hanzi" value="1">是</label>
-                          <label><input type="radio" v-model="params.korean_dup_hanzi" value="0">否</label>
-                          <label><input type="radio" v-model="params.korean_dup_hanzi">都可以</label>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col col-md-6 col-sm-6 col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon">正字:</span>
-                      <input type="text" class="form-control" v-model="params.std_hanzi" placeholder="请输入">
-                    </div>
-                  </div>
-                  <div class="col col-md-6 col-sm-6 col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon">图片字编码:</span>
-                      <input type="text" class="form-control" v-model="params.hanzi_pic_id" placeholder="请输入">
-                    </div>
-                  </div>
-
-                </div>
-                <div class="btns">
-                  <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
-                  <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置</button>
+<!-- Content Header-->
+<div class="content-header">
+  <ol class="breadcrumb">
+    <li><a href="javascript:;">字库检索</a></li>
+    <li class="active">高丽去重库</li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div id="search" class="box box-blue">
+      <!-- /.box-header -->
+      <div class="box-header">
+        <div class="box-header-inner">
+          <div class="ser-bd">
+            <div class="z-ser z2-ser">
+              <div class="col col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">郑码:</span>
+                  <input type="text" class="form-control" v-model="search_params.zheng_code" placeholder="请输入">
                 </div>
               </div>
-            </div>
-          </div>
-          <div v-show="models" class="box-body">
-            <div class="gaoli-ser-results">
-              <div class="res-item" v-for="(item, index) in models">
-                <div class="z1-info">
-                  <h3 class="box-title">郑码: <span v-text="index"></span></h3>
+              <div class="col col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">正字:</span>
+                  <input type="text" class="form-control" v-model="search_params.std_hanzi" placeholder="请输入">
                 </div>
-                <ul class="item-lists" v-for="element in item">
-                  <li>
-                    <div class="item-left pull-left">
-                      <p class="img"><img v-bind:src="element.hanzi_pic_path"></p>
-                      <p class="txt">#[ element.hanzi_pic_id.substr(2) ]<em></em></p>
-                    </div>
-                    <div class="item-right pull-right">
-                      <p class="txt"><em></em><em></em></p>
-                    </div>
-                  </li>
-                </ul>
               </div>
-            </div>
-          </div><!-- /.box-body -->
-          <div class="box-footer clearfix">
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-if="paging.previous_url">
-                    <a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
-                </li>
-                <li v-else><a>«</a></li>
-                <li v-for="item in paging.page_links">
-                  <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
-                  <a v-else-if="item[3]" href="javascript:void(0);">....</a>
-                  <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
-                </li>
-                <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
-                <li v-else><a>»</a></li>
-              </ul>
-          </div>
-        </div><!-- /.box -->
-      </div>
-      <!-- /.col -->
-    </div>
-    <!--遮罩层-->
-    <div class="hw-overlay" id="hw-layer">
-      <div class="hw-layer-wrap">
-        <div class="row">
-          <div class="col-md-12 col-sm-12">
-            <div><span class="glyphicon glyphicon-remove hwLayer-close"></span></div>
-            <div class="title-info">
-               <p class="img"><img src="../img/font-img4.jpg" alt=""></p>
-               <p class="txt"><em>熱</em><em>1</em></p>
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon">重复编码:</span>
-              <input type="text" class="form-control" placeholder="请输入与上面图片字重复的高丽异体字编码" v-model.number="daily_plan">
+              <div class="col col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">图片字编码:</span>
+                  <input type="text" class="form-control" v-model="search_params.hanzi_pic_id" placeholder="请输入">
+                </div>
+              </div>
+              <div class="col col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">是否重复:</span>
+                    <!-- select -->
+                    <div class="radios">
+                      <label><input type="radio" v-model="search_params.korean_dup_hanzi" value="1">是</label>
+                      <label><input type="radio" v-model="search_params.korean_dup_hanzi" value="0">否</label>
+                    </div>
+                  </div>
+              </div>
             </div>
             <div class="btns">
-              <button class="btn btn-blue btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
-              <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
+              <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
+              <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置</button>
             </div>
           </div>
         </div>
       </div>
+      <div v-show="models" class="box-body">
+        <div class="gaoli-ser-results">
+          <div class="res-item" v-for="(item, index) in models">
+            <div class="z1-info">
+              <h3 class="box-title">郑码: <span v-text="index"></span></h3>
+            </div>
+            <ul class="item-lists" v-for="element in item">
+              <li v-bind:class="shouldHighlight(element)" @click="handleClick(element)">
+                <div class="item-left pull-left">
+                  <p class="img"><img v-bind:src="element.hanzi_pic_path"></p>
+                  <p class="txt">#[ element.hanzi_pic_id.substr(2) ]]<em></em></p>
+                </div>
+                <div class="item-right pull-right">
+                  <p class="txt"><em v-if="element.korean_dup_hanzi">#[ element.korean_dup_hanzi ]]</em></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+            <li v-if="paging.previous_url">
+                <a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
+            </li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+              <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+              <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+              <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
+          </ul>
+      </div>
+    </div><!-- /.box -->
+  </div>
+  <!-- /.col -->
+</div>
+<!--遮罩层-->
+<div class="hw-overlay" id="hw-layer">
+  <div class="hw-layer-wrap">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div><span class="glyphicon glyphicon-remove hwLayer-close"></span></div>
+        <div class="title-info">
+           <p class="img"><img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id"></p>
+           <p class="txt"><em>#[ item.hanzi_pic_id ]]</em></p>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">重复编码:</span>
+          <input type="text" class="form-control" placeholder="请输入与上面图片字重复的高丽异体字编码" v-model="dup_id">
+        </div>
+        <div class="btns">
+          <button class="btn btn-blue btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
+          <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
+        </div>
+      </div>
     </div>
-    <!--/.遮罩层-->
-    <script type="text/javascript">
-    //弹出层
-      $(function () {
-          //展示层
-          function showLayer(id) {
-              var layer = $('#' + id),layerwrap = layer.find('.hw-layer-wrap');
-              layer.fadeIn();
-              //屏幕居中
-              layerwrap.css({
-                  'margin-top': -layerwrap.outerHeight() / 2
-              });
-          }
-          //隐藏层
-          function hideLayer() {
-              $('.hw-overlay').fadeOut();
-          }
-          $('.hwLayer-ok,.hwLayer-cancel,.hwLayer-close').on('click', function() {
-              hideLayer();
-          });
-          //触发弹出层
-          $('.show-layer').on('click', function() {
-              $(this).css({
-                "background":"#ddf9ff",
-                "border":"1px solid #ddf9ff"
-              })
-              var layerid = $(this).data('show-layer');
-              showLayer(layerid);
-          });
-          //点击或者触控弹出层外的半透明遮罩层，关闭弹出层
-          $('.hw-overlay').on('click', function(event) {
-              if (event.target == this) {
-                  hideLayer();
-              }
-          });
+  </div>
+</div>
+<!--/.遮罩层-->
+<script type="text/javascript">
+//弹出层
 
-          //按ESC键关闭弹出层
-          $(document).keyup(function(event) {
-              if (event.keyCode == 27) {
-                  hideLayer();
-              }
-          });
-      });
-
-    $(function () {
-        var $choices = $('.z-ser .col:lt(4)');
-        $choices.show();
-    });
-
-    function korean_dedup_search(url, cond) {
-        $.ajax({
-            url: url,
-            method: 'GET',
-            data: cond,
-            success: function(data) {
-                    app.paging = data.html_context;
-                    r = data.models;
-                    a = {};
-                    for (item in r) {
-                        zc = r[item]['zheng_code']
-                        if (zc in a) {
-                            a[zc].push(r[item])
-                        } else {
-                            a[zc] = []
-                            a[zc].push(r[item])
-                        }
+function korean_dedup_search(url, cond) {
+    $.ajax({
+        url: url,
+        method: 'GET',
+        data: cond,
+        success: function(data) {
+                app.paging = data.html_context;
+                r = data.models;
+                a = {};
+                for (item in r) {
+                    zc = r[item]['zheng_code']
+                    if (zc in a) {
+                        a[zc].push(r[item])
+                    } else {
+                        a[zc] = []
+                        a[zc].push(r[item])
                     }
-                    app.models = a
+                }
+                app.models = a
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+        }
+    });
+}
+
+var search_url = "{% url 'korean-dedups-list' version='v1' %}"
+
+var modal_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#hw-layer',
+    data: {
+      item: '',
+      dup_id: '',
+    },
+    methods: {
+      show: function() {
+        $('#hw-layer').fadeIn();
+      },
+      confirm: function() {
+          var vm = this;
+          $.ajax({
+            url: search_url+this.item.id+'/',
+            method: 'PUT',
+            data: {"korean_dup_hanzi": this.dup_id},
+            success: function(data) {
+                console.log(data);
+                vm.item.korean_dup_hanzi = vm.dup_id;
             },
             error: function (xhr, status, err) {
                 console.log(err);
             }
         });
+      }
     }
+})
 
-    var search_url = "{% url 'korean-dedups-list' version='v1' %}"
-
-    var app = new Vue({
-        delimiters: ["#[", "]"],
-        el: '#search',
-        data: {
-            params: {
-                'zheng_code': '',
-                'korean_dup_hanzi': '',
-                'std_hanzi': '',
-                'hanzi_pic_id': ''
-            },
-            models: '',
-            paging: '',
-            urls: search_url
+var app = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#search',
+    data: {
+        search_params: {
+            'zheng_code': '',
+            'korean_dup_hanzi': '',
+            'std_hanzi': '',
+            'hanzi_pic_id': ''
         },
-        methods: {
-            searchResult: function () {
-                var vm = this;
-                for (keyname in vm.params) {
-                    if (vm.params[keyname] === '') {
-                        delete vm.params[keyname];
-                    }
+        models: '',
+        paging: '',
+        urls: search_url,
+    },
+    methods: {
+        searchResult: function () {
+            var vm = this;
+            for (keyname in vm.search_params) {
+                if (vm.search_params[keyname] === '') {
+                    delete vm.search_params[keyname];
                 }
-                korean_dedup_search(vm.urls, vm.params)
-            },
-            clearAllResult: function() {
-                this.params.zheng_code = '';
-                this.params.korean_dup_hanzi = '';
-                this.params.std_hanzi = '';
-                this.params.hanzi_pic_id = '';
-            },
-            goto_page: function(url) {
-                korean_dedup_search(url, null)
+            }
+            korean_dedup_search(vm.urls, vm.search_params)
+        },
+        clearAllResult: function() {
+            for(var key in this.search_params) {
+                this.search_params[key] = "";
             }
         },
-    });
+        goto_page: function(url) {
+            korean_dedup_search(url, null)
+        },
+        shouldHighlight: function(item) {
+          return {
+            'box-highlight': item.korean_dup_hanzi,
+            'show-layer': item.korean_dup_hanzi
+          };
+        },
+        handleClick: function(item) {
+          if (item.korean_dup_hanzi == "") return;
+          modal_box.item = item;
+          modal_box.dup_id = item.korean_dup_hanzi;
+          modal_box.show();
+        }
+    },
+});
 
-    $(function(){
-        korean_dedup_search(search_url, null)
-    })
-    </script>
+$(function(){
+    korean_dedup_search(search_url, null)
+})
+</script>
 {% endblock %}

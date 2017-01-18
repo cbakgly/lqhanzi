@@ -1,4 +1,4 @@
-/*我的自定义样式*/
+G/*我的自定义样式*/
 /*reset*/
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{
     margin:0;
@@ -1230,7 +1230,11 @@ tbody tr th{
 .title-info p.txt{
     margin-top: 5px;
 }
-@media (min-width: 768px){
+
+.box-highlight {
+    background: #ddf9ff;
+    border: 1px solid #ddf9ff;
+}@media (min-width: 768px){
     .modal-dialog {
         width:500px;
         margin-top: 200px;

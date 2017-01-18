@@ -1,6 +1,9 @@
 # -*- coding:utf8 -*-
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db import connection
+from django.db.models.query import RawQuerySet
+from django.utils.functional import cached_property
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -37,7 +40,6 @@ class KoreanDedupFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
-    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
 
     class Meta:
         model = KoreanDedup
@@ -48,10 +50,43 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
+    sql = """
+    select r.* from `lq_korean_dup_zheng_codes` h
+    left join lq_korean_dedup r on h.zheng_code = r.zheng_code
+    where h.page_num = %d
+    order by h.id
+    """
     queryset = KoreanDedup.objects.all()
     filter_class = KoreanDedupFilter
     pagination_class = NumberPagination
     serializer_class = KoreanDedupSerializer
+    pagination_class.page_size = 100
+
+    @cached_property
+    def total_page(self):
+        cursor = connection.cursor()
+        cursor.execute("select max(page_num) from lq_korean_dup_zheng_codes;")
+        row = cursor.fetchone()
+        return row[0]
+
+    def list(self, request, *args, **kwargs):
+        page_number = int(request.query_params.get(self.paginator.page_query_param, 1))
+        page_size = self.paginator.get_page_size(request)
+
+        # Raw query set doesn't have count() and getitem() used in pagination
+        # We provide one in order to make paging run smoothly
+        # Arbitrarily set them so it makes paging as what we intend to, here, 100/p, 100*total_page
+        queryset = KoreanDedup.objects.raw(self.sql % (page_number))
+        queryset.count = lambda: self.total_page * page_size
+        RawQuerySet.__getitem__ = lambda this, k: list(queryset)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class InterDictDedupSerializer(serializers.ModelSerializer):
