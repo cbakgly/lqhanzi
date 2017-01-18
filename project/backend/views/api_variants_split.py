@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework import serializers
@@ -143,10 +144,10 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
                     serializer = self.serializer_class(new_task.content_object)
                     return Response(serializer.data)
                 else:
-                    return Response(u"没有更多任务了！", status=status.HTTP_204_NO_CONTENT)
+                    return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
             else:
-                return Response(u"该任务包已完成，请领取新任务包。", status=status.HTTP_100_CONTINUE)
-        return Response("数据错误！")
+                return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_100_CONTINUE)
+        return Response(_("Inputdata Error!"))
 
     # 提交
     @detail_route(methods=["PUT", "GET", "PATCH"])
@@ -163,7 +164,7 @@ class VariantsSplitViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(task_ele)
             return Response(serializer.data)
         else:
-            return Response("数据错误！")
+            return Response(_("Inputdata Error!"))
 
     @list_route(methods=["GET"])
     def single_split(self, request, *args, **kwargs):

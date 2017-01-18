@@ -12,7 +12,6 @@ from ..filters import fields_or_filter_method
 
 
 class HanziSetSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = HanziSet
         fields = "__all__"
@@ -28,11 +27,51 @@ class HanziSetSerializer(serializers.ModelSerializer):
         return ret
 
 
-class HanziSetFilter(django_filters.FilterSet):
+class HanziSetDedupSerializer(serializers.ModelSerializer):
+    hanzi = serializers.SerializerMethodField()
 
-    """
+    class Meta:
+        model = HanziSet
+        exclude = ["hanzi_type",
+                   "variant_type",
+                   "as_std_hanzi",
+                   "pinyin",
+                   "radical",
+                   "strokes",
+                   "zheng_code",
+                   "wubi",
+                   "dup_count",
+                   "inter_dict_dup_hanzi",
+                   "korean_dup_hanzi",
+                   "is_korean_redundant",
+                   "is_inter_dict_redundant",
+                   "structure",
+                   "min_split",
+                   "max_split",
+                   "mix_split",
+                   "deform_split",
+                   "similar_parts",
+                   "stroke_serial",
+                   "remark",
+                   "c_t",
+                   "u_t",
+                   "std_hanzi",
+                   "source",
+                   "hanzi_pic_id",
+                   "hanzi_char"
+                   ]
+
+    def get_hanzi(self, obj):
+        if obj.hanzi_char is "":
+            return get_pic_url_by_source_pic_name(obj.source, obj.hanzi_pic_id)
+        else:
+            return obj.hanzi_char
+
+
+class HanziSetFilter(django_filters.FilterSet):
+    '''
     异体字拆字过滤器
-    """
+    '''
     u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
     split = django_filters.CharFilter(name=["min_split", "max_split", "mix_split", "deform_split"], method=fields_or_filter_method)
 

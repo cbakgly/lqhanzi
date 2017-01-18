@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.db import connection
 from django.db.models.query import RawQuerySet
 from django.utils.functional import cached_property
@@ -10,7 +10,6 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from rest_framework import status
 import django_filters
 
 from ..pagination import NumberPagination
@@ -18,11 +17,10 @@ from ..models import KoreanDedup, InterDictDedup, HanziSet
 from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
 from ..enums import getenum_source, getenum_task_business_status, getenum_business_stage
-from task_func import assign_task
+from task_func import create_task
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = KoreanDedup
         fields = "__all__"
@@ -36,7 +34,6 @@ class KoreanDedupSerializer(serializers.ModelSerializer):
 
 
 class KoreanDedupFilter(django_filters.FilterSet):
-
     """
     异体字拆字过滤器
     """
@@ -90,7 +87,6 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
 
 
 class InterDictDedupSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = InterDictDedup
         fields = "__all__"
@@ -135,7 +131,6 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
 
 
 class InterDictDedupFilter(django_filters.FilterSet):
-
     """
     异体字拆字过滤器
     """
@@ -193,50 +188,27 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = InterDictDedupSerializer
 
-    # 提交
+    # 提交 此处提交为单个字提交,非页面提交
     @detail_route(methods=["PUT", "GET", "PATCH"])
-    def submit(self, request, *args, **kwargs):
+    def submit_single_variant(self, request, *args, **kwargs):
         variants_dedup = self.get_object()
         serializer = InterDictDedupSerializer(data=request.data)
 
         if serializer.is_valid():
-            origin_task = update_tasks_status(variants_dedup)
-            task_ele = origin_task.content_object
-            for key in serializer.initial_data.keys():
-                setattr(task_ele, key, serializer.initial_data.get(key, getattr(task_ele, key)))
-            task_ele.save()
-            serializer = self.serializer_class(task_ele)
+            new_task_data = {
+                'user': request.user,
+                'task_package': request.query_params['task_package'],
+                'content': variants_dedup
+            }
+            business_stage = create_task(new_task_data)
+            if business_stage is 1:
+                variants_dedup.inter_dict_dup_hanzi_draft = serializer.initial_data['inter_dict_dup_hanzi_draft']
+            elif business_stage is 2:
+                variants_dedup.inter_dict_dup_hanzi_review = serializer.initial_data['inter_dict_dup_hanzi_review']
+            else:
+                variants_dedup.inter_dict_dup_hanzi_final = serializer.initial_data['inter_dict_dup_hanzi_final']
+            variants_dedup.save()
+            serializer = self.serializer_class(variants_dedup)
             return Response(serializer.data)
         else:
             return Response(_("Inputdata Error!"))
-
-            # 提交并转下一条
-
-    @detail_route(methods=["PUT", "GET", "PATCH"])
-    def submit_and_next(self, request, *args, **kwargs):
-        variants_dedup = self.get_object()
-        serializer = InterDictDedupSerializer(data=request.data)
-
-        if serializer.is_valid():
-            origin_task = update_tasks_status(variants_dedup)
-            task_ele = origin_task.content_object
-            for key in serializer.initial_data.keys():
-                setattr(task_ele, key, serializer.initial_data.get(key, getattr(task_ele, key)))
-            task_ele.save()
-
-            task_package = origin_task.task_package
-            task_plan = task_package.size
-            task_num = len(list(task_package.tasks.all()))
-            if task_num < task_plan:
-                business_type = origin_task.business_type
-                business_stage = origin_task.business_stage
-                user = origin_task.user
-                new_task = assign_task(business_type, business_stage, task_package, user)
-                if new_task:
-                    serializer = self.serializer_class(new_task.content_object)
-                    return Response(serializer.data)
-                else:
-                    return Response(u"没有更多任务了！", status=status.HTTP_204_NO_CONTENT)
-            else:
-                return Response(u"该任务包已完成，请领取新任务包。", status=status.HTTP_100_CONTINUE)
-        return Response(_("Inputdata Error!"))
