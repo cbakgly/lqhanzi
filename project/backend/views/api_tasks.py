@@ -10,11 +10,12 @@ import django_filters
 # from django.db.models import Q
 
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput
+from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters
 from ..enums import getenum_business_type, getenum_task_business_status, getenum_business_stage
 import api_variants_input
 import api_variants_dedup
 import api_variants_split
+import api_korean_dup_characters
 from task_func import assign_task
 
 
@@ -61,11 +62,13 @@ class TasksSerializer(serializers.ModelSerializer):
     def get_task_ele(self, obj):
         task_ele = obj.content_object
         if isinstance(task_ele, VariantsInput):
-            ele_serializer = api_variants_input.VariantsInputSerializer
+            ele_serializer = api_variants_input.VariantsInputSelectSerializer
         elif isinstance(task_ele, VariantsSplit):
             ele_serializer = api_variants_split.VariantsSplitSerializer
         elif isinstance(task_ele, KoreanDedup):
             ele_serializer = api_variants_dedup.KoreanDedupSerializer
+        elif isinstance(task_ele, KoreanDupCharacters):
+            ele_serializer = api_korean_dup_characters.KoreanDupCharactersSerializer
         else:
             ele_serializer = api_variants_dedup.InterDictDedupSerializer
 
@@ -164,11 +167,30 @@ class TasksViewSet(viewsets.ModelViewSet):
     @list_route()
     def ongoing_input(self, request, *args, **kwargs):
         user = self.request.user
-        page_num = self.request.query_params["page_num"]
+        if self.request.query_params["task_package"]:
+            task_package = self.request.query_params["task_package"]
+        business_type = getenum_business_type("input")
+        if user.is_superuser == 1:
+            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
+        else:
+            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
+
+        serializer = self.serializer_class(tasks, many=True)
+        input_variants = [v["task_ele"] for v in serializer.data]
+
+        return_dict = {
+            "task_package": int(task_package),
+            "models": input_variants
+        }
+
+        return Response(return_dict)
+
+    @list_route()
+    def select_input(self, request, *args, **kwargs):
+        user = self.request.user
         hanzi_char = self.request.query_params["hanzi_char"]
         note = self.request.query_params["note"]
-        variant_type = self.request.query_params["variant_type"]
-        task_package = request.query_params["task_package"]
+        task_package = self.request.query_params["task_package"]
         business_type = getenum_business_type("input")
         if user.is_superuser == 1:
             tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
@@ -190,7 +212,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             hanzi_char_comp = "hanzi_char_final"
             variant_type_comp = "variant_type_final"
             notes_comp = "notes_final"
-        results = []
         staged_result = []
         key_list = {
             1: [
@@ -228,21 +249,24 @@ class TasksViewSet(viewsets.ModelViewSet):
             ]
         }
 
-        for input_variant in input_variants:
-            if page_num:
-                page_num = int(page_num)
-                if variant_type in input_variant[variant_type_comp] and int(page_num) == input_variant["page_num"] and (note in str(input_variant[notes_comp]) or hanzi_char in input_variant[hanzi_char_comp]):
-                    results.append(input_variant)
-            else:
-                if variant_type in input_variant[variant_type_comp] and (note in str(input_variant[notes_comp]) or hanzi_char in input_variant[hanzi_char_comp]):
-                    results.append(input_variant)
+        if self.request.query_params["page_num"]:
+            page_num = int(self.request.query_params["page_num"])
+            input_variants = [input_variant for input_variant in input_variants if page_num == input_variant["page_num"]]
+        if self.request.query_params["variant_type"]:
+            variant_type = int(self.request.query_params["variant_type"])
+            input_variants = [input_variant for input_variant in input_variants if variant_type == input_variant[variant_type_comp]]
+        if note:
+            input_variants = [input_variant for input_variant in input_variants if note in str(input_variant[notes_comp])]
+        if hanzi_char:
+            input_variants = [input_variant for input_variant in input_variants if hanzi_char in input_variant[hanzi_char_comp]]
 
-        for result in results:
+        for result in input_variants:
             tmp = {}
             for key in key_list[business_stage]:
                 tmp[key] = result[key]
             staged_result.append(tmp)
         return_dict = {
+            "business_stage": business_stage,
             "task_package": int(task_package),
             "models": staged_result
         }

@@ -14,7 +14,7 @@ from ..pagination import NumberPagination
 from ..models import VariantsInput
 from ..filters import NumberInFilter
 from ..enums import getenum_task_business_status, getenum_business_stage
-from task_func import assign_task
+from task_func import assign_input_task
 
 
 def update_tasks_status(variants_input):
@@ -75,6 +75,14 @@ class VariantsInputSerializer(serializers.ModelSerializer):
         return ret
 
 
+class VariantsInputSelectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VariantsInput
+        fields = "__all__"
+        depth = 0
+
+
 class VariantsInputFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
@@ -133,12 +141,12 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
                 business_type = origin_task.business_type
                 business_stage = origin_task.business_stage
                 user = origin_task.user
-                new_task = assign_task(business_type, business_stage, task_package, user)
+                new_task = assign_input_task(business_type, business_stage, task_package, user)
                 if new_task:
                     serializer = self.serializer_class(new_task.content_object)
                     return Response(serializer.data)
                 else:
-                    return Response(u"没有更多任务了！", status=status.HTTP_204_NO_CONTENT)
+                    return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
             else:
-                return Response(u"该任务包已完成，请领取新任务包。", status=status.HTTP_100_CONTINUE)
+                return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_100_CONTINUE)
         return Response(_("Inputdata Error!"))

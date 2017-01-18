@@ -1,5 +1,5 @@
 # -*- coding:utf8 -*-
-
+from django.db.models import Sum
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
@@ -8,7 +8,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
-from ..models import Credits
+from ..models import Credits, Tasks
 from ..pagination import LimitOffsetPagination
 
 
@@ -71,3 +71,9 @@ class CreditViewSet(viewsets.ModelViewSet):
         user_credits = user.user_credits.all()
         serializer = self.serializer_class(user_credits, many=True)
         return Response(serializer.data)
+
+    @list_route()
+    def caculate_user_credits(self, request, *args, **kwargs):
+        user = request.user
+        sum_credits = Tasks.objects.filter(user=user.id).values("business_type").aggregate(Sum("credits"))
+        return Response(sum_credits)

@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward, KoreanDupCharacters
 
 
 # VariantsInput, KoreanDedup, InterDictDedup
@@ -24,6 +24,8 @@ class TaskPackagesAdmin(admin.ModelAdmin):
     )
 
 
+class KoreanDupChaAdmin(admin.ModelAdmin):
+    fields = ("korean_variant", "unicode")
 # class TasksInline(admin.TabularInline):
 #     model = Tasks
 
@@ -131,3 +133,4 @@ admin.site.register(User, GuardedModelAdmin)
 admin.site.register(Permission, GuardedModelAdmin)
 admin.site.register(HanziSet)
 admin.site.register(Reward, RewardAdmin)
+admin.site.register(KoreanDupCharacters, KoreanDupChaAdmin)

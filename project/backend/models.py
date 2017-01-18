@@ -71,7 +71,7 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (7, u'互助'))
+business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'暂缺'), (7, u'互助'), (8, u'去重子任务'))
 business_stage_choices = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
 task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -94,7 +94,7 @@ class TaskPackages(models.Model):
         db_table = 'lq_task_packages'
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage - 1][1] + str(self.size) + str(self.id)
+        return "#" + business_type_choices[self.business_type - 1][1] + business_stage_choices[self.business_stage - 1][1] + str(self.size) + str(self.id)
 
 
 class TaskTypes(models.Model):
@@ -133,7 +133,7 @@ class Tasks(models.Model):
         ordering = ['id']
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type][1] + business_stage_choices[self.business_stage - 1][1] + str(self.id)
+        return "#" + business_type_choices[self.business_type - 1][1] + business_stage_choices[self.business_stage - 1][1] + str(self.id)
 
 
 class VariantsSplit(models.Model):
@@ -290,9 +290,13 @@ class KoreanDupCharacters(models.Model):
     remark = models.CharField(u'备注', max_length=128, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    task = GenericRelation(Tasks, related_query_name="inter_dedup_task")
 
     class Meta:
         db_table = 'lq_korean_dup_characters'
+
+    def __unicode__(self):
+        return self.korean_variant + " vs." + self.unicode
 
 
 class InterDictDedup(models.Model):
