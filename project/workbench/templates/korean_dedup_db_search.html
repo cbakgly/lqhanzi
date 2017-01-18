@@ -39,8 +39,8 @@
                     <span class="input-group-addon">是否重复:</span>
                     <!-- select -->
                     <div class="radios">
-                      <label><input type="radio" v-model="search_params.korean_dup_hanzi" value="1">是</label>
-                      <label><input type="radio" v-model="search_params.korean_dup_hanzi" value="0">否</label>
+                      <label><input type="radio" v-model="search_params.has_dup" value="1">是</label>
+                      <label><input type="radio" v-model="search_params.has_dup" value="0">否</label>
                     </div>
                   </div>
               </div>
@@ -180,7 +180,7 @@ var app = new Vue({
     data: {
         search_params: {
             'zheng_code': '',
-            'korean_dup_hanzi': '',
+            'has_dup': '',
             'std_hanzi': '',
             'hanzi_pic_id': ''
         },
@@ -213,7 +213,6 @@ var app = new Vue({
           };
         },
         handleClick: function(item) {
-          if (item.korean_dup_hanzi == "") return;
           modal_box.item = item;
           modal_box.dup_id = item.korean_dup_hanzi;
           modal_box.show();

@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+import django_filters
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db import connection
@@ -10,12 +11,13 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-import django_filters
+from rest_framework import status
+from rest_framework.settings import api_settings
 
 from ..pagination import NumberPagination
 from ..models import KoreanDedup, InterDictDedup, HanziSet
-from ..utils import get_pic_url_by_source_pic_name
-from ..filters import fields_or_filter_method
+from ..utils import get_pic_url_by_source_pic_name, is_search_request
+from ..filters import fields_or_filter_method, NotEmptyFilter
 from ..enums import getenum_source, getenum_task_business_status, getenum_business_stage
 from task_func import create_task
 
@@ -37,10 +39,11 @@ class KoreanDedupFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
+    has_dup = NotEmptyFilter(name='korean_dup_hanzi')
 
     class Meta:
         model = KoreanDedup
-        fields = "__all__"
+        fields = ['zheng_code', 'std_hanzi', 'hanzi_pic_id', 'has_dup']
 
 
 class KoreanDedupViewSet(viewsets.ModelViewSet):
@@ -51,13 +54,11 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
     select r.* from `lq_korean_dup_zheng_codes` h
     left join lq_korean_dedup r on h.zheng_code = r.zheng_code
     where h.page_num = %d
-    order by h.id
     """
     queryset = KoreanDedup.objects.all()
     filter_class = KoreanDedupFilter
     pagination_class = NumberPagination
     serializer_class = KoreanDedupSerializer
-    pagination_class.page_size = 100
 
     @cached_property
     def total_page(self):
@@ -67,15 +68,23 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
         return row[0]
 
     def list(self, request, *args, **kwargs):
-        page_number = int(request.query_params.get(self.paginator.page_query_param, 1))
-        page_size = self.paginator.get_page_size(request)
+        if is_search_request(request.query_params, *KoreanDedupFilter.Meta.fields):
+            queryset = self.filter_queryset(self.get_queryset())
+            self.pagination_class.page_size = api_settings.PAGE_SIZE
+        else:
+            self.pagination_class.page_size = 100
+            page_number = int(request.query_params.get(self.paginator.page_query_param, 1))
+            # if page_size_query_param is set, get its value
+            page_size = self.paginator.get_page_size(request)
 
-        # Raw query set doesn't have count() and getitem() used in pagination
-        # We provide one in order to make paging run smoothly
-        # Arbitrarily set them so it makes paging as what we intend to, here, 100/p, 100*total_page
-        queryset = KoreanDedup.objects.raw(self.sql % (page_number))
-        queryset.count = lambda: self.total_page * page_size
-        RawQuerySet.__getitem__ = lambda this, k: list(queryset)
+            # Rawqueryset doesn't have count() and getitem() to be used in pagination
+            # We provide one in order to utilize existing funcitons.
+            queryset = KoreanDedup.objects.raw(self.sql % (page_number))
+
+            # Arbitrarily set them so it makes paging run as-is
+            # It's paged as what we intend to, here, 100/p, 100*total_page
+            queryset.count = lambda: self.total_page * page_size
+            RawQuerySet.__getitem__ = lambda this, k: list(queryset)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
