@@ -1,0 +1,336 @@
+M1 Url及API说明
+
+
+M1首页
+http://localhost/hanzi/index，
+默认指向部件笔画检字法页面，即http://localhost/hanzi/stroke_search
+
+
+1部件笔画检字法
+页面的文件名应当为“stroke_search.html”
+
+1.1页面输出
+url	:http://localhost/hanzi/stroke_search
+此url不带参数
+
+1.2检字
+url：http://192.168.191.128:8000/hanzi/stroke_search?q=%E2%BF%B1%E6%97%A5%E6%9C%88&order=1&page_size=200&page=1
+q，表示查询条件，就是搜索框里的文本。
+order，表示有序还是无序，1有序，2无序
+page_size，每页显示多少条目，由调用者指定
+page，显示第几页, 由调用者指定
+
+url的参数中，q是必须的，order、page_size、page可以省略，缺省值为1、200、1
+
+有两种使用方式：
+	一种是外部请求。用户可以在浏览器中输入URL，或者在别的页面中构造指向检字URL的超链接，或者用工具软件发起http请求。
+这种情况下，除了q参数外，其它参数可以不写。
+	
+	另一种是点击网页里的“搜索”按纽，通过ajax与后台交互。这种情况下，URL中会带有默认的参数。
+
+调用URL后，客户端得到json数据，格式如下：
+
+假如搜索条件是“⿱日月”那么得到的json串的可能是：
+{
+    "order": "1", 
+    "q": "⿱日月", 
+    "limit": 30, 
+    "pages": 3, 
+    "page": 1, 
+    "result": [
+        {
+            "zheng_code": "", 
+            "radical": "", 
+            "min_split": "⿰冐攵", 
+            "hanzi_char": "𢽵", 
+            "max_split": "⿰⿱日月，⿱⿵②二月，⿱⿵冂二，⿵冂⿱一一月攵", 
+            "remark": "22F75", 
+            "std_hanzi": "", 
+            "inter_dict_dup_hanzi": "", 
+            "variant_type": null, 
+            "source": 1, 
+            "is_korean_redundant": null, 
+            "hanzi_pic_id": "", 
+            "similar_parts": "曰", 
+            "strokes": 12, 
+            "pinyin": "", 
+            "deform_split": "", 
+            "mix_split": "⿰冐(⿱日月，⿱⿵②二月，⿱冃(⿵冂二，⿵冂𠄠(⿱一一))月)攵", 
+            "is_inter_dict_redundant": null, 
+            "wubi": "", 
+            "structure": "", 
+            "dup_count": null, 
+            "as_std_hanzi": "", 
+            "stroke_serial": "", 
+            "seq_id": "", 
+            "korean_dup_hanzi": ""
+        }, 
+        {
+            "zheng_code": "", 
+            "radical": "", 
+            "min_split": "⿰冐力", 
+            "hanzi_char": "𫦱", 
+            "max_split": "⿰⿱日月，⿱⿵②二月，⿱⿵冂二，⿵冂⿱一一月力", 
+            "remark": "2B9B1", 
+            "std_hanzi": "", 
+            "inter_dict_dup_hanzi": "", 
+            "variant_type": null, 
+            "source": 1, 
+            "is_korean_redundant": null, 
+            "hanzi_pic_id": "", 
+            "similar_parts": "曰", 
+            "strokes": 10, 
+            "pinyin": "", 
+            "deform_split": "", 
+            "mix_split": "⿰冐(⿱日月，⿱⿵②二月，⿱冃(⿵冂二，⿵冂𠄠(⿱一一))月)力", 
+            "is_inter_dict_redundant": null, 
+            "wubi": "", 
+            "structure": "", 
+            "dup_count": null, 
+            "as_std_hanzi": "", 
+            "stroke_serial": "", 
+            "seq_id": "", 
+            "korean_dup_hanzi": ""
+        }, 
+        {
+            "zheng_code": "", 
+            "radical": "", 
+            "min_split": "⿰氵冐", 
+            "hanzi_char": "𣶀", 
+            "max_split": "⿰氵⿱日月，⿱⿵②二月，⿱⿵冂二，⿵冂⿱一一月", 
+            "remark": "23D80", 
+            "std_hanzi": "", 
+            "inter_dict_dup_hanzi": "", 
+            "variant_type": null, 
+            "source": 1, 
+            "is_korean_redundant": null, 
+            "hanzi_pic_id": "", 
+            "similar_parts": "曰水", 
+            "strokes": 11, 
+            "pinyin": "", 
+            "deform_split": "", 
+            "mix_split": "⿰氵冐(⿱日月，⿱⿵②二月，⿱冃(⿵冂二，⿵冂𠄠(⿱一一))月)", 
+            "is_inter_dict_redundant": null, 
+            "wubi": "", 
+            "structure": "", 
+            "dup_count": null, 
+            "as_std_hanzi": "", 
+            "stroke_serial": "", 
+            "seq_id": "", 
+            "korean_dup_hanzi": ""
+        }, 
+        {
+            "zheng_code": "", 
+            "radical": "", 
+            "min_split": "⿱⿸广猒心，⿸广㦔", 
+            "hanzi_char": "𢣽", 
+            "max_split": "⿱⿸广⿰⿱日月，⿱⿵②二月，⿱⿵冂二，⿵冂⿱一一月犬心，⿸广⿱⿰⿱日月，⿱⿵②二月，⿱⿵冂二，⿵冂⿱一一月犬心", 
+            "remark": "228FD", 
+            "std_hanzi": "", 
+            "inter_dict_dup_hanzi": "", 
+            "variant_type": null, 
+            "source": 1, 
+            "is_korean_redundant": null, 
+            "hanzi_pic_id": "", 
+            "similar_parts": "曰", 
+            "strokes": 19, 
+            "pinyin": "", 
+            "deform_split": "", 
+            "mix_split": "⿱⿸广猒(⿰冐(⿱日月，⿱⿵②二月，⿱冃(⿵冂二，⿵冂𠄠(⿱一一))月)犬)心，⿸广㦔(⿱猒(⿰冐(⿱日月，⿱⿵②二月，⿱冃(⿵冂二，⿵冂𠄠(⿱一一))月)犬)心)", 
+            "is_inter_dict_redundant": null, 
+            "wubi": "", 
+            "structure": "", 
+            "dup_count": null, 
+            "as_std_hanzi": "", 
+            "stroke_serial": "", 
+            "seq_id": "", 
+            "korean_dup_hanzi": ""
+        }
+    ]
+}
+
+上面的字符串只是结果集的一部分。
+返回数据的统一格式是：
+{"type": "1", "q": "⿱日月", "page_size": 30,"page_num": 3, "page": 1,"results": [ {obj},{ obj },{ obj },{ obj },...{ obj }]}
+
+其中：
+q，表示查询条件，就是搜索框里的文本。
+order，表示有序还是无序，1有序，2无序
+page_size，每页显示多少条目
+page，显示第几页
+为什么要把这些参数混在结果集中回传回来？是为了翻页时用。有了这些参数，前台就可以构造新的检索条件，在用户点击“上一页”“下一页”时发送出去。
+
+result是本次检索到的数据，其中的{obj}代表数据库中的一行，其中，
+Source	表示这个字属于那个字典:1 unicode；2台湾；3汉语大字典；4高丽；5敦煌
+hanzi_char  字，对于未编码的字，这个字段为空
+hanzi_pic_id  图片字的文件名，代表未编码的字，无法直接显示的那些。
+Remark 			这个字的utf-8编码
+mix_split 		混合折分序列
+similar_parts	相似部件
+
+其它字段的含义请参考数据库设计文档。
+
+需要指出的是，本页显示数目与page_size可能不相等，准确的数值应该通过result变量的length属性得到（javascript语法）
+
+
+
+2异体字检字法页面url
+页面的文件名应当为“variant_search.html”
+
+2.1页面输出
+http://192.168.191.128:8000/hanzi/ variant_search
+此url用于输出异体字检索页面，不带参数
+
+2.2异体字检索url：
+http://192.168.191.128:8000/hanzi/variant_search?q=%E8%8F%A9
+
+q表示查询条件，就是搜索框里的文本,是一个汉字或图片字
+
+点查询后，后台发给浏览器一个json串。如查询“菩”字，得到下面数据：
+
+[
+    {
+        "content": [
+            {
+                "variant": [
+                    {
+                        "text": "f5052", 
+                        "type": "pic"
+			"pic_url": (只有type是pic时此属性才会出现)
+                    }, 
+                    {
+                        "text": "䔒", 
+                        "type": "char"
+                    }, 
+                    {
+                        "text": "f5053", 
+                        "type": "pic"
+			"pic_url": (只有type是pic时此属性才会出现)
+                    }, 
+                    {
+                        "text": "f5054", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "f5055", 
+                        "type": "pic"
+                    }
+                ], 
+                "type": "char", 
+                "stdchar": "菩"
+		"pic_url": (只有type是pic时此属性才会出现)
+            }
+        ], 
+        "source": 2
+    }, 
+    {
+        "content": "v6-3452-8", 
+        "source": 3, 
+        "url": ""
+    }, 
+    {
+        "content": [
+            {
+                "variant": [
+                    {
+                        "text": "kr艓1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艔1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艕1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艌1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艍1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艎1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艏1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艑1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr艒1", 
+                        "type": "pic"
+                    }, 
+                    {
+                        "text": "kr槯2", 
+                        "type": "pic"
+                    }
+                ], 
+                "type": "char", 
+                "stdchar": "菩"
+            }
+        ], 
+        "source": 4
+    }, 
+    {
+        "content": "309", 
+        "source": 5, 
+        "url": ""
+    }
+]
+
+Source表示属于那部字典
+Content是该字典里该字的所有信息。
+Stdchar表示该代表字的字符串，可能是字本身，也可能是图片字的文件名
+Type表示这个正字是字还是图片字，因为不方便从Zhengzi判断正字的类型，所以设立此值。字为char，图片字为pic
+Variant表示该正字所包含的所有异体字，是一个数组。
+Type表示 是字还是图片字
+Text表示异体字，可能是异体字本身，也可能是图片字的文件名
+
+返回的JSON串中，台湾异体字和高丽异体字的的结构是相同的，汉语大字典和敦煌俗字典是相同的，后者比较简单。如：
+    {
+        "content": "309", 
+        "source": 5, 
+        "url": ""
+    }
+Content表示图片文件名，也是该字在字典中的页码，url是图片的URL，可直接写在<img src=>的src属性中。
+3异体字/正字综合信息页面
+url：   http://localhost/hanzi/variant_detail?source=4&type=char&text=a
+
+source，代表字典，有四种值：2、3、4、5
+Type ,代表是字还是图片字，有两种值：cha、pic
+Text,如果是字,就是字本身;如果是图片字,是图片名
+
+调用URL后，会返回一个页面，页面内容与输入的参数有关。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.1输出页面
+本页面一开始就包含了动态生成的内容，所有此处不专门讲页面的输出
+
+
+3.2输出页面
+http://192.168.191.128:8000/hanzi/variant_detail?source=2&kind=pic&text=abcd
+会在浏览器中打开新页面
+贤度  15:18:42
+3、综合信息页面 hanzi/variant?q=text/pic_ic&type=bb
+

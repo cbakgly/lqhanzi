@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>检索结果详情页</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <script src="{% static 'js/jquery-2.2.3.min.js'  %}"></script>
+</head>
+<body>
+
+
+    {% load m1filter %}
+
+
+    <div class="wrapper">
+        <div class="hanzi-sets-header">
+            <div class="shortcut">
+                <div class="w">
+                    <div class="hanzi-sets-logo fl">
+                        <h1><a href="index.html">龙泉字库</a></h1>
+                    </div>
+                    <div class="nav-tab fr">
+                        <ul  class="tabs clearfix">
+                            <li><a href="/hanzi/index">异体字检索</a></li>
+                            <li><a href="dicts">字典</a></li>
+                            <li class="dropdown">
+                                <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
+                                <!--未登录前-->
+                                <a href="javascript:;" class="dropdown-toggle"><i class="icon-user1"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li class="user-header">
+                                        <img src="{% static 'img/login-ahead.jpg'  %}" class="img-circle" alt="User Image">
+                                        <p>未登录</p>
+                                    </li>
+                                    <li class="user-footer clearfix">
+                                        <div class="fl">
+                                            <a href="#" class="btn btn-default btn-flat">注册</a>
+                                        </div>
+                                        <div class="fr">
+                                            <a href="#" class="btn btn-default btn-flat">登录</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!--./未登录-->
+                                <!--登录后-->
+                                <!-- The user image in the nav-->
+                                <!--<a href="javascript:;">-->
+                                <!--<img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">-->
+                                <!--<span>贤二</span>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                <!--<li class="user-header">-->
+                                <!--<img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">-->
+                                <!--<p>贤二</p>-->
+                                <!--</li>-->
+                                <!--<li class="user-footer clearfix">-->
+                                <!--<div class="fl">-->
+                                <!--<a href="#" class="btn btn-default btn-flat">修改密码</a>-->
+                                <!--</div>-->
+                                <!--<div class="fr">-->
+                                <!--<a href="#" class="btn btn-default btn-flat">退出登录</a>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--./登录后-->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hanzi-sets-content">
+            <div class="w">
+
+                <div class="hanzi-sets-main">
+                    <div class="hanzi-main-hd clearfix">
+
+
+                        <!--字头-->
+
+                        <div class="hanzi">
+                            <div class="zi">
+                                <div class="single-zi">
+
+                                    {% ifequal type "pic" %}
+                                     <img src="{{pic_url}}">
+                                    {% else %}
+                                    {{text}}       
+                                    {% endifequal %}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!--表格-->
+                        <div class="hanzi-origin clearfix">
+
+
+                     <table class="table">
+                        <thead>
+                            <tr>
+                                <th>字典</th>
+                                <th>原始位置</th>
+                                <th>所属正字</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        {% if TW %}
+                        <tr>
+                        <td>{{TW|key:"dict"}}</td>
+                        <td>
+                            {% for item in TW|key:"a" %}
+                            <a target="_blank" href="{{item|list:1}}">{{item|list:0}}</a>
+                            {% endfor %}
+                        </td>
+                        <td>{{TW|key:"zhengzhi"}}</td>
+                        <td>{{TW|key:"mark"}}</td>
+                        </tr>
+                        {% endif %}
+
+
+                        {% if HY %}
+                        <tr>
+                        <td>{{HY|key:"dict"}}</td>
+                        <td>{{HY|key:"addr"}}</td>
+                        <td>{{HY|key:"zhengzhi"}}</td>
+                        <td>{{HY|key:"mark"}}</td>  
+                        </tr>
+                        {% endif %}
+
+
+                        {% if GL %}
+                        <tr>
+                        <td>{{GL|key:"dict"}}</td>
+                        <td>
+                            <a target="_blank" href="{{GL|key:"url"}}">{{GL|key:"zhengzhi"}}</a>
+                        </td>
+                        <td>{{GL|key:"zhengzhi"}}</td>
+                        <td>{{GL|key:"mark"}}</td>  
+                        </tr>
+                        {% endif %}
+
+
+                        {% if DH %}
+                        <tr>
+                        <td>{{DH|key:"dict"}}</td>
+                        <td>{{DH|key:"addr"}}</td>
+                        <td>{{DH|key:"zhengzhi"}}</td>
+                        <td>{{DH|key:"mark"}}</td>  
+                        </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>         
+
+
+                        </div>
+                    </div>
+
+
+                    <!--属性页-->
+                    <div class="hanzi-main-bd">
+
+
+                        <ul class="nav-tab-custom clearfix">
+
+                        {% if TW %}
+                            {% for item in TW|key:"tab" %}
+                                <li>{{item|list:0}}</li>
+                            {% endfor %}
+                        {% endif %}          
+
+                        {% if HY %}
+                            <li>{{HY|key:"addr"}}</li>
+                        {% endif %}
+
+                        {% if DH %}
+
+                            <li>{{DH|key:"addr"}}</li>
+                        {% endif %}
+
+                        {% if GL %}
+                            <li>{{GL|key:"zhengzhi"}}</li>
+                        {% endif %}
+
+                        </ul>
+
+
+                        <div class="tab-content">
+
+                        {% if TW %}
+                            {% for item in TW|key:"tab" %}
+                                <div class="tab-panel">
+                                    {{item|list:1}}
+                                </div>  
+                            {% endfor %}
+                        {% endif %}          
+
+                        {% if HY %}
+                            <div class="tab-panel">
+
+                                <img class="hy-img" src="{{HY|key:'page_url'}}"">
+
+                            </div>
+                        {% endif %}
+
+                        {% if DH %}
+                            <div class="tab-panel">
+
+                            <img class="dh-img" src="{{DH|key:"page_url"}}">
+                            </div>
+                        {% endif %}
+
+                        {% if GL %}
+                            <div class="tab-panel">
+                                <span class="gl-label">正字:</span>{{GL|key:"zhengzhi"}}<br>
+                                <span class="gl-label">異體字</span>
+                                                  
+                                {% for item in GL|key:"vraiant" %}
+                                    <img class="gl-yitizi" src="{{item|key:'pic_url'}}" alt="{{item|key:'pic_id'}}"> 
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function()
+        {
+             //dropdown menu
+            $(".nav-tab .dropdown").mouseenter(function()
+            {
+                if(!$(this).children(".dropdown-menu").is(":animated"))
+                {
+                    $(this).children(".dropdown-menu").fadeIn(600);
+                }
+            });
+            $(".nav-tab .dropdown").mouseleave(function()
+            {
+                $(this).children(".dropdown-menu").fadeOut(600);
+            });
+        });
+        //tab切换
+        $(function()
+        {
+            $(".nav-tab-custom li").eq(0).addClass("active");
+            $(".tab-content .tab-panel").eq(0).addClass("showing");
+
+
+            $(".nav-tab-custom li").click(function()
+            {
+                var $this = $(this),
+                index = $this.index();
+                $this.addClass("active").siblings("li").removeClass("active");
+                $(".tab-content .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
+            })
+        });
+
+    </script>
+</body>
+</html>
