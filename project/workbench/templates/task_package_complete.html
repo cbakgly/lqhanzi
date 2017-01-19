@@ -2,8 +2,8 @@
 
 {% block content %}
 <!-- TODOs
-1. 翻页功能，等前端设计好按钮样式大小位置
-2. 任务包编号等APIs
+APIs: 翻页页码、任务包编号；
+跟进后续：一页是否可显示10行数据；
 -->
 <div class="content-header">
     <ol class="breadcrumb">
@@ -13,13 +13,14 @@
 </div>
 <div class="row">
 	<div class="col-xs-12">
-	  <div class="box box-blue">
-	    <div id="task-package-complete" class="box-body">
+	  <div id="task-package-complete" class="box box-blue">
+	    <div class="box-body">
 	      <div class="checkboxs">
-	        <label><input type="checkbox" value="0" v-model="tasks">录入</label>
 	        <label><input type="checkbox" value="1" v-model="tasks">拆字</label>
-	        <label><input type="checkbox" value="2" v-model="tasks">去重</label>
-	        <label><input type="checkbox" value="3" v-model="tasks">互助</label>
+	        <label><input type="checkbox" value="2" v-model="tasks">录入</label>
+	        <label><input type="checkbox" value="3" v-model="tasks">图书校对</label>
+	        <label><input type="checkbox" value="4" v-model="tasks">论文下载</label>
+	        <label><input type="checkbox" value="5" v-model="tasks">去重</label>
 	      </div>
 	      <table class="table table-bordered">
 	        <thead>
@@ -44,77 +45,84 @@
               <td v-text='item.c_t'></td>
               <td v-text='item.completed_at'></td>
               <td>
-                  <a v-show='item.business_type===0' href="{% url 'm2.task-package-input-list' %}">查看</a>
                   <a v-show='item.business_type===1' href="{% url 'm2.task-package-split-list' %}">查看</a>
-                  <a v-show='item.business_type===2' href="{% url 'm2.task-package-dedup-list' %}">查看</a>
-                  <a v-show='item.business_type===3' href="#">查看</a>
-
+                  <a v-show='item.business_type===2' href="{% url 'm2.task-package-input-list' %}">查看</a>
+                  <a v-show='item.business_type===3' href=#>查看</a>
+                  <a v-show='item.business_type===4' href=#>查看</a>
+                  <a v-show='item.business_type===5' href="{% url 'm2.task-package-dedup-list' %}">查看</a>
               </td>
             </tr>
 	        </tbody>
 	      </table>
 	    </div>
+        <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li v-if="previous"><a @click="gotoPage(previous)">«</a></li>
+                <li v-else><a href="javascript:void(0);">«</a></li>
+{#                <li v-for="item in context.page_links">#}
+{#                  <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>#}
+{#                  <a v-else-if="item[3]" href="javascript:void(0);">....</a>#}
+{#                  <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>#}
+{#                </li>#}
+                <li v-if="next"><a href="javascript:void(0);" @click="gotoPage(next)">»</a></li>
+                <li v-else><a href="javascript:void(0);">»</a></li>
+              </ul>
+            </div>
 	  </div>
 	</div>
 </div>
 
 <script type="text/javascript">
-function AjaxHelper() {
-    this.ajax = function (url, type, dataType, data, callback) {
-        $.ajax({
-            url: url,
-            method: type,
-            cache: false,
-            dataType: dataType,
-            data: data,
-            tranditional: true,
-            success: callback,
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        })
-    }
+function MyFinishedTasks(url, data) {
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        data: data,
+        success: function(data) {
+        app.result = data.results;
+        app.previous = data.previous;
+        app.next = data.next;
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+        }
+    })
 }
-
-AjaxHelper.prototype.get = function(url, data, callback) {
-    this.ajax(url, 'GET', 'json', data, callback)
-}
-
-var ajaxHelper = new AjaxHelper();
 
 var app = new Vue({
     el: '#task-package-complete',
     data: {
 	    tasks: [],
 	    result: [],
+        previous: null,
+        next: null,
         param: {'status': 1},
         url: '{% url 'task-packages-list' version='v1' %}',
-        map_type: {0: '录入', 1: '拆字', 2: '去重', 3: '互助'},
+        map_type: {1: '拆字', 2: '录入', 3: '图书校对', 4: '论文下载', 5: '去重'},
         map_stage: {0: '初次', 1: '回查', 2: '审查'},
     },
     created: function() {
-        var vm = this
-        callback = function(data) {
-            vm.result = data.results
-        }
-        ajaxHelper.get(vm.url, {'status': 1}, callback)
+        MyFinishedTasks(this.url, {'status': 1});
     },
     watch: {
         tasks: function() {
-            // 定义vm变量，让它指向this,this是当前的Vue实例
-            var vm = this
-            callback = function(data) {
-                vm.result = data.results
-            }
-            if (vm.tasks.length === 0) {
-                ajaxHelper.get(vm.url, {'status': 1}, callback)
+            if (this.tasks.length === 0) {
+                MyFinishedTasks(this.url, {'status': 1});
             } else {
-                vm.param.business_type_in = vm.tasks.join(",")
-                ajaxHelper.get(vm.url, vm.param, callback)
+                this.param.business_type_in = this.tasks.join(",");
+                MyFinishedTasks(this.url, this.param);
+
             }
+        }
+    },
+    methods: {
+        gotoPage: function(url) {
+            MyFinishedTasks(url, null);
         }
     }
 });
+
 </script>
 {% endblock %}
 
