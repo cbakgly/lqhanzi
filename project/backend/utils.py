@@ -1,12 +1,28 @@
-from django.core.cache import cache
+from datetime import date, datetime
+from django.db.models import Sum, Count
 
-from backend.cache_keys import getcachekey_today_credits
 from lqconfig.settings import STATIC_URL, USE_S3_HANZI_PICTURE
 
+from functional import timeout_cache
+from models import Tasks
 
+
+# 5 minutes
+@timeout_cache(5 * 60)
 def get_today_credits(user_id):
-    key = getcachekey_today_credits(user_id)
-    return cache.get(key, 0)
+    today = date.today()
+    start = datetime(today.year, today.month, today.day, 0, 0, 0)
+    end = datetime(today.year, today.month, today.day, 23, 59, 59)
+    ret = Tasks.objects.filter(user=user_id).filter(completed_at__range=(start, end)).values("credits").aggregate(Sum("credits"))
+    return ret['credits__sum']
+
+@timeout_cache(5 * 60)
+def get_today_complete_task_num(user_id, business_type):
+    today = date.today()
+    start = datetime(today.year, today.month, today.day, 0, 0, 0)
+    end = datetime(today.year, today.month, today.day, 23, 59, 59)
+    ret = Tasks.objects.filter(user=user_id).filter(business_type=business_type).filter(completed_at__range=(start, end)).values("id").aggregate(Count("id"))
+    return ret['id__count']
 
 
 def get_hanzi_assets_path():

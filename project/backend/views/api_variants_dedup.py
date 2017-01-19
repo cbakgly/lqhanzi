@@ -11,7 +11,6 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.settings import api_settings
 
 from ..pagination import NumberPagination

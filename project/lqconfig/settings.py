@@ -78,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'backend.context_processors.today_credits',
             ],
         },
     },
@@ -196,7 +197,7 @@ CACHES = {
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-# SESSION_CACHE_ALIAS = "default"
+SESSION_CACHE_ALIAS = "default"
 # Redis Cache Settings end
 
 

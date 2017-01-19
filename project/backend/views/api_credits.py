@@ -73,7 +73,7 @@ class CreditViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @list_route()
-    def caculate_user_credits(self, request, *args, **kwargs):
+    def calculate_user_credits(self, request, *args, **kwargs):
         user = request.user
-        sum_credits = Tasks.objects.filter(user=user.id).values("business_type").aggregate(Sum("credits"))
+        sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
         return Response(sum_credits)
