@@ -2,9 +2,10 @@
 
 {% block content %}
 <!--
-1. 载入界面显示“总积分”的查询结果
-2. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
-3. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
+APIs:
+1. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
+2. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
+3. show_urls里面缺/api/v1/credits/?sort=1
 -->
 <div class="row">
   <div class="col-xs-12">
@@ -34,7 +35,7 @@
         </div>
       </div>
       <div class="box-body table-responsive">
-          <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th>序号</th>
@@ -44,15 +45,54 @@
             </thead>
             <tbody>
             <tr v-for="(item, index) in result">
-                <td v-text="index+1">hihi</td>
-                <td v-text="item.credit">hi</td>
-                <td v-text="item.sort">hello world</td>
+                <td v-text="index+1"></td>
+                <td v-text="item.credit"></td>
+                <td v-text="item.sort"></td>
             </tr>
             </tbody>
           </table>
-        </div>
+      </div>
     </div>
   </div>
 </div>
-<script src="{{STATIC_URL}}js/workbench/credits-details.js"></script>
+<script type="text/javascript">
+function MyCreditsSearch(url, data) {
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        data: data,
+        success: function(response) {
+            creditsSort.result = response.results;
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+        }
+    })
+}
+var creditsSort = new Vue({
+  delimiters: ["#[", "]"],
+  el: '#credits-sort',
+  data: {
+    url: "{% url 'credits-detail' version='v1' pk='1' %}",
+    result: null,
+    sort: 1,
+    options: [
+      {text: '总积分', value: 1},
+      {text: '拆字积分', value: 2},
+      {text: '去重积分', value: 3},
+      {text: '录入积分', value: 4},
+      {text: '互助积分', value: 5}
+    ]
+  },
+  watch: {
+      sort: function () {
+          MyCreditsSearch(url, {'sort': this.sort});
+      }
+  },
+  created: function() {
+      MyCreditsSearch(url, {'sort': 1})
+  }
+});
+</script>
 {% endblock %}
