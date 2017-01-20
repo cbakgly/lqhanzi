@@ -11,10 +11,10 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from ..pagination import NumberPagination
-from ..models import VariantsInput
+from ..models import VariantsInput, InputPage
 from ..filters import NumberInFilter
 from ..enums import getenum_task_business_status, getenum_business_stage
-from task_func import assign_input_task
+from task_func import assign_task_by_task_ele, assign_task_by_page
 
 
 def update_tasks_status(variants_input):
@@ -37,7 +37,7 @@ def update_tasks_status(variants_input):
         review.task_status = getenum_task_business_status("completed")
         review.completed_at = timezone.now()
         final.task_status = getenum_task_business_status("to_be_arranged")
-        variants_input.is_draft_equals_review = variants_input.inter_dict_dup_hanzi_draft is variants_input.inter_dict_dup_hanzi_review
+        variants_input.is_draft_equals_review = variants_input.hanzi_char_draft is variants_input.hanzi_char_review
         variants_input.save()
         review.save()
         final.save()
@@ -45,7 +45,7 @@ def update_tasks_status(variants_input):
     elif final.task_status == getenum_task_business_status("ongoing"):
         final.task_status = getenum_task_business_status("completed")
         final.completed_at = timezone.now()
-        variants_input.is_review_equals_final = variants_input.inter_dict_dup_hanzi_review is variants_input.inter_dict_dup_hanzi_final
+        variants_input.is_review_equals_final = variants_input.hanzi_char_review is variants_input.hanzi_char_final
         variants_input.save()
         final.save()
         origin_task = final
@@ -103,9 +103,10 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = VariantsInputSerializer
 
-    # 提交
+
+    # 单个录入任务提交,如果任务包未满,则自动转下一条,无提示,如果已满,则直接提示
     @detail_route(methods=["PUT", "GET", "PATCH"])
-    def submit(self, request, *args, **kwargs):
+    def submit_single_input(self, request, *args, **kwargs):
         variants_input = self.get_object()
         serializer = VariantsInputSerializer(data=request.data)
 
@@ -115,13 +116,20 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             for key in serializer.initial_data.keys():
                 setattr(task_ele, key, serializer.initial_data.get(key, getattr(task_ele, key)))
             task_ele.save()
-            serializer = self.serializer_class(task_ele)
-            return Response(serializer.data)
-        else:
-            return Response(_("Inputdata Error!"))
 
-            # 提交并转下一条
+            task_package = origin_task.task_package
+            task_plan = task_package.size
+            task_num = len(list(task_package.tasks.all()))
+            if task_num < task_plan:
+                business_stage = origin_task.business_stage
+                user = origin_task.user
+                assign_task_by_task_ele(task_ele, business_stage, task_package, user)
+            else:
+                return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_100_CONTINUE)
+        return Response(_("Inputdata Error!"))
 
+
+    # 提交并转下一页
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
         variants_input = self.get_object()
@@ -138,10 +146,9 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             task_plan = task_package.size
             task_num = len(list(task_package.tasks.all()))
             if task_num < task_plan:
-                business_type = origin_task.business_type
                 business_stage = origin_task.business_stage
                 user = origin_task.user
-                new_task = assign_input_task(business_type, business_stage, task_package, user)
+                new_task = assign_task_by_page(business_stage, task_package, user)
                 if new_task:
                     serializer = self.serializer_class(new_task.content_object)
                     return Response(serializer.data)
@@ -150,3 +157,33 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             else:
                 return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_100_CONTINUE)
         return Response(_("Inputdata Error!"))
+
+
+class InputPageSerializer(serializers.ModelSerializer):
+    variant_inputs = serializers.SerializerMethodField()
+
+    class Meta:
+        model = InputPage
+        fields = "__all__"
+
+    def get_variant_inputs(self, obj):
+        inputs = VariantsInput.objects.filter(page_num=obj.page_num)
+        return VariantsInputSerializer(inputs, many=True).data
+
+class InputPageFilter(django_filters.FilterSet):
+    """
+    异体字拆字过滤器
+    """
+
+    class Meta:
+        model = InputPage
+        fields = "__all__"
+
+class InputPageViewSet(viewsets.ModelViewSet):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+
+    queryset = InputPage.objects.all()
+    filter_class = InputPageFilter
+    pagination_class = NumberPagination
+    serializer_class = InputPageSerializer

@@ -104,8 +104,8 @@ class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
         else:
             return Response(_("Failed!"), status=status.HTTP_400_BAD_REQUEST)
 
-            # 提交并转下一条
 
+    # 提交并转下一条
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
         variants_input = self.get_object()

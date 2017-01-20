@@ -94,6 +94,9 @@ class TasksViewSet(viewsets.ModelViewSet):
     filter_class = TasksFilter
     queryset = Tasks.objects.all()
 
+    #已完成
+
+
     # 拆字
     @list_route()
     def ongoing_split(self, request, *args, **kwargs):

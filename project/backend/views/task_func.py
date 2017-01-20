@@ -3,8 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
-from ..models import Tasks, TaskPackages
-from ..enums import getenum_task_business_status
+from ..models import Tasks, TaskPackages, VariantsInput
+from ..enums import getenum_task_business_status, getenum_business_type, getenum_business_stage
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -25,12 +25,80 @@ def assign_task(business_type, business_stage, task_package, user):
         return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
 
 
-def assign_input_task(business_type, business_stage, task_package, user):
-    tasks = Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage).filter(task_status=getenum_task_business_status("to_be_arranged"))
-    if len(tasks):
-        task = tasks[0]
-        page_num = task.task_ele.page_num
-        return page_num
+def assign_task_by_task_ele(task_ele, business_stage, task_package, user):
+    page_num = task_ele.page_num
+    if business_stage is getenum_business_stage('init'):
+        seq_num = task_ele.seq_num_draft
+        seq_order = 'seq_num_draft'
+    elif business_stage is getenum_business_stage('review'):
+        seq_num = task_ele.seq_num_review
+        seq_order = 'seq_num_review'
+    else:
+        seq_num = task_ele.seq_num_final
+        seq_order = 'seq_num_final'
+
+    inputs = list(VariantsInput.objects.filter(pagenum=page_num, seq_num_draft__gt=seq_num).order_by(seq_order))
+
+    if inputs:
+        tasks = list(inputs[0].task.all())
+        task_dict = {}
+
+        for t in tasks:
+            task_dict[t.business_stage] = t
+        task_to_assign = task_dict[business_stage]
+        task_to_assign.user = user
+        task_to_assign.task_package = task_package
+        task_to_assign.task_status = getenum_task_business_status("ongoing")
+        task_to_assign.save()
+
+
+def finished(variant_input, business_stage):
+    tasks = list(variant_input[0].task.all())
+    task_dict = {}
+
+    for t in tasks:
+        task_dict[t.business_stage] = t
+    task_to_assign = task_dict[business_stage]
+
+
+def assign_task_by_page(business_stage, task_package, user):
+    init_stage = getenum_business_stage('init')
+    review_stage = getenum_business_stage('review')
+
+    latest_task = list(Tasks.objects.filter(business_type=getenum_business_type('input'), task_status=getenum_task_business_status("ongoing")).order_by('id'))[-1]
+    page_num = latest_task.task_ele.page_num
+    if business_stage is init_stage:
+        seq_order = 'seq_num_draft'
+    elif business_stage is review_stage:
+        seq_order = 'seq_num_review'
+    else:
+        seq_order = 'seq_num_final'
+
+    inputs = list(VariantsInput.objects.filter(page_num=page_num + 1).order_by(seq_order))[0]
+
+    if inputs:
+        tasks = list(inputs[0].task.all())
+        task_dict = {}
+        for t in tasks:
+            task_dict[t.business_stage] = t
+        task_to_assign = task_dict[business_stage]
+        if business_stage is init_stage:
+            task_to_assign.user = user
+            task_to_assign.task_package = task_package
+            task_to_assign.task_status = getenum_task_business_status("ongoing")
+            task_to_assign.save()
+            return task_to_assign
+        else:
+            if task_to_assign.task_status is getenum_task_business_status("closed"):
+                return None
+            else:
+                task_to_assign.user = user
+                task_to_assign.task_package = task_package
+                task_to_assign.task_status = getenum_task_business_status("ongoing")
+                task_to_assign.save()
+                return task_to_assign
+    else:
+        pass
 
 
 def create_task(new_task_data):
