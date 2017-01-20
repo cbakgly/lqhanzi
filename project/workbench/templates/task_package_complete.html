@@ -1,9 +1,15 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 <!-- 2017.1.20更新
 APIs: 翻页页码、任务包编号；
 HTML：一页是否可显示10行数据；
+=======
+<!-- TODOs
+APIs: 翻页页码、任务包编号；
+跟进后续：一页是否可显示10行数据；
+>>>>>>> c888418ecccb4dfc145012b227e2a317492e21fc
 -->
 <div class="content-header">
     <ol class="breadcrumb">
@@ -24,7 +30,6 @@ HTML：一页是否可显示10行数据；
             <label><input type="checkbox" value="6" v-model="tasks">暂缺</label>
             <label><input type="checkbox" value="7" v-model="tasks">互助</label>
             <label><input type="checkbox" value="8" v-model="tasks">去重子任务</label>
-
 	      </div>
 	      <table class="table table-bordered">
 	        <thead>
@@ -57,8 +62,6 @@ HTML：一页是否可显示10行数据；
                   <a v-show='item.business_type===6' href=#>查看</a>
                   <a v-show='item.business_type===7' href=#>查看</a>
                   <a v-show='item.business_type===8' href=#>查看</a>
-
-
               </td>
             </tr>
 	        </tbody>
