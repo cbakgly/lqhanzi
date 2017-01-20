@@ -15,18 +15,19 @@ from api_tasks import TasksSerializer
 from task_func import assign_task
 from backend.enums import getenum_task_package_business_status
 from backend.filters import NumberInFilter
-from ..models import TaskPackages, Tasks
+from ..models import TaskPackages, Tasks, business_stage_choices, business_type_choices
 
 
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):
     tasks = serializers.SerializerMethodField('get_today_tasks')
     credits = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = TaskPackages
         fields = ('id', 'user', 'business_type', 'business_stage', 'size', 'status', 'daily_plan', 'due_date',
-                  'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits')
+                  'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits', 'name')
 
     def get_today_tasks(self, task_package):
         tasks = Tasks.objects.filter(completed_at__gte=timezone.now().date(), task_package=task_package)
@@ -74,6 +75,9 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         sum_credits = Tasks.objects.filter(task_package=instance).aggregate(Sum("credits"))
         return sum_credits
 
+    def get_name(self, instance):
+        return "#" + business_type_choices[instance.business_type-1][1] + business_stage_choices[instance.business_stage-1][1] + str(instance.size) + str(instance.id)
+
 
 class TaskPackagesFilter(django_filters.FilterSet):
     c_t = django_filters.DateFromToRangeFilter()
@@ -103,4 +107,5 @@ class TaskPackagesViewSet(viewsets.ModelViewSet):
         # TODO: will return object basing on user's group(role)
         if user.is_superuser == 1:
             return TaskPackages.objects.all()
-        return TaskPackages.objects.filter(user_id=self.request.user.id)
+        else:
+            return TaskPackages.objects.filter(user_id=self.request.user.id)
