@@ -1,9 +1,9 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-<!-- TODOs
+<!-- 2017.1.20更新
 APIs: 翻页页码、任务包编号；
-跟进后续：一页是否可显示10行数据；
+HTML：一页是否可显示10行数据；
 -->
 <div class="content-header">
     <ol class="breadcrumb">
@@ -21,6 +21,10 @@ APIs: 翻页页码、任务包编号；
 	        <label><input type="checkbox" value="3" v-model="tasks">图书校对</label>
 	        <label><input type="checkbox" value="4" v-model="tasks">论文下载</label>
 	        <label><input type="checkbox" value="5" v-model="tasks">去重</label>
+            <label><input type="checkbox" value="6" v-model="tasks">暂缺</label>
+            <label><input type="checkbox" value="7" v-model="tasks">互助</label>
+            <label><input type="checkbox" value="8" v-model="tasks">去重子任务</label>
+
 	      </div>
 	      <table class="table table-bordered">
 	        <thead>
@@ -50,6 +54,11 @@ APIs: 翻页页码、任务包编号；
                   <a v-show='item.business_type===3' href=#>查看</a>
                   <a v-show='item.business_type===4' href=#>查看</a>
                   <a v-show='item.business_type===5' href="{% url 'm2.task-package-dedup-list' %}">查看</a>
+                  <a v-show='item.business_type===6' href=#>查看</a>
+                  <a v-show='item.business_type===7' href=#>查看</a>
+                  <a v-show='item.business_type===8' href=#>查看</a>
+
+
               </td>
             </tr>
 	        </tbody>
@@ -99,8 +108,8 @@ var app = new Vue({
         next: null,
         param: {'status': 1},
         url: '{% url 'task-packages-list' version='v1' %}',
-        map_type: {1: '拆字', 2: '录入', 3: '图书校对', 4: '论文下载', 5: '去重'},
-        map_stage: {0: '初次', 1: '回查', 2: '审查'},
+        map_type: {1: '拆字', 2: '录入', 3: '图书校对', 4: '论文下载', 5: '去重', 6: '暂缺', 7: '互助', 8: '去重子任务'},
+        map_stage: {1: '初次', 2: '回查', 3: '审查'},
     },
     created: function() {
         MyFinishedTasks(this.url, {'status': 1});
