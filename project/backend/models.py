@@ -184,9 +184,11 @@ class VariantsSplit(models.Model):
     def __unicode__(self):
         return self.hanzi_char
 
+
 class InputPage(models.Model):
     page_num = models.SmallIntegerField('页码')
     task = GenericRelation(Tasks, related_query_name="page_task")
+
 
 class VariantsInput(models.Model):
     variant_type_choices = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))

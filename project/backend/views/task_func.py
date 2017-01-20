@@ -52,15 +52,6 @@ def assign_task_by_task_ele(task_ele, business_stage, task_package, user):
         task_to_assign.save()
 
 
-def finished(variant_input, business_stage):
-    tasks = list(variant_input[0].task.all())
-    task_dict = {}
-
-    for t in tasks:
-        task_dict[t.business_stage] = t
-    task_to_assign = task_dict[business_stage]
-
-
 def assign_task_by_page(business_stage, task_package, user):
     init_stage = getenum_business_stage('init')
     review_stage = getenum_business_stage('review')

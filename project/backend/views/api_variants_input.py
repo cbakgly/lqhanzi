@@ -103,7 +103,6 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = VariantsInputSerializer
 
-
     # 单个录入任务提交,如果任务包未满,则自动转下一条,无提示,如果已满,则直接提示
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_single_input(self, request, *args, **kwargs):
@@ -127,7 +126,6 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             else:
                 return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_100_CONTINUE)
         return Response(_("Inputdata Error!"))
-
 
     # 提交并转下一页
     @detail_route(methods=["PUT", "GET", "PATCH"])
@@ -170,6 +168,7 @@ class InputPageSerializer(serializers.ModelSerializer):
         inputs = VariantsInput.objects.filter(page_num=obj.page_num)
         return VariantsInputSerializer(inputs, many=True).data
 
+
 class InputPageFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
@@ -178,6 +177,7 @@ class InputPageFilter(django_filters.FilterSet):
     class Meta:
         model = InputPage
         fields = "__all__"
+
 
 class InputPageViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
