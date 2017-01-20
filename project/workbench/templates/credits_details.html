@@ -1,10 +1,11 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-<!--
-1. 载入界面显示“总积分”的查询结果
-2. 总积分根据用户查出工作任务名称及其相应比例（等APIs)
-3. 查询结果中的任务类型改成中文，以及载入任务包名称（等APIs)
+<!--2017年1月20日更新
+APIs:
+1. 积分类型以及占总积分的比例等待api完成后写
+2. 任务包名称
+3. 积分类型缺图书校对和论文下载
 -->
 <div class="row">
   <div class="col-xs-12">
@@ -15,7 +16,7 @@
           <div class="ser-bd">
             <div class="z-ser z1-ser">
               <div class="z-myScore">
-                <span class="z-total">总积分：<b>3000</b></span>
+                <span class="z-total">总积分：<b>#[ aquireCredit ]</b></span>
                 <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
                 <a class="exchange" href="{% url 'm2.credits-redeem' %}" title="查看我的兑换">已兑换：<b>800</b></a>
               </div>
@@ -34,7 +35,7 @@
         </div>
       </div>
       <div class="box-body table-responsive">
-          <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th>序号</th>
@@ -44,15 +45,67 @@
             </thead>
             <tbody>
             <tr v-for="(item, index) in result">
-                <td v-text="index+1">hihi</td>
-                <td v-text="item.credit">hi</td>
-                <td v-text="item.sort">hello world</td>
+                <td v-text="index+1"></td>
+                <td v-text="item.credit"></td>
+                <td v-text="item.sort_name"></td>
             </tr>
             </tbody>
           </table>
-        </div>
+      </div>
     </div>
   </div>
 </div>
-<script src="{{STATIC_URL}}js/workbench/credits-details.js"></script>
+<script type="text/javascript">
+function MyCreditsSearch(url, data) {
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        data: data,
+        success: function(response) {
+            creditsSort.result = response.results;
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+        }
+    })
+}
+
+var credit_url = "{% url 'credits-list' version='v1' %}";
+
+var creditsSort = new Vue({
+  delimiters: ["#[", "]"],
+  el: '#credits-sort',
+  data: {
+    result: null,
+    sort: 1,
+    total_credit: null,
+    options: [
+      {text: '总积分', value: 1},
+      {text: '拆字积分', value: 2},
+      {text: '去重积分', value: 3},
+      {text: '录入积分', value: 4},
+      {text: '互助积分', value: 5},
+      {text: '图书校对', value: 6},
+      {text: '论文下载', value: 7}
+    ]
+  },
+  watch: {
+      sort: function () {
+          MyCreditsSearch(credit_url, {'sort': creditsSort.sort});
+      }
+  },
+  computed: {
+      aquireCredit: function() {
+          for (item in this.result) {
+            this.total_credit = this.result[item].credit
+          }
+          return this.total_credit
+      }
+  },
+  created: function() {
+      MyCreditsSearch(credit_url, {'sort': 1});
+  }
+});
+</script>
 {% endblock %}
