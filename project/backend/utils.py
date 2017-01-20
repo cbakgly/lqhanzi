@@ -1,8 +1,8 @@
 from datetime import date, datetime
 from django.db.models import Sum, Count
+from django.utils import timezone
 
 from lqconfig.settings import STATIC_URL, USE_S3_HANZI_PICTURE
-
 from functional import timeout_cache
 from models import Tasks
 
@@ -11,17 +11,18 @@ from models import Tasks
 @timeout_cache(5 * 60)
 def get_today_credits(user_id):
     today = date.today()
-    start = datetime(today.year, today.month, today.day, 0, 0, 0)
-    end = datetime(today.year, today.month, today.day, 23, 59, 59)
-    ret = Tasks.objects.filter(user=user_id).filter(completed_at__range=(start, end)).values("credits").aggregate(Sum("credits"))
+    start = timezone.make_aware(datetime(today.year, today.month, today.day, 0, 0, 0), timezone.get_current_timezone())
+    end = timezone.make_aware(datetime(today.year, today.month, today.day, 23, 59, 59), timezone.get_current_timezone())
+    ret = Tasks.objects.filter(user_id=user_id).filter(completed_at__range=(start, end)).values("credits").aggregate(Sum("credits"))
     return ret['credits__sum']
+
 
 @timeout_cache(5 * 60)
 def get_today_complete_task_num(user_id, business_type):
     today = date.today()
-    start = datetime(today.year, today.month, today.day, 0, 0, 0)
-    end = datetime(today.year, today.month, today.day, 23, 59, 59)
-    ret = Tasks.objects.filter(user=user_id).filter(business_type=business_type).filter(completed_at__range=(start, end)).values("id").aggregate(Count("id"))
+    start = timezone.make_aware(datetime(today.year, today.month, today.day, 0, 0, 0), timezone.get_current_timezone())
+    end = timezone.make_aware(datetime(today.year, today.month, today.day, 23, 59, 59), timezone.get_current_timezone())
+    ret = Tasks.objects.filter(user_id=user_id).filter(business_type=business_type).filter(completed_at__range=(start, end)).values("id").aggregate(Count("id"))
     return ret['id__count']
 
 

@@ -2,16 +2,17 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from backend.enums import getenum_task_business_status
+from backend.enums import getenum_task_package_business_status
 from backend.models import TaskPackages, business_stage_choices, business_type_choices
 from backend.utils import get_today_complete_task_num
+
 
 @login_required
 def new_task_page(request):
     return render(request, 'new_task.html', {
         "business_type_choices": business_type_choices,
         "business_stage_choices": business_stage_choices,
-        "business_status_ongoing": getenum_task_business_status('ongoing')
+        "business_status_ongoing": getenum_task_package_business_status('ongoing')
     })
 
 
