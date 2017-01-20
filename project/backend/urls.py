@@ -8,7 +8,7 @@ from backend.views.api_diaries import DiaryViewSet
 from backend.views.api_redeem import RedeemViewSet
 from backend.views.api_credits import CreditViewSet
 from backend.views.api_variants_split import VariantsSplitViewSet
-from backend.views.api_variants_input import VariantsInputViewSet
+from backend.views.api_variants_input import VariantsInputViewSet, InputPageViewSet
 from backend.views.api_variants_dedup import InterDictDedupViewSet, KoreanDedupViewSet
 from backend.views.api_korean_dup_characters import KoreanTaiwanDupCharactersViewSet
 from backend.views.api_hanzi_set import HanziSetViewSet
@@ -30,4 +30,5 @@ router.register(r'interdict-dedups', InterDictDedupViewSet, base_name='inter-dic
 router.register(r'korean-taiwan-dup-charaters', KoreanTaiwanDupCharactersViewSet, base_name='korean-taiwan-dup-characters')
 router.register(r'korean-dedups', KoreanDedupViewSet, base_name='korean-dedups')
 router.register(r'hanzi-set', HanziSetViewSet, base_name='hanzi-set')
+router.register(r'inputpage', InputPageViewSet, base_name='inputpage')
 urlpatterns = router.urls

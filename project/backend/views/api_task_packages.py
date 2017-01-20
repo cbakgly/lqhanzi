@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import django_filters
+from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
@@ -20,11 +21,12 @@ from ..models import TaskPackages, Tasks
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):
     tasks = serializers.SerializerMethodField('get_today_tasks')
+    credits = serializers.SerializerMethodField()
 
     class Meta:
         model = TaskPackages
         fields = ('id', 'user', 'business_type', 'business_stage', 'size', 'status', 'daily_plan', 'due_date',
-                  'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks')
+                  'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits')
 
     def get_today_tasks(self, task_package):
         tasks = Tasks.objects.filter(completed_at__gte=timezone.now().date(), task_package=task_package)
@@ -67,6 +69,10 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         ret['business_type_display'] = instance.get_business_type_display()
         ret['business_stage_display'] = instance.get_business_stage_display()
         return ret
+
+    def get_credits(self, instance):
+        sum_credits = Tasks.objects.filter(task_package=instance).aggregate(Sum("credits"))
+        return sum_credits
 
 
 class TaskPackagesFilter(django_filters.FilterSet):
