@@ -17,9 +17,14 @@ def assign_task(business_type, business_stage, task_package, user):
         task.task_package = task_package
         task.task_status = getenum_task_business_status("ongoing")
         # task.credits = list(TaskCredit.objects.filter(business_type=business_type).filter(business_stage=business_stage))[0].business_credit
-        task.credits = 2
+        if business_type in [getenum_business_type("input_page"), getenum_business_type("dedup")]:
+            task.credits = 0
+        else:
+            task.credits = 2
         task.assigned_at = timezone.now()
         task.save()
+        if business_type == getenum_business_type("input_page"):
+            inputs = VariantsInput.objects.filter(page_num=task.content_object.page_num)
         return task
     else:
         return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
@@ -37,7 +42,7 @@ def assign_task_by_task_ele(task_ele, business_stage, task_package, user):
         seq_num = task_ele.seq_num_final
         seq_order = 'seq_num_final'
 
-    inputs = list(VariantsInput.objects.filter(pagenum=page_num, seq_num_draft__gt=seq_num).order_by(seq_order))
+    inputs = list(VariantsInput.objects.filter(page_num=page_num, seq_num_draft__gt=seq_num).order_by(seq_order))
 
     if inputs:
         tasks = list(inputs[0].task.all())
@@ -92,6 +97,7 @@ def assign_task_by_page(business_stage, task_package, user):
         pass
 
 
+# 用于给去重分配后生成任务
 def create_task(new_task_data):
     task_package = list(TaskPackages.objects.filter(pk=new_task_data['task_package']))[0]
     content_object = new_task_data['content']
