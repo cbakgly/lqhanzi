@@ -76,7 +76,6 @@ class VariantsInputSerializer(serializers.ModelSerializer):
 
 
 class VariantsInputSelectSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = VariantsInput
         fields = "__all__"
@@ -87,16 +86,16 @@ class VariantsDraftSerializer(serializers.ModelSerializer):
     class Meta:
         model = VariantsInput
         fields = [
-                "id",
-                'page_num',
-                'seq_num_draft',
-                'hanzi_char_draft',
-                'hanzi_pic_id_draft',
-                'variant_type_draft',
-                'std_hanzi_draft',
-                'notes_draft',
-                'is_del_draft'
-            ]
+            "id",
+            'page_num',
+            'seq_num_draft',
+            'hanzi_char_draft',
+            'hanzi_pic_id_draft',
+            'variant_type_draft',
+            'std_hanzi_draft',
+            'notes_draft',
+            'is_del_draft'
+        ]
         depth = 0
 
 
@@ -104,23 +103,23 @@ class VariantsReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = VariantsInput
         fields = [
-                "id",
-                'page_num',
-                'seq_num_draft',
-                'hanzi_char_draft',
-                'hanzi_pic_id_draft',
-                'variant_type_draft',
-                'std_hanzi_draft',
-                'notes_draft',
-                'is_del_draft',
-                'seq_num_review',
-                'hanzi_char_review',
-                'hanzi_pic_id_review',
-                'variant_type_review',
-                'std_hanzi_review',
-                'notes_review',
-                'is_del_review'
-            ]
+            "id",
+            'page_num',
+            'seq_num_draft',
+            'hanzi_char_draft',
+            'hanzi_pic_id_draft',
+            'variant_type_draft',
+            'std_hanzi_draft',
+            'notes_draft',
+            'is_del_draft',
+            'seq_num_review',
+            'hanzi_char_review',
+            'hanzi_pic_id_review',
+            'variant_type_review',
+            'std_hanzi_review',
+            'notes_review',
+            'is_del_review'
+        ]
         depth = 0
 
 
@@ -128,30 +127,30 @@ class VariantsFinalSerializer(serializers.ModelSerializer):
     class Meta:
         model = VariantsInput
         fields = [
-                "id",
-                'page_num',
-                'seq_num_draft',
-                'hanzi_char_draft',
-                'hanzi_pic_id_draft',
-                'variant_type_draft',
-                'std_hanzi_draft',
-                'notes_draft',
-                'is_del_draft',
-                'seq_num_review',
-                'hanzi_char_review',
-                'hanzi_pic_id_review',
-                'variant_type_review',
-                'std_hanzi_review',
-                'notes_review',
-                'is_del_review',
-                'seq_num_final',
-                'hanzi_char_final',
-                'hanzi_pic_id_final',
-                'variant_type_final',
-                'std_hanzi_final',
-                'notes_final',
-                'is_del_final'
-            ]
+            "id",
+            'page_num',
+            'seq_num_draft',
+            'hanzi_char_draft',
+            'hanzi_pic_id_draft',
+            'variant_type_draft',
+            'std_hanzi_draft',
+            'notes_draft',
+            'is_del_draft',
+            'seq_num_review',
+            'hanzi_char_review',
+            'hanzi_pic_id_review',
+            'variant_type_review',
+            'std_hanzi_review',
+            'notes_review',
+            'is_del_review',
+            'seq_num_final',
+            'hanzi_char_final',
+            'hanzi_pic_id_final',
+            'variant_type_final',
+            'std_hanzi_final',
+            'notes_final',
+            'is_del_final'
+        ]
         depth = 0
 
 
@@ -195,8 +194,8 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
         else:
             return Response(_("Inputdata Error!"))
 
-    #插入新行
-    @detail_route(methods=["GET","PUT","PATCH"])
+    # 插入新行
+    @detail_route(methods=["GET", "PUT", "PATCH"])
     def insert_new_line(self, request, *args, **kwargs):
         variants_input = self.get_object()
         page_num = variants_input.page_num
@@ -220,7 +219,7 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
                 input.save()
         return Response(VariantsInputSerializer(new_input).data)
 
-    #删除行
+    # 删除行
     @detail_route(methods=["GET", "PUT", "PATCH"])
     def del_input(self, request, *args, **kwargs):
         variants_input = self.get_object()
@@ -234,7 +233,7 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
         variants_input.save()
         return Response(VariantsInputSerializer(variants_input).data)
 
-    #回查 审查 的查看功能
+    # 回查 审查 的查看功能
     @detail_route(methods=["GET", "PUT", "PATCH"])
     def view_info(self, request, *args, **kwargs):
         variants_input = self.get_object()

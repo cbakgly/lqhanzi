@@ -188,7 +188,6 @@ class TasksViewSet(viewsets.ModelViewSet):
 
         return Response(return_dict)
 
-
     # 搜索录入任务
     @list_route()
     def select_input(self, request, *args, **kwargs):
@@ -278,7 +277,7 @@ class TasksViewSet(viewsets.ModelViewSet):
 
         return Response(return_dict)
 
-    #按字头查看高台去重任务-进行中
+    # 按字头查看高台去重任务-进行中
     @list_route()
     def ongoing_dedup(self, request, *args, **kwargs):
         user = self.request.user

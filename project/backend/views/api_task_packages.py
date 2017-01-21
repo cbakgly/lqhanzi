@@ -76,7 +76,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         return sum_credits
 
     def get_name(self, instance):
-        return "#" + business_type_choices[instance.business_type-1][1] + business_stage_choices[instance.business_stage-1][1] + str(instance.size) + str(instance.id)
+        return "#" + business_type_choices[instance.business_type - 1][1] + business_stage_choices[instance.business_stage - 1][1] + str(instance.size) + str(instance.id)
 
 
 class TaskPackagesFilter(django_filters.FilterSet):

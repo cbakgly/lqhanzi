@@ -123,6 +123,7 @@ class CreditsRedeemAdmin(admin.ModelAdmin):
 class InputPageAdmin(admin.ModelAdmin):
     list_display = ('page_num',)
 
+
 admin.site.register(Diaries, DiaryAdmin)
 admin.site.register(Credits, CreditsAdmin)
 admin.site.register(TaskPackages, TaskPackagesAdmin)

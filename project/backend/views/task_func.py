@@ -23,8 +23,8 @@ def assign_task(business_type, business_stage, task_package, user):
             task.credits = 2
         task.assigned_at = timezone.now()
         task.save()
-        if business_type == getenum_business_type("input_page"):
-            inputs = VariantsInput.objects.filter(page_num=task.content_object.page_num)
+        # if business_type == getenum_business_type("input_page"):
+            # inputs = VariantsInput.objects.filter(page_num=task.content_object.page_num)
         return task
     else:
         return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
