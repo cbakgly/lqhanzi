@@ -10,7 +10,7 @@ import django_filters
 # from django.db.models import Q
 
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters
+from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage
 from ..enums import getenum_business_type, getenum_task_business_status, getenum_business_stage
 import api_variants_input
 import api_variants_dedup
@@ -69,6 +69,8 @@ class TasksSerializer(serializers.ModelSerializer):
             ele_serializer = api_variants_dedup.KoreanDedupSerializer
         elif isinstance(task_ele, KoreanDupCharacters):
             ele_serializer = api_korean_dup_characters.KoreanDupCharactersSerializer
+        elif isinstance(task_ele, InputPage):
+            ele_serializer = api_variants_input.InputPageSerializer
         else:
             ele_serializer = api_variants_dedup.InterDictDedupSerializer
 
@@ -164,27 +166,29 @@ class TasksViewSet(viewsets.ModelViewSet):
 
         return Response(return_dict)
 
+    # 按页查看录入任务-进行中
     @list_route()
-    def ongoing_input(self, request, *args, **kwargs):
+    def ongoing_inputpage(self, request, *args, **kwargs):
         user = self.request.user
         if self.request.query_params["task_package"]:
             task_package = self.request.query_params["task_package"]
-        business_type = getenum_business_type("input")
+        business_type = getenum_business_type("input_page")
         if user.is_superuser == 1:
             tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
         else:
             tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_business_status("ongoing")).filter(task_package=task_package)
 
         serializer = self.serializer_class(tasks, many=True)
-        input_variants = [v["task_ele"] for v in serializer.data]
+        input_pages = [v["task_ele"] for v in serializer.data]
 
         return_dict = {
             "task_package": int(task_package),
-            "models": input_variants
+            "models": input_pages
         }
 
         return Response(return_dict)
 
+    # 搜索录入任务
     @list_route()
     def select_input(self, request, *args, **kwargs):
         user = self.request.user
@@ -273,6 +277,7 @@ class TasksViewSet(viewsets.ModelViewSet):
 
         return Response(return_dict)
 
+    # 按字头查看高台去重任务-进行中
     @list_route()
     def ongoing_dedup(self, request, *args, **kwargs):
         user = self.request.user

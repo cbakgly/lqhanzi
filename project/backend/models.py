@@ -71,7 +71,7 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'暂缺'), (7, u'互助'), (8, u'去重子任务'))
+business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'录入页码任务'), (7, u'互助'), (8, u'去重子任务'))
 business_stage_choices = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
 task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -186,7 +186,7 @@ class VariantsSplit(models.Model):
 
 
 class InputPage(models.Model):
-    page_num = models.SmallIntegerField('页码')
+    page_num = models.SmallIntegerField(primary_key=True)
     task = GenericRelation(Tasks, related_query_name="page_task")
 
 
@@ -194,6 +194,7 @@ class VariantsInput(models.Model):
     variant_type_choices = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))
     volume_num = models.SmallIntegerField(u'册', null=True, blank=True)
     page_num = models.IntegerField(u'页码', null=True)
+    # page_num = models.ForeignKey(InputPage, related_name='inputs', on_delete=models.SET_NULL, blank=True, null=True)
 
     seq_num_draft = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_draft = models.CharField(u'文字', max_length=8, null=True)

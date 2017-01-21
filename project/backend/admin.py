@@ -2,10 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward, KoreanDupCharacters
-
-
-# VariantsInput, KoreanDedup, InterDictDedup
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward, KoreanDupCharacters, InputPage
 
 
 class DiaryAdmin(admin.ModelAdmin):
@@ -123,6 +120,10 @@ class CreditsRedeemAdmin(admin.ModelAdmin):
     )
 
 
+class InputPageAdmin(admin.ModelAdmin):
+    list_display = ('page_num',)
+
+
 admin.site.register(Diaries, DiaryAdmin)
 admin.site.register(Credits, CreditsAdmin)
 admin.site.register(TaskPackages, TaskPackagesAdmin)
@@ -134,3 +135,4 @@ admin.site.register(Permission, GuardedModelAdmin)
 admin.site.register(HanziSet)
 admin.site.register(Reward, RewardAdmin)
 admin.site.register(KoreanDupCharacters, KoreanDupChaAdmin)
+admin.site.register(InputPage, InputPageAdmin)
