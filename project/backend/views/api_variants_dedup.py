@@ -143,7 +143,7 @@ class InterDictDedupFilter(django_filters.FilterSet):
     异体字拆字过滤器
     """
     inter_dict_dup_hanzi = django_filters.CharFilter(name=["inter_dict_dup_hanzi_draft", "inter_dict_dup_hanzi_review", "inter_dict_dup_hanzi_final"], method=fields_or_filter_method)
-    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
+    u_t = django_filters.DateTimeFromToRangeFilter()
 
     class Meta:
         model = InterDictDedup

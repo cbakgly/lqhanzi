@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import django_filters
+from datetime import datetime
 from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -30,7 +31,9 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
                   'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits', 'name')
 
     def get_today_tasks(self, task_package):
-        tasks = Tasks.objects.filter(completed_at__gte=timezone.now().date(), task_package=task_package)
+        now = timezone.now()
+        today = datetime(now.year, now.month, now.day, tzinfo=timezone.utc)
+        tasks = Tasks.objects.filter(completed_at__gte=today, task_package=task_package)
         serializer = TasksSerializer(instance=tasks, many=True)
         return serializer.data
 

@@ -241,8 +241,8 @@
                 if (date_span.length > 1) {
                   var d0 = new Date(date_span[0]);
                   var d1 = new Date(date_span[1]);
-                  cond['u_t_span_0'] = d0.getUTCFullYear() + '-' + (d0.getUTCMonth()+1) + '-' + d0.getUTCDate() + ' ' + d0.getUTCHours() + ':' + (d0.getUTCMinutes()<10?'0'+d0.getUTCMinutes():d0.getUTCMinutes());
-                  cond['u_t_span_1'] = d1.getUTCFullYear() + '-' + (d1.getUTCMonth()+1) + '-' + d1.getUTCDate() + ' ' + d1.getUTCHours() + ':' + (d1.getUTCMinutes()<10?'0'+d1.getUTCMinutes():d1.getUTCMinutes());
+                  cond['u_t_0'] = d0.getUTCFullYear() + '-' + (d0.getUTCMonth()+1) + '-' + d0.getUTCDate() + ' ' + d0.getUTCHours() + ':' + (d0.getUTCMinutes()<10?'0'+d0.getUTCMinutes():d0.getUTCMinutes());
+                  cond['u_t_1'] = d1.getUTCFullYear() + '-' + (d1.getUTCMonth()+1) + '-' + d1.getUTCDate() + ' ' + d1.getUTCHours() + ':' + (d1.getUTCMinutes()<10?'0'+d1.getUTCMinutes():d1.getUTCMinutes());
                 }
 
                 console.log(cond);

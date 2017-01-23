@@ -50,7 +50,7 @@ class KoreanDupCharactersFilter(django_filters.FilterSet):
 
     class Meta:
         model = KoreanDupCharacters
-        fields = ("__all__")
+        fields = "__all__"
 
 
 def update_tasks_status(variants_dedup):

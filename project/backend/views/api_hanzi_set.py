@@ -72,7 +72,7 @@ class HanziSetFilter(django_filters.FilterSet):
     '''
     异体字拆字过滤器
     '''
-    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
+    u_t = django_filters.DateTimeFromToRangeFilter()
     split = django_filters.CharFilter(name=["min_split", "max_split", "mix_split", "deform_split"], method=fields_or_filter_method)
 
     class Meta:
