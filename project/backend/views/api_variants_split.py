@@ -51,7 +51,7 @@ class VariantsSplitFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
-    u_t_span = django_filters.DateTimeFromToRangeFilter(name="u_t")
+    u_t = django_filters.DateTimeFromToRangeFilter()
     split = django_filters.CharFilter(name=["init_split_draft", "other_init_split_draft", "deform_split_draft", "init_split_review", "other_init_split_review", "deform_split_review", "init_split_final", "other_init_split_final", "deform_split_final"], method=fields_or_filter_method)
     split_draft = django_filters.CharFilter(name=["init_split_draft", "other_init_split_draft", "deform_split_draft"], method=fields_or_filter_method)
     split_review = django_filters.CharFilter(name=["init_split_review", "other_init_split_review", "deform_split_review"], method=fields_or_filter_method)

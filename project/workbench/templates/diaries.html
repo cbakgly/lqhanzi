@@ -1,177 +1,205 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-xs-12">
-		  <div class="nav-tabs-custom">
-		    <ul class="nav nav-tabs pull-right">
-		      <li class="active"><a href="#Jan" data-toggle="tab">1月</a></li>
-		      <li><a href="#Feb" data-toggle="tab">2月</a></li>
-		      <li><a href="#Mar" data-toggle="tab">3月</a></li>
-		      <li><a href="#Apr" data-toggle="tab">4月</a></li>
-		      <li><a href="#May" data-toggle="tab">5月</a></li>
-		      <li><a href="#June" data-toggle="tab">6月</a></li>
-		      <li><a href="#July" data-toggle="tab">7月</a></li>
-		      <li><a href="#Aug" data-toggle="tab">8月</a></li>
-		      <li><a href="#Sep" data-toggle="tab">9月</a></li>
-		      <li><a href="#Oct" data-toggle="tab">10月</a></li>
-		      <li><a href="#Nov" data-toggle="tab">11月</a></li>
-		      <li><a href="#Dec" data-toggle="tab">12月</a></li>
-		    </ul>
-		    <div class="tab-content">
-		      <div class="active tab-pane" id="Jan">
-		        <!-- The time line -->
-		        <ul class="timeline">
-		          <!-- timeline time label -->
-		          <li class="time-label">
-		            <span class="bg-red">
-		                今天
-		            </span>
-		            <span>今日未打卡</span>
-		          </li>
-		          <!-- /.timeline-label -->
-		          <!-- timeline item -->
-		          <li>
-		            <div class="timeline-item">
-		              <h3 class="timeline-header">
-		                <!-- radio -->
-		                <!-- radio -->
-		                <div class="form-group">
-		                  <div class="radio">
-		                    <label>
-		                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-		                      问题反馈
-		                    </label>
-		                    <label>
-		                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-		                      心情故事
-		                    </label>
-		                    <label>
-		                      <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"/>
-		                      其他
-		                    </label>
-		                  </div>
-		                </div>
-		              </h3>
-		              <div class="timeline-body">
-		                <!-- quick email widget -->
-		                <div class="box-info">
-		                  <div class="box-body pad">
-		                    <form>
-		                        <textarea class="textarea" placeholder="说点什么吧..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-		                    </form>
-		                  </div>
-		                  <div class="box-footer clearfix">
-		                    <button class="pull-right btn btn-default" id="sendEmail">提交 <i class="fa fa-arrow-circle-right"></i></button>
-		                  </div>
-		                </div>
-		              </div>
-		            </div>
-		          </li>
-		          <!-- END timeline item -->
-		          <!-- timeline time label -->
-		          <li class="time-label">
-		            <span class="bg-green">
-		                2016-12-12
-		            </span>
-		            <span>拆字</span>
-		            <span>去重</span>
-		          </li>
-		          <!-- /.timeline-label -->
-				  <!-- timeline item -->
-		          <li>
-		            <div class="timeline-item">
-		              <h3 class="timeline-header">
-		                <div class="diary-con">
-		                	<div class="title">日志</div>
-		                	<div class="text">
-		                		<p>
-		                			<span><em>去重</em><em>10个</em>&nbsp;&nbsp;<em>完成</em><em>90%</em></span>
-		                			<span><em>任务包ID：</em><em>33</em></span>
-		                			<span><em>标签：</em><em>心情故事</em></span>
-		                		</p>
-		                		<p>
-		                			<span><em>拆字</em><em>10个</em>&nbsp;&nbsp;<em>完成</em><em>90%</em></span>
-		                			<span><em>任务包ID：</em><em>34</em></span>
-		                		</p>
-		                	</div>
-		                	<div class="timer">
-		                		<i class="icon-time"></i><span>4天前</span>
-		                	</div>
-		                </div>
-		              </h3>
-		              <div class="timeline-body">
-		                <div class="words">
-		                	<textarea>今天做的感觉很好！回向文：愿以此殊胜功德 回向法界有情 尽除一切罪障 共成无上菩提！那无阿弥陀佛！
-			                </textarea>
-		                </div>
-		              </div>
-		            </div>
-		          </li>
-		          <!-- END timeline item -->
-		          <li>
-		            <i class="fa fa-clock-o"></i>
-		          </li>
-		        </ul>
-		      </div>
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Feb">
+<div class="row">
+    <div class="col-xs-12">
+      <div class="nav-tabs-custom" id="time_line">
+        <ul class="nav nav-tabs pull-right">
+            <li :class="activate(0)" @click="nav(0)"><a href="javascript:void(0);">1月</a></li>
+            <li :class="activate(1)" @click="nav(1)"><a href="javascript:void(0);">2月</a></li>
+            <li :class="activate(2)" @click="nav(2)"><a href="javascript:void(0);">3月</a></li>
+            <li :class="activate(3)" @click="nav(3)"><a href="javascript:void(0);">4月</a></li>
+            <li :class="activate(4)" @click="nav(4)"><a href="javascript:void(0);">5月</a></li>
+            <li :class="activate(5)" @click="nav(5)"><a href="javascript:void(0);">6月</a></li>
+            <li :class="activate(6)" @click="nav(6)"><a href="javascript:void(0);">7月</a></li>
+            <li :class="activate(7)" @click="nav(7)"><a href="javascript:void(0);">8月</a></li>
+            <li :class="activate(8)" @click="nav(8)"><a href="javascript:void(0);">9月</a></li>
+            <li :class="activate(9)" @click="nav(9)"><a href="javascript:void(0);">10月</a></li>
+            <li :class="activate(10)" @click="nav(10)"><a href="javascript:void(0);">11月</a></li>
+            <li :class="activate(11)" @click="nav(11)"><a href="javascript:void(0);">12月</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane">
+            <ul class="timeline">
+              <li class="time-label" v-show="show_input">
+                <span class="bg-red">
+                    今天
+                </span>
+                <span>今日未打卡</span>
+              </li>
+              <li v-show="show_input">
+                <div class="timeline-item">
+                  <h3 class="timeline-header">
+                    <!-- radio -->
+                    <!-- radio -->
+                    <div class="form-group">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" v-model="input_tag" value="0">
+                          问题反馈
+                        </label>
+                        <label>
+                          <input type="radio" v-model="input_tag" value="1">
+                          心情故事
+                        </label>
+                        <label>
+                          <input type="radio" v-model="input_tag" value="2"/>
+                          其他
+                        </label>
+                      </div>
+                    </div>
+                  </h3>
+                  <div class="timeline-body">
+                    <!-- quick email widget -->
+                    <div class="box-info">
+                      <div class="box-body pad">
+                        <form>
+                            <textarea class="textarea" placeholder="说点什么吧..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </form>
+                      </div>
+                      <div class="box-footer clearfix">
+                        <button class="pull-right btn btn-default" id="sendEmail" @click="submit_input">提交 <i class="fa fa-arrow-circle-right"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            <!-- timeline time label -->
+                <template  v-for="item in models">
+                  <li class="time-label">
+                    <span class="bg-green">
+                        #[ (new Date(item.c_t)).toLocaleString() ]]
+                    </span>
+                    <span>#[ item.work_types ]]</span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header">
+                        <div class="diary-con">
+                            <div class="title">日志</div>
+                            <div class="text">
+                                <p>
+                                    <span><em>#[item.work_brief]]</em></span>
+                                    <span><em>标签：</em><em>#[item.tag_display]]</em></span>
+                                </p>
+                            </div>
+                            <div class="timer">
+                                <i class="icon-time"></i><span>#[Math.floor((new Date().getTime() - new Date(item.c_t).getTime())/3600000/24)]]天前</span>
+                            </div>
+                        </div>
+                      </h3>
+                      <div class="timeline-body">
+                        <div class="words">
+                            <div class="text-area" :id="'ta-'+item.id" v-html="item.content"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </template>
+              <!-- END timeline item -->
+              <li>
+                <i class="fa fa-clock-o"></i>
+              </li>
+            </ul>
+          </div>
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Mar">
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
+    </div>
+</div>
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Apr">
+<script type="text/javascript">
+    function search(cond, callback) {
+        console.log(cond);
+        $.ajax({
+            url: '{% url "diaries-list" version="v1" %}' + '?page_size=0&ordering=-id',
+            type: 'GET',
+            data: cond,
+            success: function(data) {
+                console.log(data);
+                if(callback) callback(data, new Date());
+            },
+            error: function(jqXHR, status, error) {
+                console.log(error);
+            }
+        });
+    }
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="May">
+    // we presume that user doesn't stay over midnight at 12:00 am.
+    // if he does, the content will not be updated across the mid-night of two months.
+    var time_line = new Vue({
+        delimiters: ['#[', ']]'],
+        el: '#time_line',
+        data: {
+            last_month: 0,
+            month_switch: [],
+            models: [],
+            show_input: false,
+            input_tag: 0,
+        },
+        methods: {
+            activate: function(id) {
+                return { 'active': this.month_switch[id] }
+            },
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="June">
+            nav: function(id) {
+                Vue.set(this.month_switch, this.last_month, 0);
+                Vue.set(this.month_switch, id, 1);
+                this.last_month = id;
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="July">
+                var cond = {}, today = new Date();
+                cond['c_t_0'] = today.getFullYear() + '-' + (id+1) + '-1 00:00:00';
+                cond['c_t_1'] = id==12? today.getFullYear()+1 :today.getFullYear()  + '-' + (id+2)%12 + '-1 00:00:00';
+                search(cond, this.data_proc);
+            },
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Aug">
+            data_proc: function(data, date) {
+                this.models = data.models;
+            },
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Sep">
+            current_month_proc: function(data, date) {
+                if (!data.models) return;
+                // As data is descending ordered, we check the first one.
+                if (date.getDate() != new Date(data.models[0].c_t).getDate()) {
+                    this.show_input = true;
+                }
+                this.data_proc(data, date);
+            },
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Oct">
+            submit_input: function() {
+                var vm = this;
+                $.ajax({
+                    url: '{% url "diaries-list" version="v1" %}',
+                    type: 'POST',
+                    data: {"tag": vm.input_tag, "content": $('.textarea').val()},
+                    success: function(data) {
+                        console.log(data);
+                        vm.models.unshift(data);
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+        },
+        created: function() {
+            for(var i=0;i<12;i++) {
+                this.month_switch[i] = 0;
+            }
+            var today = new Date();
+            this.last_month = today.getMonth();
+            this.month_switch[this.last_month] = 1;
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Nov">
+            var cond = {};
+            cond['c_t_0'] = today.getFullYear() + '-' + (today.getMonth()+1) + '-1 00:00:00';
+            cond['c_t_1'] = today.getMonth()==12? today.getFullYear()+1 :today.getFullYear()  + '-' + (today.getMonth()+2)%12 + '-1 00:00:00';
+            search(cond, this.current_month_proc);
+        }
+    })
 
-		      </div>
-		      <!-- /.tab-pane -->
-		      <!-- /.tab-pane -->
-		      <div class="tab-pane" id="Dec">
-
-		      </div>
-		      <!-- /.tab-pane -->
-		    </div>
-		    <!-- /.tab-content -->
-		  </div>
-		  <!-- /.nav-tabs-custom -->
-		</div>
-	</div>
+</script>
 {% endblock %}

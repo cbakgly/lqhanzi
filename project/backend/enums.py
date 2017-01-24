@@ -14,8 +14,8 @@ def getenum_task_business_status(name):
 
 
 def getenum_business_type(name):
-    type = {"split": 1, "input": 2, "book":3, "download": 4, "dedup": 5, "help": 7, "input_page": 6, "dedup_child": 8}
-    return type[name]
+    types = {"split": 1, "input": 2, "book": 3, "download": 4, "dedup": 5, "help": 7, "input_page": 6, "dedup_child": 8}
+    return types[name]
 
 
 def getenum_source(name):

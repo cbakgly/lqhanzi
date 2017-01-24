@@ -158,7 +158,7 @@ class VariantsInputFilter(django_filters.FilterSet):
     """
     异体字拆字过滤器
     """
-    update_time_in = NumberInFilter(name='business_type', lookup_expr='in')
+    business_type_in = NumberInFilter(name='business_type', lookup_expr='in')
 
     class Meta:
         model = VariantsInput

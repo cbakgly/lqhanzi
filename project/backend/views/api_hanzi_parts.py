@@ -21,7 +21,7 @@ class HanziPartFilter(django_filters.FilterSet):
 
     class Meta:
         model = LqHanziPart
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class HanziPartViewSet(viewsets.ModelViewSet):

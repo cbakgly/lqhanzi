@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import django_filters
+from datetime import datetime
 from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -15,7 +16,7 @@ from api_tasks import TasksSerializer
 from task_func import assign_task
 from backend.enums import getenum_task_package_business_status
 from backend.filters import NumberInFilter
-from ..models import TaskPackages, Tasks, business_stage_choices, business_type_choices
+from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 
 
 # Task Packages management
@@ -30,7 +31,9 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
                   'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits', 'name')
 
     def get_today_tasks(self, task_package):
-        tasks = Tasks.objects.filter(completed_at__gte=timezone.now().date(), task_package=task_package)
+        now = timezone.now()
+        today = datetime(now.year, now.month, now.day, tzinfo=timezone.utc)
+        tasks = Tasks.objects.filter(completed_at__gte=today, task_package=task_package)
         serializer = TasksSerializer(instance=tasks, many=True)
         return serializer.data
 
@@ -76,7 +79,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         return sum_credits
 
     def get_name(self, instance):
-        return "#" + business_type_choices[instance.business_type - 1][1] + business_stage_choices[instance.business_stage - 1][1] + str(instance.size) + str(instance.id)
+        return "#" + BUSINESS_TYPE_CHOICES[instance.business_type - 1][1] + BUSINESS_STAGE_CHOICES[instance.business_stage - 1][1] + str(instance.size) + str(instance.id)
 
 
 class TaskPackagesFilter(django_filters.FilterSet):

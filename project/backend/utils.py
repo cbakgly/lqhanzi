@@ -7,12 +7,15 @@ from functional import timeout_cache
 from models import Tasks
 
 
+# https://docs.djangoproject.com/en/dev/topics/i18n/timezones/#selecting-the-current-time-zone
+# see above to learn timezone usage
+
 # 5 minutes
 @timeout_cache(5 * 60)
 def get_today_credits(user_id):
     today = date.today()
-    start = timezone.make_aware(datetime(today.year, today.month, today.day, 0, 0, 0), timezone.get_current_timezone())
-    end = timezone.make_aware(datetime(today.year, today.month, today.day, 23, 59, 59), timezone.get_current_timezone())
+    start = datetime(today.year, today.month, today.day, tzinfo=timezone.utc)
+    end = start + timezone.timedelta(days=1)
     ret = Tasks.objects.filter(user_id=user_id).filter(completed_at__range=(start, end)).values("credits").aggregate(Sum("credits"))
     return ret['credits__sum']
 
@@ -21,7 +24,7 @@ def get_today_credits(user_id):
 def get_today_complete_task_num(user_id, business_type):
     today = date.today()
     start = timezone.make_aware(datetime(today.year, today.month, today.day, 0, 0, 0), timezone.get_current_timezone())
-    end = timezone.make_aware(datetime(today.year, today.month, today.day, 23, 59, 59), timezone.get_current_timezone())
+    end = start + timezone.timedelta(days=1)
     ret = Tasks.objects.filter(user_id=user_id).filter(business_type=business_type).filter(completed_at__range=(start, end)).values("id").aggregate(Count("id"))
     return ret['id__count']
 
@@ -89,3 +92,11 @@ def is_search_request(search_param, *keywords):
         if ret:
             return True
     return False
+
+
+def is_int(n):
+    try:
+        int(n)
+        return True
+    except Exception:
+        return False

@@ -25,13 +25,13 @@ class RedeemFilter(django_filters.FilterSet):
 class RedeemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreditsRedeem
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class RedeemSerializerVersion1(serializers.ModelSerializer):
     class Meta:
         model = CreditsRedeem
-        fields = ("__all__")
+        fields = "__all__"
         depth = 1
 
 
