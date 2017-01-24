@@ -92,3 +92,11 @@ def is_search_request(search_param, *keywords):
         if ret:
             return True
     return False
+
+
+def is_int(n):
+    try:
+        int(n)
+        return True
+    except Exception:
+        return False

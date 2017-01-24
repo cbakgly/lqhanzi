@@ -16,7 +16,7 @@ from api_tasks import TasksSerializer
 from task_func import assign_task
 from backend.enums import getenum_task_package_business_status
 from backend.filters import NumberInFilter
-from ..models import TaskPackages, Tasks, business_stage_choices, business_type_choices
+from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 
 
 # Task Packages management

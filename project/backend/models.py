@@ -26,19 +26,19 @@ class User(AbstractUser, GuardianUserMixin):
         return self.username
 
 
-variant_type_choices = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
-hanzi_type_choices = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
-source_choices = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
-boolean_choices = ((0, u'否'), (1, u'是'))
+VARIANT_TYPE_CHOICES = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
+HANZI_TYPE_CHOICES = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
+SOURCE_CHOICES = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
+YESNO_CHOICES = ((0, u'否'), (1, u'是'))
 
 
 class HanziSet(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
-    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
+    source = models.SmallIntegerField(u'来源', choices=SOURCE_CHOICES, null=True)
+    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=HANZI_TYPE_CHOICES, null=True, blank=True)
     hanzi_char = models.CharField(u'文字', null=True, max_length=8)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, max_length=32)
 
-    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True, blank=True)
+    variant_type = models.SmallIntegerField(u'正异类型', choices=VARIANT_TYPE_CHOICES, null=True, blank=True)
     std_hanzi = models.CharField(u'所属正字', null=True, max_length=64)
     as_std_hanzi = models.CharField(u'兼正字号', null=True, max_length=32)
     seq_id = models.CharField(u'字的位置统一编码', null=True, max_length=32)
@@ -52,8 +52,8 @@ class HanziSet(models.Model):
     dup_count = models.SmallIntegerField(u'重复次数', null=True)
     inter_dict_dup_hanzi = models.CharField(u'异体字字典间重复编码', null=True, max_length=64)
     korean_dup_hanzi = models.CharField(u'高丽异体字字典内部重复编码', null=True, max_length=32)
-    is_korean_redundant = models.BooleanField(u'是否多余高丽异体字', choices=boolean_choices, default=False)
-    is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', choices=boolean_choices, default=False)
+    is_korean_redundant = models.BooleanField(u'是否多余高丽异体字', choices=YESNO_CHOICES, default=False)
+    is_inter_dict_redundant = models.BooleanField(u'是否多余台湾高丽异体字', choices=YESNO_CHOICES, default=False)
 
     structure = models.CharField(u'结构', max_length=16, null=True)
     min_split = models.CharField(u'初步拆分', max_length=255, null=True)
@@ -71,18 +71,18 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-business_type_choices = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'录入页码任务'), (7, u'互助'), (8, u'去重子任务'))
-business_stage_choices = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
-task_package_status_choices = ((0, u'进行中'), (1, u'已完成'))
-task_status_choices = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
+BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'拆字'), (7, u'互助'), (8, u'去重子任务'))
+BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
+TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
+TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
 
 
 class TaskPackages(models.Model):
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True, related_name="user_tps")  # 用户，拆字员
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True)
     size = models.SmallIntegerField(u'工作包大小', null=False, default=100)
-    status = models.SmallIntegerField(u'工作包状态', choices=task_package_status_choices, default=0)
+    status = models.SmallIntegerField(u'工作包状态', choices=TASK_PACKAGE_STATUS_CHOICES, default=0)
     daily_plan = models.SmallIntegerField(u'日计划工作量', null=False, default=5)
     due_date = models.DateTimeField(u'预计完成时间', null=True, blank=True)
     completed_num = models.SmallIntegerField(u'已完成数量', default=0)
@@ -94,11 +94,11 @@ class TaskPackages(models.Model):
         db_table = 'lq_task_packages'
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type - 1][1] + business_stage_choices[self.business_stage - 1][1] + str(self.size) + str(self.id)
+        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][1] + str(self.size) + str(self.id)
 
 
 class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True)
     business_name = models.CharField(u'任务名称', max_length=64, null=True)
     credits = models.SmallIntegerField(u'单个任务积分', default=0)
     is_active = models.BooleanField(u'是否启用', default=True)
@@ -110,11 +110,11 @@ class TaskTypes(models.Model):
 class Tasks(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
-    task_status = models.SmallIntegerField(u'任务状态', choices=task_status_choices, null=True, blank=True)
+    task_status = models.SmallIntegerField(u'任务状态', choices=TASK_STATUS_CHOICES, null=True, blank=True)
 
     # business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True, blank=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
 
     credits = models.SmallIntegerField(u'积分', null=True, blank=True)
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
@@ -133,20 +133,20 @@ class Tasks(models.Model):
         ordering = ['id']
 
     def __unicode__(self):
-        return "#" + business_type_choices[self.business_type - 1][1] + business_stage_choices[self.business_stage - 1][1] + str(self.id)
+        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][1] + str(self.id)
 
 
 class VariantsSplit(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True, blank=True)
-    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True, blank=True)
+    source = models.SmallIntegerField(u'来源', choices=SOURCE_CHOICES, null=True, blank=True)
+    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=HANZI_TYPE_CHOICES, null=True, blank=True)
     hanzi_char = models.CharField(u'文字', null=True, blank=True, max_length=8)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, blank=True, max_length=32)
 
-    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True, blank=True)
+    variant_type = models.SmallIntegerField(u'正异类型', choices=VARIANT_TYPE_CHOICES, null=True, blank=True)
     std_hanzi = models.CharField(u'所属正字', null=True, blank=True, max_length=64)
     as_std_hanzi = models.CharField(u'兼正字号', null=True, blank=True, max_length=32)
     seq_id = models.CharField(u'字的位置统一编码', null=True, blank=True, max_length=32)
-    is_redundant = models.BooleanField(u'是否多余', choices=boolean_choices, default=False)
+    is_redundant = models.BooleanField(u'是否多余', choices=YESNO_CHOICES, default=False)
 
     skip_num_draft = models.SmallIntegerField(u'太难跳过次数', null=True, blank=True)
     init_split_draft = models.CharField(u'初步拆分', max_length=128, null=True, blank=True)
@@ -169,10 +169,10 @@ class VariantsSplit(models.Model):
     similar_parts_final = models.CharField(u'相似部件', max_length=64, null=True, blank=True)
     dup_id_final = models.CharField(u'重复ID', max_length=32, null=True, blank=True)
 
-    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=boolean_choices, default=False)
-    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=boolean_choices, default=False)
-    is_checked = models.BooleanField(u'是否人工审核', choices=boolean_choices, default=False)
-    is_submitted = models.BooleanField(u'是否入hanzi库', choices=boolean_choices, default=False)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=YESNO_CHOICES, default=False)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=YESNO_CHOICES, default=False)
+    is_checked = models.BooleanField(u'是否人工审核', choices=YESNO_CHOICES, default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', choices=YESNO_CHOICES, default=False)
     remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, blank=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, blank=True, auto_now=True)
@@ -191,7 +191,7 @@ class InputPage(models.Model):
 
 
 class VariantsInput(models.Model):
-    variant_type_choices = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))
+    INPUT_VARIANT_TYPE_CHOICES = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))
     volume_num = models.SmallIntegerField(u'册', null=True, blank=True)
     page_num = models.IntegerField(u'页码', null=True)
     # page_num = models.ForeignKey(InputPage, related_name='inputs', on_delete=models.SET_NULL, blank=True, null=True)
@@ -199,31 +199,31 @@ class VariantsInput(models.Model):
     seq_num_draft = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_draft = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_draft = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_draft = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
+    variant_type_draft = models.SmallIntegerField(u'正异类型', choices=INPUT_VARIANT_TYPE_CHOICES, default=0)
     std_hanzi_draft = models.CharField(u'所属正字', max_length=64, null=True)
     notes_draft = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_draft = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
+    is_del_draft = models.BooleanField(u'是否删除', choices=YESNO_CHOICES, default=False)
 
     seq_num_review = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_review = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_review = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_review = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
+    variant_type_review = models.SmallIntegerField(u'正异类型', choices=INPUT_VARIANT_TYPE_CHOICES, default=0)
     std_hanzi_review = models.CharField(u'所属正字', max_length=64, null=True)
     notes_review = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_review = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
+    is_del_review = models.BooleanField(u'是否删除', choices=YESNO_CHOICES, default=False)
 
     seq_num_final = models.SmallIntegerField(u'序号', null=True)
     hanzi_char_final = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id_final = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type_final = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, default=0)
+    variant_type_final = models.SmallIntegerField(u'正异类型', choices=INPUT_VARIANT_TYPE_CHOICES, default=0)
     std_hanzi_final = models.CharField(u'所属正字', max_length=64, null=True)
     notes_final = models.CharField(u'注释信息', max_length=64, null=True)
-    is_del_final = models.BooleanField(u'是否删除', choices=boolean_choices, default=False)
+    is_del_final = models.BooleanField(u'是否删除', choices=YESNO_CHOICES, default=False)
 
-    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=boolean_choices, default=False)
-    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=boolean_choices, default=False)
-    is_checked = models.BooleanField(u'是否人工审核', choices=boolean_choices, default=False)
-    is_submitted = models.BooleanField(u'是否入hanzi库', choices=boolean_choices, default=False)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=YESNO_CHOICES, default=False)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=YESNO_CHOICES, default=False)
+    is_checked = models.BooleanField(u'是否人工审核', choices=YESNO_CHOICES, default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', choices=YESNO_CHOICES, default=False)
 
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
@@ -273,11 +273,11 @@ class KoreanDupZhengCodes(models.Model):
 
 
 class KoreanDedup(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
-    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True)
+    source = models.SmallIntegerField(u'来源', choices=SOURCE_CHOICES, null=True)
+    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=HANZI_TYPE_CHOICES, null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
+    variant_type = models.SmallIntegerField(u'正异类型', choices=VARIANT_TYPE_CHOICES, null=True)
     std_hanzi = models.CharField(u'所属正字', max_length=64, null=True)
     zheng_code = models.CharField(u'郑码', max_length=32, null=True)
     korean_dup_hanzi = models.CharField(u'异体字字典内部重复编码', max_length=32, null=True)
@@ -306,20 +306,20 @@ class KoreanDupCharacters(models.Model):
 
 
 class InterDictDedup(models.Model):
-    source = models.SmallIntegerField(u'来源', choices=source_choices, null=True)
-    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=hanzi_type_choices, null=True)
+    source = models.SmallIntegerField(u'来源', choices=SOURCE_CHOICES, null=True)
+    hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=HANZI_TYPE_CHOICES, null=True)
     hanzi_char = models.CharField(u'文字', max_length=8, null=True)
     hanzi_pic_id = models.CharField(u'图片字编码', max_length=32, null=True)
-    variant_type = models.SmallIntegerField(u'正异类型', choices=variant_type_choices, null=True)
+    variant_type = models.SmallIntegerField(u'正异类型', choices=VARIANT_TYPE_CHOICES, null=True)
     std_hanzi = models.CharField(u'所属正字', max_length=64, null=True)
     as_std_hanzi = models.CharField(u'兼正字号', max_length=32, null=True)
     inter_dict_dup_hanzi_draft = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
     inter_dict_dup_hanzi_review = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
     inter_dict_dup_hanzi_final = models.CharField(u'异体字字典间重复编码', max_length=64, null=True)
-    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=boolean_choices, default=False)
-    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=boolean_choices, default=False)
-    is_checked = models.BooleanField(u'是否人工审核', choices=boolean_choices, default=False)
-    is_submitted = models.BooleanField(u'是否入hanzi库', choices=boolean_choices, default=False)
+    is_draft_equals_review = models.BooleanField(u'初次回查是否相等', choices=YESNO_CHOICES, default=False)
+    is_review_equals_final = models.BooleanField(u'回查审查是否相等', choices=YESNO_CHOICES, default=False)
+    is_checked = models.BooleanField(u'是否人工审核', choices=YESNO_CHOICES, default=False)
+    is_submitted = models.BooleanField(u'是否入hanzi库', choices=YESNO_CHOICES, default=False)
     remark = models.CharField(u'备注', max_length=64, null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
@@ -412,7 +412,7 @@ class Credits(models.Model):
 
 # Operation log table
 class Operation(models.Model):
-    logtype_choices = (
+    log_type_choices = (
         (0, u'常规日志'),
         (1, u'任务包管理'),
         (2, u'任务管理'),
@@ -421,7 +421,7 @@ class Operation(models.Model):
         (5, u'用户管理'),
     )
     user = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
-    logtype = models.IntegerField(u'日志类型', choices=logtype_choices, default=0)
+    logtype = models.IntegerField(u'日志类型', choices=log_type_choices, default=0)
     message = models.CharField(u'日志内容', max_length=1024)
     logtime = models.DateTimeField(u'记录时间', auto_now=True)
 
@@ -471,8 +471,8 @@ class RbacAction(models.Model):
 
 
 class TaskCredit(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=business_type_choices, null=True, blank=True)
-    business_stage = models.SmallIntegerField(u'任务阶段', choices=business_stage_choices, null=True, blank=True)
+    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True, blank=True)
+    business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
     business_credit = models.SmallIntegerField(u'任务积分')
 
 

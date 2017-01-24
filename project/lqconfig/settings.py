@@ -153,7 +153,7 @@ MEDIA_URL = '/media/'
 # Rest framework paging setting added by @xianduan
 REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 10,
     'DEFAULT_VERSION': 'v1',
     'ALLOWED_VERSIONS': ['v1', None],
     'DEFAULT_FILTER_BACKENDS': (
