@@ -27,8 +27,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskPackages
-        fields = ('id', 'user', 'business_type', 'business_stage', 'size', 'status', 'daily_plan', 'due_date',
-                  'completed_num', 'completed_at', 'c_t', 'u_t', 'tasks', 'credits', 'name')
+        fields = '__all__'
 
     def get_today_tasks(self, task_package):
         now = timezone.now()
@@ -43,7 +42,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         biz_stage = validated_data['business_stage']
         exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_task_package_business_status('ongoing'))
         if exist:
-            raise ValidationError(_("Only one task package per type and stage can be created."))
+            raise ValidationError({"detail": _("Only one task package per type and stage can be created.")})
 
         due_days = validated_data['size'] / validated_data['daily_plan']
         c_t = timezone.now()

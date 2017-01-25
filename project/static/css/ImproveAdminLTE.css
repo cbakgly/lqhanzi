@@ -1252,3 +1252,9 @@ tbody tr th{
 .modal-footer .input-group .form-control{
     border-radius:3px;
 }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}

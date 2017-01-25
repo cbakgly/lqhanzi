@@ -12,6 +12,15 @@
     <h4>字库温馨提示：</h4>
     <p>请您慎重选择每日计划，要每天坚持完成哦！如果想要调整计划，请在任务进行中设置调整每日计划～随喜您,合十～</p>
 </div>
+<div id="msg-bar">
+<transition name="fade">
+<div class="alert alert-dismissible" :class="show_type()"v-show="showup">
+    <button type="button" class="close" @click="dismiss()">&times;</button>
+    <h4><i class="icon fa" :class="symbol_type()"></i> #[ header ]]</h4>
+    #[ content ]]
+</div>
+</transition>
+</div>
 <div class="row">
     <div class="col-xs-12">
       <div class="box box-widget">
@@ -70,6 +79,45 @@
     </div>
 </div>
 <script type="text/javascript">
+    var msg_bar = new Vue({
+        delimiters: ['#[', ']]'],
+        el: '#msg-bar',
+        data: {
+            header: "{% trans 'Alert!' %}",
+            is_success: true,
+            content: '',
+            showup: false,
+        },
+        methods: {
+            show_type: function() {
+                return {
+                    'alert-success': this.is_success,
+                    'alert-warning': !this.is_success,
+                }
+            },
+            symbol_type: function() {
+                return {
+                    'fa-check': this.is_success,
+                    'fa-warning': !this.is_success,
+                }
+            },
+            show: function(success, msg) {
+                var m = JSON.parse(msg);
+                if (success) {
+                    this.content = m.detail;
+                    this.is_success = true;
+                } else {
+                    this.content = m.detail;
+                    this.is_success = false;
+                }
+                this.showup = true;
+            },
+            dismiss: function() {
+                this.showup = false;
+            }
+        },
+    })
+
     $("#submit-task-button").click(function() {
         var business_type = $('input[name=business_type]:checked').data('val');
         var business_stage = $('input[name=business_stage]:checked').data('val');
@@ -99,11 +147,11 @@
                 },
                 success: function(data) {
                     console.log(data);
-                    alert("{% trans "success" %}");
+                    msg_bar.show(true, {'detail': {% trans "success" %}});
                 },
                 error: function(jqXHR, status, error) {
                     console.log(jqXHR.responseText);
-                    alert(jqXHR.responseText);
+                    msg_bar.show(false, jqXHR.responseText);
                 }
         });
 
