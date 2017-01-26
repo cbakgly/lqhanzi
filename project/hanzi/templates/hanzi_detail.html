@@ -14,6 +14,66 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     
     <script src="{% static 'js/jquery-2.2.3.min.js'  %}"></script>
+
+<style type="text/css">
+
+
+#up,#down{margin:0;padding:0;overflow:hidden;}
+
+#left,#right{ margin:0;float:left;overflow:hidden;}
+
+/*#middle img{ display:block; margin:0 auto; width:22px; height:30px; padding-top:335px;}*/
+
+.tab-panel iframe{ width:100%;height:100%;position:relative;top:-2px;left:-2px;}
+
+#up { border-bottom:1px solid #82abd5;}
+
+#left { border-right:1px solid #82abd5;}
+
+/*#middle { border-right:1px solid #82abd5;border-bottom:1px solid #82abd5; background-color:#e6e6e6;}*/
+
+/*#right { border-right:1px solid #82abd5;border-bottom:1px solid #82abd5;}
+*/
+
+
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(function()
+{
+    $(".tab-content").css("padding",0);
+    $(".tab-panel").css("padding",0);
+    $(".tab-panel").css("border-left","1px solid #82abd5");
+    $(".tab-panel").css("border-bottom","1px solid #82abd5");
+    $(".tab-panel").css("border-right","1px solid #82abd5");
+
+    var w = $(".tab-content").width();
+    var h = $(".tab-content").height();
+
+    $("#up").css("width",w-2);
+    $("#up").css("height",150);
+
+    $("#down").css("width",w-2);
+    $("#down").css("height",700);
+
+    $("#left").css("width",w*0.7-2);
+    $("#left").css("height",700);
+
+    // $("#middle").css("width",30);
+    // $("#middle").css("height",700);
+
+    // $("#right").css("width",w*0.3-30);
+    // $("#right").css("height",700);
+
+    $("#right").css("width",w*0.3-1);
+    $("#right").css("height",700);
+});
+
+
+</script>
+
+
 </head>
 <body>
 
@@ -28,7 +88,7 @@
                     <div class="hanzi-sets-logo fl">
                         <h1><a href="index.html">龙泉字库</a></h1>
                     </div>
-                    <div class="nav-tab fr">
+                    <div class="nav-tab nav-tab-r fr">
                         <ul  class="tabs clearfix">
                             <li><a href="/hanzi/index">异体字检索</a></li>
                             <li><a href="dicts">字典</a></li>
@@ -106,67 +166,59 @@
                         <!--表格-->
                         <div class="hanzi-origin clearfix">
 
-
-                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th>字典</th>
-                                <th>原始位置</th>
-                                <th>所属正字</th>
-                                <th>备注</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
+                      
+                            <dl>
+                                <dt></dt>
+                                <dd>正异类型：</dd>
+                                <dd>所属正字：</dd>
+                                <dd>原始出处：</dd>
+                            </dl>
 
 
-                        {% if TW %}
-                        <tr>
-                        <td>{{TW|key:"dict"}}</td>
-                        <td>
-                            {% for item in TW|key:"a" %}
-                            <a target="_blank" href="{{item|list:1}}">{{item|list:0}}</a>
-                            {% endfor %}
-                        </td>
-                        <td>{{TW|key:"zhengzhi"}}</td>
-                        <td>{{TW|key:"mark"}}</td>
-                        </tr>
-                        {% endif %}
+                            {% if TW %}
+                                <dl>
+                                <dt>{{TW|key:"dict"}}</dt>
+                                <dd>{{TW|key:"type"}}</dd>                                
+                                <dd>{{TW|key:"zhengzhi"}}</dd>
+
+                                <dd>
+                                    {% for item in TW|key:"a" %}
+                                        <a target="_blank" href="{{item|list:1}}">{{item|list:0}}</a>
+                                    {% endfor %}
+                                </dd>
+                        
+                                </dl>
+                            {% endif %}
 
 
-                        {% if HY %}
-                        <tr>
-                        <td>{{HY|key:"dict"}}</td>
-                        <td>{{HY|key:"addr"}}</td>
-                        <td>{{HY|key:"zhengzhi"}}</td>
-                        <td>{{HY|key:"mark"}}</td>  
-                        </tr>
-                        {% endif %}
+                            {% if HY %}
+                                <dl>
+                                <dt>{{HY|key:"dict"}}</dt>
+                                <dd>{{HY|key:"type"}}</dd>                                
+                                <dd>{{HY|key:"zhengzhi"}}</dd>
+                                <dd>{{HY|key:"addr"}}</dd>
+                                </dl>
+                            {% endif %}
 
 
-                        {% if GL %}
-                        <tr>
-                        <td>{{GL|key:"dict"}}</td>
-                        <td>
-                            <a target="_blank" href="{{GL|key:"url"}}">{{GL|key:"zhengzhi"}}</a>
-                        </td>
-                        <td>{{GL|key:"zhengzhi"}}</td>
-                        <td>{{GL|key:"mark"}}</td>  
-                        </tr>
-                        {% endif %}
+                            {% if GL %}
+                                <dl>
+                                <dt>{{GL|key:"dict"}}</dt>
+                                <dd>{{GL|key:"type"}}</dd>                                
+                                <dd>{{GL|key:"zhengzhi"}}</dd>
+                                <dd><a target="_blank" href="{{GL|key:"url"}}">{{GL|key:"zhengzhi"}}</a></dd>
+                                </dl>
+                            {% endif %}
 
 
-                        {% if DH %}
-                        <tr>
-                        <td>{{DH|key:"dict"}}</td>
-                        <td>{{DH|key:"addr"}}</td>
-                        <td>{{DH|key:"zhengzhi"}}</td>
-                        <td>{{DH|key:"mark"}}</td>  
-                        </tr>
-                        {% endif %}
-
-                        </tbody>
-                    </table>         
+                            {% if DH %}
+                                <dl>
+                                <dt>{{DH|key:"dict"}}</dt>
+                                <dd>{{DH|key:"type"}}</dd>
+                                <dd>{{DH|key:"zhengzhi"}}</dd>
+                                <dd>{{DH|key:"addr"}}</dd>  
+                                </dl>
+                            {% endif %}
 
 
                         </div>
@@ -206,30 +258,44 @@
                         {% if TW %}
                             {% for item in TW|key:"tab" %}
                                 <div class="tab-panel">
-                                    {{item|list:1}}
+                                    <!-- {{item|list:1}} -->
+
+                                    <div id="up">
+                                        <iframe width="100%" height="100%" seamless src="{{item|list:1}}" name="up"></iframe>
+                                    </div>
+
+                                    <div id="down">
+                                        <div id="left">
+                                            <iframe width="100%" height="100%" seamless src="{{item|list:2}}" name="down"></iframe>
+                                        </div>
+<!--                                         <div id="middle">
+                                            <img src="{% static 'img/arrow-right-33.png' %}">
+                                        </div> -->
+                                        <div id="right">
+                                            <iframe width="100%" height="100%" seamless src="{{item|list:3}}" name="right"></iframe>
+                                        </div>
+                                    </div>
+
                                 </div>  
                             {% endfor %}
                         {% endif %}          
 
                         {% if HY %}
                             <div class="tab-panel">
-
-                                <img class="hy-img" src="{{HY|key:'page_url'}}"">
-
+                                <img class="hy-img" src="{{HY|key:'page'}}">
                             </div>
                         {% endif %}
 
                         {% if DH %}
                             <div class="tab-panel">
-
-                            <img class="dh-img" src="{{DH|key:"page_url"}}">
+                                <img class="dh-img" src="{{DH|key:'page'}}">
                             </div>
                         {% endif %}
 
                         {% if GL %}
                             <div class="tab-panel">
-                                <span class="gl-label">正字:</span>{{GL|key:"zhengzhi"}}<br>
-                                <span class="gl-label">異體字</span>
+                                <span class="gl-label">正字：</span><span class="gl-zhengzi">{{GL|key:"zhengzhi"}}</span><br>
+                                <span class="gl-label">異體字：</span>
                                                   
                                 {% for item in GL|key:"vraiant" %}
                                     <img class="gl-yitizi" src="{{item|key:'pic_url'}}" alt="{{item|key:'pic_id'}}"> 
@@ -245,18 +311,14 @@
         </div>
     </div>
     <script>
-        $(function()
-        {
+        $(function(){
              //dropdown menu
-            $(".nav-tab .dropdown").mouseenter(function()
-            {
-                if(!$(this).children(".dropdown-menu").is(":animated"))
-                {
+            $(".nav-tab .dropdown").mouseenter(function() {
+                if(!$(this).children(".dropdown-menu").is(":animated")){
                     $(this).children(".dropdown-menu").fadeIn(600);
                 }
             });
-            $(".nav-tab .dropdown").mouseleave(function()
-            {
+            $(".nav-tab .dropdown").mouseleave(function() {
                 $(this).children(".dropdown-menu").fadeOut(600);
             });
         });
@@ -270,12 +332,11 @@
             $(".nav-tab-custom li").click(function()
             {
                 var $this = $(this),
-                index = $this.index();
+                    index = $this.index();
                 $this.addClass("active").siblings("li").removeClass("active");
                 $(".tab-content .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
             })
         });
-
     </script>
 </body>
 </html>

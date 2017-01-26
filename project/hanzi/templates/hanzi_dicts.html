@@ -11,14 +11,13 @@
 
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
-    <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
 
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/hanzi.js' %}"></script>
+    <script src="{% static 'js/hanzi_dicts.js' %}"></script>
 
 </head>
 
@@ -422,41 +421,32 @@
                 -->
             </ul>
 
-            <div class="pages-box fr clearfix">
+            <div class="pages-box clearfix">
                 <ul class="pagination fl">
-                    <li><a href="#"><</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">></a></li>
+
                 </ul>
-                <div class="search-page fl">
-                            <span class="page-go">
-                                <em>跳至:</em>
-                                <input type="text">
-                                <em>页</em>
-                            </span>
-                    <span class="page-btn">GO</span>
-                </div>
+
+                <span>跳至:<input id="new_page" type="text">页</span>
+                <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
+
             </div>
         </div>
         <!--./浮层-->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper tab-con">
             <!-- Main content -->
-            <section class="content-wrapper-inner tab-panel showing">
-                1
+<!--             <section class="content-wrapper-inner tab-panel showing">
+              
             </section>
             <section class="content-wrapper-inner tab-panel">
-                2
+              
             </section>
             <section class="content-wrapper-inner tab-panel">
-                3
+               
             </section>
             <section class="content-wrapper-inner tab-panel">
-                4
-            </section>
+              
+            </section> -->
             <!-- /.content -->
         </div>
     </div>
@@ -496,12 +486,11 @@
             {
                 var radical = $(this).html();
                 clickRadical(radical);
-                $(".popup").show();
+                $(".popup").show("slow");
             })
         })
-        $(".toggler").click(function()
-        {
-            $(".popup").hide();
+        $(".toggler").click(function(){
+            $(".popup").hide("slow");
         })
     });
 </script>
