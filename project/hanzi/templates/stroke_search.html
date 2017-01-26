@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    
+
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <script src="{% static 'js/stroke_search.js' %}"></script>
 
@@ -29,12 +29,12 @@
                     <div class="nav-tab nav-tab-r fr">
                         <ul class="tabs clearfix">
 
-                            <li><a href="variant_search">异体字检索</a></li>
-                            <li><a href="dicts">字典</a></li>
+                            <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
+                            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
                             <li class="dropdown">
                             <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
                                 <!--未登录前-->
-                                <a  class="dropdown-toggle"><img src="{% static 'img/44.png' %}"></a>
+                                <a  class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
                                         <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
@@ -92,7 +92,7 @@
                             <label><input type="radio" name="r" value="3">&nbsp;反查</label>
                         </div>
                     </div>
-                        <div class="help"><i class="icon-help"></i></div> 
+                        <div class="help"><i class="icon-help"></i></div>
                 </div>
             </div>
         </div>
@@ -103,9 +103,9 @@
                 <div class="con-left">
                     <p class="total">共检索到<em><span id="stroke_result_count"></span></em>条数据</p>
                     <ul class="hanzi-wrap clearfix">
-                
-                    </ul>                    
-               
+
+                    </ul>
+
                     <div class="pages-box">
                         <ul class="pagination">
                         </ul>

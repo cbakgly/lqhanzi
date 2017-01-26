@@ -11,7 +11,7 @@ from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
-from hanzi.models import HanziParts, HanziSet, Radical
+from backend.models import HanziParts, HanziSet, Radical
 from appendix_hanzi import fuluzi
 
 
@@ -50,13 +50,6 @@ def is_has_letter(s):
 # else:
 #     pass
 #     #该行有指定符号
-
-
-
-
-
-
-
 
 
 '''
@@ -133,11 +126,10 @@ def stroke_ajax_search(request):
     page_num = request.GET.get('page_num', None)
 
     # 参数不足四个就参数出错信息
-    if (q == None or order == None or page_size == None or page_num == None):
+    if (q is None or order is None or page_size is None or page_num is None):
         return HttpResponse("parameters is invalid")
 
     # 较验参数有效性
-
 
     page_size = int(page_size)
     page_num = int(page_num)
@@ -187,9 +179,8 @@ def variant_search(request):
 
     # 较验参数有效性
 
-
     # 如果缺少参数q就输出页面本身
-    if (q == None):
+    if (q is None):
         return render(request, 'variant_search.html')
 
     # 做检索操作
@@ -198,65 +189,64 @@ def variant_search(request):
     # 返回值是一个list，里边包含若干字典变量，每个字典又包含很复杂的内容，见下面结构
     # ret[]:
     # [
-    # 	{ source:2,
-    # 	  content:{
-    # 				{stdchar:aaa
-    # 				 type:char
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 				{stdchar:bbb
-    # 				 type:char
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 				{stdchar:ccc
-    # 				 type:pic
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 			  }
+    #   { source:2,
+    #     content:{
+    #               {stdchar:aaa
+    #                type:char
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #               {stdchar:bbb
+    #                type:char
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #               {stdchar:ccc
+    #                type:pic
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #             }
     #  }
     #
-    # 	{ source:4,
-    # 	  content:{
-    # 				{stdchar:aaa
-    # 				 type:char
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 				{stdchar:bbb
-    # 				 type:char
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 				{stdchar:ccc
-    # 				 type:pic
-    # 				 variant:[
-    # 				 		  {type:pic,text:aaa},
-    # 				 		  {type:char,text:bbb},
-    # 				 		  {type:char,text:ccc},
-    # 				 		 ]
-    # 				 }
-    # 			  }
+    #   { source:4,
+    #     content:{
+    #               {stdchar:aaa
+    #                type:char
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #               {stdchar:bbb
+    #                type:char
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #               {stdchar:ccc
+    #                type:pic
+    #                variant:[
+    #                         {type:pic,text:aaa},
+    #                         {type:char,text:bbb},
+    #                         {type:char,text:ccc},
+    #                        ]
+    #                }
+    #             }
     #  }
     # ]
-
 
     ret = []
     for item in result:
@@ -464,28 +454,28 @@ def get_dh_mark(seq_id):
 # 第一个参数是所属字典，第二个是图片id
 # 返回值：图片在静态文件中的路径，以static开头
 # def get_pic_path(char_dict,pic_id):
-# 	try:
-# 		obj = HanziSet.objects.get( Q(source=char_dict ) & Q(hanzi_pic_id=pic_id) ) 
+#   try:
+#       obj = HanziSet.objects.get( Q(source=char_dict ) & Q(hanzi_pic_id=pic_id) )
 
-# 		path = ''
-# 		if (char_dict == '2') :  			 	#如果是台湾图片
-# 			forst_two_letter = pic_id[0:2]		#截取前两个字母
-# 			path = '/static/tw/' + forst_two_letter + '/' + pic_id + '.png'
-# 		elif (char_dict == '3'):					#如果是汉语大字典里的字
-# 			path = '/static/hy/' + pic_id + '.png'
-# 			print path
-# 		elif (char_dict == '4') :   				#如果是高丽字典里的字
-# 			if(obj.variant_type == 0):			#如果是正字
-# 				path = '/static/gl/standard/' + pic_id + '.png'
-# 			else:
-# 				path = '/static/gl/variant/' + pic_id + '.png'
-# 		elif (char_dict == '5'):		#如果是敦煌俗字典里的字
-# 			path = '/static/dh/' + pic_id + '.png'
-# 		else:
-# 			pass
-# 		return path		
-# 	except:
-# 		return ''
+#       path = ''
+#       if (char_dict == '2') :                 #如果是台湾图片
+#           forst_two_letter = pic_id[0:2]      #截取前两个字母
+#           path = '/static/tw/' + forst_two_letter + '/' + pic_id + '.png'
+#       elif (char_dict == '3'):                    #如果是汉语大字典里的字
+#           path = '/static/hy/' + pic_id + '.png'
+#           print path
+#       elif (char_dict == '4') :                   #如果是高丽字典里的字
+#           if(obj.variant_type == 0):          #如果是正字
+#               path = '/static/gl/standard/' + pic_id + '.png'
+#           else:
+#               path = '/static/gl/variant/' + pic_id + '.png'
+#       elif (char_dict == '5'):        #如果是敦煌俗字典里的字
+#           path = '/static/dh/' + pic_id + '.png'
+#       else:
+#           pass
+#       return path
+#   except:
+#       return ''
 
 
 @csrf_exempt
@@ -570,7 +560,6 @@ def variant_detail(request):
 
             elif (item.variant_type == 4):
                 continue
-
 
         # 得到汉语大字典中的信息。处理起来比较简单。得到页码即可。
         elif (item.source == 3):
@@ -678,73 +667,71 @@ def dicts_search(request):
 # @csrf_exempt
 # def show_iframe(request):
 
-# 	#取出汉字代码
-# 	tw_char_code = request.path.split('/')[3].encode("utf-8")
+#   #取出汉字代码
+#   tw_char_code = request.path.split('/')[3].encode("utf-8")
 
-# 	#如果不是附录字
-# 	if fuluzi.count( tw_char_code ) == 0:
+#   #如果不是附录字
+#   if fuluzi.count( tw_char_code ) == 0:
 
-# 		#构造模板路径
-# 		tw_char_code = tw_char_code.lower()
-# 		first_letter = tw_char_code[0].lower()
-# 		up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
-# 		down = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + tw_char_code + '.htm'
-# 		right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
+#       #构造模板路径
+#       tw_char_code = tw_char_code.lower()
+#       first_letter = tw_char_code[0].lower()
+#       up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
+#       down = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + tw_char_code + '.htm'
+#       right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
 
-# 	else:
-# 		tw_char_code = tw_char_code.lower()
-# 		first_letter = tw_char_code[0].lower()
-# 		up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
-# 		down = '/hanzi/yitizi/yiti' + first_letter + '/fu' + first_letter + '/fu' + tw_char_code + '.htm'
-# 		right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
-
-
-# 	context = {}
-# 	context['up'] = up
-# 	context['down'] = down
-# 	context['right'] = right	
-# 	return render(request, 'iframe.htm', context)  	
+#   else:
+#       tw_char_code = tw_char_code.lower()
+#       first_letter = tw_char_code[0].lower()
+#       up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
+#       down = '/hanzi/yitizi/yiti' + first_letter + '/fu' + first_letter + '/fu' + tw_char_code + '.htm'
+#       right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
 
 
+#   context = {}
+#   context['up'] = up
+#   context['down'] = down
+#   context['right'] = right
+#   return render(request, 'iframe.htm', context)
 
 
 # @csrf_exempt
 # def show_yitizi(request):
-# 	path =  request.path.encode("utf-8")
-# 	addr = path[7:len(path)]
-# 	return render_to_response(addr)
+#   path =  request.path.encode("utf-8")
+#   addr = path[7:len(path)]
+#   return render_to_response(addr)
 
 
 # @csrf_exempt
 # def variant2(request):
-# 	return render(request, 'variant2.htm', context)  
+#   return render(request, 'variant2.htm', context)
 
 '''
 这个函数，里边的分页功能将由我自己写，不用Paginator
 '''
 # @csrf_exempt
 # def check_by_bujian(request):
-# 	page = 0
-# 	page_size = 50
-# 	if request.method == 'GET':
-# 		q = request.GET['q']
-# 		page  = int(request.GET['page']) # 获取页码
-# 	elif request.method == 'POST':
-# 		q = request.POST['q']
-# 		page  = int(request.POST['page']) # 获取页码
+#   page = 0
+#   page_size = 50
+#   if request.method == 'GET':
+#       q = request.GET['q']
+#       page  = int(request.GET['page']) # 获取页码
+#   elif request.method == 'POST':
+#       q = request.POST['q']
+#       page  = int(request.POST['page']) # 获取页码
 
-# 	pages = HanziSet.objects.filter( Q(mix_split__contains=q)  ).count() / page_size + 1
-# 	result = HanziSet.objects.filter( Q(mix_split__contains=q)  ).order_by('source')[(page-1)*page_size:page*page_size]
-# 	for item in result:
-# 		if( item.hanzi_pic_id != "" ):
-# 			item.pic_url = get_pic_path( str(item.source),item.hanzi_pic_id ) 
+#   pages = HanziSet.objects.filter( Q(mix_split__contains=q)  ).count() / page_size + 1
+#   result = HanziSet.objects.filter( Q(mix_split__contains=q)  ).order_by('source')[(page-1)*page_size:page*page_size]
+#   for item in result:
+#       if( item.hanzi_pic_id != "" ):
+#           item.pic_url = get_pic_path( str(item.source),item.hanzi_pic_id )
 
-# 	context = {}
-# 	context['page'] = page
-# 	context['pages'] = pages
-# 	context['q'] = q
-# 	context['result'] = result
-# 	return render(request, 'checkresult.htm', context) 
+#   context = {}
+#   context['page'] = page
+#   context['pages'] = pages
+#   context['q'] = q
+#   context['result'] = result
+#   return render(request, 'checkresult.htm', context)
 
 
 '''
@@ -752,7 +739,7 @@ def dicts_search(request):
 '''
 # @csrf_exempt
 # def variant(request):
-# 	return render(request,'variant_search.html')
+#   return render(request,'variant_search.html')
 
 
 # '''
@@ -760,94 +747,92 @@ def dicts_search(request):
 # '''
 # @csrf_exempt
 # def get_parts(request):
-# 	parts = HanziParts.objects.all().order_by('strokes','stroke_order')#.order_by('stroke_order')#[0:10]
-# 	a = serialize("json",parts,ensure_ascii=False)
-# 	b = json.loads(a)
-# 	c = []
-# 	for item in b:
-# 		c.append(item['fields'])
-# 	d = json.dumps(c,ensure_ascii=False)
-# 	# print d
-# 	write_log("get_parts.txt",d)
-# 	return HttpResponse(d,content_type="application/json")
-# 	
+#   parts = HanziParts.objects.all().order_by('strokes','stroke_order')#.order_by('stroke_order')#[0:10]
+#   a = serialize("json",parts,ensure_ascii=False)
+#   b = json.loads(a)
+#   c = []
+#   for item in b:
+#       c.append(item['fields'])
+#   d = json.dumps(c,ensure_ascii=False)
+#   # print d
+#   write_log("get_parts.txt",d)
+#   return HttpResponse(d,content_type="application/json")
+#
 
 
 # @csrf_exempt
 # def strock_search(request):
-# 	pages = 0
-# 	page_size = 100
+#   pages = 0
+#   page_size = 100
 
-# 	q = request.GET['q']
-# 	order = request.GET['order']
-# 	page  = int(request.GET['page'])
+#   q = request.GET['q']
+#   order = request.GET['order']
+#   page  = int(request.GET['page'])
 
-# 	if order=='1':
-# 		total = HanziSet.objects.filter( Q(mix_split__contains=q)  ).count()
-# 		pages = total / page_size + 1
-# 		result = HanziSet.objects.filter( Q(mix_split__contains=q)  ).order_by('source')[(page-1)*page_size:page*page_size]
+#   if order=='1':
+#       total = HanziSet.objects.filter( Q(mix_split__contains=q)  ).count()
+#       pages = total / page_size + 1
+#       result = HanziSet.objects.filter( Q(mix_split__contains=q)  ).order_by('source')[(page-1)*page_size:page*page_size]
 
-# 		for item in result:
-# 			if( item.hanzi_pic_id != "" ):
-# 				item.pic_url = get_pic_path( str(item.source),item.hanzi_pic_id ) 
+#       for item in result:
+#           if( item.hanzi_pic_id != "" ):
+#               item.pic_url = get_pic_path( str(item.source),item.hanzi_pic_id )
 
-# 	elif order == 2:
-# 		pass
+#   elif order == 2:
+#       pass
 
 
-# 	context = {}
-# 	context['page'] = page
-# 	context['pages'] = pages
-# 	context['q'] = q
-# 	context['total'] = total
-# 	context['result'] = result
-# 	return render(request, 'checkresult.htm', context) 
+#   context = {}
+#   context['page'] = page
+#   context['pages'] = pages
+#   context['q'] = q
+#   context['total'] = total
+#   context['result'] = result
+#   return render(request, 'checkresult.htm', context)
 
 # Entry.objects.get(title__regex=r'^(An?|The) +')
-
-
 
 
 # @csrf_exempt
 # def show_iframe(request):
 
-# 	#取出汉字代码
-# 	tw_char_code = request.path.split('/')[3].encode("utf-8")
+#   #取出汉字代码
+#   tw_char_code = request.path.split('/')[3].encode("utf-8")
 
-# 	#如果不是附录字
-# 	if fuluzi.count( tw_char_code ) == 0:
+#   #如果不是附录字
+#   if fuluzi.count( tw_char_code ) == 0:
 
-# 		#构造模板路径
-# 		tw_char_code = tw_char_code.lower()
-# 		first_letter = tw_char_code[0].lower()
-# 		up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
-# 		down = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + tw_char_code + '.htm'
-# 		right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
+#       #构造模板路径
+#       tw_char_code = tw_char_code.lower()
+#       first_letter = tw_char_code[0].lower()
+#       up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
+#       down = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + tw_char_code + '.htm'
+#       right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
 
-# 	else:
-# 		tw_char_code = tw_char_code.lower()
-# 		first_letter = tw_char_code[0].lower()
-# 		up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
-# 		down = '/hanzi/yitizi/yiti' + first_letter + '/fu' + first_letter + '/fu' + tw_char_code + '.htm'
-# 		right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
+#   else:
+#       tw_char_code = tw_char_code.lower()
+#       first_letter = tw_char_code[0].lower()
+#       up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + tw_char_code + '.htm'
+#       down = '/hanzi/yitizi/yiti' + first_letter + '/fu' + first_letter + '/fu' + tw_char_code + '.htm'
+#       right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + tw_char_code + '.htm'
 
 
-# 	context = {}
-# 	context['up'] = up
-# 	context['down'] = down
-# 	context['right'] = right	
-# 	return render(request, 'iframe.htm', context)  	
+#   context = {}
+#   context['up'] = up
+#   context['down'] = down
+#   context['right'] = right
+#   return render(request, 'iframe.htm', context)
 
 # '''
 # 取部首函数，可以考虑用values()查询，以降低数据库负担
 # '''
 # @csrf_exempt
 # def get_radical(request):
-# 	queryset = Radical.objects.all()#[0:10]
-# 	a = serialize("json", queryset,ensure_ascii=False)
-# 	b = json.loads(a)
-# 	c = []
-# 	for item in b:
-# 		c.append(item['fields'])
+#   queryset = Radical.objects.all()#[0:10]
+#   a = serialize("json", queryset,ensure_ascii=False)
+#   b = json.loads(a)
+#   c = []
+#   for item in b:
+#       c.append(item['fields'])
 # d = json.dumps(c,ensure_ascii=False)
 # return HttpResponse(d,content_type="application/json")

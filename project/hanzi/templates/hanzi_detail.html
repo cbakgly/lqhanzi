@@ -86,12 +86,12 @@ $(document).ready(function()
             <div class="shortcut">
                 <div class="w">
                     <div class="hanzi-sets-logo fl">
-                        <h1><a href="index.html">龙泉字库</a></h1>
+                        <h1><a href="{% url 'm1.index' %}">龙泉字库</a></h1>
                     </div>
                     <div class="nav-tab nav-tab-r fr">
                         <ul  class="tabs clearfix">
-                            <li><a href="/hanzi/index">异体字检索</a></li>
-                            <li><a href="dicts">字典</a></li>
+                            <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
+                            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
                             <li class="dropdown">
                                 <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
                                 <!--未登录前-->
@@ -206,7 +206,7 @@ $(document).ready(function()
                                 <dt>{{GL|key:"dict"}}</dt>
                                 <dd>{{GL|key:"type"}}</dd>                                
                                 <dd>{{GL|key:"zhengzhi"}}</dd>
-                                <dd><a target="_blank" href="{{GL|key:"url"}}">{{GL|key:"zhengzhi"}}</a></dd>
+                                <dd><a target="_blank" href="{{GL|key:'url'}}">{{GL|key:"zhengzhi"}}</a></dd>
                                 </dl>
                             {% endif %}
 
