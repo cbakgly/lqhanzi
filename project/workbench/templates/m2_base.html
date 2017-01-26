@@ -185,46 +185,46 @@
       <ul class="sidebar-menu">
         <li class="header">工作台</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="treeview">
+        <li class="treeview {% block 'menu-task-css' %}{% endblock %}">
           <a href="javascript:;"><i class="icon-task"></i> <span>我的任务</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{% url 'm2.task-package-ongoing' %}"><i class="fa fa-circle-o"></i> 进行中</a></li>
-            <li><a href="{% url 'm2.task-package-completed' %}"><i class="fa fa-circle-o"></i> 已完成</a></li>
-            <li><a href="{% url 'm2.new-task-package' %}"><i class="fa fa-circle-o"></i> 领任务</a></li>
+            <li {% block 'menu-item-ongoing-css' %}{% endblock %}><a href="{% url 'm2.task-package-ongoing' %}"><i class="fa fa-circle-o"></i> 进行中</a></li>
+            <li {% block 'menu-item-complete-css' %}{% endblock %}><a href="{% url 'm2.task-package-completed' %}"><i class="fa fa-circle-o"></i> 已完成</a></li>
+            <li {% block 'menu-item-new-css' %}{% endblock %}><a href="{% url 'm2.new-task-package' %}"><i class="fa fa-circle-o"></i> 领任务</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview {% block 'menu-hanzi-css' %}{% endblock %}">
           <a href="javascript:;"><i class="icon-search"></i> <span>字库检索</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{% url 'm2.lq-hanzi-search' %}"><i class="fa fa-circle-o"></i> 龙泉字库</a></li>
-            <li><a href="{% url 'm2.lq-split-search' %}"><i class="fa fa-circle-o"></i> 龙泉拆字库</a></li>
-            <li><a href="{% url 'm2.cn-dict-input-search' %}"><i class="fa fa-circle-o"></i> 汉大录入库</a></li>
-            <li><a href="{% url 'm2.korean-dedup-search' %}"><i class="fa fa-circle-o"></i> 高丽去重库</a></li>
-            <li><a href="{% url 'm2.korean-taiwan-dedup-search' %}"><i class="fa fa-circle-o"></i> 高台去重库</a></li>
+            <li {% block 'menu-item-hanzi-css' %}{% endblock %}><a href="{% url 'm2.lq-hanzi-search' %}"><i class="fa fa-circle-o"></i> 龙泉字库</a></li>
+            <li {% block 'menu-item-split-css' %}{% endblock %}><a href="{% url 'm2.lq-split-search' %}"><i class="fa fa-circle-o"></i> 龙泉拆字库</a></li>
+            <li {% block 'menu-item-input-css' %}{% endblock %}><a href="{% url 'm2.cn-dict-input-search' %}"><i class="fa fa-circle-o"></i> 汉大录入库</a></li>
+            <li {% block 'menu-item-krdedup-css' %}{% endblock %}><a href="{% url 'm2.korean-dedup-search' %}"><i class="fa fa-circle-o"></i> 高丽去重库</a></li>
+            <li {% block 'menu-item-krtwdedup-css' %}{% endblock %}><a href="{% url 'm2.korean-taiwan-dedup-search' %}"><i class="fa fa-circle-o"></i> 高台去重库</a></li>
             <!-- <li><a href="{% url 'm2.cn-dict-dedup-search' %}"><i class="fa fa-circle-o"></i> 汉大去重库</a></li> -->
           </ul>
         </li>
-        <li class="treeview">
-          <a href="javascript:;"><i class="icon-forum"></i> <span>讨论区</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> 讨论区</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 我的求助</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 我的关注</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 回收站</a></li>
-          </ul>
-        </li>
+        <!--<li class="treeview">-->
+          <!--<a href="javascript:;"><i class="icon-forum"></i> <span>讨论区</span>-->
+            <!--<span class="pull-right-container">-->
+              <!--<i class="fa fa-angle-left pull-right"></i>-->
+            <!--</span>-->
+          <!--</a>-->
+          <!--<ul class="treeview-menu">-->
+            <!--<li><a href="#"><i class="fa fa-circle-o"></i> 讨论区</a></li>-->
+            <!--<li><a href="#"><i class="fa fa-circle-o"></i> 我的求助</a></li>-->
+            <!--<li><a href="#"><i class="fa fa-circle-o"></i> 我的关注</a></li>-->
+            <!--<li><a href="#"><i class="fa fa-circle-o"></i> 回收站</a></li>-->
+          <!--</ul>-->
+        <!--</li>-->
       </ul>
       <!-- /.sidebar-menu -->
     </section>
