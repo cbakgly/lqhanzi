@@ -4,13 +4,8 @@ from django.shortcuts import render
 
 
 @login_required
-def index(request):
-    return render(request, 'task_package_management.html')
-
-
-@login_required
-def business(request):
-    return render(request, 'business.html')
+def task_package(request):
+    return render(request, 'task_package.html')
 
 
 @login_required
@@ -19,45 +14,45 @@ def task(request):
 
 
 @login_required
-def clock(request):
-    return render(request, 'clock.html')
+def check_in(request):
+    return render(request, 'check_in_management.html')
 
 
 @login_required
-def integral(request):
-    return render(request, 'integral.html')
+def credits(request):
+    return render(request, 'credits.html')
 
 
 @login_required
-def award(request):
-    return render(request, 'award.html')
+def reward(request):
+    return render(request, 'reward.html')
 
 
 @login_required
-def usertake(request):
-    return render(request, 'usertake.html')
+def user_management(request):
+    return render(request, 'user_management.html')
 
 
 @login_required
-def privelegs(request):
-    return render(request, 'privelegs.html')
+def access_privilege(request):
+    return render(request, 'privileges.html')
 
 
 @login_required
-def parts(request):
-    return render(request, 'parts.html')
+def hanzi_parts(request):
+    return render(request, 'hanzi_parts.html')
 
 
 @login_required
-def radical(request):
-    return render(request, 'radical.html')
+def hanzi_radicals(request):
+    return render(request, 'hanzi_radicals.html')
 
 
 @login_required
-def type_data_dictionary(request):
-    return render(request, 'type_data_dictionary.html')
+def task_type_management(request):
+    return render(request, 'task_type_management.html')
 
 
 @login_required
-def take(request):
-    return render(request, 'take.html')
+def forum(request):
+    return render(request, 'forum_management.html')
