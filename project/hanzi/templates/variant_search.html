@@ -7,16 +7,14 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>首页-异体字检字法</title>
 
-
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    
-    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-    <script src="{% static 'js/hanzi.js' %}"></script>
 
+    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+    <script src="{% static 'js/variant_search.js' %}"></script>
 
 
 </head>
@@ -25,19 +23,20 @@
         <!--header-->
         <div class="header">
             <div class="shortcut">
-                <div class="w">
-                    <div class="nav-tab fr">
-                        <ul>
+                <div class="shortcut-inner">
+                    <div class="nav-tab nav-tab-r fr">
+                        <ul class="tabs clearfix">
                             <li><a href="/hanzi/index">部件笔画检字法</a></li>
                             <li><a href="dicts">字典</a></li>
                             <li class="dropdown">
                                 <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
                                 <!--未登录前-->
-                                <a href="javascript:;" class="dropdown-toggle"><i class="icon-user1"></i></a>
+                                <a class="dropdown-toggle"><img src="{% static 'img/44.png' %}"></a><!-- <i class="icon-user1"></i> -->
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
                                         <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                                        <p>未登录</p>
+
+                                        <p class="status">未登录</p>
                                     </li>
                                     <li class="user-footer clearfix">
                                         <div class="fl">
@@ -76,7 +75,7 @@
                 </div>
             </div>
             <div class="w">
-                <div class="search-box">
+                <div class="search-box clearfix">
                     <div class="logo fl">
                         <h1 style="background:url({% static 'img/logo2.png' %}) no-repeat">
                             <a href="#">龙泉字库</a>
@@ -84,14 +83,14 @@
                     </div>
                     <div class="search fl">
                         <div class="search-top">
-                            <input id="variant_searchinput"class="ser-input" type="text" placeholder="请输入您所查文字或图片字编码">
-                            <!-- <span class="ser-btn" id="yitizi_search_btn">搜索</span> -->
-                            <button type="button" class="ser-btn" id="variant_search_btn">搜索</button>
+                            <input id="variant_searchinput" class="ser-input" type="text" placeholder="请输入您所查文字或图片字编码">
+                            <span class="ser-btn" id="variant_search_btn">搜索</span>
 
                         </div>
                     </div>
+                        <div class="help fl"><i class="icon-help"></i></div>
                 </div>
-                <div class="help"><i class="icon-help"></i></div>
+
             </div>
         </div>
         <!--./header-->
@@ -100,11 +99,11 @@
             <div class="w">
                 <div class="dict-con-inner">
                     <!--说明：此页面不跳页，默认显示no-result,数据请求回来则显示results-->
-                    <div class="no-result hide">
+                    <div class="no-result">
                         <p class="tip">请先输入您所查文字或图片字编码</p>
                     </div>
                     <!--有数据-->
-                    <div class="dict-results clearfix">
+                    <div class="dict-results hide clearfix">
                         <ul class="dict-result-lists fl">
 
 
@@ -203,15 +202,5 @@
             });
         });
     </script>
-
-    <div id="tip" class="w">
-        <div class="dict-con-inner">
-            <div class="no-result">
-                <p class="tip">请先输入您所查文字或图片字编码</p>
-            </div>
-        </div>
-    </div>
-
-
 </body>
 </html>

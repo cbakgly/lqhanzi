@@ -319,8 +319,9 @@ function _init() {
               $(".main-sidebar .tab-con").css({
                   "margin-top":0
               })
-              $(".sidebar-toggle").css({
-                  "top":"25px"
+              $(".icon-sidebar-toggle").css({
+                  "top":"25px",
+                  "right":"6px"
               })
           } else {
             $("body").addClass('sidebar-collapse').trigger('collapsed.pushMenu');
@@ -329,8 +330,9 @@ function _init() {
             $(".main-sidebar .tab-con").css({
               "margin-top":"25px"
             })
-            $(".sidebar-toggle").css({
-              "top":"8px"
+            $(".icon-sidebar-toggle").css({
+              "top":"16px",
+              "right":"16px"
             })
           }
         }
