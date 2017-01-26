@@ -39,7 +39,7 @@ def task_package_complete(request):
 @login_required
 def task_package_ongoing(request):
     user_id = request.user.id
-    data = TaskPackages.objects.filter(user_id=user_id).filter(status=getenum_task_business_status('ongoing'))
+    data = TaskPackages.objects.filter(user_id=user_id).filter(status=getenum_task_package_business_status('ongoing'))
     task_packages = []
     for counter, item in enumerate(data):
         i = item.__dict__

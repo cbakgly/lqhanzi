@@ -7,17 +7,17 @@ from views import task_package
 urlpatterns = [
     # 工作打卡
     # url(r'task-package-management', task_package.index, name='m3.task-package-management'),
-    url(r'task', task_package.task, name='m3.task'),
-    url(r'business', task_package.business, name='m3.business'),
-    url(r'clock', task_package.clock, name='m3.clock'),
-    url(r'integral', task_package.integral, name='m3.integral'),
-    url(r'award', task_package.award, name='m3.award'),
-    url(r'take', task_package.take, name='m3.take'),
-    url(r'usertake', task_package.usertake, name='m3.usertake'),
-    url(r'privelegs', task_package.privelegs, name='m3.privelegs'),
-    url(r'parts', task_package.parts, name='m3.parts'),
-    url(r'radical', task_package.radical, name='m3.radical'),
-    url(r'type_data_dictionary', task_package.type_data_dictionary, name='m3.type_data_dictionary'),
-    # url(r'^$', task_package.index, name='m3.task-package-management')
+    url(r'task$', task_package.task, name='m3.task'),
+    url(r'task-package$', task_package.task_package, name='m3.task_package'),
+    url(r'check-in$', task_package.check_in, name='m3.check-in'),
+    url(r'credits$', task_package.credits, name='m3.credits'),
+    url(r'reward$', task_package.reward, name='m3.reward'),
+    url(r'forum$', task_package.forum, name='m3.forum'),
+    url(r'user-management$', task_package.user_management, name='m3.user-management'),
+    url(r'access-privilege$', task_package.access_privilege, name='m3.access-privilege'),
+    url(r'hanzi-parts$', task_package.hanzi_parts, name='m3.hanzi-parts'),
+    url(r'hanzi-radical$', task_package.hanzi_radicals, name='m3.hanzi-radical'),
+    url(r'task-type-management$', task_package.task_type_management, name='m3.task-type-management'),
+    url(r'^$', task_package.task_package)
 
 ]

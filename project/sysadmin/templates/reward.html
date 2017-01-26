@@ -1,0 +1,357 @@
+{% extends "m3_base.html" %}
+
+{% block content %}
+  <div class="content-header">
+    <h1>
+      <small>后台管理/奖品管理</small>
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-11" style="margin-left: 20px;">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active treeview"><a href="#tab_1" data-toggle="tab">查询</a></li>
+          <li><a href="#tab_2" data-toggle="tab">操作日志</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab_1">
+            <div class="box-body">
+              <button type="button" class="btn bg-orange col-sm-1" id="xinzheng">新增</button>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered">
+                  <thead style="background-color: #f4f4f4;">
+                    <tr>
+                      <td>ID</td>
+                      <td>奖品名称</td>
+                      <td>兑换积分</td>
+                      <td>存量</td>
+                      <td>已兑换</td>
+                      <td>状态</td>
+                      <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>苦乐人生</td>
+                      <td>2000</td>
+                      <td>200</td>
+                      <td>8</td>
+                      <td>启用</td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>感悟人生</td>
+                      <td>2000</td>
+                      <td>200</td>
+                      <td>8</td>
+                      <td>启用</td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>认识人生</td>
+                      <td>2000</td>
+                      <td>200</td>
+                      <td>8</td>
+                      <td>启用</td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>365天</td>
+                      <td>2000</td>
+                      <td>200</td>
+                      <td>8</td>
+                      <td>启用</td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>阿弥陀佛</td>
+                      <td>2000</td>
+                      <td>200</td>
+                      <td>8</td>
+                      <td>启用</td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+                <div class="box-footer clearfix">
+                  <ul class="pagination pagination-sm no-margin col-md-12">
+                    <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                    <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                    <li>跳至</li>
+                    <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab_2">
+            <form class="form-horizontal  col-sm-12" style="margin-bottom: 70px;">
+              <div class="box-body  col-sm-12">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-1 control-label">用户：</label>
+
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="请输入用户名">
+                  </div>
+                  <label for="inputEmail3" class="col-sm-1 control-label">日志：</label>
+
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="请输入日志">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-md-1 control-label">时间：</label>
+
+                  <div class="col-sm-4">
+                      <input type="text" class="form-control pull-right" id="datepickerAll" data-date-format="yyyy-mm-dd hh:ii" class="form_datetime">
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="box-footer  col-sm-12">
+                <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+              </div>
+            </form>
+            <div class="box-body" style="margin-top: 20px;">
+                <table id="example1" class="table table-bordered">
+                  <thead style="background-color: #f4f4f4;">
+                    <tr>
+                      <td class="col-md-1">ID</td>
+                      <td class="col-md-1">用户</td>
+                      <td class="col-md-2">时间</td>
+                      <td class="col-md-6">日志</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>贤一</td>
+                      <td>2016/11/11 11:30:32</td>
+                      <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>贤二</td>
+                      <td>2016/11/11 11:30:32</td>
+                      <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>贤一</td>
+                      <td>2016/11/11 11:30:32</td>
+                      <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>李某某</td>
+                      <td>2016/11/11 11:30:32</td>
+                      <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>朱某某</td>
+                      <td>2016/11/11 11:30:32</td>
+                      <td>贤一阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛阿弥陀佛</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+                <div class="box-footer clearfix">
+                  <ul class="pagination pagination-sm no-margin col-md-12">
+                    <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                    <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                    <li>跳至</li>
+                    <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-modal">
+      <div class="modal">
+        <div class="modal-dialog">
+          <div class="modal-content col-md-12" style="border-radius: 4px;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" id="exampleModal">&times;</span></button>
+              <h4 class="modal-title">苦乐人生</h4>
+            </div>
+            <div class="modal-body col-md-12">
+              <div class='col-md-4'>
+                  <img src="{{STATIC_URL}}img/imgrensheng.jpg" class='renImg' >
+                  <button type="button" class="btn btn-block btn-primary btn-lg renImgB">上传本地图片</button>
+              </div>
+              <div class='col-md-8 padding'>
+                  <div class="form-group col-sm-12">
+                    <label for="inputEmail3" class="col-sm-4 control-label">奖品名称：</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" placeholder="奖品名称">
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                    <label for="inputEmail3" class="col-sm-4 control-label">兑换积分：</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" placeholder="输入兑换积分">
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                    <label for="inputEmail3" class="col-sm-4 control-label">存量：</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" placeholder="请输入数量">
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                    <label for="inputEmail3" class="col-sm-4 control-label">状态：</label>
+                    <div class="col-sm-7">
+                      <input type="button" class="buttonR btn-success" name='radio1'> <span class='buttonT'>启用</span>
+                      <input type="button" class="buttonR" name='radio2'> <span class='buttonT'>禁用</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                      <button type="button" class="btn btn-success col-sm-4 col-sm-push-2">确定</button>
+                      <span id="exampleModal"><button type="button" class="btn btn-default col-sm-4 col-sm-push-3">取消</button></span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  $(function () {
+    $(".select2").select2();
+
+    $('input[id^=datepicker]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A',singleDatePicker:true});
+    $('input[id^=datepickerAll]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+    //Date picker
+    // $('input[id^=datepicker]').datepicker({autoclose: true});
+    $('#lowAll').click(function(){
+        $('#leave').toggle();
+    })
+
+    $('input[class^=buttonR]').click(function(){
+        if($(this).hasClass('btn-success')){
+        }else{
+            $('input[name=radio2]').removeClass('btn-success');
+            $('input[name=radio1]').removeClass('btn-success');
+            $(this).addClass('btn-success');
+        }
+    })
+
+    $('#xinzheng').click(function(){
+          $('.modal').show();
+    })
+
+    $('span[id^=exampleModal]').click(function(){
+          $('.modal').hide();
+    })
+
+    // var donutData = [
+    //   {label: "已完成", data: 65, color: "#06c367"},
+    //   {label: "未完成", data: 35, color: "#fd9800"}
+    // ];
+    // $.plot("#donut-chart", donutData, {
+    //   series: {
+    //     pie: {
+    //       show: true,
+    //       radius: 1,
+    //       innerRadius: 0.5,
+    //       label: {
+    //         show: true,
+    //         radius: 2 / 3,
+    //         formatter: labelFormatter,
+    //         threshold: 0.1
+    //       }
+
+    //     }
+    //   },
+    //   legend: {
+    //     show: false
+    //   }
+    // });
+    // var donutData2 = [
+    //   {label: "已完成", data: 65, color: "#06c367"},
+    //   {label: "未完成", data: 35, color: "#fd9800"}
+    // ];
+    // $.plot("#donut-chart2", donutData2, {
+    //   series: {
+    //     pie: {
+    //       show: true,
+    //       radius: 1,
+    //       innerRadius: 0.5,
+    //       label: {
+    //         show: true,
+    //         radius: 2 / 3,
+    //         formatter: labelFormatter,
+    //         threshold: 0.1
+    //       }
+
+    //     }
+    //   },
+    //   legend: {
+    //     show: false
+    //   }
+    // });
+    // var donutData3 = [
+    //   {label: "已完成", data: 65, color: "#06c367"},
+    //   {label: "未完成", data: 35, color: "#fd9800"}
+    // ];
+    // $.plot("#donut-chart3", donutData3, {
+    //   series: {
+    //     pie: {
+    //       show: true,
+    //       radius: 1,
+    //       innerRadius: 0.5,
+    //       label: {
+    //         show: true,
+    //         radius: 2 / 3,
+    //         formatter: labelFormatter,
+    //         threshold: 0.1
+    //       }
+
+    //     }
+    //   },
+    //   legend: {
+    //     show: false
+    //   }
+    // });
+    function labelFormatter(label, series) {
+    return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+        + label
+        + "<br>"
+        + Math.round(series.percent) + "%</div>";
+    }
+
+  });
+</script>
+{% endblock %}

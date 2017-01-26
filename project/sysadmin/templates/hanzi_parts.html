@@ -1,0 +1,394 @@
+{% extends "m3_base.html" %}
+
+{% block content %}
+  <div class="content-header">
+    <h1>
+      <small>后台管理/部件集</small>
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-11" style="margin-left: 20px;">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active treeview"><a href="#tab_1" data-toggle="tab">部件集</a></li>
+          <!-- <li><a href="#tab_2" data-toggle="tab" id="tabTwo">部首集</a></li> -->
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab_1">
+            <form class="form-horizontal  col-sm-12" style="margin-bottom: 30px;">
+              <div class="box-body  col-sm-12">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-1 control-label">文字：</label>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="请输入文字">
+                  </div>
+
+                  <label for="inputEmail3" class="col-sm-1 control-label">图片字：</label>
+                  <div class="col-sm-2">
+                    <input type="file" id="imgup">
+                    <!-- <input type="text" class="form-control" placeholder="请输入图片字"> -->
+                  </div>
+
+                  <label for="inputEmail3" class="col-sm-1 control-label">笔画数：</label>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="请输入笔画数">
+                  </div>
+
+                  <label for="inputPassword3" class="control-label text-green" id="lowAll">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多搜索 <i class="fa fa-angle-down"></i></label>
+                </div>
+                
+                <div style="display:none;" id="leave">
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-md-1 control-label">笔顺：</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" placeholder="请输入笔顺">
+                        </div>
+
+                        <label for="inputEmail3" class="col-md-1 control-label">序号：</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" placeholder="请输入序号">
+                        </div>
+
+                        <label for="inputEmail3" class="col-md-2 col-sm-pull-1 control-label">难易等级：</label>
+                        <div class="col-sm-2 col-sm-pull-1">
+                          <input type="text" class="form-control" placeholder="请输入难易等级">
+                        </div>
+                        
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-sm-3" style='margin-left: 30px;'>
+                            <label for="inputPassword3" class="col-sm-6 col-sm-pull-1 control-label">是否拆分部件：</label>
+                            <div class="col-sm-5 col-sm-pull-1">
+                              <select class="form-control select2" style="width: 100%;">
+                                <option selected="selected">是</option>
+                                <option>否</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3" style='margin-left: 30px;'>
+                            <label for="inputPassword3" class="col-sm-6 col-sm-pull-1 control-label">是否检索部件：</label>
+                            <div class="col-sm-4 col-sm-pull-1">
+                              <select class="form-control select2" style="width: 100%;">
+                                <option selected="selected">是</option>
+                                <option>否</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-4" style='margin-left: -50px;'>
+                              <label for="inputPassword3" class="col-sm-4 control-label">代替部件：</label>
+                              <div class="col-sm-7">
+                                <select class="form-control select2" style="width: 100%;">
+                                  <option selected="selected">选择代替部件</option>
+                                  <option>一</option>
+                                  <option>丿</option>
+                                  <option>丶</option>
+                                  <option>丨</option>
+                                  <option>𠃍</option>
+                                </select>
+                              </div>
+                          </div>
+                          
+                      </div>
+
+                      <div class="form-group">
+                          <label for="inputEmail3" class="col-md-2 col-sm-pull-1 control-label">备注：</label>
+                          <div class="col-sm-2 col-sm-pull-1">
+                            <input type="text" class="form-control" placeholder="请输入备注">
+                          </div>
+                      </div>
+
+                </div>
+                
+
+              </div>
+              <div class="box-footer  col-sm-12">
+                <button type="submit" class="btn btn-success col-sm-1 col-sm-push-4">搜索</button>
+                <button type="submit" class="btn btn-default col-md-1 col-sm-push-5">清除</button>
+              </div>
+            </form>
+            <div class="box-body" style="margin-top: 20px;">
+                <button type="button" class="btn bg-orange col-sm-1" id="xinzheng" style="margin-bottom: 10px;">新增部件</button>
+                <table id="example1" class="table table-bordered">
+                  <thead style="background-color: #f4f4f4;">
+                    <tr>
+                      <td>#</td>
+                      <td>文字</td>
+                      <td>图片字</td>
+                      <td>图片输入值</td>
+                      <td>序号</td>
+                      <td>难易等级</td>
+                      <td>是否拆分部件</td>
+                      <td>是否检索部件</td>
+                      <td>代替部件</td>
+                      <td>笔画数</td>
+                      <td>笔顺</td>
+                      <td>备注</td>
+                      <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>丶</td>
+                      <td></td>
+                      <td></td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>1</td>
+                      <td>d</td>
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>一</td>
+                      <td></td>
+                      <td></td>
+                      <td>2</td>
+                      <td>1</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>1</td>
+                      <td>h</td>
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>丨</td>
+                      <td></td>
+                      <td></td>
+                      <td>3</td>
+                      <td>1</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>1</td>
+                      <td>s</td>
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>丿</td>
+                      <td></td>
+                      <td></td>
+                      <td>4</td>
+                      <td>1</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>1</td>
+                      <td>p</td>
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td></td>
+                      <td><img src="{{STATIC_URL}}img/u13480.png"></td>
+                      <td>⿱𠃍一</td>
+                      <td>5</td>
+                      <td>2</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>2</td>
+                      <td>zh</td>  
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td></td>
+                      <td><img src="{{STATIC_URL}}img/u13478.png"></td>
+                      <td>⿱丿𠄌</td>
+                      <td>6</td>
+                      <td>3</td>
+                      <td>是</td>
+                      <td>否</td>
+                      <td></td>
+                      <td>2</td>
+                      <td>ps</td>  
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    <tr>
+                      <td>7</td>
+                      <td></td>
+                      <td><img src="{{STATIC_URL}}img/u13476.png"></td>
+                      <td>八</td>
+                      <td>7</td>
+                      <td>2</td>
+                      <td>是</td>
+                      <td>是</td>
+                      <td></td>
+                      <td>2</td>
+                      <td>pn</td>  
+                      <td></td>
+                      <td><span class="text-green col-sm-7">修改</span><span class="text-red">删除</span></td>
+                    </tr>
+                    </tbody>
+                    
+                </table>
+
+                <div class="box-footer clearfix">
+                  <ul class="pagination pagination-sm no-margin col-md-12">
+                    <li><a href="#"><i class='fa fa-angle-left'></i></a></li>
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class='fa fa-angle-right'></i></a></li>
+                    <li><a href="#">10条/页 <i class="fa fa-angle-down"></i></a></li>
+                    <li>跳至</li>
+                    <li><a href="#">5/100</a>&nbsp;&nbsp;页</li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-modal">
+    <div class="modal">
+      <div class="modal-dialog" style="top: 5%;left:30%">
+        <div class="modal-content col-md-12" style="border-radius: 4px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" id="exampleModal">&times;</span></button>
+            <h4 class="modal-title text-green" style='font-weight: 600'>新增部件</h4>
+          </div>
+          <div class="modal-body col-md-6 bujian">
+            <div class='col-md-11 padding'>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">文字：</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入文字" value="几">
+                  </div>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">序号：</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入序号">
+                  </div>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">笔顺：</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入笔顺">
+                  </div>
+                </div>
+                
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">笔画：</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入笔画">
+                  </div>
+                </div>
+                 <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">备注：</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入备注">
+                  </div>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+          <div class="modal-body col-md-6">
+            <div class='col-md-11 padding'>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-3 control-label">图片字：</label>
+                  <div class="col-sm-8">
+                    <input type="file" id="imgup">
+                    <!-- <button type="button" class="btn col-sm-12 btn-default" click='return  $("#imgup").click();'>请选择图片</button> -->
+                  </div>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-6 control-label">图片字输入值：</label>
+                  <div class="col-sm-5">
+                    <input type="text" class="form-control" placeholder="请输入">
+                  </div>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-6 control-label">是否拆分部件：</label>
+                  <div class="col-sm-5">
+                    <select class="form-control select2" style="width: 100%;">
+                      <option selected="selected">是</option>
+                      <option>否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-6 control-label">是否检索部件：</label>
+                  <div class="col-sm-5">
+                    <select class="form-control select2" style="width: 100%;">
+                      <option selected="selected">是</option>
+                      <option>否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-4 control-label">代替部件：</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" placeholder="请输入代替部件">
+                  </div>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="inputEmail3" class="col-sm-4 control-label">难易等级：</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" placeholder="请输入">
+                  </div>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+          <div class="modal-footer">
+            <span id="exampleModal"><button type="button" class="btn col-sm-4 col-sm-push-4 btn-success">保存</button></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  $(function () {
+    $(".select2").select2();
+
+    $('input[id^=datepicker]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+    $('input[id^=datepickerAll]').daterangepicker({timePicker: true, format: 'MM/DD/YYYY h:mm A'});
+    //Date picker
+    // $('input[id^=datepicker]').datepicker({autoclose: true});
+    $('#lowAll').click(function(){
+        $('#leave').toggle();
+    })
+
+    $('input[id=radioAll]').click(function(){
+        var df=$(this).is(':checked');
+        $('input[id^=radioD]').attr('checked',df);
+        // alert(df);
+    })
+
+    $('#xinzheng').click(function(){
+          $('.modal').show();
+    })
+
+    $('span[id^=exampleModal]').click(function(){
+          $('.modal').hide();
+    })
+
+  });
+</script>
+{% endblock %}  
