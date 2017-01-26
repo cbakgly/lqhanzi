@@ -26,12 +26,12 @@
                 <div class="shortcut-inner">
                     <div class="nav-tab nav-tab-r fr">
                         <ul class="tabs clearfix">
-                            <li><a href="/hanzi/index">部件笔画检字法</a></li>
-                            <li><a href="dicts">字典</a></li>
+                            <li><a href="{% url 'm1.index' %}">部件笔画检字法</a></li>
+                            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
                             <li class="dropdown">
                                 <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
                                 <!--未登录前-->
-                                <a class="dropdown-toggle"><img src="{% static 'img/44.png' %}"></a><!-- <i class="icon-user1"></i> -->
+                                <a class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a><!-- <i class="icon-user1"></i> -->
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
                                         <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">

@@ -11,7 +11,7 @@ from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
-from hanzi.models import HanziParts, HanziSet, Radical
+from backend.models import HanziParts, HanziSet, Radical
 from appendix_hanzi import fuluzi
 
 

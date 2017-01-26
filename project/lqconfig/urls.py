@@ -22,7 +22,6 @@ from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
 from settings import DEBUG, MEDIA_ROOT, MEDIA_URL
-from hanzi.views.hanzi import index
 
 admin.autodiscover()
 
@@ -36,7 +35,7 @@ urlpatterns = [
     url(r'^workbench/', include('workbench.urls')),
     url(r'^api/(?P<version>\w+)/', include('backend.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^$', index, name='index'),
+    url(r'^', include('hanzi.urls')),
 ]
 
 if DEBUG:
