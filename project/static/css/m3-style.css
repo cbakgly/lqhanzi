@@ -27,3 +27,16 @@ label{color: #666666;}
 #imgup{width: 75px;height: 34px;line-height: 34px;margin-left: 30px;}
 .content{min-width: 1140px;}
 .content-header{padding-bottom:20px;padding-left:0px; }
+.top-35{height: 35px;margin-bottom: 15px;overflow: hidden;}
+.top-35-samll{height: 35px;margin-bottom: 15px;}
+.top-35 label.top,.top-35-samll label.top{top: -35px;}
+.top-35 div.top,.top-35-samll div.top{top: -70px;}
+.file {position: relative;display: inline-block;background: #f8f8f8;padding: 4px 12px;overflow: hidden;color: #999;text-decoration: none;text-indent: 0;line-height: 26px;height: 35px;border:1px solid #d2d6de;
+}
+.file input {position: absolute;font-size: 100px;right: 0;top: 0;opacity: 0;height: 35px;}
+.file:hover {background: #AADFFD;border-color: #78C3F3;color: #004974;text-decoration: none;}
+.box-body div.form-group{padding-left: 8%;}
+.col-sm-pull-yuan-2{right: 18%;}
+.col-sm-pull-yuan-4{right: 35%;}
+.col-sm-push-yuan-8{left: 62.333%;}
+.col-sm-input-3{width: 28%;}
