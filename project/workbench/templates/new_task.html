@@ -32,15 +32,9 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
-            {% for key, value in business_type_choices %}
-                {% if value == '拆字' %}
-                    <label><input type="radio" name="business_type" data-val="{{key}}" checked="checked">拆字</label>
-                {% elif value == '录入' %}
-                    <label><input type="radio" name="business_type" data-val="{{key}}">录入</label>
-                {% elif value == '去重' %}
-                    <label><input type="radio" name="business_type" data-val="{{key}}">去重</label>
-                {% endif %}
-            {% endfor %}
+            <label><input type="radio" name="business_type" data-val="{{business_type_split}}" checked="checked">拆字</label>
+            <label><input type="radio" name="business_type" data-val="{{business_type_input}}">录入</label>
+            <label><input type="radio" name="business_type" data-val="{{business_type_dedup}}">去重</label>
             </div>
           </div>
           <div class="task-item">
