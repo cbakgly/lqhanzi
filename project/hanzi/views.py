@@ -11,7 +11,7 @@ from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
-from backend.models import HanziParts, HanziSet, Radical
+from backend.models import HanziParts, HanziSet, HanziRadicals
 from appendix_hanzi import fuluzi
 
 
@@ -81,7 +81,7 @@ def get_parts():
 
 
 def get_radical():
-    queryset = Radical.objects.all()
+    queryset = HanziRadicals.objects.all()
     a = serialize("json", queryset, ensure_ascii=False)
     b = json.loads(a)
     c = []
@@ -643,7 +643,7 @@ def dicts_search(request):
     print type(result)
 
     a = []
-    radical_strokes_num = Radical.objects.get(radical=q).strokes  # 部首笔画数
+    radical_strokes_num = HanziRadicals.objects.get(radical=q).strokes  # 部首笔画数
     for item in result:
         item['pic_url'] = get_pic_url_by_source_pic_name(source, item['hanzi_pic_id'])
         item['remain_strokes_num'] = item['strokes'] - radical_strokes_num
@@ -828,7 +828,7 @@ def dicts_search(request):
 # '''
 # @csrf_exempt
 # def get_radical(request):
-#   queryset = Radical.objects.all()#[0:10]
+#   queryset = HanziRadicals.objects.all()#[0:10]
 #   a = serialize("json", queryset,ensure_ascii=False)
 #   b = json.loads(a)
 #   c = []
