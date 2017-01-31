@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from api_tasks import TasksSerializer
 from task_func import assign_task
-from backend.enums import getenum_task_package_business_status
+from ..enums import getenum_task_package_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 
@@ -40,7 +40,7 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         user_id = validated_data['user'].id
         biz_type = validated_data['business_type']
         biz_stage = validated_data['business_stage']
-        exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_task_package_business_status('ongoing'))
+        exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_task_package_status('ongoing'))
         if exist:
             raise ValidationError({"detail": _("Only one task package per type and stage can be created.")})
 
