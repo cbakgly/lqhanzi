@@ -71,30 +71,6 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-class HanziParts(models.Model):
-    part_char = models.CharField(max_length=8, null=True, default='')  # 文字部件
-    strokes = models.PositiveSmallIntegerField()
-    stroke_order = models.CharField(max_length=20, null=True, default='')  # 笔画数笔顺
-
-    def __unicode__(self):
-        return self.part_char
-
-    class Meta:
-        pass
-        db_table = 'lq_hanzi_parts'
-
-
-class Radical(models.Model):
-    radical = models.CharField(max_length=8, null=True, default='')
-    strokes = models.PositiveSmallIntegerField()
-
-    def __unicode__(self):
-        return self.radical
-
-    class Meta:
-        db_table = 'lq_hanzi_radicals'
-
-
 BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
@@ -136,7 +112,7 @@ class Tasks(models.Model):
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=TASK_STATUS_CHOICES, null=True, blank=True)
 
-    # business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
+    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
 
@@ -213,6 +189,9 @@ class InputPage(models.Model):
     page_num = models.SmallIntegerField(primary_key=True)
     task = GenericRelation(Tasks, related_query_name="page_task")
 
+    class Meta:
+        db_table = 'lq_input_page'
+
 
 class VariantsInput(models.Model):
     INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
@@ -280,8 +259,11 @@ class KoreanVariantsDict(models.Model):
 
 
 class HanziRadicals(models.Model):
-    radical = models.CharField(u'部首', max_length=16, null=True)
-    strokes = models.SmallIntegerField(u'笔画数', null=True)
+    radical = models.CharField(u'部首', max_length=16, null=True, default='')
+    strokes = models.PositiveSmallIntegerField(u'笔画数')
+
+    def __unicode__(self):
+        return self.radical
 
     class Meta:
         db_table = 'lq_hanzi_radicals'
@@ -362,6 +344,7 @@ class Reward(models.Model):
     class Meta:
         verbose_name = u"奖品"
         verbose_name_plural = u"奖品"
+        db_table = 'lq_reward'
 
     def __unicode__(self):
         return self.reward_name
@@ -499,8 +482,11 @@ class TaskCredit(models.Model):
     business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
     business_credit = models.SmallIntegerField(u'任务积分')
 
+    class Meta:
+        db_table = 'lq_task_credits'
 
-class LqHanziPart(models.Model):
+
+class HanziParts(models.Model):
     cancan_choices = ((0, u'不可'), (1, u'可'))
     hspnz_hash = {'1': 'h', '2': 's', '3': 'p', '4': 'n', '5': 'z'}
 
@@ -514,12 +500,15 @@ class LqHanziPart(models.Model):
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
+    def __unicode__(self):
+        return self.part_char
+
     class Meta:
         db_table = 'lq_hanzi_parts'
 
     @property
     def stroke_hspnz(self):
-        return ''.join(map(lambda x: LqHanziPart.hspnz_hash[x], self.stroke_order))
+        return ''.join(map(lambda x: HanziParts.hspnz_hash[x], self.stroke_order))
 
     @property
     def display(self):
