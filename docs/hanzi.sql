@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS hanzi_set (
   seq_id varchar(32) DEFAULT NULL, -- '字的位置统一编码'
   pinyin varchar(64) DEFAULT NULL, -- '拼音'
   radical varchar(8) DEFAULT NULL, -- '部首'
-  strokes tinyint DEFAULT NULL, -- '笔画数'
+  min_strokes tinyint DEFAULT NULL, -- '最小笔画数'
+  max_strokes tinyint DEFAULT NULL, -- '最小笔画数'
   zheng_code varchar(32) DEFAULT NULL, -- '郑码'
   wubi varchar(32) DEFAULT NULL, -- '五笔'
 
@@ -216,6 +217,7 @@ CREATE TABLE IF NOT EXISTS korean_dup_characters (
   korean_variant VARCHAR(32) NOT NULL,  -- '高丽字头'
   unicode VARCHAR(32) NOT NULL,  -- '与字头字形相同/相近的Unicode'
   relation SMALLINT DEFAULT NULL,  -- '二者关系：形码均相同，形似码相同，形同码不同，无相同字形'
+  status tinyint DEFAULT NULL, -- '去重状态'
   remark VARCHAR(128) DEFAULT NULL, -- '备注'
   c_t DATETIME NOT NULL,
   u_t DATETIME NOT NULL
@@ -331,6 +333,18 @@ CREATE TABLE IF NOT EXISTS hanzi_parts (
   remark varchar(64) DEFAULT NULL, -- '备注'
 );
 
+/* 部首集 */
+CREATE TABLE IF NOT EXISTS hanzi_radicals (
+  id INT(11) PRIMARY KEY,
+  radical varchar(8) DEFAULT NULL,	--'部首'
+  strokes tinyint DEFAULT NULL,	--'笔画'
+  is_un_radical tinyint DEFAULT NULL,	--'是否为Unicode部首'
+  is_tw_radical tinyint DEFAULT NULL,	--'是否为台湾异体字部首'
+  is_zh_radical tinyint DEFAULT NULL,	--'是否为汉语大字典部首'
+  is_kr_radical tinyint DEFAULT NULL,	--'是否为高丽异体字字典部首'
+  is_dh_radical tinyint DEFAULT NULL,	--'是否为敦煌俗字典部首'
+  remark varchar(256) DEFAULT NULL
+);
 
 /* 任务类型 */
 CREATE TABLE IF NOT EXISTS task_types (
