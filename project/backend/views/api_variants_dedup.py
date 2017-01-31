@@ -17,7 +17,7 @@ from ..pagination import NumberPagination
 from ..models import KoreanDedup, InterDictDedup, HanziSet
 from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import fields_or_filter_method, NotEmptyFilter
-from ..enums import getenum_source, getenum_task_business_status, getenum_business_stage
+from ..enums import getenum_source, getenum_task_status, getenum_business_stage
 from task_func import create_task
 
 
@@ -159,24 +159,24 @@ def update_tasks_status(variants_dedup):
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_business_status("ongoing"):
-        draft.task_status = getenum_task_business_status("completed")
+    if draft.task_status == getenum_task_status("ongoing"):
+        draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status = getenum_task_business_status("to_be_arranged")
+        review.task_status = getenum_task_status("to_be_arranged")
         variants_dedup.save()
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_business_status("ongoing"):
-        review.task_status = getenum_task_business_status("completed")
+    elif review.task_status == getenum_task_status("ongoing"):
+        review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
-        final.task_status = getenum_task_business_status("to_be_arranged")
+        final.task_status = getenum_task_status("to_be_arranged")
         variants_dedup.is_draft_equals_review = variants_dedup.inter_dict_dup_hanzi_draft is variants_dedup.inter_dict_dup_hanzi_review
         variants_dedup.save()
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_business_status("ongoing"):
-        final.task_status = getenum_task_business_status("completed")
+    elif final.task_status == getenum_task_status("ongoing"):
+        final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         variants_dedup.is_review_equals_final = variants_dedup.inter_dict_dup_hanzi_review is variants_dedup.inter_dict_dup_hanzi_final
         variants_dedup.save()

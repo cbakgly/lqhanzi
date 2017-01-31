@@ -32,9 +32,9 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
-            <label><input type="radio" name="business_type" data-val="{{business_type_split}}" checked="checked">拆字</label>
-            <label><input type="radio" name="business_type" data-val="{{business_type_input}}">录入</label>
-            <label><input type="radio" name="business_type" data-val="{{business_type_dedup}}">去重</label>
+            <label><input type="radio" name="business_type" data-val="{{business_type_enum.split}}" checked="checked">拆字</label>
+            <label><input type="radio" name="business_type" data-val="{{business_type_enum.input}}">录入</label>
+            <label><input type="radio" name="business_type" data-val="{{business_type_enum.dedup}}">去重</label>
             </div>
           </div>
           <div class="task-item">
@@ -124,7 +124,7 @@
         if (package_plan == 0) package_plan = $('#custom_plan').data('val');
         if (package_plan == 0 || package_plan%5 != 0) alert('Please input valid plan number.');
 
-        var package_status = {{business_status_ongoing}};
+        var package_status = {{task_package_status_enum.ongoing}};
 
         var t = new Date();
         var due_date = new Date(Date.now() + package_size/package_plan*24*3600*1000 - 8*3600*1000);

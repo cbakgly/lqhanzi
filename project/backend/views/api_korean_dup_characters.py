@@ -12,7 +12,7 @@ import django_filters
 
 from ..pagination import NumberPagination
 from ..models import KoreanDupCharacters, HanziSet
-from ..enums import getenum_source, getenum_business_stage, getenum_task_business_status
+from ..enums import getenum_source, getenum_business_stage, getenum_task_status
 from api_hanzi_set import HanziSetDedupSerializer
 from task_func import assign_task
 
@@ -62,21 +62,21 @@ def update_tasks_status(variants_dedup):
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_business_status("ongoing"):
-        draft.task_status = getenum_task_business_status("completed")
+    if draft.task_status == getenum_task_status("ongoing"):
+        draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status = getenum_task_business_status("to_be_arranged")
+        review.task_status = getenum_task_status("to_be_arranged")
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_business_status("ongoing"):
-        review.task_status = getenum_task_business_status("completed")
+    elif review.task_status == getenum_task_status("ongoing"):
+        review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
-        final.task_status = getenum_task_business_status("to_be_arranged")
+        final.task_status = getenum_task_status("to_be_arranged")
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_business_status("ongoing"):
-        final.task_status = getenum_task_business_status("completed")
+    elif final.task_status == getenum_task_status("ongoing"):
+        final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         final.save()
         origin_task = final

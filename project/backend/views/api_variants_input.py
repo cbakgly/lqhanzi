@@ -13,7 +13,7 @@ from rest_framework import status
 from ..pagination import NumberPagination
 from ..models import VariantsInput, InputPage
 from ..filters import NumberInFilter
-from ..enums import getenum_task_business_status, getenum_business_stage, getenum_business_type
+from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type
 from task_func import assign_task
 
 
@@ -26,24 +26,24 @@ def update_tasks_status(variants_input):
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_business_status("ongoing"):
-        draft.task_status = getenum_task_business_status("completed")
+    if draft.task_status == getenum_task_status("ongoing"):
+        draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status = getenum_task_business_status("to_be_arranged")
+        review.task_status = getenum_task_status("to_be_arranged")
         variants_input.save()
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_business_status("ongoing"):
-        review.task_status = getenum_task_business_status("completed")
+    elif review.task_status == getenum_task_status("ongoing"):
+        review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
-        final.task_status = getenum_task_business_status("to_be_arranged")
+        final.task_status = getenum_task_status("to_be_arranged")
         variants_input.is_draft_equals_review = variants_input.hanzi_char_draft is variants_input.hanzi_char_review
         variants_input.save()
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_business_status("ongoing"):
-        final.task_status = getenum_task_business_status("completed")
+    elif final.task_status == getenum_task_status("ongoing"):
+        final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         variants_input.is_review_equals_final = variants_input.hanzi_char_review is variants_input.hanzi_char_final
         variants_input.save()
@@ -187,7 +187,7 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             input_page = InputPage.object_id(page_num)
             tasks = list(input_page.task.all())
             for t in tasks:
-                if t.business_status == getenum_task_business_status("ongoing"):
+                if t.business_status == getenum_task_status("ongoing"):
                     t.credits += 2
                     t.save()
                     break

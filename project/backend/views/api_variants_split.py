@@ -13,7 +13,7 @@ import django_filters
 from ..pagination import NumberPagination
 from ..models import VariantsSplit
 from task_func import assign_task
-from ..enums import getenum_task_business_status, getenum_business_stage
+from ..enums import getenum_task_status, getenum_business_stage
 from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
 
@@ -76,24 +76,24 @@ def update_tasks_status(variants_split):
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_business_status("ongoing"):
-        draft.task_status = getenum_task_business_status("completed")
+    if draft.task_status == getenum_task_status("ongoing"):
+        draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
-        review.task_status = getenum_task_business_status("to_be_arranged")
+        review.task_status = getenum_task_status("to_be_arranged")
         variants_split.save()
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_business_status("ongoing"):
-        review.task_status = getenum_task_business_status("completed")
+    elif review.task_status == getenum_task_status("ongoing"):
+        review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
-        final.task_status = getenum_task_business_status("to_be_arranged")
+        final.task_status = getenum_task_status("to_be_arranged")
         variants_split.is_draft_equals_review = variants_split.init_split_draft is variants_split.init_split_review
         variants_split.save()
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_business_status("ongoing"):
-        final.task_status = getenum_task_business_status("completed")
+    elif final.task_status == getenum_task_status("ongoing"):
+        final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         variants_split.is_review_equals_final = variants_split.init_split_final is variants_split.init_split_review
         variants_split.save()
