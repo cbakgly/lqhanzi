@@ -4,18 +4,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
 from ..models import Tasks, TaskPackages, VariantsInput
-from ..enums import getenum_task_business_status, getenum_business_type, getenum_business_stage
+from ..enums import getenum_task_status, getenum_business_type, getenum_business_stage
 from django.contrib.contenttypes.models import ContentType
 
 
 # 分配新任务
 def assign_task(business_type, business_stage, task_package, user):
-    tasks = list(Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage).filter(task_status=getenum_task_business_status("to_be_arranged")))
+    tasks = list(Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage).filter(task_status=getenum_task_status("to_be_arranged")))
     if len(tasks):
         task = tasks[0]
         task.user = user
         task.task_package = task_package
-        task.task_status = getenum_task_business_status("ongoing")
+        task.task_status = getenum_task_status("ongoing")
         # task.credits = list(TaskCredit.objects.filter(business_type=business_type).filter(business_stage=business_stage))[0].business_credit
         if business_type in [getenum_business_type("input_page"), getenum_business_type("dedup")]:
             task.credits = 0
@@ -53,7 +53,7 @@ def assign_task_by_task_ele(task_ele, business_stage, task_package, user):
         task_to_assign = task_dict[business_stage]
         task_to_assign.user = user
         task_to_assign.task_package = task_package
-        task_to_assign.task_status = getenum_task_business_status("ongoing")
+        task_to_assign.task_status = getenum_task_status("ongoing")
         task_to_assign.save()
 
 
@@ -61,7 +61,7 @@ def assign_task_by_page(business_stage, task_package, user):
     init_stage = getenum_business_stage('init')
     review_stage = getenum_business_stage('review')
 
-    latest_task = list(Tasks.objects.filter(business_type=getenum_business_type('input'), task_status=getenum_task_business_status("ongoing")).order_by('id'))[-1]
+    latest_task = list(Tasks.objects.filter(business_type=getenum_business_type('input'), task_status=getenum_task_status("ongoing")).order_by('id'))[-1]
     page_num = latest_task.task_ele.page_num
     if business_stage is init_stage:
         seq_order = 'seq_num_draft'
@@ -81,16 +81,16 @@ def assign_task_by_page(business_stage, task_package, user):
         if business_stage is init_stage:
             task_to_assign.user = user
             task_to_assign.task_package = task_package
-            task_to_assign.task_status = getenum_task_business_status("ongoing")
+            task_to_assign.task_status = getenum_task_status("ongoing")
             task_to_assign.save()
             return task_to_assign
         else:
-            if task_to_assign.task_status is getenum_task_business_status("closed"):
+            if task_to_assign.task_status is getenum_task_status("closed"):
                 return None
             else:
                 task_to_assign.user = user
                 task_to_assign.task_package = task_package
-                task_to_assign.task_status = getenum_task_business_status("ongoing")
+                task_to_assign.task_status = getenum_task_status("ongoing")
                 task_to_assign.save()
                 return task_to_assign
     else:
