@@ -15,8 +15,8 @@
             <div class="box-header">
               <div class="marks"><span>初次</span><span>回查</span><span>审查</span></div>
             </div>
-            <div id='taskdedup' class="box-body">
-              <div class="dedup-container">
+            <div class="box-body">
+              <div id='taskdedup' class="dedup-container">
                 <div class="dedup dedup-left">
                   <div class="header-img">
                     <div class="zi">
@@ -24,53 +24,20 @@
                     </div>
                   </div>  <!--字头-->
                   <ul class="dedup-bd">
+{#                    <li>#}
+{#                      <div class="l pull-left">#}
+{#                        <p class="top"><img src="../img/font-img8.jpg" alt=""></p>#}
+{#                        <p class="bottom">测B05968-002</p>#}
+{#                      </div>#}
+{#                      <div class="r pull-left" style="display:none;">#}
+{#                        <p>庆</p>#}
+{#                        <p>测B05968-002</p>#}
+{#                        <p>测B05968-002</p>#}
+{#                      </div>#}
+{#                    </li>#}
                     <li>
                       <div class="l pull-left">
-                        <p class="top"><img src="../img/font-img8.jpg" alt=""></p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top active">庆</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top">慶</p>
+                        <p class="top active">慶</p>
                         <p class="bottom">测B05968-002</p>
                       </div>
                       <div class="r pull-left" style="display:none;">
@@ -89,41 +56,8 @@
                   </div>
                   <ul class="dedup-bd">
                     <li>
-                      <div class="l pull-left">
-                        <p class="top active">庆</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                    <li>
                       <div class="l pull-left" @click="showModal" data-target="#myModal">
-                        <p class="top">慶</p>
+                        <p class="top active">慶</p>
                         <p class="bottom">测B05968-002</p>
                       </div>
                       <div class="r pull-left" style="display:none;">
@@ -135,14 +69,9 @@
                   </ul>
                 </div>
               </div>
-
-             <!--  <div class="btns btns-tr">
-                <button class="btn btn-blue btn-sm next-page">提交</button>
-                <button class="btn btn-blue btn-sm next-page">提交并转下一页</button>
-              </div> -->
               <div class="btn-group btns-tr split-btns pull-right">
-                  <button class="btn btn-blue btn-sm z-btn-sm">存疑提交</button>
-                  <button class="btn btn-blue btn-sm z-btn-sm">下一页</button>
+                  <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
+                  <button class="btn btn-blue btn-sm z-btn-sm">提交并转下一页</button>
               </div>
             </div><!-- /.box-body -->
           </div><!-- /.box -->
@@ -154,12 +83,7 @@
            <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block;">
              <div class="modal-dialog">
                <div class="modal-content">
-{#                 <div class="modal-header">#}
-{#                   <button type="button" class="close" data-dismiss="modal" @click="displayModal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>#}
-{#                   <h4 class="modal-title" id="myModalLabel">Modal title</h4>#}
-{#                 </div>#}
                  <div class="modal-body" style="display:none;">
-
                  </div>
                  <div class="modal-footer" style="text-align:left;">
                    <div class="input-group" style="padding-bottom: 15px;"><span
@@ -182,14 +106,54 @@
         </div>
       </div>
       <script type="text/javascript">
+        var package_url = "{% url 'tasks-ongoing-dedup' version='v1' %}";
+        var variant_hanzi = "{% url 'korean-taiwan-dup-characters-list' version='v1' %}";
+
+
+        function GetHanzi(url, data, callback) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                data: data,
+                success: callback,
+                error: function (xhr, status, err) {
+                    console.log(err);
+                }
+            })
+        }
         var taskdedup = new Vue({
             el: '#taskdedup',
             data: {
                 display: 'display:none;',
+                package_id: '1055',
+                std_hanzi_set: ['迥'],
+                korean_hanzi_sets: [],
+                tw_hanzi_sets: []
             },
             methods: {
                 showModal: function() {
                     document.getElementById("modals").style.display="block";
+                },
+                aquireStdHanzi: function() {
+                    vm = this;
+                    callback = function(response) {
+                        for (item in response.models) {
+                            vm.std_hanzi_set.push(reponse.models[item].std_hanzi);
+                        }
+                    }
+                    GetHanzi(package_url, {'package_id': 1055}, callback)
+                },
+                aquireVariantHanzi: function() {
+                    vm = this
+                    for (item in vm.std_hanzi_set) {
+                        params = {'korean_variant': vm.std_hanzi_set[item]}
+                    callback = function(response) {
+                        vm.korean_hanzi_sets = response.korean_hanzi_sets;
+                        vm.tw_hanzi_sets = response.tw_hanzi_sets;
+                        }
+                    }
+                    GetHanzi(variant_hanzi, params, callback)
                 }
             }
         });
