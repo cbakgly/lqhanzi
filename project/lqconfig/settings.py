@@ -79,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'backend.context_processors.today_credits',
+                'backend.context_processors.task_enum',
             ],
         },
     },
@@ -155,7 +156,7 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     'PAGE_SIZE': 10,
     'DEFAULT_VERSION': 'v1',
-    'ALLOWED_VERSIONS': ['v1', None],
+    'ALLOWED_VERSIONS': ['v1'],
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework_filters.backends.DjangoFilterBackend',
     ),

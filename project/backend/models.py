@@ -26,9 +26,9 @@ class User(AbstractUser, GuardianUserMixin):
         return self.username
 
 
-VARIANT_TYPE_CHOICES = ((0, '纯正字'), (1, '狭义异体字'), (2, '广义且正字'), (3, '广义异体字'), (4, '狭义且正字'), (5, '特定异体字'), (6, '特定且正字'), (7, '误刻误印'), (8, '其他不入库类型'), (9, '其他入库类型'))
-HANZI_TYPE_CHOICES = ((0, '文字'), (1, '图片'), (2, '文字且图片'))
-SOURCE_CHOICES = ((1, 'Unicode'), (2, '台湾异体字典'), (3, '汉语大字典'), (4, '高丽大藏经'), (5, '敦煌俗字典'))
+VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
+HANZI_TYPE_CHOICES = ((0, u'文字'), (1, u'图片'), (2, u'文字且图片'))
+SOURCE_CHOICES = ((1, 'Unicode'), (2, u'台湾异体字典'), (3, u'汉语大字典'), (4, u'高丽大藏经'), (5, u'敦煌俗字典'))
 YESNO_CHOICES = ((0, u'否'), (1, u'是'))
 
 
@@ -215,7 +215,7 @@ class InputPage(models.Model):
 
 
 class VariantsInput(models.Model):
-    INPUT_VARIANT_TYPE_CHOICES = ((1, '狭义异体字'), (2, '简化字'), (3, '类推简化字'), (4, '讹字'), (5, '古今字'), (6, '@'))
+    INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
     volume_num = models.SmallIntegerField(u'册', null=True, blank=True)
     page_num = models.IntegerField(u'页码', null=True)
     # page_num = models.ForeignKey(InputPage, related_name='inputs', on_delete=models.SET_NULL, blank=True, null=True)
@@ -360,23 +360,23 @@ class Reward(models.Model):
     need_credits = models.SmallIntegerField(u'所需积分')
 
     class Meta:
-        verbose_name = "奖品"
-        verbose_name_plural = "奖品"
+        verbose_name = u"奖品"
+        verbose_name_plural = u"奖品"
 
     def __unicode__(self):
         return self.reward_name
 
 
 class CreditsRedeem(models.Model):
-    redeem_status_choices = ((0, '申请中'), (1, '已受理'), (2, '已完成'))
+    redeem_status_choices = ((0, u'申请中'), (1, u'已受理'), (2, u'已完成'))
 
-    applied_by = models.ForeignKey(User, verbose_name="申请人", related_name="applier")
-    accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor", null=True, blank=True)
-    completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor", null=True, blank=True)
+    applied_by = models.ForeignKey(User, verbose_name=u"申请人", related_name="applier")
+    accepted_by = models.ForeignKey(User, verbose_name=u"受理人", related_name="acceptor", null=True, blank=True)
+    completed_by = models.ForeignKey(User, verbose_name=u"完成人", related_name="completor", null=True, blank=True)
     accepted_at = models.DateTimeField(u'受理时间', null=True, blank=True, default=timezone.now)
     completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
     reward_name = models.CharField(u'奖品名称', max_length=64)
-    reward = models.ForeignKey(Reward, related_name="reward", verbose_name="奖品")
+    reward = models.ForeignKey(Reward, related_name="reward", verbose_name=u"奖品")
     cost_credits = models.IntegerField(u'所用积分', null=True)
 
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', choices=redeem_status_choices, null=True)
@@ -386,14 +386,14 @@ class CreditsRedeem(models.Model):
 
     class Meta:
         db_table = 'lq_credits_redeem'
-        verbose_name = verbose_name_plural = "积分兑换"
+        verbose_name = verbose_name_plural = u"积分兑换"
 
 
 class Diaries(models.Model):
     """
     打卡记录
     """
-    tag_choices = ((0, '问题反馈'), (1, '心情故事'), (2, '其他'))
+    tag_choices = ((0, u'问题反馈'), (1, u'心情故事'), (2, u'其他'))
 
     # user_id = models.IntegerField(u'用户id', null=True)
     user = models.ForeignKey(User)
@@ -405,8 +405,8 @@ class Diaries(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     class Meta:
-        verbose_name = "打卡记录"
-        verbose_name_plural = "打卡记录"
+        verbose_name = u"打卡记录"
+        verbose_name_plural = u"打卡记录"
         db_table = 'lq_diaries'
 
     def __unicode__(self):
@@ -420,13 +420,13 @@ class Credits(models.Model):
     sort_choices = ((1, u"总积分"), (2, u"拆字积分"), (3, u"去重积分"), (4, u"录入积分"), (5, u"互助积分"))
 
     # user_id = models.IntegerField(u'用户id', null=True)
-    user = models.ForeignKey(User, verbose_name="用户", related_name="user_credits")
+    user = models.ForeignKey(User, verbose_name=u"用户", related_name="user_credits")
     credit = models.IntegerField(u"积分值", null=True)
     sort = models.IntegerField(u"积分类型", choices=sort_choices, default=1)
 
     class Meta:
-        verbose_name = "积分"
-        verbose_name_plural = "积分"
+        verbose_name = u"积分"
+        verbose_name_plural = u"积分"
         db_table = 'lq_credits'
         ordering = ["-credit"]
 
@@ -501,7 +501,7 @@ class TaskCredit(models.Model):
 
 
 class LqHanziPart(models.Model):
-    cancan_choices = ((0, '不可'), (1, '可'))
+    cancan_choices = ((0, u'不可'), (1, u'可'))
     hspnz_hash = {'1': 'h', '2': 's', '3': 'p', '4': 'n', '5': 'z'}
 
     part_char = models.CharField(u'部首文字', null=True, max_length=8)

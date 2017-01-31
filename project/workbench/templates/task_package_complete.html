@@ -20,14 +20,9 @@ HTML：一页是否可显示10行数据；
 	  <div id="task-package-complete" class="box box-blue">
 	    <div class="box-body">
 	      <div class="checkboxs">
-	        <label><input type="checkbox" value="1" v-model="tasks">拆字</label>
-	        <label><input type="checkbox" value="2" v-model="tasks">录入</label>
-	        <label><input type="checkbox" value="3" v-model="tasks">图书校对</label>
-	        <label><input type="checkbox" value="4" v-model="tasks">论文下载</label>
-	        <label><input type="checkbox" value="5" v-model="tasks">去重</label>
-            <label><input type="checkbox" value="6" v-model="tasks">暂缺</label>
-            <label><input type="checkbox" value="7" v-model="tasks">互助</label>
-            <label><input type="checkbox" value="8" v-model="tasks">去重子任务</label>
+            {% for key, value in business_type_choices %}
+	        <label><input type="checkbox" value="{{key}}" v-model="tasks">{{value}}</label>
+            {% endfor %}
 	      </div>
 	      <table class="table table-bordered">
 	        <thead>
@@ -51,16 +46,7 @@ HTML：一页是否可显示10行数据；
               <td v-text='map_stage[item.business_stage]'></td>
               <td v-text='item.c_t'></td>
               <td v-text='item.completed_at'></td>
-              <td>
-                  <a v-show='item.business_type===1' href="{% url 'm2.task-package-split-list' %}">查看</a>
-                  <a v-show='item.business_type===2' href="{% url 'm2.task-package-input-list' %}">查看</a>
-                  <a v-show='item.business_type===3' href=#>查看</a>
-                  <a v-show='item.business_type===4' href=#>查看</a>
-                  <a v-show='item.business_type===5' href="{% url 'm2.task-package-dedup-list' %}">查看</a>
-                  <a v-show='item.business_type===6' href=#>查看</a>
-                  <a v-show='item.business_type===7' href=#>查看</a>
-                  <a v-show='item.business_type===8' href=#>查看</a>
-              </td>
+              <td><a :href="get_href(item.business_type, item.id)">查看</a></td>
             </tr>
 	        </tbody>
 	      </table>
@@ -100,6 +86,10 @@ function MyFinishedTasks(url, data) {
     })
 }
 
+var task_split_page_url = "{% url 'm2.task-package-split-list' package_id=0 %}";
+var task_input_page_url = "{% url 'm2.task-package-input-list' package_id=0 %}";
+var task_dedup_page_url = "{% url 'm2.task-package-dedup-list' package_id=0 %}";
+
 var app = new Vue({
     el: '#task-package-complete',
     data: {
@@ -109,8 +99,8 @@ var app = new Vue({
         next: null,
         param: {'status': 1},
         url: '{% url 'task-packages-list' version='v1' %}',
-        map_type: {1: '拆字', 2: '录入', 3: '图书校对', 4: '论文下载', 5: '去重', 6: '暂缺', 7: '互助', 8: '去重子任务'},
-        map_stage: {1: '初次', 2: '回查', 3: '审查'},
+        map_type: {{ business_type_choices_json | safe}},
+        map_stage: {{ business_stage_choices_json | safe}},
     },
     created: function() {
         MyFinishedTasks(this.url, {'status': 1});
@@ -129,7 +119,22 @@ var app = new Vue({
     methods: {
         gotoPage: function(url) {
             MyFinishedTasks(url, null);
-        }
+        },
+        get_href(type, id) {
+            var url = '';
+            switch(type) {
+                case {{business_type_enum.split}}:
+                    url = task_split_page_url.replace(0, id);
+                    break;
+                case {{business_type_enum.input}}:
+                    url = task_input_page_url.replace(0, id);
+                    break;
+                case {{business_type_enum.dedup}}:
+                    url = task_dedup_page_url.replace(0, id);
+                    break;
+            }
+            return url;
+        },
     }
 });
 

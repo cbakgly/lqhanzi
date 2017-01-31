@@ -62,12 +62,12 @@
 	            <td>{{ item.c_t }}</td>
 	            <td>{{ item.due_date }}</td>
 	            <td>
-                    {% if item.business_type == 0 %}
-                    <a href="{% url 'm2.task-input' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-input-list' %}">查看</a>&nbsp;&nbsp;
-                    {% elif item.business_type == 1 %}
-                    <a href="{% url 'm2.task-split' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-split-list' %}">查看</a>&nbsp;&nbsp;
-                    {% elif item.business_type == 2 %}
-                    <a href="{% url 'm2.task-dedup' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-dedup-list' %}">查看</a>&nbsp;&nbsp;
+                    {% if item.business_type == business_type_enum.input %}
+                    <a href="{% url 'm2.task-input' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-input-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                    {% elif item.business_type == business_type_enum.split %}
+                    <a href="{% url 'm2.task-split' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-split-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                    {% elif item.business_type == business_type_enum.dedup %}
+                    <a href="{% url 'm2.task-dedup' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-dedup-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
                     {% endif %}
                     <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}" role="button">修改</a></td>
 	          </tr>
