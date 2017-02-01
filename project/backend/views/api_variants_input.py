@@ -183,12 +183,9 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
             for key in serializer.initial_data.keys():
                 setattr(variants_input, key, serializer.initial_data.get(key, getattr(variants_input, key)))
             variants_input.save()
-            page_num = request.query_params["page_num"]
-            input_page = InputPage.object_id(page_num)
-            tasks = list(input_page.task.all())
+            tasks = list(variants_input.task.all())
             for t in tasks:
                 if t.business_status == getenum_task_status("ongoing"):
-                    t.credits += 2
                     t.save()
                     break
         else:

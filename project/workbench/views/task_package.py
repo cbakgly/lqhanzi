@@ -38,14 +38,17 @@ def task_package_complete(request):
 
 @login_required
 def task_package_ongoing(request):
-    user_id = request.user.id
-    data = TaskPackages.objects.filter(user_id=user_id).filter(status=getenum_task_package_status('ongoing'))
+    user = request.user
+    if user.is_superuser:
+        data = TaskPackages.objects.filter(status=getenum_task_package_status('ongoing'))
+    else:
+        data = TaskPackages.objects.filter(user_id=user.id, status=getenum_task_package_status('ongoing'))
     task_packages = []
     for counter, item in enumerate(data):
         i = item.__dict__
         i['get_business_type_display'] = item.get_business_type_display()
         i['get_business_stage_display'] = item.get_business_stage_display()
-        i['today_num'] = get_today_complete_task_num(user_id, item.business_type)
+        i['today_num'] = get_today_complete_task_num(user.id, item.business_type)
         task_packages.append(i)
 
     return render(request, 'task_package_ongoing.html', {'task_packages': task_packages})

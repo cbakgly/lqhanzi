@@ -1,170 +1,179 @@
 {% extends "m2_base.html" %}
+{% load i18n %}
 
 {% block content %}
-	<!-- Content Header-->
-      <div class="content-header">
+    <!-- Content Header-->
+    <div class="content-header">
         <ol class="breadcrumb">
-          <li><a href="javascript:;">我的任务</a></li>
-          <li class="active">去重</li>
+            <li><a href="javascript:;">我的任务</a></li>
+            <li class="active">去重</li>
         </ol>
-      </div>
-      <div class="row">
+    </div>
+    <div class="row">
         <div class="col-xs-12">
-          <div class="box box-widget">
-            <!-- /.box-header -->
-            <div class="box-header">
-              <div class="marks"><span>初次</span><span>回查</span><span>审查</span></div>
-            </div>
-            <div class="box-body">
-              <div id='taskdedup' class="dedup-container">
-                <div class="dedup dedup-left">
-                  <div class="header-img">
-                    <div class="zi">
-                      <div class="single-zi">庆</div>
-                    </div>
-                  </div>  <!--字头-->
-                  <ul class="dedup-bd">
-{#                    <li>#}
-{#                      <div class="l pull-left">#}
-{#                        <p class="top"><img src="../img/font-img8.jpg" alt=""></p>#}
-{#                        <p class="bottom">测B05968-002</p>#}
-{#                      </div>#}
-{#                      <div class="r pull-left" style="display:none;">#}
-{#                        <p>庆</p>#}
-{#                        <p>测B05968-002</p>#}
-{#                        <p>测B05968-002</p>#}
-{#                      </div>#}
-{#                    </li>#}
-                    <li>
-                      <div class="l pull-left">
-                        <p class="top active">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                  </ul>
+            <div class="box box-widget">
+                <!-- /.box-header -->
+                <div class="box-header">
+                    <div class="marks"><span>初次</span><span>回查</span><span>审查</span></div>
                 </div>
-                <div class="dedup dedup-right">
-                  <div class="header-img">
-                    <div class="zi">
-                      <div class="single-zi">庆</div>
+                <div id='taskdedup' class="box-body">
+                    <div class="dedup-container">
+                        <div class="dedup dedup-left">
+                            <div class="header-img">
+                                <div class="zi">
+                                    <div class="single-zi">{{ korean_char }} </div>
+                                </div>
+                            </div>  <!--字头-->
+                            <ul class="dedup-bd">
+                                {% for korean_variant in korean_list %}
+                                <li>
+                                    <div class="l pull-left">
+                                        <p class="top" v-on:click = "clicked()" char_id="{{ korean_variant.id }}" pic="{{ korean_variant.hanzi_pic_path }}" char="{{korean_variant.hanzi_char }}">
+                                    {% if korean_variant.hanzi_pic_path != "" %}
+                                        <img src= {{ korean_variant.hanzi_pic_path }}>
+                                    {% else %}
+                                        {{ korean_variant.hanzi_char }}
+                                    {% endif %}
+                                    </div>
+
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="dedup dedup-right">
+                            <div class="header-img">
+                                <div class="zi">
+                                    <div class="single-zi">{{ taiwan_char }} </div>
+                                </div>
+                            </div>
+                            <ul class="dedup-bd">
+                                {% for taiwan_variant in taiwan_list %}
+                                <li>
+                                    <div class="l pull-right">
+                                        <p class="top">
+                                    {% if taiwan_variant.hanzi_pic != "" %}
+                                        <img src= {{ taiwan_variant.hanzi_pic }}>
+                                    {% else %}
+                                        {{ taiwan_variant.hanzi_char }}
+                                    {% endif %}</p>
+                                        <p class="bottom">{{ taiwan_variant.seq_id }}</p>
+                                    </div>
+
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                  </div>
-                  <ul class="dedup-bd">
-                    <li>
-                      <div class="l pull-left" @click="showModal" data-target="#myModal">
-                        <p class="top active">慶</p>
-                        <p class="bottom">测B05968-002</p>
-                      </div>
-                      <div class="r pull-left" style="display:none;">
-                        <p>庆</p>
-                        <p>测B05968-002</p>
-                        <p>测B05968-002</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="btn-group btns-tr split-btns pull-right">
-                  <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
-                  <button class="btn btn-blue btn-sm z-btn-sm">提交并转下一页</button>
-              </div>
-            </div><!-- /.box-body -->
-          </div><!-- /.box -->
+
+                    <!--  <div class="btns btns-tr">
+                       <button class="btn btn-blue btn-sm next-page">提交</button>
+                       <button class="btn btn-blue btn-sm next-page">提交并转下一页</button>
+                     </div> -->
+                    <div class="btn-group btns-tr split-btns pull-right">
+                        <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
+                        <button class="btn btn-blue btn-sm z-btn-sm">下一页</button>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
         </div>
         <!-- /.col -->
-      </div>
-      <div id="modals">
+    </div>
+    <div id="modals" style="display: block;">
         <div class="col-lg-8 col-lg-offset-2">
-           <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block;">
-             <div class="modal-dialog">
-               <div class="modal-content">
-                 <div class="modal-body" style="display:none;">
-                 </div>
-                 <div class="modal-footer" style="text-align:left;">
-                   <div class="input-group" style="padding-bottom: 15px;"><span
-                           class="input-group-addon">高丽异体字:</span>
-                       <img src="img/font-img7.jpg" alt="">
-                     </div>
-                   <div class="input-group" style="padding-bottom: 15px"><span
-                           class="input-group-addon">重复的台湾异体字:</span>
-                       <input type="text" placeholder="请输入与高丽异体字重复的台湾异体字编号" class="form-control">
-                   </div>
-                   <div class="btns">
-                      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" @click="displayModal">取消</button>
-                      <button type="button" class="btn btn-blue btn-sm">确定</button>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-           <div class="modal-backdrop fade in"></div>
+            <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {#                 <div class="modal-header">#}
+                        {#                   <button type="button" class="close" data-dismiss="modal" @click="displayModal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>#}
+                        {#                   <h4 class="modal-title" id="myModalLabel">Modal title</h4>#}
+                        {#                 </div>#}
+                        <div class="modal-body" style="display:none;">
+
+                        </div>
+                        <div class="modal-footer" style="text-align:left;">
+                            <div class="input-group" style="padding-bottom: 15px;"><span
+                                    class="input-group-addon">高丽异体字:</span>
+
+                                <img :src="pic_id" :alt="hanzi_char">
+                            </div>
+                            <div class="input-group" style="padding-bottom: 15px"><span
+                                    class="input-group-addon">重复的台湾异体字:</span>
+                                <input type="text" placeholder="请输入与高丽异体字重复的台湾异体字编号" class="form-control" v-model="inter_dict_dup_hanzi">
+                            </div>
+                            <div class="btns">
+                                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"
+                                        @click="displayModal">取消
+                                </button>
+                                <button type="button" class="btn btn-blue btn-sm" @click="setDedup">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-      <script type="text/javascript">
-        var package_url = "{% url 'tasks-ongoing-dedup' version='v1' %}";
-        var variant_hanzi = "{% url 'korean-taiwan-dup-characters-list' version='v1' %}";
-
-
-        function GetHanzi(url, data, callback) {
-            $.ajax({
-                url: url,
-                method: 'GET',
-                dataType: 'json',
-                data: data,
-                success: callback,
-                error: function (xhr, status, err) {
-                    console.log(err);
-                }
-            })
-        }
+    </div>
+    <script type="text/javascript">
+        var bus = new Vue();
         var taskdedup = new Vue({
+            delimiters: ["#[", "]"],
             el: '#taskdedup',
             data: {
-                display: 'display:none;',
-                package_id: '1055',
-                std_hanzi_set: ['迥'],
-                korean_hanzi_sets: [],
-                tw_hanzi_sets: []
+                display: 'display:block;'
+
             },
             methods: {
-                showModal: function() {
-                    document.getElementById("modals").style.display="block";
+                showModal: function () {
+                    document.getElementById("myModal").style.display = "block";
+
                 },
-                aquireStdHanzi: function() {
-                    vm = this;
-                    callback = function(response) {
-                        for (item in response.models) {
-                            vm.std_hanzi_set.push(reponse.models[item].std_hanzi);
-                        }
-                    }
-                    GetHanzi(package_url, {'package_id': 1055}, callback)
-                },
-                aquireVariantHanzi: function() {
-                    vm = this
-                    for (item in vm.std_hanzi_set) {
-                        params = {'korean_variant': vm.std_hanzi_set[item]}
-                    callback = function(response) {
-                        vm.korean_hanzi_sets = response.korean_hanzi_sets;
-                        vm.tw_hanzi_sets = response.tw_hanzi_sets;
-                        }
-                    }
-                    GetHanzi(variant_hanzi, params, callback)
+                clicked: function() {
+                    clicked_el = event.currentTarget;
+                    taskdedup.showModal();
+                    bus.$emit('clicked',clicked_el)
                 }
             }
         });
 
         var modals = new Vue({
+            delimiters: ["#[", "]"],
             el: '#modals',
+            data:{
+                pic_id: "",
+                hanzi_char: "",
+                char_id:0,
+                inter_dict_dup_hanzi:"",
+            },
+
             methods: {
-                displayModal: function() {
-                    document.getElementById("modals").style.display="none";
+                setDedup: function(){
+                    $.ajax({
+                        url: "/api/v1/interdict-dedups/"+modals.char_id+"/submit_single_variant/",
+                        method: 'PATCH',
+                        dataType: 'json',
+                        data: {
+                            'inter_dict_dup_hanzi':modals.inter_dict_dup_hanzi
+                        },
+                        success: function (response) {
+                            alert(response);
+                        },
+                        error: function (xhr, status, err) {
+                            console.log(err);
+                        }
+                    })
+                },
+                displayModal: function () {
+                    document.getElementById("myModal").style.display = "none";
                 }
+            },
+            created: function() {
+                 bus.$on('clicked', function (clicked_el){
+                     modals.pic_id = clicked_el.getAttribute('pic');
+                     modals.hanzi_char = clicked_el.getAttribute('char');
+                     modals.char_id = clicked_el.getAttribute('char_id');
+                 })
             }
         })
-      </script>
+    </script>
 {% endblock %}

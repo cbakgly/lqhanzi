@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # 'debug_toolbar',
     # 'crispy_forms',
     'registration',
-    'hanzi',
+    #'hanzi',
     'sysadmin',
     'workbench',
     'backend',

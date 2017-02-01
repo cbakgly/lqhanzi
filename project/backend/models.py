@@ -110,11 +110,14 @@ class TaskTypes(models.Model):
 class Tasks(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
-    task_status = models.SmallIntegerField(u'任务状态', choices=TASK_STATUS_CHOICES, null=True, blank=True)
 
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
+    task_status = models.SmallIntegerField(u'任务状态', choices=TASK_STATUS_CHOICES, null=True, blank=True)
+
+    # business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
 
     credits = models.SmallIntegerField(u'积分', null=True, blank=True)
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
@@ -125,7 +128,6 @@ class Tasks(models.Model):
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
-    object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:
@@ -353,19 +355,19 @@ class Reward(models.Model):
 class CreditsRedeem(models.Model):
     redeem_status_choices = ((0, u'申请中'), (1, u'已受理'), (2, u'已完成'))
 
-    applied_by = models.ForeignKey(User, verbose_name=u"申请人", related_name="applier")
-    accepted_by = models.ForeignKey(User, verbose_name=u"受理人", related_name="acceptor", null=True, blank=True)
-    completed_by = models.ForeignKey(User, verbose_name=u"完成人", related_name="completor", null=True, blank=True)
     accepted_at = models.DateTimeField(u'受理时间', null=True, blank=True, default=timezone.now)
     completed_at = models.DateTimeField(u'完成时间', null=True, blank=True)
     reward_name = models.CharField(u'奖品名称', max_length=64)
-    reward = models.ForeignKey(Reward, related_name="reward", verbose_name=u"奖品")
+    # reward = models.ForeignKey(Reward, related_name="reward", verbose_name="奖品")
     cost_credits = models.IntegerField(u'所用积分', null=True)
 
     status = models.SmallIntegerField(u'状态：申请中，已受理，已完成', choices=redeem_status_choices, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    accepted_by = models.ForeignKey(User, verbose_name="受理人", related_name="acceptor", null=True, blank=True)
+    applied_by = models.ForeignKey(User, verbose_name="申请人", related_name="applier")
+    completed_by = models.ForeignKey(User, verbose_name="完成人", related_name="completor", null=True, blank=True)
 
     class Meta:
         db_table = 'lq_credits_redeem'
@@ -379,13 +381,14 @@ class Diaries(models.Model):
     tag_choices = ((0, u'问题反馈'), (1, u'心情故事'), (2, u'其他'))
 
     # user_id = models.IntegerField(u'用户id', null=True)
-    user = models.ForeignKey(User)
     tag = models.SmallIntegerField(u'标签', choices=tag_choices, default=0)
     work_types = models.CharField(u'工作类型', max_length=64, null=True)
     work_brief = models.CharField(u'工作摘要，如：【拆字x个，去重y页，录入z个。】', max_length=512, null=True)
     content = models.TextField(u'打卡日记', null=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+
+    user = models.ForeignKey(User)
 
     class Meta:
         verbose_name = u"打卡记录"
@@ -403,8 +406,8 @@ class Credits(models.Model):
     sort_choices = ((1, u"总积分"), (2, u"拆字积分"), (3, u"去重积分"), (4, u"录入积分"), (5, u"互助积分"))
 
     # user_id = models.IntegerField(u'用户id', null=True)
-    user = models.ForeignKey(User, verbose_name=u"用户", related_name="user_credits")
     credit = models.IntegerField(u"积分值", null=True)
+    user = models.ForeignKey(User, verbose_name="用户", related_name="user_credits")
     sort = models.IntegerField(u"积分类型", choices=sort_choices, default=1)
 
     class Meta:
@@ -517,3 +520,11 @@ class HanziParts(models.Model):
     @property
     def input(self):
         return self.part_char
+
+
+class django_content_type(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'django_content_type'

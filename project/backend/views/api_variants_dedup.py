@@ -18,7 +18,7 @@ from ..models import KoreanDedup, InterDictDedup, HanziSet
 from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import fields_or_filter_method, NotEmptyFilter
 from ..enums import getenum_source, getenum_task_status, getenum_business_stage
-from task_func import create_task
+from task_func import create_task, has_task
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
@@ -203,18 +203,24 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
         serializer = InterDictDedupSerializer(data=request.data)
 
         if serializer.is_valid():
-            new_task_data = {
-                'user': request.user,
-                'task_package': request.query_params['task_package'],
-                'content': variants_dedup
-            }
-            business_stage = create_task(new_task_data)
-            if business_stage is 1:
-                variants_dedup.inter_dict_dup_hanzi_draft = serializer.initial_data['inter_dict_dup_hanzi_draft']
-            elif business_stage is 2:
-                variants_dedup.inter_dict_dup_hanzi_review = serializer.initial_data['inter_dict_dup_hanzi_review']
+            tasks = has_task(variants_dedup)
+            if not tasks:
+                new_task_data = {
+                    'user': request.user,
+                    'task_package': request.query_params['task_package'],
+                    'content': variants_dedup
+                }
             else:
-                variants_dedup.inter_dict_dup_hanzi_final = serializer.initial_data['inter_dict_dup_hanzi_final']
+                for t in tasks:
+                    if t.task_status is getenum_task_status('ongoing'):
+                        business_stage = t.business_stage
+                        break
+            if business_stage is 1:
+                variants_dedup.inter_dict_dup_hanzi_draft = serializer.initial_data['inter_dict_dup_hanzi']
+            elif business_stage is 2:
+                variants_dedup.inter_dict_dup_hanzi_review = serializer.initial_data['inter_dict_dup_hanzi']
+            else:
+                variants_dedup.inter_dict_dup_hanzi_final = serializer.initial_data['inter_dict_dup_hanzi']
             variants_dedup.save()
             serializer = self.serializer_class(variants_dedup)
             return Response(serializer.data)

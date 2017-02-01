@@ -28,7 +28,7 @@ class HanziSetSerializer(serializers.ModelSerializer):
 
 
 class HanziSetDedupSerializer(serializers.ModelSerializer):
-    hanzi = serializers.SerializerMethodField()
+    hanzi_pic = serializers.SerializerMethodField()
 
     class Meta:
         model = HanziSet
@@ -58,14 +58,14 @@ class HanziSetDedupSerializer(serializers.ModelSerializer):
                    "std_hanzi",
                    "source",
                    "hanzi_pic_id",
-                   "hanzi_char"
+                   # "hanzi_char"
                    ]
 
-    def get_hanzi(self, obj):
-        if obj.hanzi_char is "":
-            return get_pic_url_by_source_pic_name(obj.source, obj.hanzi_pic_id)
-        else:
-            return obj.hanzi_char
+    def get_hanzi_pic(self, obj):
+        #    if not obj.hanzi_char:
+        return get_pic_url_by_source_pic_name(obj.source, obj.hanzi_pic_id)
+    #    else:
+    #        return obj.hanzi_char
 
 
 class HanziSetFilter(django_filters.FilterSet):
