@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from guardian.admin import GuardedModelAdmin
-from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, Reward, KoreanDupCharacters, InputPage
+from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, KoreanDupCharacters, InputPage
 
 
 class DiaryAdmin(admin.ModelAdmin):

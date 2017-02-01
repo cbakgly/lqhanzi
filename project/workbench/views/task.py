@@ -6,6 +6,7 @@ from backend.enums import getenum_source
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
 
+
 @login_required
 def task_split(request):
     return render(request, 'task_split.html')
