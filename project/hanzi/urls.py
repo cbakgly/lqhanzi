@@ -5,7 +5,7 @@ import views
 
 urlpatterns = [
     url(r'^$', views.stroke_search, name='m1.index'),  # 模块主页
-    url(r'index$', views.stroke_search,name='m1.stroke-search'),  # 模块主页
+    url(r'index$', views.stroke_search, name='m1.stroke-search'),  # 模块主页
     url(r'stroke_search$', views.stroke_search, name='m1.stroke-search'),
     url(r'stroke_ajax_search$', views.stroke_ajax_search, name='m1.stroke-ajax-search'),
     url(r'inverse_search$', views.inverse_search, name='m1.inverse-search'),
