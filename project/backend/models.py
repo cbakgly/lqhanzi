@@ -74,8 +74,6 @@ class HanziSet(models.Model):
         db_table = 'lq_hanzi_set'
 
 
-<<<<<<< HEAD
-=======
 class HanziParts(models.Model):
     part_char = models.CharField(max_length=8, null=True, default='')  # 文字部件
     strokes = models.PositiveSmallIntegerField()
@@ -88,18 +86,6 @@ class HanziParts(models.Model):
         db_table = 'lq_hanzi_parts'
 
 
-class Radical(models.Model):
-    radical = models.CharField(max_length=8, null=True, default='')
-    strokes = models.PositiveSmallIntegerField()
-
-    def __unicode__(self):
-        return self.radical
-
-    class Meta:
-        db_table = 'lq_hanzi_radicals'
-
-
->>>>>>> 主要功能全部完成
 BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
@@ -404,6 +390,7 @@ class CreditsRedeem(models.Model):
 
 
 class Diaries(models.Model):
+
     """
     打卡记录
     """
@@ -429,6 +416,7 @@ class Diaries(models.Model):
 
 
 class Credits(models.Model):
+
     """
     积分
     """
