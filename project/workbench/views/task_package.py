@@ -2,33 +2,29 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from backend.enums import getenum_task_package_status
+from backend.enums import getenum_task_package_status, getenum_business_type
 from backend.models import TaskPackages, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 from backend.utils import get_today_complete_task_num
 
 
 @login_required
 def new_task_page(request):
-    return render(request, 'new_task.html', {
-        "business_type_choices": BUSINESS_TYPE_CHOICES,
-        "business_stage_choices": BUSINESS_STAGE_CHOICES,
-        "business_status_ongoing": getenum_task_package_status('ongoing')
-    })
+    return render(request, 'new_task.html')
 
 
 @login_required
-def task_package_input_list(request):
-    return render(request, 'task_package_input_list.html')
+def task_package_input_list(request, *args, **kwargs):
+    return render(request, 'task_package_input_list.html', kwargs)
 
 
 @login_required
-def task_package_dedup_list(request):
-    return render(request, 'task_package_dedup_list.html')
+def task_package_dedup_list(request, *args, **kwargs):
+    return render(request, 'task_package_dedup_list.html', kwargs)
 
 
 @login_required
-def task_package_split_list(request):
-    return render(request, 'task_package_split_list.html')
+def task_package_split_list(request, *args, **kwargs):
+    return render(request, 'task_package_split_list.html', kwargs)
 
 
 @login_required
@@ -51,4 +47,6 @@ def task_package_ongoing(request):
         i['today_num'] = get_today_complete_task_num(user.id, item.business_type)
         task_packages.append(i)
 
-    return render(request, 'task_package_ongoing.html', {'task_packages': task_packages})
+    return render(request, 'task_package_ongoing.html', {
+        'task_packages': task_packages,
+    })
