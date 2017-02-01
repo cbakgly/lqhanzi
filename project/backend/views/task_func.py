@@ -128,3 +128,10 @@ def create_task(new_task_data):
         return business_stage
     else:
         return business_stage
+
+
+def has_task(task_ele):
+    tasks = list(Tasks.objects.filter(object_id=task_ele.id))
+    return tasks
+
+# def get_stage(task_package_id):

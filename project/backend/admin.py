@@ -109,8 +109,8 @@ class CreditRedeemInline(admin.TabularInline):
     model = CreditsRedeem
 
 
-class RewardAdmin(admin.ModelAdmin):
-    inlines = [CreditRedeemInline]
+# class RewardAdmin(admin.ModelAdmin):
+    # inlines = [CreditRedeemInline]
 
 
 class CreditsRedeemAdmin(admin.ModelAdmin):
@@ -133,6 +133,6 @@ admin.site.register(CreditsRedeem, CreditsRedeemAdmin)
 admin.site.register(User, GuardedModelAdmin)
 admin.site.register(Permission, GuardedModelAdmin)
 admin.site.register(HanziSet)
-admin.site.register(Reward, RewardAdmin)
+# admin.site.register(Reward, RewardAdmin)
 admin.site.register(KoreanDupCharacters, KoreanDupChaAdmin)
 admin.site.register(InputPage, InputPageAdmin)

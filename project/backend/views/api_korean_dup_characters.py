@@ -11,9 +11,11 @@ from rest_framework.response import Response
 import django_filters
 
 from ..pagination import NumberPagination
-from ..models import KoreanDupCharacters, HanziSet
+
+from ..models import KoreanDupCharacters, HanziSet, InterDictDedup
 from ..enums import getenum_source, getenum_business_stage, getenum_task_status
 from api_hanzi_set import HanziSetDedupSerializer
+from api_variants_dedup import InterDictDedupSerializer
 from task_func import assign_task
 
 
@@ -26,12 +28,18 @@ class KoreanDupCharactersSerializer(serializers.ModelSerializer):
         exclude = ["c_t", "u_t", "remark", "relation"]
         depth = 0
 
-    def get_korean_hanzi_sets(self, obj):
+    '''def get_korean_hanzi_sets(self, obj):
         hanzi_set_qs = HanziSet.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('korean'))
-        return HanziSetDedupSerializer(hanzi_set_qs, many=True).data
+        return HanziSetDedupSerializer(hanzi_set_qs, many=True).data'''
+    def get_korean_hanzi_sets(self, obj):
+        hanzi_set_qs = InterDictDedup.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('korean'))
+        return InterDictDedupSerializer(hanzi_set_qs, many=True).data
 
     def get_tw_hanzi_sets(self, obj):
-        hanzi_set_qs = HanziSet.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('taiwan'))
+        if obj.relation is 3:
+            hanzi_set_qs = HanziSet.objects.filter(std_hanzi=obj.unicode).filter(source=getenum_source('taiwan'))
+        else:
+            hanzi_set_qs = HanziSet.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('taiwan'))
         return HanziSetDedupSerializer(hanzi_set_qs, many=True).data
 
 
