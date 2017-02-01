@@ -8,7 +8,6 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <title>首页-部件笔画检字法</title>
 
-
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
@@ -18,6 +17,15 @@
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <script src="{% static 'js/stroke_search.js' %}"></script>
 
+<style type="text/css">
+.reverse{ background-color:#b1cfff;font-size:15px;}
+.reverse td { border:1px solid white;}
+.reverse img {height:15px;}
+.reverse td:nth-child(1)
+{
+    width:90px;
+}
+</style>
 
 </head>
 <body>
@@ -101,7 +109,7 @@
         <div class="content">
             <div class="w">
                 <div class="con-left">
-                    <p class="total">共检索到<em><span id="stroke_result_count"></span></em>条数据</p>
+                    <p class="total">共有<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条</p>
                     <ul class="hanzi-wrap clearfix">
 
                     </ul>
@@ -112,7 +120,7 @@
 
                         <span>跳至:<input id="new_page" type="text">页</span>
                         <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span>
-
+                        <span id="search_tip"></span>
                     </div>
 
 
@@ -147,17 +155,23 @@
                             </div>
                             <div class="parts-bd">
                                 <div class="parts-ser clearfix">
-                                    <input id="radical_input" class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
-                                    <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
+                        <!-- 
+                        <input id="radical_input" readonly class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
+                        <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
+                        </div> -->
+
+                                    <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
+                                    <div class="fl" id="radical_input">筛选条件在这里显示</div>
+                                    <button class="btn btn-default fl" id="clearitem">重置</button>
                                 </div>
 
-                                <div class="help"><i class="icon-help"></i></div>
+                                <!-- <div class="help"><i class="icon-help"></i></div> -->
 
                                 <!--笔画-->
                                 <div class="stroke">
                                     <span class="stroke-hd">笔画：</span>
                                     <div id="strokes" class="stroke-bd">
-                                        <span class="stroke-item active">All</span>
+                                        <!-- <span class="stroke-item active">All</span> -->
                                         <span class="stroke-item">1</span>
                                         <span class="stroke-item">2</span>
                                         <span class="stroke-item">3</span>
@@ -175,18 +189,20 @@
                                         <span class="stroke-item">15</span>
                                         <span class="stroke-item">16</span>
                                         <span class="stroke-item">17</span>
+                                        <span class="stroke-item">18</span>
+                                        <span class="stroke-item">19</span>
                                     </div>
                                 </div>
                                 <!--笔顺-->
                                 <div class="stroke">
                                     <span class="stroke-hd">笔顺：</span>
                                     <div id="stroke-order" class="stroke-bd">
-                                        <span data-value="h" class="stroke-item">一</span>
-                                        <span data-value="s" class="stroke-item">丨</span>
-                                        <span data-value="p" class="stroke-item">丿</span>
-                                        <span data-value="n" class="stroke-item">丶</span>
-                                        <span data-value="z" class="stroke-item">乛</span>
-                                        <span data-value="n" class="stroke-item">乀</span>
+                                        <span data-value="1" class="stroke-item">一</span>
+                                        <span data-value="2" class="stroke-item">丨</span>
+                                        <span data-value="3" class="stroke-item">丿</span>
+                                        <span data-value="4" class="stroke-item">丶</span>
+                                        <span data-value="5" class="stroke-item">乛</span>
+                                        <span data-value="4" class="stroke-item">乀</span>
                                     </div>
                                 </div>
                             </div>
@@ -197,9 +213,9 @@
                             {% for item in part_list %}
 
                                 {% if item.flag %}
-                                    <span class="result-stoke">{{item.flag}}</span>
+                                    <span class="result-stoke" data-stroke="{{item.flag}}-">{{item.flag}}</span>
                                 {% else %}
-                                    <span class="result-item" data-stroke="{{item.strokes}};{{item.stroke_order}}">{{item.part_char}}</span>
+                                    <span class="result-item" data-stroke="{{item.strokes}}-{{item.stroke_order}}">{{item.part_char}}</span>
                                 {% endif %}
 
                             {% endfor %}
@@ -222,37 +238,51 @@
 
             <div class="bubble-hd">
                 <ul class="hd-lists">
+
+                    <li class="clearfix">
+                        <span class="fl"></span>
+                        <div class="fl" id="bline1"></div>
+                    </li>
+
                     <li class="clearfix">
                         <span class="fl">来源：</span>
-                        <div class="fl">
-                        <!-- <em>台湾</em> /<em>汉语</em> /<em>高丽</em> -->
-                        </div>
+                        <div class="fl" id="bline2"></div>
                     </li>
+
                     <li class="clearfix">
-                        <span class="fl">编码：</span>
-                        <div class="fl">
-<!--                             <p><em>A02758-005</em><a href="#">(盲)</a></p>
-                            <p><em>C04978</em><a href="#">(盲)</a></p> -->
-                        </div>
+                        <span class="fl">类型：</span>
+                        <div class="fl" id="bline3"></div>
                     </li>
+
+                    <li class="clearfix">
+                        <span class="fl">正字：</span>
+                        <div class="fl" id="bline4"></div>
+                    </li>
+
+                    <li class="clearfix">
+                        <span class="fl">兼正字：</span>
+                        <div class="fl" id="bline5"></div>
+                    </li>
+
+
                 </ul>
             </div>
-            <div class="bubble-bd">
+<!--             <div class="bubble-bd">
                 <ul class="bd-lists">
                     <li class="clearfix">
                         <span class="fl">相似部件：</span>
-                        <div class="fl"><!-- <em>水</em> <em>瓜</em> --></div>
+                        <div class="fl"> <em>水</em> <em>瓜</em></div>
                     </li>
                     <li class="clearfix">
                         <span class="fl">拆字序列：</span>
                         <div class="fl">
-<!--                             <p>⿶水</p>
                             <p>⿶水</p>
-                            <p>⿶水⿶水⿶水</p> -->
+                            <p>⿶水</p>
+                            <p>⿶水⿶水⿶水</p>
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
         </div>
 
@@ -307,7 +337,6 @@
         // $(function (){
         //     $(".hanzi-item").bubbletips({position : "b",value : 35});
         // });
-
 </script>
 
 </body>

@@ -215,6 +215,11 @@
     float: left;
     margin-bottom:7px;
 }
+
+/*added by wenxiaofeng*/
+#bline1 { font-size:35px; }
+
+
 .hanzi-wrap li .hanzi-item{
     display: block;
     width:45px;
@@ -223,6 +228,8 @@
     text-align: center;
     vertical-align:middle;
 }
+
+
 .hanzi-wrap li .hanzi-item img{
     width: 30px;
     height: 30px;
@@ -311,6 +318,20 @@
     -webkit-border-bottom-right-radius: 0;
     -moz-border-bottom-right-radius: 0;
 }
+
+/*added by wenxiaofeng*/
+#radical_input{
+    height:26px;
+    width:140px;
+    /*padding:6px 10px 7px 10px;*/
+    padding:6px 5px 0px 5px;
+    font-size: 14px; 
+    border:1px solid #ddd;
+    text-align:center;
+
+}
+
+
 .parts-ser button{
     border-top-left-radius: 0;
     -webkit-border-top-left-radius: 0;
@@ -360,10 +381,14 @@
     color:#fff;
 }
 .parts .parts-results{
-    padding:10px 17px 100px 16px;
+    padding:10px 17px 10px 16px;
     background-color: #fff;
-    margin-top:5px;
+    /*margin-top:5px;*/
     font-size:0;
+
+/*added by wenxiaofeng*/
+    box-shadow:0 1px 5px rgba(0,0,0,.3);
+    -webkit-box-shadow:0 1px 6px rgba(0,0,0,.2);  
 }
 .con-right .result-stoke,.con-right .result-item{
     display:inline-block;
@@ -763,6 +788,7 @@
     top:3px;
 }
 
+
 .hanzi-variants a{
     display:inline-block;
     width:50px;
@@ -785,6 +811,35 @@
     height:40px;
     margin-top:-6px;
 }
+
+
+/** add by wenxiaofeng */
+.hanzi-variants2 a{
+    display:inline-block;
+    min-width:50px;*/
+    height:50px;
+    text-align: center;
+    line-height:50px;
+    border:1px solid #ddd;
+    vertical-align:middle;
+    margin-right:4px;
+}
+.hanzi-variants2 a span{
+    display: block;
+    min-width:50px;
+    height:50px;
+    font-size:38px;
+    vertical-align:middle;
+}
+.hanzi-variants2 a img{
+    width:40px;
+    height:40px;
+    margin-top:-6px;
+}
+
+
+
+
 .normal{
     background-color: #e2eef5;
 }

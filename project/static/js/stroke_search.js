@@ -50,25 +50,36 @@
 //     });
 // }
 
+/*
+string必须是"source=unicode;code=;variant_type=null;std_hanzi=;as_std_hanzi="这样的格式
+*/
+function FindPropertyValue(string,property)
+{
+    var rex = new RegExp( property+"=(.*?);");
+    m = string.match(rex);
+    if(m != null) return m[1];
+}
+
 
 $(document).ready(function()
 {
 
     $(document).on('mouseover', '.hanzi-item', function()
     {
-        // offset = $(this).offset();
-        // w1 = $(this).width();
-        // h1 = $(this).height();
-
-        // w2 = $('#btip').width();
-        // h2 = $('#btip').height();
-        // 
         var options = $.extend({position:"t", value:15},{position:"b",value:35});
 
         offset = $(this).offset();
         h = $(this).height();
         w = $(this).width();
-     
+
+        var value = $(this).attr("data-value");
+
+        $('#bline1').html( $(this).html()  );
+        $('#bline2').html( FindPropertyValue(value,"source") );
+        $('#bline3').html( FindPropertyValue(value,"variant_type") );
+        $('#bline4').html( FindPropertyValue(value,"std_hanzi") );
+        $('#bline5').html( FindPropertyValue(value,"as_std_hanzi") );
+
         $("#btip").css({ "visibility":"visible","left":offset.left-w/2-options.value-23,"top":offset.top-h-$("#btip").height()+40});
         $("#btip").show();
 
@@ -90,14 +101,15 @@ $(document).ready(function()
     {
         $("#btip").hide(); 
     });
-  
+
 
     //点击笔画数的响应函数
     $(document).on('click', '#strokes > span', function()
     {
-        var text = $("#radical_input").val() + $(this).html();
-        $("#radical_input").val(text);
-        strokes_filter();
+        var stroke = $("#radical_input").val() + $(this).html();
+        stroke += '-';
+        $("#radical_input").text(stroke);
+        strokes_filter(stroke);
     });
 
 
@@ -105,9 +117,18 @@ $(document).ready(function()
     $(document).on('click', '#stroke-order > span', function()
     {
         var text = $("#radical_input").val() + $(this).attr("data-value");
-        $("#radical_input").val(text);
-        strokes_filter();
+        $("#radical_input").append(text);
+        strokes_filter2();
     });
+
+
+    //点击重置时的响应函数
+    $(document).on('click', '#clearitem', function()
+    {
+        $("#radical_input").text("筛选条件在这里显示");
+        $(".parts-results span").show();
+    });
+
 
     //点击部件时的响应函数
     $(document).on('click', '.result-item', function()
@@ -123,20 +144,28 @@ $(document).ready(function()
         $("#searchinput").val(text);
     });
 
-    //点击检索结果中的字的响应函数
-    //$(document).on('click', '.hanzi-item', function()
-    //{
-        // var text = $("#searchinput").val() + $(this).attr("data-value");
-        // $("#searchinput").val(text);
-    //});
 
     //点击部件笔画搜索按钮时的响应函数
     $("#strock_search_btn").click( function ()
     {
         //显示载入动画
         //$(".loading").show();
-        //var url = $(this).find("a").attr("href");
-        var order = $('.search-bottom input[name="r"]:checked').val();  
+        var order = $('.search-bottom input[name="r"]:checked').val();
+
+        if(order=='3')
+        {
+            $.get(
+              "inverse_search",
+              {"q":$(".ser-input").val()},
+              function (data)
+              {
+                  //渲染数据
+                  render_inverse_result(data);
+              });
+            return;
+        }
+
+
         $.get(
           "stroke_ajax_search",
           {"q":$(".ser-input").val(),"order":order,"page_num":1,"page_size":100,},
@@ -171,18 +200,24 @@ $(document).ready(function()
     $("#stroke_page_btn").click( function ()
     {
         var new_page = $('#new_page').val();
-        var regex = /^[1-9]+$/;
+        var regex = /^[1-9]{1}[0-9]*$/;
 
         if(new_page.match(regex) == null)
         {
-            alert("页码格式不对");
+            $("#search_tip").html("格式不对");
             return;
         }
+
+        if(new_page>$("#total").html()/$("#perpage").html()+1)
+        {
+            $("#search_tip").html("页码超过范围啦");
+            return;
+        }  
+
 
         var url = $(this).attr("data-url");
         url += '&page_num=' + new_page;
 
-        alert(url);return;
         $.get(
           url,
           function (data)
@@ -199,6 +234,24 @@ $(document).ready(function()
 
 
 
+function strokes_filter(stroke)
+{
+    $(".parts-results span").hide();
+    $(".parts-results span[data-stroke^=" + stroke +"]").show();  
+}
+
+
+function strokes_filter2()
+{
+    var item = $("#radical_input").text();
+
+    // var parts = $(".parts-results span:visible[data-stroke^=" + item +"]");
+    // $(".parts-results span:visible[data-stroke!=" + item +"]").hide();
+    // parts.show();
+    $(".parts-results span").hide();
+    $(".parts-results span[data-stroke^=" + item +"]").show();  
+}
+
 
 //渲染部件笔画检字法结果集的函数
 function render_stroke_result(data)
@@ -209,23 +262,24 @@ function render_stroke_result(data)
     var pages = data.pages;
     var page_size = data.page_size;
     var order = data.order;
+    var total = data.total;
     var data = data.result;
 
-    //查询到的字对象的个数
-    len = data.length;
+    //显示符合要求的条目数
+    $("#total").html(total);
+    $("#perpage").html(page_size);
 
-    //显示取到的条目数
-    $("#stroke_result_count").html(len);   
     $('.hanzi-wrap').html('');
     $('.pagination').empty();
 
+    //本次查询到的字对象的个数
+    len = data.length;
     for (var i=0;i<len;i++)
     {
-
         var char = "";
         if(data[i].source == 1)//如果是unicode
         {
-            var data_value = 'source=unicode;code='+data[i].remark +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+            var data_value = 'source=unicode;code='+data[i].remark +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
             char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=1&type=char&text=';
             char += data[i].hanzi_char;
@@ -236,7 +290,7 @@ function render_stroke_result(data)
         }
         else if(data[i].source == 2)//如果是台湾异体字
         {
-            var data_value = 'source=台湾异体字;code='+data[i].seq_id +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+            var data_value = 'source=台湾异体字;code='+data[i].seq_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
             if(data[i].hanzi_char != "")
             {
@@ -269,7 +323,7 @@ function render_stroke_result(data)
 
             if(data[i].hanzi_char != "")
             {
-                var data_value = 'source=汉字大字典;code='+data[i].hanzi_char +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=汉字大字典;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=3&type=char&text=';
                 char += data[i].hanzi_char;
@@ -282,7 +336,7 @@ function render_stroke_result(data)
             }
             else
             {
-                var data_value = 'source=汉字大字典;code='+data[i].hanzi_pic_id +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=汉字大字典;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=3&type=pic&text=';
                 char += data[i].hanzi_pic_id;
@@ -301,7 +355,7 @@ function render_stroke_result(data)
         {
             if(data[i].hanzi_char != "")
             {
-                var data_value = 'source=高丽异体字;code='+data[i].hanzi_char +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=高丽异体字;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=4&type=char&text=';
                 char += data[i].hanzi_char;
@@ -315,7 +369,7 @@ function render_stroke_result(data)
             }
             else
             {
-                var data_value = 'source=高丽异体字;code='+data[i].hanzi_pic_id +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=高丽异体字;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=4&type=pic&text=';
                 char += data[i].hanzi_pic_id;
@@ -334,7 +388,7 @@ function render_stroke_result(data)
         {
             if(data[i].hanzi_char != "")
             {
-                var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_char +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=5&type=char&text=';
                 char += data[i].hanzi_char;
@@ -348,7 +402,7 @@ function render_stroke_result(data)
             }
             else
             {
-                var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_pic_id +';similar_parts='+data[i].similar_parts+';split_serial='+data[i].mix_split;
+                var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi+';as_std_hanzi='+data[i].as_std_hanzi;
 
                 char = '<li><a class="hanzi-item" target="_blank" href="/hanzi/variant_detail?source=5&type=pic&text=';
                 char += data[i].hanzi_pic_id;
@@ -409,3 +463,37 @@ function render_stroke_result(data)
     $(".con-right").addClass("con-right-new");
 }
 
+
+
+function render_inverse_result(data)
+{
+    $("#total").html(1);
+    $("#perpage").html(1);
+
+    $('.pages-box').empty();
+
+    $('.hanzi-wrap').html('');
+
+
+    var str = '<table class="reverse">';
+
+    if(data.hanzi_pic_id != "")
+    {
+        str +='<tr><td>所查字</td><td><img src="' + data.hanzi_pic_id + '"></td></tr>';
+    }
+    else
+    {
+        str +='<tr><td>所查字</td><td>' + data.hanzi_char + '</td></tr>';
+    }
+
+    str +='<tr><td>来源</td><td>' + data.source + '</td></tr>';
+    str +='<tr><td>正字</td><td>' + data.std_hanzi + '</td></tr>';
+    str +='<tr><td>兼正字</td><td>' + data.as_std_hanzi + '</td></tr>';
+    str +='<tr><td>混合拆分</td><td>' + data.mix_split + '</td></tr>';
+    str += '</table>';
+
+    $('.hanzi-wrap').append(str);
+
+    $(".con-left").fadeIn(600);
+    $(".con-right").addClass("con-right-new");   
+}

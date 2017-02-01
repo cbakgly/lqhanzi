@@ -2,14 +2,54 @@
 
 $(document).ready(function()
 {
+    //当剩余笔画数变化时的响应函数
+    $(".input-ser").blur( function (){
+    //$(".input-ser").on("input propertychange",function(){  
+
+        var left_stroke = $('.input-ser').val();
+        var regex = /^[1-9]{1}[0-9]*$/;
+
+        if(left_stroke.match(regex) == null)
+        {
+            $("#search_tip").html("格式不对");
+            return;
+        }
+
+        //取得部首
+        var redical = $('#search_item').html();
+
+        //搞清楚当前那个字典有效
+        var dict = $(".dict-tabs .active").html();
+        var source = 0;
+        if(dict == '台湾异体字字典')
+            source = 2;
+        else if(dict == '高丽异体字字典')
+            source = 4;
+        else if(dict == '汉语大字典')
+            source = 3;
+        else if(dict == '敦煌俗字典')
+            source = 5;
+
+        $.get(
+          "dicts_search",
+          {"q":redical,"source":source,"page_num":1,"page_size":200,"left_stroke":left_stroke },
+          function (data)
+          {
+              //渲染数据
+              render_dicts_result(data);
+          });
+
+    });
+
+
+
     //字典页面中，点击上一个、下一页时的换页函数
     $(document).on('click', '.stroke_page', function()
     {
-        //var url = $(this).find("a").attr("href");
         var url = $(this).attr("data-url");
         //显示载入动画
         //$(".loading").show();
-        
+
         $.get(
           url,
           function (data)
@@ -27,11 +67,11 @@ $(document).ready(function()
     $("#dict_page_btn").click( function ()
     {
         var new_page = $('#new_page').val();
-        var regex = /^[1-9]+$/;
+        var regex = /^[1-9]{1}[0-9]*$/;
 
         if(new_page.match(regex) == null)
         {
-            alert("页码格式不对");
+            $("#search_tip2").html("页码格式不对");
             return;
         }
 
@@ -51,9 +91,6 @@ $(document).ready(function()
 });
 
 
-
-
-
 //点击部首时的响应函数
 function clickRadical(redical)
 {
@@ -69,9 +106,12 @@ function clickRadical(redical)
     else if(dict == '敦煌俗字典')
         source = 5;
 
+    //设置面板顶部搜索部首
+    $('#search_item').html(redical);
+
     $.get(
       "dicts_search",
-      {"q":redical,"source":source,"page_num":1,"page_size":200 },
+      {"q":redical,"source":source,"page_num":1,"page_size":200,"left_stroke":-1 },
       function (data)
       {
           //渲染数据
@@ -84,9 +124,11 @@ function clickRadical(redical)
 function render_dicts_result(data)
 {
     var q = data.q;
+    var total = data.total;
     var page_num = data.page_num;
     var pages = data.pages;
     var page_size = data.page_size;
+    var left_stroke = data.left_stroke;
     var source = data.source;
 
     var title=new Array("零画","一画","二画","三画","四画","五画","六画","七画","八画","九画","十画",
@@ -99,6 +141,8 @@ function render_dicts_result(data)
     $(".strokes-lists").empty();
     $('.pagination').empty();
 
+    //在面板顶部显示搜索到条目的总数
+    $('#search_count').html(total);
 
     var flag = -1;
 
@@ -153,7 +197,7 @@ function render_dicts_result(data)
     }
     else
     {
-        url = 'dicts_search?q=' + q + '&source=' + source + '&page_num=' + prev +'&page_size=' + page_size;
+        url = 'dicts_search?q=' + q + '&source=' + source + '&page_num=' + prev +'&page_size=' + page_size+'&left_stroke=' + left_stroke;
         str += '<li class="stroke_page" data-url="' + url + '">上一页</li>';
     }
 
@@ -165,7 +209,7 @@ function render_dicts_result(data)
     }
     else
     {
-        url = 'dicts_search?q=' + q + '&source=' + source + '&page_num=' + next +'&page_size=' + page_size;
+        url = 'dicts_search?q=' + q + '&source=' + source + '&page_num=' + next +'&page_size=' + page_size+'&left_stroke=' + left_stroke;
         //str += '<li class="stroke_page" data-url="' + url + '"><a>下一页</a></li>';
         str += '<li class="stroke_page" data-url="' + url + '">下一页</li>';
     }
@@ -173,7 +217,7 @@ function render_dicts_result(data)
     $('.pagination').append(str);  
 
     //给翻页按纽增加data-url属性， 以便单击时利用
-    var new_url = 'dicts_search?q=' + q + '&source=' + source + '&page_size=' + page_size;
+    var new_url = 'dicts_search?q=' + q + '&source=' + source + '&page_size=' + page_size+'&left_stroke=' + left_stroke;
     $('#dict_page_btn').attr("data-url",new_url); 
 }
 

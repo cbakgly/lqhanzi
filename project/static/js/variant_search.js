@@ -150,17 +150,61 @@ function render_variant_result(data)
         {
             char += '<li class="dict-result-item">';
             char += '<h3 class="dict-title">《汉语大字典》</h3>';
-            char += '<div class="desc"><a target="_blank" href="#">';
-            char += data[i].content;
-            char += '</a></div>';
+            char += '<div class="hanzi-variants2">';
+
+
+            count = data[i].content.length;
+            variant = data[i].content;
+            for(var k=0;k<count;k++)
+            {
+                if(variant[k].type == 'char')
+                {
+                    char += '<a target="_blank" href="/hanzi/variant_detail?source=3&type=char&text=';
+                    char += variant[k].text;
+                    char += '"><span class="normal">';
+                    char += variant[k].text;
+                    char += '</span></a>';
+                }
+                else
+                {
+                    char += '<a target="_blank" href="/hanzi/variant_detail?source=3&type=pic&text=';
+                    char += variant[k].text;
+                    char += '"><span><img src="';
+                    char += variant[k].pic_url;
+                    char += '"></span></a>';
+                }
+            }
+            char += '</div>';
+
         }
         else if(data[i].source == 5)   //如果是敦煌俗字典
         {
             char += '<li class="dict-result-item">';
             char += '<h3 class="dict-title">《敦煌俗字典》</h3>';
-            char += '<div class="desc"><a target="_blank" href="#">';
-            char += data[i].content;
-            char += '</a></div>';
+            char += '<div class="hanzi-variants2">';
+
+            count = data[i].content.length;
+            variant = data[i].content;
+            for(var k=0;k<count;k++)
+            {
+                if(variant[k].type == 'char')
+                {
+                    char += '<a target="_blank" href="/hanzi/variant_detail?source=5&type=char&text=';
+                    char += variant[k].text;
+                    char += '"><span class="normal">';
+                    char += variant[k].text;
+                    char += '</span></a>';
+                }
+                else
+                {
+                    char += '<a target="_blank" href="/hanzi/variant_detail?source=5&type=pic&text=';
+                    char += variant[k].text;
+                    char += '"><span><img src="';
+                    char += variant[k].pic_url;
+                    char += '"></span></a>';
+                }
+            }
+            char += '</div>';
         }
         $('.dict-result-lists').append(char);
     }
