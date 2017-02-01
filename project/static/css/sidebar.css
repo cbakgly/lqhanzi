@@ -783,9 +783,11 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 .popup p{
   margin-bottom:20px;
 }
+
+/*modified by wenxiaofeng*/
 .popup p span{
   color:#5cbbe9;
-  margin-right:10px;
+  /*margin-right:10px;*/
 }
 .popup .strokes-item{
   margin-bottom:20px;

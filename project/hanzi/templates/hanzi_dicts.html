@@ -369,12 +369,12 @@
         <div class="popup">
             <span class="toggler"><i class="icon-l-arrow"></i></span>
             <div class="popup-hd clearfix">
-                <!-- <span class="close">关闭</span> -->
-                <p class="fl"><span>请选择剩余笔画</span>部首为<em>一</em>的汉字(共<em>928</em>字)</p>
-                <!--搜索-->
+              
+                <p class="fl">部首为<span id="search_item"></span>的字共有<span id="search_count"></span>个</p>
+           
                 <div class="parts-ser fl clearfix">
-                    <input class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
-                    <button type="submit" class="btn btn-default fl"><i class="icon-ser"></i></button>
+                    <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数"><span class="fl" id="search_tip"></span>
+                    <!-- <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i></button> -->
                 </div>
 
             </div>
@@ -428,7 +428,7 @@
 
                 <span>跳至:<input id="new_page" type="text">页</span>
                 <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
-
+                <span id="search_tip2"></span>
             </div>
         </div>
         <!--./浮层-->
