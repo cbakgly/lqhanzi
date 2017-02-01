@@ -2,8 +2,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from backend.enums import getenum_task_package_status, getenum_business_type
-from backend.models import TaskPackages, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
+from backend.enums import getenum_task_package_status
+from backend.models import TaskPackages
 from backend.utils import get_today_complete_task_num
 
 
