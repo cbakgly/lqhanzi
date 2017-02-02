@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
+from django.http import HttpResponseNotFound
+from django.core.exceptions import MultipleObjectsReturned
 # from django.db.models import Q
 
 from ..pagination import NumberPagination
@@ -323,3 +325,43 @@ class TasksViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
+
+    @list_route()
+    def split_search(self, request, *args, **kwargs):
+        hanzi_char = request.query_params.get('hanzi_char', False)
+        hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
+
+        if hanzi_char:
+            qs_split = VariantsSplit.objects.filter(hanzi_char=hanzi_char)
+        elif hanzi_pic_id:
+            qs_split = VariantsSplit.objects.filter(hanzi_pic_id=hanzi_pic_id)
+        else:
+            qs_split = None
+
+        if qs_split is None:
+            return HttpResponseNotFound()
+
+        # Here we assume that query result only has 1 item because hanzi_char is unique in code.
+        # But there isn't any assurance in code defence to guarantee that.
+        if qs_split.count() > 1:
+            raise MultipleObjectsReturned()
+
+        business_id = qs_split[0].id
+
+        qs = Tasks.objects.filter(business_type=getenum_business_type('split')).filter(object_id=business_id)
+
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            qs = Tasks.objects.all()
+        else:
+            qs = Tasks.objects.filter(user_id=user.id)
+        return qs

@@ -2,104 +2,164 @@
 
 {% block content %}
 <div class="content-header">
-    <ol class="breadcrumb">
-      <li><a href="javascript:;">我的任务</a></li>
-      <li>任务包</li>
-      <li class="active">005</li>
-    </ol>
+  <ol class="breadcrumb">
+    <li><a href="javascript:;">我的任务</a></li>
+    <li>任务包</li>
+    <li class="active">005</li>
+  </ol>
 </div>
 <div class="row">
-    <div class="col-xs-12">
-      <div class="box box-blue">
-        <!-- /.box-header -->
-        <div class="box-header">
-          <div class="box-header-inner">
-            <div class="box-tools pull-right">
-              <div class="input-group input-group-sm" style="width: 180px;">
-                <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入">
+  <div class="col-xs-12">
+    <div class="box box-blue">
+      <!-- /.box-header -->
+      <div class="box-header" id="search-box">
+        <div class="box-header-inner">
+          <div class="box-tools pull-right">
+            <div class="input-group input-group-sm" style="width: 180px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入" v-model="hanzi">
 
-                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" @click="search"><i class="fa fa-search"></i></button>
               </div>
             </div>
           </div>
-          <p class="total-data">共搜索到<span>900</span>条数据</p>
         </div>
-        <div class="box-body table-responsive">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>序号</th>
-              <th>阶段</th>
-              <th>字头</th>
-              <th>重复值</th>
-              <th>初步拆分一</th>
-              <th>初步拆分二</th>
-              <th>调笔拆分</th>
-              <th>相似部件</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>初次</td>
-                <td></td>
-                <td></td>
-                <td>⿰⿰亻丨⿱厶夫</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">查看</a></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>初次</td>
-                <td></td>
-                <td></td>
-                <td>⿰⿰亻丨⿱厶夫</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">查看</a></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>初次</td>
-                <td></td>
-                <td></td>
-                <td>⿰⿰亻丨⿱厶夫</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">查看</a></td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>初次</td>
-                <td></td>
-                <td></td>
-                <td>⿰⿰亻丨⿱厶夫</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">查看</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
-          </ul>
-        </div>
-      </div><!-- /.box -->
-    </div>
-<!-- /.col -->
+        <p class="total-data">共搜索到<span>900</span>条数据</p>
+      </div>
+      <div id="content-box">
+      <div class="box-body table-responsive">
+        <table id="example1" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>阶段</th>
+            <th>字头</th>
+            <th>重复值</th>
+            <th>初步拆分一</th>
+            <th>初步拆分二</th>
+            <th>调笔拆分</th>
+            <th>相似部件</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="item in models">
+            <td>#[item.id]]</td>
+            <td>#[item.business_stage_display]]</td>
+            <td v-if="item.task_ele.hanzi_char">#[item.task_ele.hanzi_char]]</td>
+            <td v-else><img :src="item.task_ele.hanzi_pic_path"></td>
+            <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.dup_id_draft]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.dup_id_review]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.dup_id_final]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.init_split_draft]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.init_split_review]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.init_split_final]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.other_init_split_draft]]
+            </td>
+            <td v-if="item.business_stage=={{business_stage_enum.review}}">
+              #[item.task_ele.other_init_split_review]]
+            </td>
+            <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.other_init_split_final]]
+            </td>
+            <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.deform_split_draft]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.deform_split_review]]
+            </td>
+            <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.deform_split_final]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.similar_parts_draft]]</td>
+            <td v-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.similar_parts_review]]
+            </td>
+            <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.similar_parts_final]]</td>
+            <td><a :href="detail_url.replace(0, item.id)">查看</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+          <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
+          </li>
+          <li v-else><a>«</a></li>
+          <li v-for="item in paging.page_links">
+            <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+            <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+            <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+          </li>
+          <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+          <li v-else><a>»</a></li>
+        </ul>
+      </div>
+      </div>
+    </div><!-- /.box -->
+  </div>
+  <!-- /.col -->
 </div>
+
+<script type="text/javascript">
+  var package_id = {{package_id}};
+  var list_url = "{% url 'tasks-list' version='v1' %}";
+  var search_url = "{% url 'tasks-split-search' version='v1' %}";
+  var status_complete = {{task_status_enum.completed}};
+
+  function hanzi_search(url, cond) {
+    console.log(cond);
+    $.ajax({
+      url: url + '?task_package=' + package_id + '&task_status=' + status_complete,
+      type: 'GET',
+      data: cond,
+      success: function(data) {
+        console.log(data);
+        content_box.models = data.models;
+        content_box.paging = data.html_context;
+      },
+      error: function(jqXHR, status, error) {
+        console.log(error);
+      }
+    });
+  }
+
+  var search_box = new Vue({
+    delimiters: ["#[", "]]"],
+    data: {
+      hanzi: "",
+    },
+    el: '#search-box',
+    methods: {
+      search: function() {
+        var cond = {};
+        if (this.hanzi.length > 1) {
+            cond['hanzi_pic_id'] = this.hanzi;
+        } else if (this.hanzi.length == 1) {
+            cond['hanzi_char'] = this.hanzi;
+        } else {
+            cond['empty'] = 1;
+        }
+
+        if (cond['empty']) {
+          hanzi_search(list_url, cond);
+        } else {
+          hanzi_search(search_url, cond);
+        }
+      },
+    }
+  });
+
+  var content_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#content-box',
+    data: {
+      models: [],
+      paging: {},
+      detail_url: "{% url 'm2.task-split' pk=0 %}",
+   },
+    methods: {
+      goto_page: function(url) {
+        hanzi_search(url, null);
+      }
+    },
+    created: function() {
+      hanzi_search(list_url, null);
+    }
+  });
+
+</script>
 {% endblock %}
