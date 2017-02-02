@@ -6,7 +6,7 @@ from views import diaries, task_package, search, forum, credits, task
 # Additionally, we include login URLs for the browseable API.
 urlpatterns = [
     # 工作打卡
-    url(r'diaries', diaries.index, name='m2.diaries'),
+    url(r'diaries$', diaries.index, name='m2.diaries'),
 
     # 积分排行榜，积分详情，我的兑换
     url(r'credits-ranking$', credits.ranking_page, name='m2.credits-ranking'),
@@ -17,13 +17,13 @@ urlpatterns = [
     url(r'task-package/ongoing$', task_package.task_package_ongoing, name='m2.task-package-ongoing'),
     url(r'task-package/completed$', task_package.task_package_complete, name='m2.task-package-completed'),
     url(r'task-package/new$', task_package.new_task_page, name='m2.new-task-package'),
-    url(r'task-package/split/list$', task_package.task_package_split_list, name='m2.task-package-split-list'),
-    url(r'task-package/input/list$', task_package.task_package_input_list, name='m2.task-package-input-list'),
-    url(r'task-package/dedup/list$', task_package.task_package_dedup_list, name='m2.task-package-dedup-list'),
+    url(r'task-package/(?P<package_id>\d+)/split$', task_package.task_package_split_list, name='m2.task-package-split-list'),
+    url(r'task-package/(?P<package_id>\d+)/input$', task_package.task_package_input_list, name='m2.task-package-input-list'),
+    url(r'task-package/(?P<package_id>\d+)/dedup$', task_package.task_package_dedup_list, name='m2.task-package-dedup-list'),
 
     # 我的任务拆字，拆字，去重，录入
-    url(r'task/split$', task.task_split, name='m2.task-split'),
-    url(r'task/input$', task.task_input, name='m2.task-input'),
+    url(r'task/split/(?P<pk>\d+)/$', task.task_split, name='m2.task-split'),
+    url(r'task/input/(?P<pk>\d+)/$', task.task_input, name='m2.task-input'),
     url(r'task/dedup/(?P<pk>\d+)/$', task.task_dedup, name='m2.task-dedup'),
 
     url(r'search/lq-hanzi$', search.lq_hanzi_db_search, name='m2.lq-hanzi-search'),

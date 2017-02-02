@@ -76,8 +76,8 @@ class KoreanDedupViewSet(viewsets.ModelViewSet):
             # if page_size_query_param is set, get its value
             page_size = self.paginator.get_page_size(request)
 
-            # Rawqueryset doesn't have count() and getitem() to be used in pagination
-            # We provide one in order to utilize existing funcitons.
+            # Rawqueryset doesn't have count() and getitem() to use in pagination
+            # We provide them in order to utilize existing functions.
             queryset = KoreanDedup.objects.raw(self.sql % (page_number))
 
             # Arbitrarily set them so it makes paging run as-is
@@ -205,11 +205,12 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             tasks = has_task(variants_dedup)
             if not tasks:
-                new_task_data = {
-                    'user': request.user,
-                    'task_package': request.query_params['task_package'],
-                    'content': variants_dedup
-                }
+                # new_task_data = {
+                #     'user': request.user,
+                #     'task_package': request.query_params['task_package'],
+                #     'content': variants_dedup
+                # }
+                pass
             else:
                 for t in tasks:
                     if t.task_status is getenum_task_status('ongoing'):
