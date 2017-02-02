@@ -339,12 +339,12 @@ class TasksViewSet(viewsets.ModelViewSet):
             qs_split = None
 
         if qs_split is None:
-            return HttpResponseNotFound()
+            return HttpResponseNotFound(_("Not found for specific char %s(%s)." % (hanzi_char, hanzi_pic_id)))
 
         # Here we assume that query result only has 1 item because hanzi_char is unique in code.
         # But there isn't any assurance in code defence to guarantee that.
         if qs_split.count() > 1:
-            raise MultipleObjectsReturned()
+            raise MultipleObjectsReturned(_("Multiple objects returned for specific char %s(%s)." % (hanzi_char, hanzi_pic_id)))
 
         business_id = qs_split[0].id
 
