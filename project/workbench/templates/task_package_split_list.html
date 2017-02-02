@@ -3,9 +3,9 @@
 {% block content %}
 <div class="content-header">
   <ol class="breadcrumb">
-    <li><a href="javascript:;">我的任务</a></li>
+    <li><a href="{% url 'm2.task-package-ongoing' %}">我的任务</a></li>
     <li>任务包</li>
-    <li class="active">005</li>
+    <li class="active">{{package_id}}</li>
   </ol>
 </div>
 <div class="row">
