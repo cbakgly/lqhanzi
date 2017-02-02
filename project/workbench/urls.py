@@ -22,9 +22,13 @@ urlpatterns = [
     url(r'task-package/(?P<package_id>\d+)/dedup$', task_package.task_package_dedup_list, name='m2.task-package-dedup-list'),
 
     # 我的任务拆字，拆字，去重，录入
-    url(r'task/split/(?P<pk>\d+)/$', task.task_split, name='m2.task-split'),
-    url(r'task/input/(?P<pk>\d+)/$', task.task_input, name='m2.task-input'),
-    url(r'task/dedup/(?P<pk>\d+)/$', task.task_dedup, name='m2.task-dedup'),
+    url(r'task/split$', task.task_split, name='m2.task-split'),
+    url(r'task/input$', task.task_input, name='m2.task-input'),
+    url(r'task/dedup$', task.task_dedup, name='m2.task-dedup'),
+
+    url(r'task/split/(?P<pk>\d+)/$', task.task_split, name='m2.task-split-detail'),
+    url(r'task/input/(?P<pk>\d+)/$', task.task_input, name='m2.task-input-detail'),
+    url(r'task/dedup/(?P<pk>\d+)/$', task.task_dedup, name='m2.task-dedup-detail'),
 
     url(r'search/lq-hanzi$', search.lq_hanzi_db_search, name='m2.lq-hanzi-search'),
     url(r'search/lq-split$', search.lq_split_db_search, name='m2.lq-split-search'),
