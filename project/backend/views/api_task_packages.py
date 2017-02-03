@@ -17,6 +17,7 @@ from task_func import assign_task
 from ..enums import getenum_task_package_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
+from ..pagination import NumberPagination
 
 
 # Task Packages management
@@ -103,6 +104,7 @@ class TaskPackagesViewSet(viewsets.ModelViewSet):
 
     serializer_class = TaskPackagesSerializer
     filter_class = TaskPackagesFilter
+    pagination_class = NumberPagination
 
     def get_queryset(self):
         user = self.request.user
