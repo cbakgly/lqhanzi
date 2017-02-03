@@ -118,7 +118,7 @@
                   </div>
                   <div class="btns">
                     <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
-                    <!-- <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button> -->
+                    <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置</button>
                     <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
                   </div>
                 </div>
@@ -158,19 +158,19 @@
                   <td v-show="titles[2]['show']">#[item.page_num]]</td>
                   <td v-show="titles[3]['show']">#[item.seq_num_draft]]</td>
                   <td v-show="titles[4]['show']">#[item.hanzi_char_draft]]</td>
-                  <td v-show="titles[5]['show']">#[item.hanzi_pic_id_draft]]</td>
+                  <td v-show="titles[5]['show']"><img :src="item.hanzi_pic_path_draft"></td>
                   <td v-show="titles[6]['show']">#[item.variant_type_draft]]</td>
                   <td v-show="titles[7]['show']">#[item.std_hanzi_draft]]</td>
                   <td v-show="titles[8]['show']">#[item.notes_draft]]</td>
                   <td v-show="titles[9]['show']">#[item.seq_num_review]]</td>
                   <td v-show="titles[10]['show']">#[item.hanzi_char_review]]</td>
-                  <td v-show="titles[11]['show']">#[item.hanzi_pic_id_review]]</td>
+                  <td v-show="titles[11]['show']"><img :src="item.hanzi_pic_path_review"></td>
                   <td v-show="titles[12]['show']">#[item.variant_type_review]]</td>
                   <td v-show="titles[13]['show']">#[item.std_hanzi_review]]</td>
                   <td v-show="titles[14]['show']">#[item.notes_review]]</td>
                   <td v-show="titles[15]['show']">#[item.seq_num_review]]</td>
                   <td v-show="titles[16]['show']">#[item.hanzi_char_review]]</td>
-                  <td v-show="titles[17]['show']">#[item.hanzi_pic_id_review]]</td>
+                  <td v-show="titles[17]['show']"><img :src="item.hanzi_pic_path_review"></td>
                   <td v-show="titles[18]['show']">#[item.variant_type_review]]</td>
                   <td v-show="titles[19]['show']">#[item.std_hanzi_review]]</td>
                   <td v-show="titles[20]['show']">#[item.notes_review]]</td>
