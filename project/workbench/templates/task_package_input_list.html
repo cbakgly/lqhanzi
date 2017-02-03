@@ -3,23 +3,23 @@
 {% block content %}
 <div class="content-header">
     <ol class="breadcrumb">
-      <li><a href="javascript:;">我的任务</a></li>
+      <li><a href="{% url 'm2.task-package-ongoing' %}">我的任务</a></li>
       <li>任务包</li>
-      <li class="active">004</li>
+      <li class="active">{{package_id}}</li>
     </ol>
 </div>
 <div class="row">
     <div class="col-xs-12">
       <div class="box box-blue">
         <!-- /.box-header -->
-        <div class="box-header">
+        <div class="box-header" id="search-box">
           <div class="box-header-inner">
             <div class="ser-bd">
               <div class="z-ser">
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="input-group">
                     <span class="input-group-addon">字头:</span>
-                    <input type="text" class="form-control" placeholder="字头">
+                    <input type="text" class="form-control" placeholder="字头" v-model="hanzi_">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6">
@@ -27,12 +27,11 @@
                     <span class="input-group-addon">类型:</span>
                     <!-- select -->
                     <div class="form-group">
-                      <select class="form-control">
-                        <option>狭义</option>
-                        <option>狭义</option>
-                        <option>狭义</option>
-                        <option>狭义</option>
-                        <option>狭义</option>
+                      <select class="form-control" v-model="variant_type">
+                        <option value="">请选择</option>
+                  {% for key,value in input_variant_type_choices %}
+                        <option value="{{key}}">{{value}}</option>
+                  {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -40,23 +39,24 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="input-group">
                     <span class="input-group-addon">页码:</span>
-                    <input type="text" class="form-control" placeholder="页码">
+                    <input type="text" class="form-control" placeholder="页码" v-model="page_num">
                   </div>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="input-group">
                     <span class="input-group-addon">备注:</span>
-                    <input type="text" class="form-control" placeholder="备注">
+                    <input type="text" class="form-control" placeholder="备注" v-model="notes">
                   </div>
                 </div>
               </div>
               <div class="btns">
-                <button class="btn btn-blue btn-sm z-btn-sm">搜索</button>
-                <button class="btn btn-default btn-sm z-btn-sm z-reset">重置</button>
+                <button class="btn btn-blue btn-sm z-btn-sm" @click="search">搜索</button>
+                <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="reset_search">重置</button>
               </div>
             </div>
           </div>
         </div>
+        <div id="content-box">
         <div class="box-body table-responsive">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
@@ -72,60 +72,128 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>1</td>
-              <td>戊</td>
-              <td>10</td>
-              <td>2</td>
-              <td>狭义</td>
-              <td></td>
-              <td></td>
-              <td><a href="#">查看</a></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>戊</td>
-              <td>10</td>
-              <td>2</td>
-              <td>狭义</td>
-              <td></td>
-              <td></td>
-              <td><a href="#">查看</a></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>与</td>
-              <td>10</td>
-              <td>2</td>
-              <td>狭义异体字</td>
-              <td>與</td>
-              <td></td>
-              <td><a href="#">查看</a></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>𡕒</td>
-              <td>10</td>
-              <td>2</td>
-              <td>@</td>
-              <td></td>
-              <td></td>
-              <td><a href="#">查看</a></td>
+            <tr v-for="item in models">
+              <td>#[item.id]]</td>
+              <td v-if="item.task_ele.hanzi_char_draft && item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.hanzi_char_draft]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.init}}"><img :src="item.task_ele.hanzi_pic_path_draft"></td>
+              <td v-if="item.task_ele.hanzi_char_review && item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.hanzi_char_review]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.review}}"><img :src="item.task_ele.hanzi_pic_path_review"></td>
+              <td v-if="item.task_ele.hanzi_char_final && item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.hanzi_char_final]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.final}}"><img :src="item.task_ele.hanzi_pic_path_final"></td>
+              <td>#[item.task_ele.page_num]]</td>
+              <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.seq_num_draft]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.seq_num_review]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.seq_num_final]]</td>
+              <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.variant_type_draft]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.variant_type_review]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.variant_type_final]]</td>
+              <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.std_hanzi_draft]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.std_hanzi_review]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.std_hanzi_final]]</td>
+              <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.notes_draft]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.notes_review]]</td>
+              <td v-else-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.notes_final]]</td>
+              <td><a :href="detail_url.replace(0, item.id)">查看</a></td>
             </tr>
             </tbody>
           </table>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
           <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
+            <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
+            </li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+              <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+              <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+              <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
           </ul>
+        </div>
         </div>
       </div><!-- /.box -->
     </div>
 <!-- /.col -->
 </div>
+<script type="text/javascript">
+  var package_id = {{package_id}};
+  var list_url = "{% url 'tasks-list' version='v1' %}";
+  var search_url = "{% url 'tasks-input-search' version='v1' %}";
+  var status_complete = {{task_status_enum.completed}};
+
+  function hanzi_search(url, cond) {
+    console.log(cond);
+    $.ajax({
+      url: url + '?task_package=' + package_id + '&task_status=' + status_complete,
+      type: 'GET',
+      data: cond,
+      success: function(data) {
+        console.log(data);
+        content_box.models = data.models;
+        content_box.paging = data.html_context;
+      },
+      error: function(jqXHR, status, error) {
+        console.log(error);
+      }
+    });
+  }
+
+  var search_box = new Vue({
+    delimiters: ["#[", "]]"],
+    data: {
+      hanzi_: "",
+      variant_type: "",
+      page_num: "",
+      notes: "",
+    },
+    el: '#search-box',
+    methods: {
+      search: function() {
+        var cond = {};
+        if (this.hanzi_.length > 1) {
+            cond['hanzi_pic_id'] = this.hanzi_;
+        } else if (this.hanzi_.length == 1) {
+            cond['hanzi_char'] = this.hanzi_;
+        }
+
+        for(var key in this.$data) {
+          if (key.slice(-1) == '_') continue;
+          if (this.$data[key] != "") cond[key] = this.$data[key];
+        }
+
+        if (Object.keys(cond).length > 0) {
+          hanzi_search(search_url, cond);
+        } else {
+          hanzi_search(list_url, cond);
+        }
+      },
+      reset_search: function() {
+          for(var key in this.$data) {
+            this.$data[key] = "";
+          }
+      }
+    }
+  });
+
+  var content_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#content-box',
+    data: {
+      models: [],
+      paging: {},
+      detail_url: "{% url 'm2.task-input-detail' pk=0 %}",
+   },
+    methods: {
+      goto_page: function(url) {
+        hanzi_search(url, null);
+      }
+    },
+    created: function() {
+      hanzi_search(list_url, null);
+    }
+  });
+
+</script>
 {% endblock %}
