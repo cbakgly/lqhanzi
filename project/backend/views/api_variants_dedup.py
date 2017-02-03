@@ -102,6 +102,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         ret = super(InterDictDedupSerializer, self).to_representation(instance)
         ret['hanzi_pic_path'] = get_pic_url_by_source_pic_name(getenum_source('korean'), ret['hanzi_pic_id'])
+        ret['std_hanzi_pic_path'] = get_pic_url_by_source_pic_name(getenum_source('korean'), ret['std_hanzi'])
         ret['source_display'] = instance.get_source_display()
         ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
         ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
