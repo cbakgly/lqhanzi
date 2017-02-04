@@ -134,5 +134,6 @@ def has_task(task_ele, business_stage):
     tasks = list(Tasks.objects.filter(object_id=task_ele.id, business_stage=business_stage))
     return tasks
 
+
 def get_stage(task_package_id):
     return list(TaskPackages.objects.filter(id=task_package_id))[0].business_stage

@@ -18,7 +18,7 @@ from ..models import KoreanDedup, InterDictDedup, HanziSet
 from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import fields_or_filter_method, NotEmptyFilter
 from ..enums import getenum_source, getenum_task_status, getenum_business_stage
-from task_func import create_task, has_task, get_stage
+from task_func import create_task
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
