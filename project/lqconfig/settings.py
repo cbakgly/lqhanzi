@@ -79,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'backend.context_processors.today_credits',
-                'backend.context_processors.task_enum',
+                'backend.context_processors.model_enum',
             ],
         },
     },

@@ -13,83 +13,105 @@
     <div class="col-xs-12">
       <div class="box box-blue">
         <!-- /.box-header -->
-        <div class="box-header">
+        <div class="box-header" id="search-box">
           <h3 class="box-title box-title2">查看去重结果:</h3>
           <div class="box-tools box-tools2">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索" v-model="hanzi_">
               <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn btn-default" @click="search"><i class="fa fa-search"></i></button>
               </div>
             </div>
           </div>
         </div>
+      <div id="content-box">
         <!-- /.box-header -->
         <div class="box-body">
           <div class="fonts-content">
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank"><img src="../img/font-img5.jpg" alt=""></a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank"><img src="../img/font-img5.jpg" alt=""></a>
-            <a class="a1" href="#" target="_blank"><img src="../img/font-img5.jpg" alt=""></a>
-            <a class="a1" href="#" target="_blank"><img src="../img/font-img5.jpg" alt=""></a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
-            <a class="a1" href="#" target="_blank">测</a>
+            <a v-for="item in models" class="a1" :href="'{% url 'm2.task-dedup-detail' pk=0 %}'.replace(0, item.id)" target="_blank"><img :src="item.std_hanzi_pic_path"></a>
           </div>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
           <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
+            <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
+            </li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+              <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+              <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+              <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
           </ul>
         </div>
+      </div>
       </div><!-- /.box -->
     </div>
     <!-- /.col -->
   </div>
+<script type="text/javascript">
+  var package_id = {{package_id}};
+  var list_url = "{% url 'tasks-list' version='v1' %}";
+  var search_url = "{% url 'tasks-dedup-search' version='v1' %}";
+  var status_complete = {{task_status_enum.completed}};
+
+  function hanzi_search(url, cond) {
+    console.log(cond);
+    $.ajax({
+      url: url + '?task_package=' + package_id + '&task_status=' + status_complete,
+      type: 'GET',
+      data: cond,
+      success: function(data) {
+        console.log(data);
+        content_box.models = data.models;
+        content_box.paging = data.html_context;
+      },
+      error: function(jqXHR, status, error) {
+        console.log(error);
+      }
+    });
+  }
+
+  var search_box = new Vue({
+    delimiters: ["#[", "]]"],
+    data: {
+      hanzi_: "",
+    },
+    el: '#search-box',
+    methods: {
+      search: function() {
+        var cond = {};
+        if (this.hanzi_.length > 0) {
+            cond['hanzi_char'] = this.hanzi_;
+        }
+
+        if (Object.keys(cond).length > 0) {
+          hanzi_search(search_url, cond);
+        } else {
+          hanzi_search(list_url, cond);
+        }
+      },
+    }
+  });
+
+  var content_box = new Vue({
+    delimiters: ["#[", "]]"],
+    el: '#content-box',
+    data: {
+      models: [],
+      paging: {},
+      detail_url: "{% url 'm2.task-dedup-detail' pk=0 %}",
+   },
+    methods: {
+      goto_page: function(url) {
+        hanzi_search(url, null);
+      }
+    },
+    created: function() {
+      hanzi_search(list_url, null);
+    }
+  });
+
+</script>
 {% endblock %}

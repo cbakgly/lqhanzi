@@ -52,17 +52,18 @@ HTML：一页是否可显示10行数据；
 	      </table>
 	    </div>
         <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-if="previous"><a @click="gotoPage(previous)">«</a></li>
-                <li v-else><a href="javascript:void(0);">«</a></li>
-{#                <li v-for="item in context.page_links">#}
-{#                  <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>#}
-{#                  <a v-else-if="item[3]" href="javascript:void(0);">....</a>#}
-{#                  <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>#}
-{#                </li>#}
-                <li v-if="next"><a href="javascript:void(0);" @click="gotoPage(next)">»</a></li>
-                <li v-else><a href="javascript:void(0);">»</a></li>
-              </ul>
+          <ul class="pagination pagination-sm no-margin pull-right">
+            <li v-if="paging.previous_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.previous_url)">«</a>
+            </li>
+            <li v-else><a>«</a></li>
+            <li v-for="item in paging.page_links">
+              <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+              <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+              <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
+            </li>
+            <li v-if="paging.next_url"><a href="javascript:void(0);" v-on:click="goto_page(paging.next_url)">»</a></li>
+            <li v-else><a>»</a></li>
+          </ul>
             </div>
 	  </div>
 	</div>
@@ -76,9 +77,8 @@ function MyFinishedTasks(url, data) {
         dataType: 'json',
         data: data,
         success: function(response) {
-            app.result = response.results;
-            app.previous = response.previous;
-            app.next = response.next;
+            app.result = response.models;
+            app.paging = response.html_context;
         },
         error: function (xhr, status, err) {
             console.log(err);
@@ -91,12 +91,12 @@ var task_input_page_url = "{% url 'm2.task-package-input-list' package_id=0 %}";
 var task_dedup_page_url = "{% url 'm2.task-package-dedup-list' package_id=0 %}";
 
 var app = new Vue({
+    delimiters: ["#[", "]]"],
     el: '#task-package-complete',
     data: {
 	    tasks: [],
 	    result: [],
-        previous: null,
-        next: null,
+        paging: {},
         param: {'status': 1},
         url: '{% url 'task-packages-list' version='v1' %}',
         map_type: {{ business_type_choices_json | safe}},

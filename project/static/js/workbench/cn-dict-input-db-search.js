@@ -132,7 +132,12 @@ var hanzi_input = new Vue({
                 vm.context = data.html_context;
             })
         },
-
+        clearAllResult: function() {
+            for(var key in this.params) {
+                this.params[key] = "";
+            }
+            $('#reservationtime').val("");
+        },
         gotoPage: function(url) {
             var vm = this;
             ajaxHelper.get(url, null, function(data){

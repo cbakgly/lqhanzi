@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 import django_filters
 from django.http import HttpResponseNotFound
 from django.core.exceptions import MultipleObjectsReturned
-# from django.db.models import Q
+from django.db.models.query import RawQuerySet
 
 from ..pagination import NumberPagination
 from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage
@@ -64,7 +64,7 @@ class TasksSerializer(serializers.ModelSerializer):
     def get_task_ele(self, obj):
         task_ele = obj.content_object
         if isinstance(task_ele, VariantsInput):
-            ele_serializer = api_variants_input.VariantsInputSelectSerializer
+            ele_serializer = api_variants_input.VariantsInputSerializer
         elif isinstance(task_ele, VariantsSplit):
             ele_serializer = api_variants_split.VariantsSplitSerializer
         elif isinstance(task_ele, KoreanDedup):
@@ -96,7 +96,14 @@ class TasksViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = TasksSerializer
     filter_class = TasksFilter
-    queryset = Tasks.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            qs = Tasks.objects.all()
+        else:
+            qs = Tasks.objects.filter(user_id=user.id)
+        return qs
 
     # 拆字
     @list_route()
@@ -358,10 +365,64 @@ class TasksViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            qs = Tasks.objects.all()
-        else:
-            qs = Tasks.objects.filter(user_id=user.id)
-        return qs
+    @list_route()
+    def input_search(self, request, *args, **kwargs):
+        hanzi_char = request.query_params.get('hanzi_char', False)
+        hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
+        page_num = request.query_params.get('page_num', False)
+        notes = request.query_params.get('notes', False)
+
+        sql = '''
+            select lq_tasks.id from lq_tasks
+            join lq_variants_input on lq_tasks.`object_id` = lq_variants_input.id
+            where lq_tasks.`business_type` = %d
+        ''' % (getenum_business_type('input'))
+
+        if hanzi_char:
+            sql += ' and (lq_variants_input.hanzi_char_draft = "%s" or lq_variants_input.hanzi_char_review= "%s" or lq_variants_input.hanzi_char_final = "%s")' % (hanzi_char, hanzi_char, hanzi_char)
+        elif hanzi_pic_id:
+            sql += ' and (lq_variants_input.hanzi_pic_id_draft = "%s" or lq_variants_input.hanzi_pic_id_review= "%s" or lq_variants_input.hanzi_pic_id_final = "%s")' % (
+                hanzi_pic_id, hanzi_pic_id, hanzi_pic_id)
+
+        if page_num:
+            sql += ' and lq_variants_input.page_num = %d' % int(page_num)
+
+        if notes:
+            sql += ' and (lq_variants_input.notes_draft like "%%%%%s%%%%" or lq_variants_input.notes_review like "%%%%%s%%%%" or lq_variants_input.notes_final like "%%%%%s%%%%")' % (
+                notes, notes, notes)
+
+        qs = Tasks.objects.raw(sql)
+        qslist = list(qs)
+        qs.count = lambda: len(qslist)
+        RawQuerySet.__getitem__ = lambda this, k: qslist
+
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+
+    @list_route()
+    def dedup_search(self, request, *args, **kwargs):
+        hanzi_char = request.query_params.get('hanzi_char', False)
+
+        sql = '''
+                 select lq_tasks.id from lq_tasks
+                 join lq_inter_dict_dedup on lq_tasks.`object_id` = lq_inter_dict_dedup.id
+                 where lq_tasks.`business_type` = %d and lq_inter_dict_dedup.std_hanzi = "%s"
+             ''' % (getenum_business_type('dedup'), hanzi_char)
+
+        qs = Tasks.objects.raw(sql)
+        qslist = list(qs)
+        qs.count = lambda: len(qslist)
+        RawQuerySet.__getitem__ = lambda this, k: qslist
+
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)

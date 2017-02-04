@@ -13,8 +13,9 @@ from rest_framework import status
 from ..pagination import NumberPagination
 from ..models import VariantsInput, InputPage
 from ..filters import NumberInFilter
-from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type
+from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type, getenum_source
 from task_func import assign_task
+from ..utils import get_pic_url_by_source_pic_name
 
 
 def update_tasks_status(variants_input):
@@ -62,24 +63,20 @@ class VariantsInputSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super(VariantsInputSerializer, self).to_representation(instance)
+        ret['hanzi_pic_path_draft'] = get_pic_url_by_source_pic_name(getenum_source('hanyu'), ret['hanzi_pic_id_draft'])
+        ret['hanzi_pic_path_review'] = get_pic_url_by_source_pic_name(getenum_source('hanyu'), ret['hanzi_pic_id_review'])
+        ret['hanzi_pic_path_final'] = get_pic_url_by_source_pic_name(getenum_source('hanyu'), ret['hanzi_pic_id_final'])
         ret['variant_type_draft'] = instance.get_variant_type_draft_display()
-        ret['is_del_draft'] = instance.get_is_del_draft_display()
         ret['variant_type_review'] = instance.get_variant_type_review_display()
-        ret['is_del_review'] = instance.get_is_del_review_display()
         ret['variant_type_final'] = instance.get_variant_type_final_display()
+        ret['is_del_draft'] = instance.get_is_del_draft_display()
+        ret['is_del_review'] = instance.get_is_del_review_display()
         ret['is_del_final'] = instance.get_is_del_final_display()
         ret['is_draft_equals_review_display'] = instance.get_is_draft_equals_review_display()
         ret['is_review_equals_final_display'] = instance.get_is_review_equals_final_display()
         ret['is_checked_display'] = instance.get_is_checked_display()
         ret['is_submitted_display'] = instance.get_is_submitted_display()
         return ret
-
-
-class VariantsInputSelectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VariantsInput
-        fields = "__all__"
-        depth = 0
 
 
 class VariantsDraftSerializer(serializers.ModelSerializer):

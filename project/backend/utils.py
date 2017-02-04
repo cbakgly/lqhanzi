@@ -60,6 +60,9 @@ def get_korean_char_pic_path(pic_name):
         2: lambda: "glyphs/gl/variant2/",
     }
     mid_path = switcher.get(code, lambda x: "")
+
+    if code == 0:
+        pic_name = 'kr' + pic_name + '0'
     return get_hanzi_assets_path() + mid_path() + pic_name + '.png'
 
 
