@@ -109,7 +109,7 @@ def create_task(new_task_data):
             'user': new_task_data['user'],
             'task_package': task_package,
             'task_status': 3,
-            'business_type': 1000,
+            'business_type': getenum_business_type('dedup_child'),
             'business_stage': task_package.business_stage,
             'credits': 2,
             'remark': "",
@@ -130,8 +130,10 @@ def create_task(new_task_data):
         return business_stage
 
 
-def has_task(task_ele):
-    tasks = list(Tasks.objects.filter(object_id=task_ele.id))
+def has_task(task_ele, business_stage):
+    tasks = list(Tasks.objects.filter(object_id=task_ele.id, business_stage=business_stage))
     return tasks
 
-# def get_stage(task_package_id):
+
+def get_stage(task_package_id):
+    return list(TaskPackages.objects.filter(id=task_package_id))[0].business_stage

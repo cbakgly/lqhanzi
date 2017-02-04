@@ -6,139 +6,156 @@
 {% block 'menu-item-ongoing-css' %}class="active"{% endblock %}
 
 {% block content %}
-<div class="content-header">
-    <ol class="breadcrumb">
-      <li><a href="javascript:;">我的任务</a></li>
-      <li class="active">进行中</li>
-    </ol>
-</div>
-<div class="row">
-	<div class="col-xs-12">
-	  <div class="box box-blue">
-	    <div class="box-body">
-	      <table class="table table-bordered" id="package-table">
-	        <thead>
-	          <tr>
-	            <!--<th style="width: 43px">序号</th>-->
-	            <th>任务包编号</th>
-	            <th>类型</th>
-	            <th>阶段</th>
-	            <th>大小</th>
-	            <th>每日计划</th>
-	            <th>今日进度</th>
-	            <th>总进度</th>
-	            <th>领取日</th>
-	            <th>预计完成日</th>
-	            <th>操作</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-            {% for item in task_packages %}
-	          <tr>
-	            <td>#{{ item.id }}</td>
-	            <td>{{ item.get_business_type_display }}</td>
-	            <td>{{ item.get_business_stage_display }}</td>
-	            <td>{{ item.size }}{% if item.business_type == 2 %}页{% endif %}</td>
-	            <td>{{ item.daily_plan }}{% if item.business_type == 2 %}页{% endif %}</td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: {% widthratio item.today_num|default:0 item.daily_plan 100 %}%"></div>
-	              </div>
-	              <div class="pros">
+    <div class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">我的任务</a></li>
+            <li class="active">进行中</li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-blue">
+                <div class="box-body">
+                    <table class="table table-bordered" id="package-table">
+                        <thead>
+                        <tr>
+                            <!--<th style="width: 43px">序号</th>-->
+                            <th>任务包编号</th>
+                            <th>类型</th>
+                            <th>阶段</th>
+                            <th>大小</th>
+                            <th>每日计划</th>
+                            <th>今日进度</th>
+                            <th>总进度</th>
+                            <th>领取日</th>
+                            <th>预计完成日</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in task_packages %}
+                            <tr>
+                                <td>#{{ item.id }}</td>
+                                <td>{{ item.get_business_type_display }}</td>
+                                <td>{{ item.get_business_stage_display }}</td>
+                                <td>{{ item.size }}{% if item.business_type == 2 %}页{% endif %}</td>
+                                <td>{{ item.daily_plan }}{% if item.business_type == 2 %}页{% endif %}</td>
+                                <td>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-yellow"
+                                             style="width: {% widthratio item.today_num|default:0 item.daily_plan 100 %}%"></div>
+                                    </div>
+                                    <div class="pros">
 	                <span class="pro pull-left">
                         {{ item.today_num|default:0 }}{% if item.business_type == 2 %}页{% endif %}</span>
-	                <span class="percent pull-right">{% widthratio item.today_num|default:0 item.daily_plan 100 %}%</span>
-	              </div>
-	            </td>
-	            <td>
-	              <div class="progress xs">
-	                <div class="progress-bar progress-bar-yellow" style="width: {% widthratio item.completed_num item.size 100 %}%"></div>
-	              </div>
-	              <div class="pros">
-	                <span class="pro pull-left">{{ item.completed_num|default:0 }} {% if item.business_type == 0 %}页{% endif %}</span>
-	                <span class="percent pull-right">{% widthratio item.completed_num item.size 100 %}%</span>
-	              </div>
-	            </td>
-	            <td>{{ item.c_t }}</td>
-	            <td>{{ item.due_date }}</td>
-	            <td>
-                    {% if item.business_type == business_type_enum.input %}
-                    <a href="{% url 'm2.task-input' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-input-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
-                    {% elif item.business_type == business_type_enum.split %}
-                    <a href="{% url 'm2.task-split' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-split-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
-                    {% elif item.business_type == business_type_enum.dedup %}
-                    <a href="{% url 'm2.task-dedup' %}">继续任务</a>&nbsp;&nbsp;<a href="{% url 'm2.task-package-dedup-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
-                    {% endif %}
-                    <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}" role="button">修改每日计划</a></td>
-	          </tr>
-            {% endfor %}
-	        </tbody>
-	      </table>
-	    </div><!-- /.box-body -->
-	  </div><!-- /.box -->
-	</div>
-<!-- /.col -->
-</div>
- <!--遮罩层-->
-  <div class="hw-overlay" id="hw-layer">
-    <div class="hw-layer-wrap">
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <div class="title">修改每日计划<span class="glyphicon glyphicon-remove hwLayer-close"></span></div>
-          <p>请尽量按最初的计划进行，不要随意修改每日计划。</p>
-          <div class="input-group">
-            <span class="input-group-addon">每日计划:</span>
-            <input type="text" class="form-control" placeholder="请输入5的倍数" v-model.number="daily_plan">
-          </div>
-          <div class="btns">
-            <button class="btn btn-blue btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
-            <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
-          </div>
+                                        <span class="percent pull-right">{% widthratio item.today_num|default:0 item.daily_plan 100 %}%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-yellow"
+                                             style="width: {% widthratio item.completed_num item.size 100 %}%"></div>
+                                    </div>
+                                    <div class="pros">
+                                        <span class="pro pull-left">{{ item.completed_num|default:0 }}
+                                            {% if item.business_type == 0 %}页{% endif %}</span>
+                                        <span class="percent pull-right">{% widthratio item.completed_num item.size 100 %}%</span>
+                                    </div>
+                                </td>
+                                <td>{{ item.c_t }}</td>
+                                <td>{{ item.due_date }}</td>
+                                <td>
+                                    {% if item.status == task_package_status_enum.ongoing %}
+                                        {% if item.business_type == business_type_enum.input %}
+                                            <a href="{% url 'm2.task-input-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-package-split-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                                        {% elif item.business_type == business_type_enum.split %}
+                                            <a href="{% url 'm2.task-split-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-package-input-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                                        {% elif item.business_type == business_type_enum.dedup %}
+                                            <a href="{% url 'm2.task-dedup-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-package-dedup-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                                        {% endif %}
+                                        <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}"
+                                           role="button">修改每日计划</a></td>
+                                    {% else %}
+                                        {% if item.business_type == business_type_enum.input %}
+                                            <a href="{% url 'm2.task-package-split-list' pk=item.id %}">查看</a>
+                                        {% elif item.business_type == business_type_enum.split %}
+                                            &nbsp;<a href="{% url 'm2.task-package-input-list' pk=item.id %}">查看</a>
+                                        {% elif item.business_type == business_type_enum.dedup %}
+                                            <a href="{% url 'm2.task-package-dedup-list' pk=item.id %}">查看</a>&nbsp;
+                                        {% endif %}
+                                    {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
         </div>
-      </div>
+        <!-- /.col -->
     </div>
-  </div>
-<!--/.遮罩层-->
-<script type="text/javascript">
+    <!--遮罩层-->
+    <div class="hw-overlay" id="hw-layer">
+        <div class="hw-layer-wrap">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="title">修改每日计划<span class="glyphicon glyphicon-remove hwLayer-close"></span></div>
+                    <p>请尽量按最初的计划进行，不要随意修改每日计划。</p>
+                    <div class="input-group">
+                        <span class="input-group-addon">每日计划:</span>
+                        <input type="text" class="form-control" placeholder="请输入5的倍数" v-model.number="daily_plan">
+                    </div>
+                    <div class="btns">
+                        <button class="btn btn-blue btn-sm z-btn-sm hwLayer-ok" v-on:click="confirm">确定</button>
+                        <button class="btn btn-default btn-sm z-btn-sm z-reset hwLayer-cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.遮罩层-->
+    <script type="text/javascript">
 
-    var dialog = new Vue({
-        delimiters: ["#[", "]"],
-        el: '#hw-layer',
-        data: {
-            daily_plan: 0,
-            id: 0,
-        },
-        methods: {
-            confirm: function() {
-                if(this.daily_plan % 5 != 0) {
-                    alert("Please input number of multiple of 5.");
-                } else {
-                    if(this.id == 0) {
-                        console.log("Row id should not be 0!");
-                        return;
-                    }
-                    $.ajax({
-                        url: "{% url 'task-packages-list' version='v1' %}" + this.id + '/',
-                        type: 'PUT',
-                        data: {"daily_plan": this.daily_plan},
-                        success: function(data) {
-                            console.log("{% trans "New task sent." %}");
-							location.reload();
-                        },
-                        error: function(jqXHR, status, error) {
-                            console.log(error);
+        var dialog = new Vue({
+            delimiters: ["#[", "]"],
+            el: '#hw-layer',
+            data: {
+                daily_plan: 0,
+                id: 0,
+            },
+            methods: {
+                confirm: function () {
+                    if (this.daily_plan % 5 != 0) {
+                        alert("Please input number of multiple of 5.");
+                    } else {
+                        if (this.id == 0) {
+                            console.log("Row id should not be 0!");
+                            return;
                         }
-                    })
+                        $.ajax({
+                            url: "{% url 'task-packages-list' version='v1' %}" + this.id + '/',
+                            type: 'PUT',
+                            data: {"daily_plan": this.daily_plan},
+                            success: function (data) {
+                                console.log("{% trans "New task sent." %}");
+                                location.reload();
+                            },
+                            error: function (jqXHR, status, error) {
+                                console.log(error);
+                            }
+                        })
+                    }
                 }
             }
-        }
-    });
+        });
 
-$(function(){
-    $('.show-layer').on('click', function() {
-        dialog.id = $(this).data("row-id")
-    });
+        $(function () {
+            $('.show-layer').on('click', function () {
+                dialog.id = $(this).data("row-id")
+            });
 
-});
-</script>
+        });
+    </script>
 {% endblock %}

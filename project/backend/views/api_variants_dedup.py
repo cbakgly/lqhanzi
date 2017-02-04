@@ -18,7 +18,7 @@ from ..models import KoreanDedup, InterDictDedup, HanziSet
 from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import fields_or_filter_method, NotEmptyFilter
 from ..enums import getenum_source, getenum_task_status, getenum_business_stage
-from task_func import has_task
+from task_func import create_task
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
@@ -192,7 +192,7 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
     # authentication_classes = (SessionAuthentication, BasicAuthentication)
     # permission_classes = (IsAuthenticated,)
 
-    queryset = InterDictDedup.objects.exclude(inter_dict_dup_hanzi_final='', inter_dict_dup_hanzi_review='', inter_dict_dup_hanzi_draft='')
+    queryset = InterDictDedup.objects
     filter_class = InterDictDedupFilter
     pagination_class = NumberPagination
     serializer_class = InterDictDedupSerializer
@@ -202,27 +202,25 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
     def submit_single_variant(self, request, *args, **kwargs):
         variants_dedup = self.get_object()
         serializer = InterDictDedupSerializer(data=request.data)
-
+        task_pacakge_id = serializer.initial_data['task_package_id']
+        business_stage = serializer.initial_data['business_stage']
         if serializer.is_valid():
-            tasks = has_task(variants_dedup)
+            tasks = list(variants_dedup.task.filter(business_stage=business_stage))
             if not tasks:
-                # new_task_data = {
-                #     'user': request.user,
-                #     'task_package': request.query_params['task_package'],
-                #     'content': variants_dedup
-                # }
-                pass
+                new_task_data = {
+                    'user': request.user,
+                    'task_package': task_pacakge_id,
+                    'content': variants_dedup
+                }
+                business_stage = create_task(new_task_data)
+
+            if business_stage is getenum_business_stage('init'):
+                key = 'inter_dict_dup_hanzi_draft'
+            elif business_stage is getenum_business_stage('review'):
+                key = 'inter_dict_dup_hanzi_review'
             else:
-                for t in tasks:
-                    if t.task_status is getenum_task_status('ongoing'):
-                        business_stage = t.business_stage
-                        break
-            if business_stage is 1:
-                variants_dedup.inter_dict_dup_hanzi_draft = serializer.initial_data['inter_dict_dup_hanzi']
-            elif business_stage is 2:
-                variants_dedup.inter_dict_dup_hanzi_review = serializer.initial_data['inter_dict_dup_hanzi']
-            else:
-                variants_dedup.inter_dict_dup_hanzi_final = serializer.initial_data['inter_dict_dup_hanzi']
+                key = 'inter_dict_dup_hanzi_final'
+            setattr(variants_dedup, key, serializer.initial_data.get('inter_dict_dup_hanzi', getattr(variants_dedup, key)))
             variants_dedup.save()
             serializer = self.serializer_class(variants_dedup)
             return Response(serializer.data)

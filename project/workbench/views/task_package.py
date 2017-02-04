@@ -45,6 +45,7 @@ def task_package_ongoing(request):
         i['get_business_type_display'] = item.get_business_type_display()
         i['get_business_stage_display'] = item.get_business_stage_display()
         i['today_num'] = get_today_complete_task_num(user.id, item.business_type)
+        i['get_status_display'] = item.get_status_display()
         task_packages.append(i)
 
     return render(request, 'task_package_ongoing.html', {
