@@ -64,26 +64,32 @@ class KoreanDupCharactersFilter(django_filters.FilterSet):
 def update_tasks_status(variants_dedup):
     tasks = list(variants_dedup.task.all())
     task_dict = {}
+    draft = None
+    review = None
+    final = None
     for t in tasks:
         task_dict[t.business_stage] = t
-    draft = task_dict[getenum_business_stage('init')]
-    review = task_dict[getenum_business_stage('review')]
-    final = task_dict[getenum_business_stage('final')]
+    if getenum_business_stage('init') in task_dict.keys():
+        draft = task_dict[getenum_business_stage('init')]
+    if getenum_business_stage('review') in task_dict.keys():
+        review = task_dict[getenum_business_stage('review')]
+    if getenum_business_stage('final') in task_dict.keys():
+        final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_status("ongoing"):
+    if draft and draft.task_status == getenum_task_status("ongoing"):
         draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
         review.task_status = getenum_task_status("to_be_arranged")
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_status("ongoing"):
+    elif review and review.task_status == getenum_task_status("ongoing"):
         review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
         final.task_status = getenum_task_status("to_be_arranged")
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_status("ongoing"):
+    elif final and final.task_status == getenum_task_status("ongoing"):
         final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         final.save()
@@ -105,8 +111,8 @@ class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
     # 提交
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit(self, request, *args, **kwargs):
-        variants_input = self.get_object()
-        origin_task = update_tasks_status(variants_input)
+        variants_dedup = self.get_object()
+        origin_task = update_tasks_status(variants_dedup)
         if origin_task:
             return Response(_("Succeess！"), status=status.HTTP_200_OK)
         else:
@@ -115,15 +121,14 @@ class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
     # 提交并转下一条
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
-        variants_input = self.get_object()
-        origin_task = update_tasks_status(variants_input)
+        variants_dedup = self.get_object()
+        origin_task = update_tasks_status(variants_dedup)
         if origin_task:
             task_package = origin_task.task_package
             task_plan = task_package.size
             business_type = origin_task.business_type
             task_num = len(list(task_package.tasks.filter(business_type=business_type)))
             if task_num < task_plan:
-
                 business_stage = origin_task.business_stage
                 user = origin_task.user
                 new_task = assign_task(business_type, business_stage, task_package, user)

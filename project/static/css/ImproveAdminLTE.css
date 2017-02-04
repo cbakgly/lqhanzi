@@ -829,6 +829,10 @@ input[type="radio"], input[type="checkbox"]{
     width:80px;
     height:56px;
     line-height: 56px;
+    float:left;
+}
+.dedup .l .intercode{
+    float:right;
 }
 .dedup .l .top img{
     width:38px;
@@ -1257,4 +1261,13 @@ tbody tr th{
 }
 .fade-enter, .fade-leave-active {
   opacity: 0
+}
+.draft_inter{
+    background: #ddf9ff;
+}
+.review_inter{
+    background: #00f9ff;
+}
+.final_inter{
+    background: #ddf900;
 }

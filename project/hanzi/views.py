@@ -84,8 +84,8 @@ hanzi首页
 '''
 
 
-def index(request):
-    return render(request, 'stroke_search.html')
+#def index(request):
+#    return render(request, 'stroke_search.html')
 
 
 '''
@@ -93,10 +93,10 @@ def index(request):
 '''
 
 
-def stroke_search(request):
-    content = {}
-    content['part_list'] = get_parts()
-    return render(request, 'stroke_search.html', content)
+#def stroke_search(request):
+#    content = {}
+#    content['part_list'] = get_parts()
+#    return render(request, 'stroke_search.html', content)
 
 
 '''
@@ -980,3 +980,8 @@ def dicts_search(request):
     d = json.dumps(b, ensure_ascii=False)
     # write_log("dicts_search.txt",d)
     return HttpResponse(d, content_type="application/json")
+
+
+@csrf_exempt
+def stroke_search(request):
+    pass
