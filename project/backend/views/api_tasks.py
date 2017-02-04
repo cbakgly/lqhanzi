@@ -10,7 +10,6 @@ import django_filters
 from django.http import HttpResponseNotFound
 from django.core.exceptions import MultipleObjectsReturned
 from django.db.models.query import RawQuerySet
-# from django.db.models import Q
 
 from ..pagination import NumberPagination
 from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage
@@ -374,7 +373,7 @@ class TasksViewSet(viewsets.ModelViewSet):
         notes = request.query_params.get('notes', False)
 
         sql = '''
-            select lq_tasks.id, lq_variants_input.* from lq_tasks
+            select lq_tasks.id from lq_tasks
             join lq_variants_input on lq_tasks.`object_id` = lq_variants_input.id
             where lq_tasks.`business_type` = %d
         ''' % (getenum_business_type('input'))
@@ -382,13 +381,15 @@ class TasksViewSet(viewsets.ModelViewSet):
         if hanzi_char:
             sql += ' and (lq_variants_input.hanzi_char_draft = "%s" or lq_variants_input.hanzi_char_review= "%s" or lq_variants_input.hanzi_char_final = "%s")' % (hanzi_char, hanzi_char, hanzi_char)
         elif hanzi_pic_id:
-            sql += ' and (lq_variants_input.hanzi_pic_id_draft = "%s" or lq_variants_input.hanzi_pic_id_review= "%s" or lq_variants_input.hanzi_pic_id_final = "%s")' % (hanzi_pic_id, hanzi_pic_id, hanzi_pic_id)
+            sql += ' and (lq_variants_input.hanzi_pic_id_draft = "%s" or lq_variants_input.hanzi_pic_id_review= "%s" or lq_variants_input.hanzi_pic_id_final = "%s")' % (
+                hanzi_pic_id, hanzi_pic_id, hanzi_pic_id)
 
         if page_num:
             sql += ' and lq_variants_input.page_num = %d' % int(page_num)
 
         if notes:
-            sql += ' and (lq_variants_input.notes_draft like "%%%%%s%%%%" or lq_variants_input.notes_review like "%%%%%s%%%%" or lq_variants_input.notes_final like "%%%%%s%%%%")' % (notes, notes, notes)
+            sql += ' and (lq_variants_input.notes_draft like "%%%%%s%%%%" or lq_variants_input.notes_review like "%%%%%s%%%%" or lq_variants_input.notes_final like "%%%%%s%%%%")' % (
+                notes, notes, notes)
 
         qs = Tasks.objects.raw(sql)
         qslist = list(qs)
@@ -406,26 +407,17 @@ class TasksViewSet(viewsets.ModelViewSet):
     @list_route()
     def dedup_search(self, request, *args, **kwargs):
         hanzi_char = request.query_params.get('hanzi_char', False)
-        hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
 
-        if hanzi_char:
-            qs_split = VariantsSplit.objects.filter(hanzi_char=hanzi_char)
-        elif hanzi_pic_id:
-            qs_split = VariantsSplit.objects.filter(hanzi_pic_id=hanzi_pic_id)
-        else:
-            qs_split = None
+        sql = '''
+                 select lq_tasks.id from lq_tasks
+                 join lq_inter_dict_dedup on lq_tasks.`object_id` = lq_inter_dict_dedup.id
+                 where lq_tasks.`business_type` = %d and lq_inter_dict_dedup.std_hanzi = "%s"
+             ''' % (getenum_business_type('dedup'), hanzi_char)
 
-        if qs_split is None:
-            return HttpResponseNotFound(_("Not found for specific char %s(%s)." % (hanzi_char, hanzi_pic_id)))
-
-        # Here we assume that query result only has 1 item because hanzi_char is unique in code.
-        # But there isn't any assurance in code defence to guarantee that.
-        if qs_split.count() > 1:
-            raise MultipleObjectsReturned(_("Multiple objects returned for specific char %s(%s)." % (hanzi_char, hanzi_pic_id)))
-
-        business_id = qs_split[0].id
-
-        qs = Tasks.objects.filter(business_type=getenum_business_type('split')).filter(object_id=business_id)
+        qs = Tasks.objects.raw(sql)
+        qslist = list(qs)
+        qs.count = lambda: len(qslist)
+        RawQuerySet.__getitem__ = lambda this, k: qslist
 
         page = self.paginate_queryset(qs)
         if page is not None:
