@@ -53,7 +53,11 @@ def get_dunhuang_char_pic_path(pic_name):
 
 
 def get_korean_char_pic_path(pic_name):
-    code = int(pic_name[-1]) if pic_name else 0
+    try:
+        code = int(pic_name[-1])
+    except Exception:
+        code = 0
+
     switcher = {
         0: lambda: "glyphs/gl/standard/",
         1: lambda: "glyphs/gl/variant1/",
