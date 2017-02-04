@@ -44,3 +44,4 @@ INSERT INTO `lqhanzi`.`lq_tasks`
 select user_id, task_package_id, page_num, completed_at, completed_at, c_t, u_t, content_type_id, 6, 3, 3, 0, "" from tmp_page_num;
 
 update lq_tasks set task_status = 3;
+update lq_tasks set `content_type_id` = 13 where `content_type_id`=15;
