@@ -39,7 +39,7 @@ class User(AbstractUser, GuardianUserMixin):
 class HanziSet(models.Model):
     source = models.SmallIntegerField(u'来源', choices=SOURCE_CHOICES, null=True)
     hanzi_type = models.SmallIntegerField(u'字形类型：文字、图片、文字且图片', choices=HANZI_TYPE_CHOICES, null=True, blank=True)
-    hanzi_char = models.CharField(u'文字', null=True, max_length=8)
+    hanzi_char = models.CharField(u'文字', null=True, max_length=8, db_index=True)
     hanzi_pic_id = models.CharField(u'图片字编码', null=True, max_length=32)
 
     variant_type = models.SmallIntegerField(u'正异类型', choices=VARIANT_TYPE_CHOICES, null=True, blank=True)
@@ -497,8 +497,8 @@ class HanziParts(models.Model):
     strokes = models.SmallIntegerField(u'笔画数', null=True, blank=True)
     stroke_order = models.CharField(u'笔顺', max_length=64, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
+    # c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
+    # u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     def __unicode__(self):
         return self.part_char
