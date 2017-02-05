@@ -50,7 +50,7 @@ class HanziSet(models.Model):
 
     pinyin = models.CharField(u'拼音', null=True, max_length=64)
     radical = models.CharField(u'部首', null=True, max_length=8)
-    strokes = models.SmallIntegerField(u'笔画数', null=True)
+    # strokes = models.SmallIntegerField(u'笔画数', null=True)
     max_strokes = models.SmallIntegerField(u'最大笔画数', null=True)
     min_strokes = models.SmallIntegerField(u'最小笔画数', null=True)
 
