@@ -19,6 +19,7 @@ from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import fields_or_filter_method, NotEmptyFilter
 from ..enums import getenum_source, getenum_task_status, getenum_business_stage
 from task_func import create_task
+from ..functional import timeout_cache
 
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
@@ -99,6 +100,14 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         model = InterDictDedup
         fields = "__all__"
 
+    @timeout_cache(-1)
+    def get_tw_char_seq_id(self, char):
+        if char is None or char == '':
+            return ''
+
+        row = HanziSet.objects.filter(hanzi_char=char, source=getenum_source('taiwan'))
+        return row[0].seq_id if row else ''
+
     def to_representation(self, instance):
         ret = super(InterDictDedupSerializer, self).to_representation(instance)
         ret['hanzi_pic_path'] = get_pic_url_by_source_pic_name(getenum_source('korean'), ret['hanzi_pic_id'])
@@ -112,8 +121,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         tw_hanzi = ret['inter_dict_dup_hanzi_draft']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_draft_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
-            ret['inter_dict_dup_hanzi_draft_seq_id'] = row[0].seq_id if row else ''
+            ret['inter_dict_dup_hanzi_draft_seq_id'] = self.get_tw_char_seq_id(tw_hanzi)
         else:
             ret['is_draft_pic'] = 1
             ret['inter_dict_dup_hanzi_draft_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)
@@ -121,8 +129,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         tw_hanzi = ret['inter_dict_dup_hanzi_review']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_review_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
-            ret['inter_dict_dup_hanzi_review_seq_id'] = row[0].seq_id if row else ''
+            ret['inter_dict_dup_hanzi_review_seq_id'] = self.get_tw_char_seq_id(tw_hanzi)
         else:
             ret['is_review_pic'] = 1
             ret['inter_dict_dup_hanzi_review_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)
@@ -130,8 +137,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         tw_hanzi = ret['inter_dict_dup_hanzi_final']
         if tw_hanzi and len(tw_hanzi) <= 2:
             ret['is_final_pic'] = 0
-            row = HanziSet.objects.filter(hanzi_char=tw_hanzi, source=getenum_source('taiwan'))
-            ret['inter_dict_dup_hanzi_final_seq_id'] = row[0].seq_id if row else ''
+            ret['inter_dict_dup_hanzi_final_seq_id'] = self.get_tw_char_seq_id(tw_hanzi)
         else:
             ret['is_final_pic'] = 1
             ret['inter_dict_dup_hanzi_final_path'] = get_pic_url_by_source_pic_name(getenum_source('taiwan'), tw_hanzi)

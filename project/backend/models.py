@@ -9,7 +9,6 @@ from guardian.mixins import GuardianUserMixin
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
-
 VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
 INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
 HANZI_TYPE_CHOICES = ((0, u'文字'), (1, u'图片'), (2, u'文字且图片'))
@@ -50,7 +49,6 @@ class HanziSet(models.Model):
 
     pinyin = models.CharField(u'拼音', null=True, max_length=64)
     radical = models.CharField(u'部首', null=True, max_length=8)
-    # strokes = models.SmallIntegerField(u'笔画数', null=True)
     max_strokes = models.SmallIntegerField(u'最大笔画数', null=True)
     min_strokes = models.SmallIntegerField(u'最小笔画数', null=True)
 
@@ -114,11 +112,10 @@ class Tasks(models.Model):
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
 
     object_id = models.PositiveIntegerField(null=True, blank=True)
+    business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
     business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True, blank=True)
     business_stage = models.SmallIntegerField(u'任务阶段', choices=BUSINESS_STAGE_CHOICES, null=True, blank=True)
     task_status = models.SmallIntegerField(u'任务状态', choices=TASK_STATUS_CHOICES, null=True, blank=True)
-
-    # business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
 
     credits = models.SmallIntegerField(u'积分', null=True, blank=True)
     remark = models.CharField(u'备注', max_length=128, null=True, blank=True)
@@ -520,11 +517,3 @@ class HanziParts(models.Model):
     @property
     def input(self):
         return self.part_char
-
-
-class django_content_type(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'django_content_type'
