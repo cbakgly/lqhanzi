@@ -121,6 +121,7 @@
             data: cond,
             success: function(data) {
                 console.log(data);
+                if(data.models.length == 0) return;
                 if(callback) callback(data, new Date());
             },
             error: function(jqXHR, status, error) {
@@ -138,7 +139,7 @@
             last_month: 0,
             month_switch: [],
             models: [],
-            show_input: false,
+            show_input: true,
             input_tag: 0,
         },
         methods: {
@@ -164,8 +165,8 @@
             current_month_proc: function(data, date) {
                 if (!data.models) return;
                 // As data is descending ordered, we check the first one.
-                if (date.getDate() != new Date(data.models[0].c_t).getDate()) {
-                    this.show_input = true;
+                if (date.getDate() == new Date(data.models[0].c_t).getDate()) {
+                    this.show_input = false;
                 }
                 this.data_proc(data, date);
             },
