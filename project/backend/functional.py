@@ -7,6 +7,7 @@ from functools import wraps
 def timeout_cache(timeout, debug=False):
     """Decorator to cache the result of a function call.
     Cache expires after timeout seconds.
+    timeout == -1 for permanent cache.
     """
 
     def decorator(func):
@@ -25,7 +26,10 @@ def timeout_cache(timeout, debug=False):
                     print ("-- Cache hit for", func.__name__, key)
 
                 (cache_hit, expiry) = cache[key]
-                if time.time() - expiry < timeout:
+                if timeout > 0:
+                    if time.time() - expiry < timeout:
+                        result = cache_hit
+                elif timeout == -1:
                     result = cache_hit
                 elif debug:
                     print ("-- Cache expired for", func.__name__, key)
