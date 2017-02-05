@@ -8,12 +8,12 @@ from backend.views.api_variants_dedup import InterDictDedupSerializer
 
 
 @login_required
-def task_split(request):
+def task_split(request, *args, **kwargs):
     return render(request, 'task_split.html')
 
 
 @login_required
-def task_input(request):
+def task_input(request, *args, **kwargs):
     return render(request, 'task_input.html')
 
 
