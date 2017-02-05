@@ -80,7 +80,7 @@ $(document).ready(function()
         $('#bline4').html( FindPropertyValue(value,"std_hanzi") );
         $('#bline5').html( FindPropertyValue(value,"as_std_hanzi") );
 
-        $("#btip").css({ "visibility":"visible","left":offset.left-w/2-options.value-23,"top":offset.top-h-$("#btip").height()+40});
+        $("#btip").css({ "visibility":"visible","left":offset.left-w/2-options.value-23,"top":offset.top-h-$("#btip").height()+21});
         $("#btip").show();
 
     });
