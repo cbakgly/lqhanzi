@@ -31,6 +31,10 @@ Lqhanzi project
 > CREATE USER lq@'localhost' IDENTIFIED BY '123456';
 > GRANT ALL PRIVILEGES ON lqhanzi.* TO lq;
 
+# import data
+> curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/lqhanzi-sql-20170205.zip
+# 导入略
+
 # 下载代码
 >git clone http://gitlab.lqdzj.cn/lqdzj/lqhanzi.git
 OR
