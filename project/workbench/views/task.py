@@ -9,17 +9,17 @@ from backend.views.api_variants_dedup import InterDictDedupSerializer
 
 @login_required
 def task_split(request, *args, **kwargs):
-    return render(request, 'task_split.html')
+    return render(request, 'task_split.html', {'task_id': request.GET.get('pk')})
 
 
 @login_required
 def task_input(request, *args, **kwargs):
-    return render(request, 'task_input.html')
+    return render(request, 'task_input.html', {'task_id': request.GET.get('pk')})
 
 
 @login_required
 def task_dedup(request, *args, **kwargs):
-    pk = int(kwargs["pk"])
+    pk = int(request.GET.get('pk'))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:
         task = task[0]
@@ -48,7 +48,7 @@ def task_dedup(request, *args, **kwargs):
 
 @login_required
 def task_dedup2(request, *args, **kwargs):
-    pk = int(kwargs["pk"])
+    pk = int(request.GET.get('pk'))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:
         task = task[0]

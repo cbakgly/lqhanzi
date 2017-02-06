@@ -67,13 +67,13 @@
                                 <td>
                                     {% if item.status == task_package_status_enum.ongoing %}
                                         {% if item.business_type == business_type_enum.input %}
-                                            <a href="{% url 'm2.task-input-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
-                                            <a href="{% url 'm2.task-package-split-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
-                                        {% elif item.business_type == business_type_enum.split %}
-                                            <a href="{% url 'm2.task-split-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-input' %}?pk={{item.id}}">继续任务</a>&nbsp;&nbsp;
                                             <a href="{% url 'm2.task-package-input-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
+                                        {% elif item.business_type == business_type_enum.split %}
+                                            <a href="{% url 'm2.task-split' %}?pk={{item.id}}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-package-split-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
                                         {% elif item.business_type == business_type_enum.dedup %}
-                                            <a href="{% url 'm2.task-dedup-detail' pk=item.id %}">继续任务</a>&nbsp;&nbsp;
+                                            <a href="{% url 'm2.task-dedup' %}?pk={{item.id}}">继续任务</a>&nbsp;&nbsp;
                                             <a href="{% url 'm2.task-package-dedup-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
                                         {% endif %}
                                         <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}"
