@@ -37,7 +37,7 @@ def is_has_letter(s):
 
 @csrf_exempt
 def get_parts():
-    parts = HanziParts.objects.all().order_by('strokes', 'stroke_order')
+    parts = HanziParts.objects.all().filter(is_search_part=1).order_by('strokes', 'stroke_order')
     a = serialize("json", parts, ensure_ascii=False)
     b = json.loads(a)
     c = []

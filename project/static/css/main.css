@@ -1,4 +1,4 @@
-
+@charset "UTF-8";
 /*wenxiaofeng added*/
 .hy-img{ width:100%; }
 .dh-img{ width:100%; }
@@ -139,8 +139,22 @@
     -moz-border-radius:4px;
     -ms-border-radius:4px;
     box-sizing:border-box;
-    font-size:14px;
+    font-size:20px;
+    color:#333;
 }
+/*placeholder字体大小设置*/  
+.search-top .ser-input::-webkit-input-placeholder { /* WebKit browsers */  
+    font-size:16px;  
+}  
+.search-top .ser-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */  
+    font-size:16px; 
+}  
+.search-top .ser-input::-moz-placeholder { /* Mozilla Firefox 19+ */  
+    font-size:16px; 
+}  
+.search-top .ser-input:-ms-input-placeholder { /* Internet Explorer 10+ */  
+    font-size:16px;!important;  
+}  
 .search-top .ser-btn{
     position: absolute;
     top:0;
@@ -301,6 +315,7 @@
     position: relative;
 }
 .parts-ser{
+    position: relative;
     margin-top:15px;
 }
 .parts-ser .input-ser{
@@ -315,14 +330,20 @@
 
 /*added by wenxiaofeng*/
 #radical_input{
-    height:26px;
-    width:140px;
-    /*padding:6px 10px 7px 10px;*/
-    padding:6px 5px 0px 5px;
-    font-size: 14px; 
-    border:1px solid #ddd;
-    text-align:center;
-
+    height: 32px;
+    line-height: 32px;
+    width: 160px;
+    padding: 0 3px 0px 3px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius:3px;
+    -moz-border-bottom-left-radius: 3px;
+    color:#666;
 }
 .parts-ser button{
     border-top-left-radius: 0;
@@ -331,11 +352,39 @@
     border-bottom-left-radius: 0;
     -webkit-border-bottom-left-radius: 0;
     -moz-border-bottom-left-radius: 0;
+    margin-left: -1px;
+    position: relative;
+    height: 34px;
+    padding: 0 18px;
+}
+#clearitem i{
+    position: absolute;
+    top:6px;
+    left:9px;
+    width:20px;
+    height: 20px;
+    background:url(/static/img/reset.png) no-repeat center center;
+    background-size:16px 16px;   
 }
 .parts-bd .help .icon-help{
     color:#ccc;
-    top: 22px;
-    left: 223px;
+    position: static;
+}
+.parts-bd .help{
+    position: relative;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    left: 10px;
+    margin-right: 15px;
+}
+.error-msg{
+    display: block;
+    line-height:34px;
+    color:#cc0000;
 }
 .parts-bd .stroke{
     margin:15px 0;
@@ -411,7 +460,7 @@
     display: inline-block;
     width: 19px;
     height: 19px;
-    margin: 0 10px;
+    margin: 0 5px;
     margin-bottom: 10px;
 }
 .con-right-new .stroke-item {
@@ -757,7 +806,17 @@
     color:#9bc5f1;
 }
 .dict-results{
-    padding:20px 140px 70px 140px;
+    padding:20px 120px 70px 120px;
+    position: relative;
+}
+.dict-results .dict-result-lists{
+    margin-right: 100px;
+}
+.dict-results .instruction{
+    width:90px;
+    position: absolute; 
+    right: 120px; 
+    top: 20px;
 }
 .dict-result-item{
     margin-bottom:30px;
@@ -780,7 +839,7 @@
 }
 .hanzi-normal a span{
     position: relative;
-    top:3px;
+    /*top:3px;*/
 }
 .hanzi-variants a{
     display:inline-block;
@@ -791,6 +850,7 @@
     border:1px solid #ddd;
     vertical-align:middle;
     margin-right:4px;
+    margin-bottom: 4px;
 }
 .hanzi-variants a span{
     display: block;
