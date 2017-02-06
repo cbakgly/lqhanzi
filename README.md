@@ -32,7 +32,7 @@ Lqhanzi project
 > GRANT ALL PRIVILEGES ON lqhanzi.* TO lq;
 
 # import data
-> curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/lqhanzi-sql-20170205.zip
+> curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/data/lqhanzi-sql-20170206.zip
 # 导入略
 
 # 下载代码

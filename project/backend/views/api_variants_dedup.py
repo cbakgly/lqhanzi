@@ -195,8 +195,8 @@ def update_tasks_status(variants_dedup):
 
 
 class InterDictDedupViewSet(viewsets.ModelViewSet):
-    # authentication_classes = (SessionAuthentication, BasicAuthentication)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
 
     queryset = InterDictDedup.objects
     filter_class = InterDictDedupFilter
