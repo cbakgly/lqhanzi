@@ -804,39 +804,36 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 .popup .strokes-item-bd .hanzi-item{
   display: block;
   float: left;
-  width:30px;
-  height:30px;
+  width:32px;
+  height:32px;
   text-align: center;
-  line-height:30px;
-  font-size:20px;
+  line-height:32px;
+  font-size:24px;
   border:1px solid #ededed;
   margin-right:-1px;
   margin-bottom:-1px;
 }
 .popup .strokes-item-bd .hanzi-item img{
-  width:20px;
-  height:20px;
-  margin-top:-6px;
+  width:22px;
+  height:22px;
+  margin-top:-5px;
 }
 .toggler{
-  width:20px;
-  height:48px;
-  background-color: #0F98DB;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
   position: absolute;
-  top:45%;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-top-left-radius: 5px;
-  -moz-border-bottom-left-radius:5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .175);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, .175);
-  right: 0;
+  top: 5px;
+  right:10px;
+  border:1px solid #ececec;
 }
-.toggler .icon-l-arrow{
+.toggler .close{
   display: block;
-  color:#fff;
-  text-align: center;
-  line-height:48px;
+  position: absolute;
+  top:4px;
+  left:4px;
+  width:30px;
+  height: 30px;
+  background: url(/static/img/close1.png) no-repeat;
+  background-size: 12px 12px;
 }

@@ -95,9 +95,9 @@
                             <span class="ser-btn" id="strock_search_btn">搜索</span>
                         </div>
                         <div class="search-bottom">
-                            <label><input type="radio" name="r" value="2" checked="checked">&nbsp;部件无序</label>
-                            <label><input type="radio" name="r" value="1">&nbsp;部件有序</label>
-                            <label><input type="radio" name="r" value="3">&nbsp;反查</label>
+                            <label><input type="radio" name="r" value="2" checked="checked">&nbsp;一般检索</label>
+                            <label><input type="radio" name="r" value="1">&nbsp;正则检索</label>
+                            <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
                         </div>
                     </div>
                         <div class="help"><i class="icon-help"></i></div>
@@ -155,17 +155,18 @@
                             </div>
                             <div class="parts-bd">
                                 <div class="parts-ser clearfix">
-                        <!-- 
-                        <input id="radical_input" readonly class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
-                        <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
-                        </div> -->
-
-                                    <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
+                                <!-- 
+                                <input id="radical_input" readonly class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
+                                <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
+                                </div> -->
+                                <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
                                     <div class="fl" id="radical_input">筛选条件在这里显示</div>
-                                    <button class="btn btn-default fl" id="clearitem">重置</button>
+                                    <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
+                                    <!-- 帮助图标 -->
+                                    <div class="help fl"><i class="icon-help"></i></div>
+                                    <!-- 错误信息提示 -->
+                                    <span class="error-msg fl">检索格式有误!</span>
                                 </div>
-
-                                <!-- <div class="help"><i class="icon-help"></i></div> -->
 
                                 <!--笔画-->
                                 <div class="stroke">
@@ -197,12 +198,12 @@
                                 <div class="stroke">
                                     <span class="stroke-hd">笔顺：</span>
                                     <div id="stroke-order" class="stroke-bd">
-                                        <span data-value="1" class="stroke-item">一</span>
-                                        <span data-value="2" class="stroke-item">丨</span>
-                                        <span data-value="3" class="stroke-item">丿</span>
-                                        <span data-value="4" class="stroke-item">丶</span>
-                                        <span data-value="5" class="stroke-item">乛</span>
-                                        <span data-value="4" class="stroke-item">乀</span>
+                                        <span data-value="h" class="stroke-item">一</span>
+                                        <span data-value="s" class="stroke-item">丨</span>
+                                        <span data-value="p" class="stroke-item">丿</span>
+                                        <span data-value="d" class="stroke-item">丶</span>
+                                        <span data-value="z" class="stroke-item">乛</span>
+                                        <span data-value="n" class="stroke-item">乀</span>
                                     </div>
                                 </div>
                             </div>
