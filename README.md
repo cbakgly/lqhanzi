@@ -12,6 +12,10 @@ Lqhanzi project
 # 安装mysql
 > brew install mysql
 
+# my.cnf
+default-storage-engine=INNODB
+innodb_large_prefix=on
+
 # 启动mysql
 > mysql.server start
 
@@ -30,6 +34,7 @@ Lqhanzi project
 # 为lqhanzi 创建用户lq，密码123456
 > CREATE USER lq@'localhost' IDENTIFIED BY '123456';
 > GRANT ALL PRIVILEGES ON lqhanzi.* TO lq;
+> FLUSH PRIVILEGES;
 
 # import data
 > curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/data/lqhanzi-sql-20170206.zip
