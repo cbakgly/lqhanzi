@@ -26,13 +26,12 @@
     <div class="dictionary-header">
         <div class="shortcut clearfix">
             <div class="home fl nav-tab">
-                <ul>
+                <ul class="ul-dicts-tab clearfix">
                     <li>
                         <a class="home-icon" href="{% url 'm1.index' %}"></a>
                     </li>
+                    <!--未登录前-->
                     <li class="dropdown">
-                        <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
-                        <!--未登录前-->
                         <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
@@ -48,29 +47,32 @@
                                 </div>
                             </li>
                         </ul>
-                        <!--./未登录-->
-                        <!--登录后-->
-                        <!-- The user image in the nav-->
-                        <!--<a href="javascript:;">-->
-                            <!--<img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">-->
-                            <!--<span>贤二</span>-->
-                        <!--</a>-->
-                        <!--<ul class="dropdown-menu">-->
-                            <!--<li class="user-header">-->
-                                <!--<img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">-->
-                                <!--<p>贤二</p>-->
-                            <!--</li>-->
-                            <!--<li class="user-footer clearfix">-->
-                                <!--<div class="fl">-->
-                                    <!--<a href="#" class="btn btn-default btn-flat">修改密码</a>-->
-                                <!--</div>-->
-                                <!--<div class="fr">-->
-                                    <!--<a href="#" class="btn btn-default btn-flat">退出登录</a>-->
-                                <!--</div>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                        <!--./登录后-->
                     </li>
+                    <!--./未登录-->
+                    <!--登录后-->
+                    <!-- 默认display:none;登录后显示-->
+                    <li class="dropdown user-menu">
+                        <!-- The user image in the nav-->
+                        <a href="javascript:;">
+                            <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
+                            <span>贤二</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
+                                <p>贤二</p>
+                            </li>
+                            <li class="user-footer clearfix">
+                                <div class="fl">
+                                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                </div>
+                                <div class="fr">
+                                    <a href="#" class="btn btn-default btn-flat">退出登录</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--./登录后-->
                 </ul>
             </div>
             <div class="dict-tabs fr">

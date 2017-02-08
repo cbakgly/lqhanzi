@@ -36,12 +36,10 @@
                 <div class="shortcut-inner">
                     <div class="nav-tab nav-tab-r fr">
                         <ul class="tabs clearfix">
-
                             <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
                             <li><a href="{% url 'm1.dicts' %}">字典</a></li>
+                            <!--未登录前-->
                             <li class="dropdown">
-                            <!--&lt;!&ndash;<li class="dropdown user-menu">&ndash;&gt; 登录后添加user-menu类名-->
-                                <!--未登录前-->
                                 <a  class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
@@ -57,29 +55,32 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <!--./未登录-->
-                                <!--登录后-->
-                                <!-- The user image in the nav-->
-                                <!--<a href="javascript:;">-->
-                                    <!--<img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">-->
-                                    <!--<span>贤二</span>-->
-                                <!--</a>-->
-                                <!--<ul class="dropdown-menu">-->
-                                    <!--<li class="user-header">-->
-                                        <!--<img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">-->
-                                        <!--<p>贤二</p>-->
-                                    <!--</li>-->
-                                    <!--<li class="user-footer clearfix">-->
-                                        <!--<div class="fl">-->
-                                            <!--<a href="#" class="btn btn-default btn-flat">修改密码</a>-->
-                                        <!--</div>-->
-                                        <!--<div class="fr">-->
-                                            <!--<a href="#" class="btn btn-default btn-flat">退出登录</a>-->
-                                        <!--</div>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                                <!--./登录后-->
                             </li>
+                            <!--./未登录-->
+                            <!--登录后-->
+                            <!-- 默认display:none;登录后显示-->
+                            <li class="dropdown user-menu">
+                                <!-- The user image in the nav-->
+                                <a href="javascript:;">
+                                    <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
+                                    <span>贤二</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="user-header">
+                                        <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
+                                        <p>贤二</p>
+                                    </li>
+                                    <li class="user-footer clearfix">
+                                        <div class="fl">
+                                            <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                        </div>
+                                        <div class="fr">
+                                            <a href="#" class="btn btn-default btn-flat">退出登录</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--./登录后-->
                         </ul>
                     </div>
                 </div>
@@ -100,7 +101,19 @@
                             <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
                         </div>
                     </div>
-                        <div class="help"><i class="icon-help"></i></div>
+                    <div class="help fr">
+                        <i class="icon-help"></i>
+                        <!-- 帮助信息提示 -->
+                        <div class="stroke-ser-bubble">
+                            <div class="ser-bubble-inner">
+                                <p>结构可点选下面的结构面板。常规部件可以直接输入，生僻部件可以查询以下部件面板后点选。剩余笔画可以输入单个数字，也可输入数字范围。
+                                如“⿰日月3-5”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-5画。
+                                </p>
+                                <p class="ar"><a class="more" href="#">更多》</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./帮助信息提示 -->
                 </div>
             </div>
         </div>
@@ -163,7 +176,18 @@
                                     <div class="fl" id="radical_input">筛选条件在这里显示</div>
                                     <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
                                     <!-- 帮助图标 -->
-                                    <div class="help fl"><i class="icon-help"></i></div>
+                                    <div class="help fl">
+                                        <div class="stroke-helppanel-bubble">
+                                            <div class="helppanel-bubble-inner">
+                                                <p>可点选，也可以手工输入。笔顺横、竖、撇、捺、点、折分别对应h、s、p、n、d、z。剩余笔画可以输入单个数字，也可输入数字范围。例如：
+                                                1、hs3-5，表示前两画为横、竖，剩余3-5画；
+                                                2、3-5hs，表示总笔画为3-5，前两画为横、竖。
+                                                </p>
+                                                <p class="ar"><a class="more" href="#">更多》</a></p>
+                                            </div>
+                                        </div>
+                                        <i class="icon-help"></i>
+                                    </div>
                                     <!-- 错误信息提示 -->
                                     <span class="error-msg fl">检索格式有误!</span>
                                 </div>
@@ -232,63 +256,52 @@
             </div>
         </div>
         <!--./content-->
-
         <!--bubble-->
         <div class="bubble" id="btip">
             <div class="bubble-inner">
-
-            <div class="bubble-hd">
-                <ul class="hd-lists">
-
-                    <li class="clearfix">
-                        <span class="fl"></span>
-                        <div class="fl" id="bline1"></div>
-                    </li>
-
-                    <li class="clearfix">
-                        <span class="fl">来源：</span>
-                        <div class="fl" id="bline2"></div>
-                    </li>
-
-                    <li class="clearfix">
-                        <span class="fl">类型：</span>
-                        <div class="fl" id="bline3"></div>
-                    </li>
-
-                    <li class="clearfix">
-                        <span class="fl">正字：</span>
-                        <div class="fl" id="bline4"></div>
-                    </li>
-
-                    <li class="clearfix">
-                        <span class="fl">兼正字：</span>
-                        <div class="fl" id="bline5"></div>
-                    </li>
-
-
-                </ul>
+                <div class="bubble-hd">
+                    <ul class="hd-lists">
+                        <li class="clearfix">
+                            <span class="fl"></span>
+                            <div class="fl" id="bline1"></div>
+                        </li>
+                        <li class="clearfix">
+                            <span class="fl">来源：</span>
+                            <div class="fl" id="bline2"></div>
+                        </li>
+                        <li class="clearfix">
+                            <span class="fl">类型：</span>
+                            <div class="fl" id="bline3"></div>
+                        </li>
+                        <li class="clearfix">
+                            <span class="fl">正字：</span>
+                            <div class="fl" id="bline4"></div>
+                        </li>
+                        <li class="clearfix">
+                            <span class="fl">兼正字：</span>
+                            <div class="fl" id="bline5"></div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- div class="bubble-bd">
+                    <ul class="bd-lists">
+                        <li class="clearfix">
+                            <span class="fl">相似部件：</span>
+                            <div class="fl"> <em>水</em> <em>瓜</em></div>
+                        </li>
+                        <li class="clearfix">
+                            <span class="fl">拆字序列：</span>
+                            <div class="fl">
+                                <p>⿶水</p>
+                                <p>⿶水</p>
+                                <p>⿶水⿶水⿶水</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
             </div>
-<!--             <div class="bubble-bd">
-                <ul class="bd-lists">
-                    <li class="clearfix">
-                        <span class="fl">相似部件：</span>
-                        <div class="fl"> <em>水</em> <em>瓜</em></div>
-                    </li>
-                    <li class="clearfix">
-                        <span class="fl">拆字序列：</span>
-                        <div class="fl">
-                            <p>⿶水</p>
-                            <p>⿶水</p>
-                            <p>⿶水⿶水⿶水</p>
-                        </div>
-                    </li>
-                </ul>
-            </div> -->
         </div>
-        </div>
-
         <!--./bubble-->
-
         <!-- loading:数据请求时动画-->
          <div class="loading">
             <div class="spinner">
@@ -320,11 +333,31 @@
         $(function(){
             $(".nav-tab .dropdown").mouseenter(function() {
                 if(!$(this).children(".dropdown-menu").is(":animated")){
-                    $(this).children(".dropdown-menu").fadeIn(600);
+                    $(this).children(".dropdown-menu").delay(800).fadeIn(600);
                 }
             });
             $(".nav-tab .dropdown").mouseleave(function() {
                 $(this).children(".dropdown-menu").fadeOut(600);
+            });
+        });
+        $(function(){
+            $(".search-box .help").mouseenter(function() {
+                if(!$(this).children(".stroke-ser-bubble").is(":animated")){
+                    $(this).children(".stroke-ser-bubble").delay(800).fadeIn(600);
+                }
+            });
+            $(".search-box .help").mouseleave(function() {
+                $(this).children(".stroke-ser-bubble").fadeOut(600);
+            });
+        });
+        $(function(){
+            $(".parts-ser .help").mouseenter(function() {
+                if(!$(this).children(".stroke-helppanel-bubble").is(":animated")){
+                    $(this).children(".stroke-helppanel-bubble").delay(800).fadeIn(600);
+                }
+            });
+            $(".parts-ser .help").mouseleave(function() {
+                $(this).children(".stroke-helppanel-bubble").fadeOut(600);
             });
         });
         // $(function(){
