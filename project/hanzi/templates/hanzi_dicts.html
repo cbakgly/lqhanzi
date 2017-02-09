@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>字典</title>
+    <title>{{ dict_name }}</title>
 
     {% load static %}
 
@@ -17,7 +17,7 @@
 
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/hanzi_dicts.js' %}"></script>
+    <script src="{% static 'js/hanzi/hanzi_dicts.js' %}"></script>
 
 </head>
 
@@ -97,423 +97,152 @@
                 <section class="sidebar tab-panel showing">
                     <!-- Sidebar Menu -->
                     <ul class="sidebar-menu">
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type1">一画</i>
-                                <span class="pull-right-container">
+                        {% for key, item in radical_dict.items %}
+                            <li class="treeview">
+                                <a href="javascript:;">
+                                    <i class="type type{{ item.strokes }}">{{ item.strokes_str }}</i>
+                                    <span class="pull-right-container">
                                   <i class="fa icon-l-arrow2 pull-right"></i>
                                 </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-
-
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 1 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type2">二画</i>
-                                <span class="pull-right-container">
-                                      <i class="fa icon-l-arrow2 pull-right"></i>
-                                    </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 2 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-
-
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type3">三画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 3 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}                            
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type4">四画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 4 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}                            
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type5">五画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 5 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type6">六画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 6 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type7">七画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-                                {% if item.strokes == 7 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-                            {% endfor %}                           
-
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type8">八画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-                                {% if item.strokes == 8 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type9">九画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 9 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type10">十画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 10 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type11">十一画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 11 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type12">十二画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-
-                                {% if item.strokes == 12 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type13">十三画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-                                {% if item.strokes == 13 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type14">十四画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-                                {% if item.strokes == 14 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <i class="type type15">十五画</i>
-                                <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu clearfix">
-                            {% for item in radical_list %}
-                                {% if item.strokes == 15 %}
-                                  <li class="hanzi-item">{{item.radical}}</li>
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                        </li>
+                                </a>
+                                <ul class="treeview-menu clearfix">
+                                    {% for radical in item.radicals %}
+                                        <li class="hanzi-item">{{ radical }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
                     </ul>
-
                     <!-- /.sidebar-menu -->
                 </section>
+
                 <section class="sidebar tab-panel catalog-panel">
                     <!-- catalog Menu -->
-                        <ul class="sidebar-menu">
-                            <li class="treeview">
-                                <a href="javascript:;">
-                                    <span>系统说明</span>
-                                </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:;">
-                                    <span>系统用语</span>
-                                </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm">
-                                    <span>编辑说明</span>
-                                </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="javascript:;">
-                                    <span>正字字表</span>
-                                    <span class="pull-right-container">
+                    <ul class="sidebar-menu">
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <span>系统说明</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <span>系统用语</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm">
+                                <span>编辑说明</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="javascript:;">
+                                <span>正字字表</span>
+                                <span class="pull-right-container">
                                       <i class="fa icon-l-arrow2 pull-right"></i>
                                     </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li ><a href="＃"><i class="fa fa-circle-o"></i> 常用字</a></li>
-                                    <li ><a href="＃"><i class="fa fa-circle-o"></i> 次常用字</a></li>
-                                    <li ><a href="＃"><i class="fa fa-circle-o"></i> 罕用字</a></li>
-                                    <li ><a href="＃"><i class="fa fa-circle-o"></i> 新增正字</a></li>
-                              </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm">
-                                    <span>异体字字表</span>
-                                </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm">
-                                    <span>附录索引</span>
-                                </a>
-                            </li>
-                        </ul>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="＃"><i class="fa fa-circle-o"></i> 常用字</a></li>
+                                <li><a href="＃"><i class="fa fa-circle-o"></i> 次常用字</a></li>
+                                <li><a href="＃"><i class="fa fa-circle-o"></i> 罕用字</a></li>
+                                <li><a href="＃"><i class="fa fa-circle-o"></i> 新增正字</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm">
+                                <span>异体字字表</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm">
+                                <span>附录索引</span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- /.catalog-menu -->
                 </section>
             </div>
             <!-- /.sidebar -->
         </aside>
+
         <!--浮层-->
         <div class="popup">
             <span class="toggler"><i class="close"></i></span>
             <div class="popup-hd clearfix">
-              
-                <p class="fl">部首为<span id="search_item"></span>的字共有<span id="search_count"></span>个</p>
-           
-                <div class="parts-ser fl clearfix">
-                    <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数"><span class="fl" id="search_tip"></span>
-                    <!-- <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i></button> -->
+                <p class="fl">部首为<span id="search_item"></span>的字共有<span id="search_count"></span>个。</p>
+                <div class="parts-ser pull-right">
+                    <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数">
+                    <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i>
+                    </button>
                 </div>
-
             </div>
+
             <ul class="strokes-lists">
-<!--                <li class="strokes-item">
+                <!--<li class="strokes-item">
                     <span class="num">一画</span>
                     <div class="strokes-item-bd clearfix">
-
-
-                        <span class="hanzi-item">八</span>
-                        <span class="hanzi-item">八</span>
-                        <span class="hanzi-item">八</span>
-                        <span class="hanzi-item">八</span>
                         <span class="hanzi-item">八</span>
                         <span class="hanzi-item"><img src="/static/img/200C9.gif" alt=""></span>
-                        <span class="hanzi-item">八</span> 
-
+                        <span class="hanzi-item">八</span>
                     </div>
                 </li>
                 <li class="strokes-item">
                     <span class="num">二画</span>
                     <div class="strokes-item-bd clearfix">
-
-
-
                     </div>
-                </li>
-                <li class="strokes-item">
-                    <span class="num">三画</span>
-                    <div class="strokes-item-bd clearfix">
-
-
-
-                    </div>
-                </li>
-                <li class="strokes-item">
-                    <span class="num">四画</span>
-                    <div class="strokes-item-bd clearfix">
-                     
-
-
-                    </div>
-                </li>
-                -->
+                </li>-->
             </ul>
 
             <div class="pages-box clearfix">
                 <ul class="pagination fl">
-
                 </ul>
-
                 <span>跳至:<input id="new_page" type="text">页</span>
                 <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
                 <span id="search_tip2"></span>
             </div>
         </div>
         <!--./浮层-->
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper tab-con">
             <!-- Main content -->
-<!--             <section class="content-wrapper-inner tab-panel showing">
-              
+            <!--
+            <section class="content-wrapper-inner tab-panel showing">
             </section>
             <section class="content-wrapper-inner tab-panel">
-              
             </section>
             <section class="content-wrapper-inner tab-panel">
-               
             </section>
             <section class="content-wrapper-inner tab-panel">
-              
-            </section> -->
+            </section>
+            -->
             <!-- /.content -->
         </div>
     </div>
 </div>
+
 <script>
     // user dropdownmenu
-    $(function(){
-        $(".nav-tab .dropdown").mouseenter(function() {
-            if(!$(this).children(".dropdown-menu").is(":animated")){
+    $(function () {
+        $(".nav-tab .dropdown").mouseenter(function () {
+            if (!$(this).children(".dropdown-menu").is(":animated")) {
                 $(this).children(".dropdown-menu").fadeIn(600);
             }
         });
-        $(".nav-tab .dropdown").mouseleave(function() {
+        $(".nav-tab .dropdown").mouseleave(function () {
             $(this).children(".dropdown-menu").fadeOut(600);
         });
     });
+
     //tab切换
-    $(function(){
-        $(".main-sidebar .tab-nav-custom li").click(function(){
+    $(function () {
+        $(".main-sidebar .tab-nav-custom li").click(function () {
             var $this = $(this),
                 index = $this.index();
             $this.addClass("active").siblings("li").removeClass("active");
             $(".main-sidebar .tab-con .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
         });
-        $(".dict-tabs-nav li").click(function(){
+        $(".dict-tabs-nav li").click(function () {
             var $this = $(this),
                 index = $this.index();
             $this.addClass("active").siblings("li").removeClass("active");
@@ -521,20 +250,20 @@
         });
     });
 
-    $(function(){
-        $(".treeview-menu li").each(function(index,el)
-        {
-            $(this).click(function()
-            {
+    //tab切换
+    $(function () {
+        $(".treeview-menu li").each(function (index, el) {
+            $(this).click(function () {
                 var radical = $(this).html();
                 clickRadical(radical);
                 $(".popup").show("slow");
             })
         })
-        $(".toggler").click(function(){
+        $(".toggler").click(function () {
             $(".popup").hide("slow");
         })
     });
 </script>
+
 </body>
 </html>

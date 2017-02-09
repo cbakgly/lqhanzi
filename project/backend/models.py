@@ -9,12 +9,15 @@ from guardian.mixins import GuardianUserMixin
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
-VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
+VARIANT_TYPE_CHOICES = (
+    (0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'),
+    (8, u'其他不入库类型'), (9, u'其他入库类型'))
 INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
 HANZI_TYPE_CHOICES = ((0, u'文字'), (1, u'图片'), (2, u'文字且图片'))
 SOURCE_CHOICES = ((1, 'Unicode'), (2, u'台湾异体字典'), (3, u'汉语大字典'), (4, u'高丽大藏经'), (5, u'敦煌俗字典'))
 YESNO_CHOICES = ((0, u'否'), (1, u'是'))
-BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
+BUSINESS_TYPE_CHOICES = (
+    (1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
 TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -94,7 +97,8 @@ class TaskPackages(models.Model):
         db_table = 'lq_task_packages'
 
     def __unicode__(self):
-        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][1] + str(self.size) + str(self.id)
+        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][
+            1] + str(self.size) + str(self.id)
 
 
 class TaskTypes(models.Model):
@@ -109,7 +113,8 @@ class TaskTypes(models.Model):
 
 class Tasks(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="user_task")  # 用户，拆字员
-    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
+    task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, blank=True,
+                                     null=True)
 
     object_id = models.PositiveIntegerField(null=True, blank=True)
     business_id = models.IntegerField(u'业务ID，指的是对应于拆字、去重、录入业务表的ID', null=True, blank=True)
@@ -133,7 +138,8 @@ class Tasks(models.Model):
         ordering = ['id']
 
     def __unicode__(self):
-        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][1] + str(self.id)
+        return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][
+            1] + str(self.id)
 
 
 class VariantsSplit(models.Model):
@@ -260,12 +266,19 @@ class KoreanVariantsDict(models.Model):
 class HanziRadicals(models.Model):
     radical = models.CharField(u'部首', max_length=16, null=True, default='')
     strokes = models.PositiveSmallIntegerField(u'笔画数')
+    is_un_radical = models.SmallIntegerField(u'是否为Unicode部首', default=0)
+    is_tw_radical = models.SmallIntegerField(u'是否为台湾异体字部首', default=0)
+    is_zh_radical = models.SmallIntegerField(u'是否为汉语大字典部首', default=0)
+    is_kr_radical = models.SmallIntegerField(u'是否为高丽异体字部首', default=0)
+    is_dh_radical = models.SmallIntegerField(u'是否为敦煌俗字典部首', default=0)
+    remark = models.CharField(u'备注', max_length=128, null=True)
 
     def __unicode__(self):
         return self.radical
 
     class Meta:
         db_table = 'lq_hanzi_radicals'
+        ordering = ['strokes', 'id']
 
 
 class KoreanDupZhengCodes(models.Model):
@@ -497,8 +510,6 @@ class HanziParts(models.Model):
     strokes = models.SmallIntegerField(u'笔画数', null=True, blank=True)
     stroke_order = models.CharField(u'笔顺', max_length=64, null=True)
     remark = models.CharField(u'备注', max_length=64, null=True)
-    # c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
-    # u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
 
     def __unicode__(self):
         return self.part_char
