@@ -756,6 +756,9 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 .sidebar-menu .treeview-menu > li.hanzi-item:hover{
   background-color: #b8e6f9;
 }
+.treeview-menu > li.active {
+  background-color: #01cffd;
+}
 .sidebar-menu .treeview-menu > li.cur{
   background-color: #b8e6f9;
 }
@@ -793,7 +796,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 }
 .popup-hd{
   margin-top:0;
-  margin-left:20px;
 }
 .parts-ser{
   margin-top:0;
@@ -806,7 +808,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 /*modified by wenxiaofeng*/
 .popup p span{
   color:#5cbbe9;
-  /*margin-right:10px;*/
 }
 .popup .strokes-item{
   margin-bottom:20px;
@@ -836,6 +837,9 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
   width:22px;
   height:22px;
   margin-top:-5px;
+}
+.hanzi-item {
+  cursor: pointer;
 }
 .toggler{
   width: 20px;

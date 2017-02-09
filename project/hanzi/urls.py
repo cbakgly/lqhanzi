@@ -18,6 +18,6 @@ urlpatterns = [
     # url(r'dicts/korean', dicts.korean, name="m1.dicts-korean"),
     # url(r'dicts/Chinese', dicts.Chinese, name="m1.dicts-Chinese"),
     # url(r'dicts/dunhuang', dicts.dunhuang, name="m1.dicts-dunhuang"),
-    url(r'dicts_search$', dicts.dicts_search, name='m1.dicts-search'),
+    url(r'dicts/dicts_search$', dicts.dicts_search, name='m1.dicts-search'),
 
 ]
