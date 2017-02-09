@@ -9,12 +9,12 @@ from backend.views.api_variants_dedup import InterDictDedupSerializer
 
 @login_required
 def task_split(request, *args, **kwargs):
-    return render(request, 'task_split.html', {'task_id': request.GET.get('pk')})
+    return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
 
 
 @login_required
 def task_input(request, *args, **kwargs):
-    return render(request, 'task_input.html', {'task_id': request.GET.get('pk')})
+    return render(request, 'task_input.html', {'task_package_id': request.GET.get('pk')})
 
 
 @login_required
