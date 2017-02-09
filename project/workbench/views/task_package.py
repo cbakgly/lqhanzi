@@ -35,10 +35,7 @@ def task_package_complete(request):
 @login_required
 def task_package_ongoing(request):
     user = request.user
-    if user.is_superuser:
-        data = TaskPackages.objects.filter(status=getenum_task_package_status('ongoing'))
-    else:
-        data = TaskPackages.objects.filter(user_id=user.id, status=getenum_task_package_status('ongoing'))
+    data = TaskPackages.objects.filter(user_id=user.id, status=getenum_task_package_status('ongoing'))
     task_packages = []
     for counter, item in enumerate(data):
         i = item.__dict__

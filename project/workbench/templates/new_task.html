@@ -100,7 +100,7 @@
                 }
             },
             show: function(success, msg) {
-                var m = JSON.parse(msg);
+                var m = msg;
                 if (success) {
                     this.content = m.detail;
                     this.is_success = true;
@@ -145,7 +145,7 @@
                 },
                 success: function(data) {
                     console.log(data);
-                    msg_bar.show(true, {'detail': {% trans "success" %}});
+                    msg_bar.show(true, {'detail': '{% trans "success" %}'});
                 },
                 error: function(jqXHR, status, error) {
                     console.log(jqXHR.responseText);
