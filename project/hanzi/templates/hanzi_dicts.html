@@ -1,224 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{{ dict_name }}</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>{{ dict_name }}</title>
 
-    {% load static %}
+  {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
 
-    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/hanzi/hanzi_dicts.js' %}"></script>
+  <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+  <script src="{% static 'js/sidebar.js' %}"></script>
+  <script src="{% static 'js/hanzi/hanzi_dicts.js' %}"></script>
 
 </head>
 
 <body class="sidebar-mini">
 <div class="wrapper">
-    <div class="dictionary-header">
-        <div class="shortcut clearfix">
-            <div class="home fl nav-tab">
-                <ul class="ul-dicts-tab clearfix">
-                    <li>
-                        <a class="home-icon" href="{% url 'm1.index' %}"></a>
-                    </li>
-                    <!--未登录前-->
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                                <p>未登录</p>
-                            </li>
-                            <li class="user-footer clearfix">
-                                <div class="fl">
-                                    <a href="#" class="btn btn-default btn-flat">注册</a>
-                                </div>
-                                <div class="fr">
-                                    <a href="#" class="btn btn-default btn-flat">登录</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--./未登录-->
-                    <!--登录后-->
-                    <!-- 默认display:none;登录后显示-->
-                    <li class="dropdown user-menu">
-                        <!-- The user image in the nav-->
-                        <a href="javascript:;">
-                            <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-                            <span>贤二</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                                <p>贤二</p>
-                            </li>
-                            <li class="user-footer clearfix">
-                                <div class="fl">
-                                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                                </div>
-                                <div class="fr">
-                                    <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--./登录后-->
-                </ul>
-            </div>
-            <div class="dict-tabs fr">
-                <ul class="clearfix dict-tabs-nav">
-                    <li class="active">台湾异体字字典</li>
-                    <li>高丽异体字字典</li>
-                    <li>汉语大字典</li>
-                    <li>敦煌俗字典</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="dictionary-content">
-        <aside class="main-sidebar">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="icon-sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-            <ul class="tab-nav-custom clearfix">
-                <li class="active">部首索引</li>
-                <li>目录索引</li>
-            </ul>
-            <div class="tab-con">
-                <section class="sidebar tab-panel showing">
-                    <!-- Sidebar Menu -->
-                    <ul class="sidebar-menu">
-                        {% for key, item in radical_dict.items %}
-                            <li class="treeview">
-                                <a href="javascript:;">
-                                    <i class="type type{{ item.strokes }}">{{ item.strokes_str }}</i>
-                                    <span class="pull-right-container">
-                                  <i class="fa icon-l-arrow2 pull-right"></i>
-                                </span>
-                                </a>
-                                <ul class="treeview-menu clearfix">
-                                    {% for radical in item.radicals %}
-                                        <li class="hanzi-item">{{ radical }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <!-- /.sidebar-menu -->
-                </section>
-
-                <section class="sidebar tab-panel catalog-panel">
-                    <!-- catalog Menu -->
-                    <ul class="sidebar-menu">
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <span>系统说明</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <span>系统用语</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm">
-                                <span>编辑说明</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="javascript:;">
-                                <span>正字字表</span>
-                                <span class="pull-right-container">
-                                      <i class="fa icon-l-arrow2 pull-right"></i>
-                                    </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="＃"><i class="fa fa-circle-o"></i> 常用字</a></li>
-                                <li><a href="＃"><i class="fa fa-circle-o"></i> 次常用字</a></li>
-                                <li><a href="＃"><i class="fa fa-circle-o"></i> 罕用字</a></li>
-                                <li><a href="＃"><i class="fa fa-circle-o"></i> 新增正字</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm">
-                                <span>异体字字表</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm">
-                                <span>附录索引</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.catalog-menu -->
-                </section>
-            </div>
-            <!-- /.sidebar -->
-        </aside>
-
-        <!--浮层-->
-        <div class="popup">
-            <span class="toggler"><i class="close"></i></span>
-            <div class="popup-hd clearfix">
-                <p class="fl">部首为<span id="search_item"></span>的字共有<span id="search_count"></span>个。</p>
-                <div class="parts-ser pull-right">
-                    <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数">
-                    <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i>
-                    </button>
+  <div class="dictionary-header">
+    <div class="shortcut clearfix">
+      <div class="home fl nav-tab">
+        <ul class="ul-dicts-tab clearfix">
+          <li>
+            <a class="home-icon" href="{% url 'm1.index' %}"></a>
+          </li>
+          <!--未登录前-->
+          <li class="dropdown">
+            <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
+            <ul class="dropdown-menu">
+              <li class="user-header">
+                <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
+                <p>未登录</p>
+              </li>
+              <li class="user-footer clearfix">
+                <div class="fl">
+                  <a href="#" class="btn btn-default btn-flat">注册</a>
                 </div>
-            </div>
-
-            <ul class="strokes-lists">
-                <!--<li class="strokes-item">
-                    <span class="num">一画</span>
-                    <div class="strokes-item-bd clearfix">
-                        <span class="hanzi-item">八</span>
-                        <span class="hanzi-item"><img src="/static/img/200C9.gif" alt=""></span>
-                        <span class="hanzi-item">八</span>
-                    </div>
-                </li>
-                <li class="strokes-item">
-                    <span class="num">二画</span>
-                    <div class="strokes-item-bd clearfix">
-                    </div>
-                </li>-->
+                <div class="fr">
+                  <a href="#" class="btn btn-default btn-flat">登录</a>
+                </div>
+              </li>
             </ul>
-
-            <div class="pages-box clearfix">
-                <ul class="pagination fl">
-                </ul>
-                <span>跳至:<input id="new_page" type="text">页</span>
-                <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
-                <span id="search_tip2"></span>
-            </div>
-        </div>
-        <!--./浮层-->
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper tab-con">
-            <!-- Main content -->
-            <!--
-            <section class="content-wrapper-inner tab-panel showing">
-            </section>
-            <section class="content-wrapper-inner tab-panel">
-            </section>
-            <section class="content-wrapper-inner tab-panel">
-            </section>
-            <section class="content-wrapper-inner tab-panel">
-            </section>
-            -->
-            <!-- /.content -->
-        </div>
+          </li>
+          <!--./未登录-->
+          <!--登录后-->
+          <!-- 默认display:none;登录后显示-->
+          <li class="dropdown user-menu">
+            <!-- The user image in the nav-->
+            <a href="javascript:;">
+              <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
+              <span>贤二</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-header">
+                <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
+                <p>贤二</p>
+              </li>
+              <li class="user-footer clearfix">
+                <div class="fl">
+                  <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                </div>
+                <div class="fr">
+                  <a href="#" class="btn btn-default btn-flat">退出登录</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!--./登录后-->
+        </ul>
+      </div>
+      <div class="dict-tabs fr">
+        <ul class="clearfix dict-tabs-nav">
+          <li class="active">台湾异体字字典</li>
+          <li>高丽异体字字典</li>
+          <li>汉语大字典</li>
+          <li>敦煌俗字典</li>
+        </ul>
+      </div>
     </div>
+  </div>
+  <div class="dictionary-content">
+    <aside class="main-sidebar">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="icon-sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+      <ul class="tab-nav-custom clearfix">
+        <li class="active">部首索引</li>
+        <li>目录索引</li>
+      </ul>
+      <div class="tab-con">
+        <section class="sidebar tab-panel showing">
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu">
+            {% for key, item in radical_dict.items %}
+              <li class="treeview">
+                <a href="javascript:;">
+                  <i class="type type{{ item.strokes }}">{{ item.strokes_str }}</i>
+                  <span class="pull-right-container">
+                    <i class="fa icon-l-arrow2 pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu clearfix">
+                  {% for radical in item.radicals %}
+                    <li class="hanzi-item">{{ radical }}</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endfor %}
+          </ul>
+          <!-- /.sidebar-menu -->
+        </section>
+
+        <section class="sidebar tab-panel catalog-panel">
+          <!-- catalog Menu -->
+          <ul class="sidebar-menu">
+            <li class="treeview">
+              <a href="javascript:;">
+                <span>系统说明</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="javascript:;">
+                <span>系统用语</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm">
+                <span>编辑说明</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="javascript:;">
+                <span>正字字表</span>
+                <span class="pull-right-container">
+                  <i class="fa icon-l-arrow2 pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="＃"><i class="fa fa-circle-o"></i> 常用字</a></li>
+                <li><a href="＃"><i class="fa fa-circle-o"></i> 次常用字</a></li>
+                <li><a href="＃"><i class="fa fa-circle-o"></i> 罕用字</a></li>
+                <li><a href="＃"><i class="fa fa-circle-o"></i> 新增正字</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm">
+                <span>异体字字表</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm">
+                <span>附录索引</span>
+              </a>
+            </li>
+          </ul>
+          <!-- /.catalog-menu -->
+        </section>
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!--浮层-->
+    <div class="popup" id="search_result">
+      <span class="toggler"><i class="close"></i></span>
+      <div class="popup-hd clearfix">
+        <p class="fl">当前部首为<span id="search_item"></span>，检索到<span id="search_count"></span>个字。</p>
+        <div class="parts-ser pull-right">
+          <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数">
+          <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i>
+          </button>
+          <span id="search_tip"></span>
+        </div>
+      </div>
+
+      <ul class="strokes-lists">
+        <!--<li class="strokes-item">
+            <span class="num">一画</span>
+            <div class="strokes-item-bd clearfix">
+                <span class="hanzi-item">八</span>
+                <span class="hanzi-item"><img src="/static/img/200C9.gif" alt=""></span>
+                <span class="hanzi-item">八</span>
+            </div>
+        </li>
+        <li class="strokes-item">
+            <span class="num">二画</span>
+            <div class="strokes-item-bd clearfix">
+            </div>
+        </li>-->
+      </ul>
+
+      <div class="pages-box hide clearfix">
+        <ul class="pagination fl">
+        </ul>
+        <span>跳至<input id="new_page" type="text">页/<span id="pages"></span>页</span>
+        <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
+        <span id="search_tip2"></span>
+      </div>
+    </div>
+    <!--./浮层-->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper tab-con">
+      <!-- Main content -->
+      <section class="content-wrapper-inner tab-panel showing">
+        <iframe src="{{ welcome_url }}" width="100%" height="600px" id="iframe1" onload="iFrameHeight('iframe1')"></iframe>
+      </section>
+      <!-- /.content -->
+    </div>
+  </div>
 </div>
 
 <script>
@@ -256,6 +250,8 @@
             $(this).click(function () {
                 var radical = $(this).html();
                 clickRadical(radical);
+                $(".treeview-menu .active").removeClass("active");
+                $(this).addClass("active");
                 $(".popup").show("slow");
             })
         })
@@ -263,6 +259,16 @@
             $(".popup").hide("slow");
         })
     });
+
+    // iframe高度自适应
+    function iFrameHeight(id) {
+        var ifm = document.getElementById(id);
+        var subWeb = document.frames ? document.frames[id].document : ifm.contentDocument;
+        if (ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
+
 </script>
 
 </body>

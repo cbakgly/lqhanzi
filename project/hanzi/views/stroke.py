@@ -44,7 +44,8 @@ def get_parts_strokes(parts_list):
     if parts_list is None or len(parts_list) == 0:
         return None
     for item in parts_list:
-        part = HanziPart.objects.filter(Q(part_char=item) & Q(is_search_part=1))  # .get()
+        part = HanziPart.objects.filter(
+            Q(part_char=item) & Q(is_search_part=1))  # .get()
         if (len(part) > 0):
             num += part[0].strokes
     return num
@@ -138,7 +139,8 @@ def extract_parts(string):
 
 @csrf_exempt
 def get_parts():
-    parts = HanziParts.objects.filter(is_search_part=1).order_by('strokes', 'stroke_order')
+    parts = HanziParts.objects.filter(is_search_part=1).order_by('strokes',
+                                                                 'stroke_order')
     a = serialize("json", parts, ensure_ascii=False)
     b = json.loads(a)
     c = []
@@ -192,7 +194,9 @@ def stroke_normal_search(request):
     # if re.search(r'^[\w,;:`%?&*^(){}@!|]+$',q) is not None:
     # 	return HttpResponse("Invalid input")
 
-    if re.match(r'^[^\w,;:`%?&*^(){}@!|]+?\d+-\d+|[^\w,;:`%?&*^(){}@!|]+?\d+|[^\w,;:`%?&*^(){}@!|]+$', q) is None:
+    if re.match(
+            r'^[^\w,;:`%?&*^(){}@!|]+?\d+-\d+|[^\w,;:`%?&*^(){}@!|]+?\d+|[^\w,;:`%?&*^(){}@!|]+$',
+            q) is None:
         return HttpResponse("Invalid input")
     else:
         print 'ok'
@@ -254,10 +258,12 @@ def stroke_normal_search(request):
 
     # 开始检索
     if (WorkMode == 1):
-        total = HanziSet.objects.filter(Q(structure__contains=structure) & Q(stroke_serial__regex=parts_rex) & Q(
+        total = HanziSet.objects.filter(Q(structure__contains=structure) & Q(
+            stroke_serial__regex=parts_rex) & Q(
             similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
-        result = HanziSet.objects.filter(Q(structure__contains=structure) & Q(stroke_serial__regex=parts_rex) & Q(
+        result = HanziSet.objects.filter(Q(structure__contains=structure) & Q(
+            stroke_serial__regex=parts_rex) & Q(
             similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
@@ -269,11 +275,13 @@ def stroke_normal_search(request):
         strokes = parts_stroke + left_stroke
 
         total = HanziSet.objects.filter(
-            Q(max_strokes=strokes) & Q(structure__contains=structure) & Q(stroke_serial__regex=parts_rex) & Q(
+            Q(max_strokes=strokes) & Q(structure__contains=structure) & Q(
+                stroke_serial__regex=parts_rex) & Q(
                 similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
         result = HanziSet.objects.filter(
-            Q(max_strokes=strokes) & Q(structure__contains=structure) & Q(stroke_serial__regex=parts_rex) & Q(
+            Q(max_strokes=strokes) & Q(structure__contains=structure) & Q(
+                stroke_serial__regex=parts_rex) & Q(
                 similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
@@ -286,12 +294,16 @@ def stroke_normal_search(request):
         max_num = parts_stroke + int(t[1])
 
         total = HanziSet.objects.filter(
-            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(structure__contains=structure) & Q(
-                stroke_serial__regex=parts_rex) & Q(similar_parts__regex=similar_parts_rex)).count()
+            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(
+                structure__contains=structure) & Q(
+                stroke_serial__regex=parts_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
         result = HanziSet.objects.filter(
-            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(structure__contains=structure) & Q(
-                stroke_serial__regex=parts_rex) & Q(similar_parts__regex=similar_parts_rex)).order_by('source')[
+            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(
+                structure__contains=structure) & Q(
+                stroke_serial__regex=parts_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
     a = serialize("json", result, ensure_ascii=False)
@@ -301,7 +313,9 @@ def stroke_normal_search(request):
         c.append(item['fields'])
     for item in c:
         if (item['hanzi_pic_id'] != ""):
-            item['pic_url'] = get_pic_url_by_source_pic_name(item['source'], item['hanzi_pic_id'])
+            item['pic_url'] = get_pic_url_by_source_pic_name(item['source'],
+                                                             item[
+                                                                 'hanzi_pic_id'])
 
     r = {}
     r['q'] = q
@@ -395,10 +409,12 @@ def stroke_advanced_search(request):
     if (WorkMode == 1):
 
         total = HanziSet.objects.filter(
-            Q(mix_split__regex=query_rex) & Q(similar_parts__regex=similar_parts_rex)).count()
+            Q(mix_split__regex=query_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
         result = HanziSet.objects.filter(
-            Q(mix_split__regex=query_rex) & Q(similar_parts__regex=similar_parts_rex)).order_by('source')[
+            Q(mix_split__regex=query_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
     elif (WorkMode == 2):
@@ -408,10 +424,12 @@ def stroke_advanced_search(request):
         strokes = parts_stroke + left_stroke
 
         total = HanziSet.objects.filter(
-            Q(max_strokes=strokes) & Q(mix_split__regex=query_rex) & Q(similar_parts__regex=similar_parts_rex)).count()
+            Q(max_strokes=strokes) & Q(mix_split__regex=query_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
-        result = HanziSet.objects.filter(Q(max_strokes=strokes) & Q(mix_split__regex=query_rex) & Q(
-            similar_parts__regex=similar_parts_rex)).order_by('source')[
+        result = HanziSet.objects.filter(
+            Q(max_strokes=strokes) & Q(mix_split__regex=query_rex) & Q(
+                similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
     elif (WorkMode == 3):
@@ -422,11 +440,13 @@ def stroke_advanced_search(request):
         max_num = parts_stroke + int(t[1])
 
         total = HanziSet.objects.filter(
-            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(mix_split__regex=query_rex) & Q(
+            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(
+                mix_split__regex=query_rex) & Q(
                 similar_parts__regex=similar_parts_rex)).count()
         pages = total / page_size + 1
         result = HanziSet.objects.filter(
-            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(mix_split__regex=query_rex) & Q(
+            Q(max_strokes__lte=max_num) & Q(max_strokes__gte=min_num) & Q(
+                mix_split__regex=query_rex) & Q(
                 similar_parts__regex=similar_parts_rex)).order_by('source')[
                  (page_num - 1) * page_size: page_num * page_size]
 
@@ -437,7 +457,9 @@ def stroke_advanced_search(request):
         c.append(item['fields'])
     for item in c:
         if (item['hanzi_pic_id'] != ""):
-            item['pic_url'] = get_pic_url_by_source_pic_name(item['source'], item['hanzi_pic_id'])
+            item['pic_url'] = get_pic_url_by_source_pic_name(item['source'],
+                                                             item[
+                                                                 'hanzi_pic_id'])
 
     r = {}
     r['q'] = q
@@ -460,11 +482,14 @@ def stroke_advanced_search(request):
 @csrf_exempt
 def inverse_search(request):
     q = request.GET.get('q', None)
-    res = HanziSet.objects.filter(Q(hanzi_char=q) & Q(source=1)).values('source', 'hanzi_char', 'hanzi_pic_id',
-                                                                        'std_hanzi', 'as_std_hanzi', 'mix_split', )
+    res = HanziSet.objects.filter(Q(hanzi_char=q) & Q(source=1)).values(
+        'source', 'hanzi_char', 'hanzi_pic_id',
+        'std_hanzi', 'as_std_hanzi', 'mix_split', )
 
     if (res[0]['hanzi_pic_id'] != ""):
-        res[0]['pic_url'] = get_pic_url_by_source_pic_name(res[0]['source'], res[0]['hanzi_pic_id'])
+        res[0]['pic_url'] = get_pic_url_by_source_pic_name(res[0]['source'],
+                                                           res[0][
+                                                               'hanzi_pic_id'])
 
     d = json.dumps(res[0], ensure_ascii=False)
     return HttpResponse(d, content_type="application/json")

@@ -2,375 +2,385 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Tell the browser to be responsive to screen width -->
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<title>首页-部件笔画检字法</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>首页-部件笔画检字法</title>
 
-    {% load static %}
+  {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-    <script src="{% static 'js/stroke_search.js' %}"></script>
+  <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+  <script src="{% static 'js/stroke_search.js' %}"></script>
 
-<style type="text/css">
-.reverse{ background-color:#b1cfff;font-size:15px;}
-.reverse td { border:1px solid white;}
-.reverse img {height:15px;}
-.reverse td:nth-child(1)
-{
-    width:90px;
-}
-</style>
+  <style type="text/css">
+    .reverse {
+      background-color: #b1cfff;
+      font-size: 15px;
+    }
+
+    .reverse td {
+      border: 1px solid white;
+    }
+
+    .reverse img {
+      height: 15px;
+    }
+
+    .reverse td:nth-child(1) {
+      width: 90px;
+    }
+  </style>
 
 </head>
 <body>
-    <div class="wrapper">
-        <!--header-->
-        <div class="header">
-            <div class="shortcut">
-                <div class="shortcut-inner">
-                    <div class="nav-tab nav-tab-r fr">
-                        <ul class="tabs clearfix">
-                            <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
-                            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
-                            <!--未登录前-->
-                            <li class="dropdown">
-                                <a  class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                                        <p>未登录</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">注册</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./未登录-->
-                            <!--登录后-->
-                            <!-- 默认display:none;登录后显示-->
-                            <li class="dropdown user-menu">
-                                <!-- The user image in the nav-->
-                                <a href="javascript:;">
-                                    <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-                                    <span>贤二</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                                        <p>贤二</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./登录后-->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="w">
-                <div class="search-box clearfix">
-                    <div class="logo fl">
-                        <h1><a href="#">龙泉字库</a></h1>
-                    </div>
-                    <div class="search fl">
-                        <div class="search-top">
-                            <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息">
-                            <span class="ser-btn" id="strock_search_btn">搜索</span>
-                        </div>
-                        <div class="search-bottom">
-                            <label><input type="radio" name="r" value="2" checked="checked">&nbsp;一般检索</label>
-                            <label><input type="radio" name="r" value="1">&nbsp;正则检索</label>
-                            <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
-                        </div>
-                    </div>
-                    <div class="help fr">
-                        <i class="icon-help"></i>
-                        <!-- 帮助信息提示 -->
-                        <div class="stroke-ser-bubble">
-                            <div class="ser-bubble-inner">
-                                <p>结构可点选下面的结构面板。常规部件可以直接输入，生僻部件可以查询以下部件面板后点选。剩余笔画可以输入单个数字，也可输入数字范围。
-                                如“⿰日月3-5”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-5画。
-                                </p>
-                                <p class="ar"><a class="more" href="#">更多》</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./帮助信息提示 -->
-                </div>
-            </div>
+<div class="wrapper">
+  <!--header-->
+  <div class="header">
+    <div class="shortcut">
+      <div class="shortcut-inner">
+        <div class="nav-tab nav-tab-r fr">
+          <ul class="tabs clearfix">
+            <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
+            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
+            <!--未登录前-->
+            <li class="dropdown">
+              <a class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
+              <ul class="dropdown-menu">
+                <li class="user-header">
+                  <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
+                  <p>未登录</p>
+                </li>
+                <li class="user-footer clearfix">
+                  <div class="fl">
+                    <a href="#" class="btn btn-default btn-flat">注册</a>
+                  </div>
+                  <div class="fr">
+                    <a href="#" class="btn btn-default btn-flat">登录</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!--./未登录-->
+            <!--登录后-->
+            <!-- 默认display:none;登录后显示-->
+            <li class="dropdown user-menu">
+              <!-- The user image in the nav-->
+              <a href="javascript:;">
+                <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
+                <span>贤二</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="user-header">
+                  <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
+                  <p>贤二</p>
+                </li>
+                <li class="user-footer clearfix">
+                  <div class="fl">
+                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                  </div>
+                  <div class="fr">
+                    <a href="#" class="btn btn-default btn-flat">退出登录</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!--./登录后-->
+          </ul>
         </div>
-        <!--./header-->
-        <!--content-->
-        <div class="content">
-            <div class="w">
-                <div class="con-left">
-                    <p class="total">共有<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条</p>
-                    <ul class="hanzi-wrap clearfix">
-
-                    </ul>
-
-                    <div class="pages-box">
-                        <ul class="pagination">
-                        </ul>
-
-                        <span>跳至:&nbsp;<input id="new_page" type="text">&nbsp;页</span>
-                        <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span>
-                        <span id="search_tip"></span>
-                    </div>
-
-
-                </div>
-                <div class="con-right">
-                    <!--结构-->
-                    <div class="compontent clearfix">
-                        <div class="compontent-hd">
-                            <span>结构：</span>
-                        </div>
-                        <div class="compontent-bd">
-                            <span data-value="⿱" class="compontent-item"><img src="{% static 'img/structs/01.gif' %}" alt=""></span>
-                            <span data-value="⿰" class="compontent-item"><img src="{% static 'img/structs/02.gif' %}" alt=""></span>
-                            <span data-value="⿵" class="compontent-item"><img src="{% static 'img/structs/03.gif' %}" alt=""></span>
-                            <span data-value="⿶" class="compontent-item"><img src="{% static 'img/structs/04.gif' %}" alt=""></span>
-                            <span data-value="⿷" class="compontent-item"><img src="{% static 'img/structs/05.gif' %}" alt=""></span>
-                            <span data-value="󰃾"  class="compontent-item"><img src="{% static 'img/structs/06.gif' %}" alt=""></span>
-                            <span data-value="⿺" class="compontent-item"><img src="{% static 'img/structs/07.gif' %}" alt=""></span>
-                            <span data-value="󰃿" class="compontent-item"><img src="{% static 'img/structs/08.gif' %}" alt=""></span>
-                            <span data-value="⿹" class="compontent-item"><img src="{% static 'img/structs/09.gif' %}" alt=""></span>
-                            <span data-value="⿸"  class="compontent-item"><img src="{% static 'img/structs/10.gif' %}" alt=""></span>
-                            <span data-value="⿻" class="compontent-item"><img src="{% static 'img/structs/11.gif' %}"  alt=""></span>
-                            <span data-value="⿴" class="compontent-item"><img src="{% static 'img/structs/12.gif' %}" alt=""></span>
-                        </div>
-                    </div>
-                    <!--./结构 -->
-                    <!--部件-->
-                    <div class="parts">
-                        <div class="parts-top clearfix">
-                            <div class="parts-hd">
-                                <span>部件：</span>
-                            </div>
-                            <div class="parts-bd">
-                                <div class="parts-ser clearfix">
-                                <!-- 
-                                <input id="radical_input" readonly class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
-                                <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
-                                </div> -->
-                                <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
-                                    <div class="fl" id="radical_input">筛选条件在这里显示</div>
-                                    <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
-                                    <!-- 帮助图标 -->
-                                    <div class="help fl">
-                                        <div class="stroke-helppanel-bubble">
-                                            <div class="helppanel-bubble-inner">
-                                                <p>可点选，也可以手工输入。笔顺横、竖、撇、捺、点、折分别对应h、s、p、n、d、z。剩余笔画可以输入单个数字，也可输入数字范围。例如：
-                                                1、hs3-5，表示前两画为横、竖，剩余3-5画；
-                                                2、3-5hs，表示总笔画为3-5，前两画为横、竖。
-                                                </p>
-                                                <p class="ar"><a class="more" href="#">更多》</a></p>
-                                            </div>
-                                        </div>
-                                        <i class="icon-help"></i>
-                                    </div>
-                                    <!-- 错误信息提示 -->
-                                    <span class="error-msg fl">检索格式有误!</span>
-                                </div>
-
-                                <!--笔画-->
-                                <div class="stroke">
-                                    <span class="stroke-hd">笔画：</span>
-                                    <div id="strokes" class="stroke-bd">
-                                        <!-- <span class="stroke-item active">All</span> -->
-                                        <span class="stroke-item">1</span>
-                                        <span class="stroke-item">2</span>
-                                        <span class="stroke-item">3</span>
-                                        <span class="stroke-item">4</span>
-                                        <span class="stroke-item">5</span>
-                                        <span class="stroke-item">6</span>
-                                        <span class="stroke-item">7</span>
-                                        <span class="stroke-item">8</span>
-                                        <span class="stroke-item">9</span>
-                                        <span class="stroke-item">10</span>
-                                        <span class="stroke-item">11</span>
-                                        <span class="stroke-item">12</span>
-                                        <span class="stroke-item">13</span>
-                                        <span class="stroke-item">14</span>
-                                        <span class="stroke-item">15</span>
-                                        <span class="stroke-item">16</span>
-                                        <span class="stroke-item">17</span>
-                                        <span class="stroke-item">18</span>
-                                        <span class="stroke-item">19</span>
-                                    </div>
-                                </div>
-                                <!--笔顺-->
-                                <div class="stroke">
-                                    <span class="stroke-hd">笔顺：</span>
-                                    <div id="stroke-order" class="stroke-bd">
-                                        <span data-value="h" class="stroke-item">一</span>
-                                        <span data-value="s" class="stroke-item">丨</span>
-                                        <span data-value="p" class="stroke-item">丿</span>
-                                        <span data-value="d" class="stroke-item">丶</span>
-                                        <span data-value="z" class="stroke-item">乛</span>
-                                        <span data-value="n" class="stroke-item">乀</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--部件结果-->
-                        <div class="parts-results">
-
-                            {% for item in part_list %}
-
-                                {% if item.flag %}
-                                    <span class="result-stoke" data-stroke="{{item.flag}}-">{{item.flag}}</span>
-                                {% else %}
-                                    <span class="result-item" data-stroke="{{item.strokes}}-{{item.stroke_order}}">{{item.part_char}}</span>
-                                {% endif %}
-
-                            {% endfor %}
-
-                            <!-- <span class="result-stoke">1</span>
-                            <span class="result-item">乀</span>
-                            <span class="result-item"><img src="/static/img/200C9.gif" alt=""></span>
-                             -->
-                        </div>
-                    </div>
-                    <!--./部件-->
-                </div>
-            </div>
-        </div>
-        <!--./content-->
-        <!--bubble-->
-        <div class="bubble" id="btip">
-            <div class="bubble-inner">
-                <div class="bubble-hd">
-                    <ul class="hd-lists">
-                        <li class="clearfix">
-                            <span class="fl"></span>
-                            <div class="fl" id="bline1"></div>
-                        </li>
-                        <li class="clearfix">
-                            <span class="fl">来源：</span>
-                            <div class="fl" id="bline2"></div>
-                        </li>
-                        <li class="clearfix">
-                            <span class="fl">类型：</span>
-                            <div class="fl" id="bline3"></div>
-                        </li>
-                        <li class="clearfix">
-                            <span class="fl">正字：</span>
-                            <div class="fl" id="bline4"></div>
-                        </li>
-                        <li class="clearfix">
-                            <span class="fl">兼正字：</span>
-                            <div class="fl" id="bline5"></div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- div class="bubble-bd">
-                    <ul class="bd-lists">
-                        <li class="clearfix">
-                            <span class="fl">相似部件：</span>
-                            <div class="fl"> <em>水</em> <em>瓜</em></div>
-                        </li>
-                        <li class="clearfix">
-                            <span class="fl">拆字序列：</span>
-                            <div class="fl">
-                                <p>⿶水</p>
-                                <p>⿶水</p>
-                                <p>⿶水⿶水⿶水</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div> -->
-            </div>
-        </div>
-        <!--./bubble-->
-        <!-- loading:数据请求时动画-->
-         <div class="loading">
-            <div class="spinner">
-                <div class="spinner-container container1">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
-                </div>
-                <div class="spinner-container container2">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
-                </div>
-                <div class="spinner-container container3">
-                    <div class="circle1"></div>
-                    <div class="circle2"></div>
-                    <div class="circle3"></div>
-                    <div class="circle4"></div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
+    <div class="w">
+      <div class="search-box clearfix">
+        <div class="logo fl">
+          <h1><a href="#">龙泉字库</a></h1>
+        </div>
+        <div class="search fl">
+          <div class="search-top">
+            <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息">
+            <span class="ser-btn" id="strock_search_btn">搜索</span>
+          </div>
+          <div class="search-bottom">
+            <label><input type="radio" name="r" value="2" checked="checked">&nbsp;一般检索</label>
+            <label><input type="radio" name="r" value="1">&nbsp;正则检索</label>
+            <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
+          </div>
+        </div>
+        <div class="help fr">
+          <i class="icon-help"></i>
+          <!-- 帮助信息提示 -->
+          <div class="stroke-ser-bubble">
+            <div class="ser-bubble-inner">
+              <p>结构可点选下面的结构面板。常规部件可以直接输入，生僻部件可以查询以下部件面板后点选。剩余笔画可以输入单个数字，也可输入数字范围。
+                如“⿰日月3-5”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-5画。
+              </p>
+              <p class="ar"><a class="more" href="#">更多》</a></p>
+            </div>
+          </div>
+        </div>
+        <!-- ./帮助信息提示 -->
+      </div>
+    </div>
+  </div>
+  <!--./header-->
+  <!--content-->
+  <div class="content">
+    <div class="w">
+      <div class="con-left">
+        <p class="total">共有<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条</p>
+        <ul class="hanzi-wrap clearfix">
+
+        </ul>
+
+        <div class="pages-box">
+          <ul class="pagination">
+          </ul>
+
+          <span>跳至:&nbsp;<input id="new_page" type="text">&nbsp;页</span>
+          <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span>
+          <span id="search_tip"></span>
+        </div>
+
+
+      </div>
+      <div class="con-right">
+        <!--结构-->
+        <div class="compontent clearfix">
+          <div class="compontent-hd">
+            <span>结构：</span>
+          </div>
+          <div class="compontent-bd">
+            <span data-value="⿱" class="compontent-item"><img src="{% static 'img/structs/01.gif' %}" alt=""></span>
+            <span data-value="⿰" class="compontent-item"><img src="{% static 'img/structs/02.gif' %}" alt=""></span>
+            <span data-value="⿵" class="compontent-item"><img src="{% static 'img/structs/03.gif' %}" alt=""></span>
+            <span data-value="⿶" class="compontent-item"><img src="{% static 'img/structs/04.gif' %}" alt=""></span>
+            <span data-value="⿷" class="compontent-item"><img src="{% static 'img/structs/05.gif' %}" alt=""></span>
+            <span data-value="󰃾" class="compontent-item"><img src="{% static 'img/structs/06.gif' %}" alt=""></span>
+            <span data-value="⿺" class="compontent-item"><img src="{% static 'img/structs/07.gif' %}" alt=""></span>
+            <span data-value="󰃿" class="compontent-item"><img src="{% static 'img/structs/08.gif' %}" alt=""></span>
+            <span data-value="⿹" class="compontent-item"><img src="{% static 'img/structs/09.gif' %}" alt=""></span>
+            <span data-value="⿸" class="compontent-item"><img src="{% static 'img/structs/10.gif' %}" alt=""></span>
+            <span data-value="⿻" class="compontent-item"><img src="{% static 'img/structs/11.gif' %}" alt=""></span>
+            <span data-value="⿴" class="compontent-item"><img src="{% static 'img/structs/12.gif' %}" alt=""></span>
+          </div>
+        </div>
+        <!--./结构 -->
+        <!--部件-->
+        <div class="parts">
+          <div class="parts-top clearfix">
+            <div class="parts-hd">
+              <span>部件：</span>
+            </div>
+            <div class="parts-bd">
+              <div class="parts-ser clearfix">
+                <!--
+                <input id="radical_input" readonly class="input-ser fl" type="text" placeholder="请输入笔画或笔顺">
+                <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
+                </div> -->
+                <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
+                <div class="fl" id="radical_input">筛选条件在这里显示</div>
+                <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
+                <!-- 帮助图标 -->
+                <div class="help fl">
+                  <div class="stroke-helppanel-bubble">
+                    <div class="helppanel-bubble-inner">
+                      <p>可点选，也可以手工输入。笔顺横、竖、撇、捺、点、折分别对应h、s、p、n、d、z。剩余笔画可以输入单个数字，也可输入数字范围。例如：
+                        1、hs3-5，表示前两画为横、竖，剩余3-5画；
+                        2、3-5hs，表示总笔画为3-5，前两画为横、竖。
+                      </p>
+                      <p class="ar"><a class="more" href="#">更多》</a></p>
+                    </div>
+                  </div>
+                  <i class="icon-help"></i>
+                </div>
+                <!-- 错误信息提示 -->
+                <span class="error-msg fl">检索格式有误!</span>
+              </div>
+
+              <!--笔画-->
+              <div class="stroke">
+                <span class="stroke-hd">笔画：</span>
+                <div id="strokes" class="stroke-bd">
+                  <!-- <span class="stroke-item active">All</span> -->
+                  <span class="stroke-item">1</span>
+                  <span class="stroke-item">2</span>
+                  <span class="stroke-item">3</span>
+                  <span class="stroke-item">4</span>
+                  <span class="stroke-item">5</span>
+                  <span class="stroke-item">6</span>
+                  <span class="stroke-item">7</span>
+                  <span class="stroke-item">8</span>
+                  <span class="stroke-item">9</span>
+                  <span class="stroke-item">10</span>
+                  <span class="stroke-item">11</span>
+                  <span class="stroke-item">12</span>
+                  <span class="stroke-item">13</span>
+                  <span class="stroke-item">14</span>
+                  <span class="stroke-item">15</span>
+                  <span class="stroke-item">16</span>
+                  <span class="stroke-item">17</span>
+                  <span class="stroke-item">18</span>
+                  <span class="stroke-item">19</span>
+                </div>
+              </div>
+              <!--笔顺-->
+              <div class="stroke">
+                <span class="stroke-hd">笔顺：</span>
+                <div id="stroke-order" class="stroke-bd">
+                  <span data-value="h" class="stroke-item">一</span>
+                  <span data-value="s" class="stroke-item">丨</span>
+                  <span data-value="p" class="stroke-item">丿</span>
+                  <span data-value="d" class="stroke-item">丶</span>
+                  <span data-value="z" class="stroke-item">乛</span>
+                  <span data-value="n" class="stroke-item">乀</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--部件结果-->
+          <div class="parts-results">
+
+            {% for item in part_list %}
+
+              {% if item.flag %}
+                <span class="result-stoke" data-stroke="{{ item.flag }}-">{{ item.flag }}</span>
+              {% else %}
+                <span class="result-item"
+                      data-stroke="{{ item.strokes }}-{{ item.stroke_order }}">{{ item.part_char }}</span>
+              {% endif %}
+
+            {% endfor %}
+
+            <!-- <span class="result-stoke">1</span>
+            <span class="result-item">乀</span>
+            <span class="result-item"><img src="/static/img/200C9.gif" alt=""></span>
+             -->
+          </div>
+        </div>
+        <!--./部件-->
+      </div>
+    </div>
+  </div>
+  <!--./content-->
+  <!--bubble-->
+  <div class="bubble" id="btip">
+    <div class="bubble-inner">
+      <div class="bubble-hd">
+        <ul class="hd-lists">
+          <li class="clearfix">
+            <span class="fl"></span>
+            <div class="fl" id="bline1"></div>
+          </li>
+          <li class="clearfix">
+            <span class="fl">来源：</span>
+            <div class="fl" id="bline2"></div>
+          </li>
+          <li class="clearfix">
+            <span class="fl">类型：</span>
+            <div class="fl" id="bline3"></div>
+          </li>
+          <li class="clearfix">
+            <span class="fl">正字：</span>
+            <div class="fl" id="bline4"></div>
+          </li>
+          <li class="clearfix">
+            <span class="fl">兼正字：</span>
+            <div class="fl" id="bline5"></div>
+          </li>
+        </ul>
+      </div>
+      <!-- div class="bubble-bd">
+          <ul class="bd-lists">
+              <li class="clearfix">
+                  <span class="fl">相似部件：</span>
+                  <div class="fl"> <em>水</em> <em>瓜</em></div>
+              </li>
+              <li class="clearfix">
+                  <span class="fl">拆字序列：</span>
+                  <div class="fl">
+                      <p>⿶水</p>
+                      <p>⿶水</p>
+                      <p>⿶水⿶水⿶水</p>
+                  </div>
+              </li>
+          </ul>
+      </div> -->
+    </div>
+  </div>
+  <!--./bubble-->
+  <!-- loading:数据请求时动画-->
+  <div class="loading">
+    <div class="spinner">
+      <div class="spinner-container container1">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container2">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+      <div class="spinner-container container3">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <script>
 
-        $(function(){
-            $(".nav-tab .dropdown").mouseenter(function() {
-                if(!$(this).children(".dropdown-menu").is(":animated")){
-                    $(this).children(".dropdown-menu").delay(800).fadeIn(600);
-                }
-            });
-            $(".nav-tab .dropdown").mouseleave(function() {
-                $(this).children(".dropdown-menu").fadeOut(600);
-            });
+    $(function () {
+        $(".nav-tab .dropdown").mouseenter(function () {
+            if (!$(this).children(".dropdown-menu").is(":animated")) {
+                $(this).children(".dropdown-menu").delay(800).fadeIn(600);
+            }
         });
-        $(function(){
-            $(".search-box .help").mouseenter(function() {
-                if(!$(this).children(".stroke-ser-bubble").is(":animated")){
-                    $(this).children(".stroke-ser-bubble").delay(800).fadeIn(600);
-                }
-            });
-            $(".search-box .help").mouseleave(function() {
-                $(this).children(".stroke-ser-bubble").fadeOut(600);
-            });
+        $(".nav-tab .dropdown").mouseleave(function () {
+            $(this).children(".dropdown-menu").fadeOut(600);
         });
-        $(function(){
-            $(".parts-ser .help").mouseenter(function() {
-                if(!$(this).children(".stroke-helppanel-bubble").is(":animated")){
-                    $(this).children(".stroke-helppanel-bubble").delay(800).fadeIn(600);
-                }
-            });
-            $(".parts-ser .help").mouseleave(function() {
-                $(this).children(".stroke-helppanel-bubble").fadeOut(600);
-            });
+    });
+    $(function () {
+        $(".search-box .help").mouseenter(function () {
+            if (!$(this).children(".stroke-ser-bubble").is(":animated")) {
+                $(this).children(".stroke-ser-bubble").delay(800).fadeIn(600);
+            }
         });
-        // $(function(){
-        //     $("#search-btn").on("click",function(){
-        //         //说明：点击搜索按钮，请求数据，loading显示，请求回结果后loading消失，汉字结果盒子显示后loading，即变成了左右结构。
-        //         //$(".loading").show();
-        //         $(".con-left").fadeIn(600);
-        //         $(".con-right").addClass("con-right-new");
-        //     })
-        // });
-        // $(function (){
-        //     $(".hanzi-item").bubbletips({position : "b",value : 35});
-        // });
+        $(".search-box .help").mouseleave(function () {
+            $(this).children(".stroke-ser-bubble").fadeOut(600);
+        });
+    });
+    $(function () {
+        $(".parts-ser .help").mouseenter(function () {
+            if (!$(this).children(".stroke-helppanel-bubble").is(":animated")) {
+                $(this).children(".stroke-helppanel-bubble").delay(800).fadeIn(600);
+            }
+        });
+        $(".parts-ser .help").mouseleave(function () {
+            $(this).children(".stroke-helppanel-bubble").fadeOut(600);
+        });
+    });
+    // $(function(){
+    //     $("#search-btn").on("click",function(){
+    //         //说明：点击搜索按钮，请求数据，loading显示，请求回结果后loading消失，汉字结果盒子显示后loading，即变成了左右结构。
+    //         //$(".loading").show();
+    //         $(".con-left").fadeIn(600);
+    //         $(".con-right").addClass("con-right-new");
+    //     })
+    // });
+    // $(function (){
+    //     $(".hanzi-item").bubbletips({position : "b",value : 35});
+    // });
 </script>
 
 </body>
