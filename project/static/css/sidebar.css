@@ -6,7 +6,6 @@ body {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
@@ -725,6 +724,22 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
 .type15{
   background-color: #387dd6;
 }
+.type16{
+  background-color: #387dd6;
+}
+.type17{
+  background-color: #387dd6;
+}
+.type18{
+  background-color: #387dd6;
+}
+.type19{
+  background-color: #387dd6;
+}
+.type20{
+  background-color: #387dd6;
+}
+
 .sidebar-menu .treeview-menu > li.hanzi-item{
   display:block;
   float: left;
@@ -776,9 +791,13 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
   color:#f40;
   cursor:pointer;
 }
-.popup-hd .parts-ser{
+.popup-hd{
   margin-top:0;
   margin-left:20px;
+}
+.parts-ser{
+  margin-top:0;
+  margin-right:30px;
 }
 .popup p{
   margin-bottom:20px;
@@ -834,6 +853,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
   left:4px;
   width:30px;
   height: 30px;
-  background: url(/static/img/close1.png) no-repeat;
+  background: url(/static/img/close.png) no-repeat;
   background-size: 12px 12px;
 }

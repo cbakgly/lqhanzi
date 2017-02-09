@@ -1,32 +1,23 @@
 # coding=utf-8
 
 from django.conf.urls import url
-import views
+from django.views.generic.base import RedirectView
+from views import stroke, variant, dicts
 
 urlpatterns = [
-    url(r'^$', views.stroke_search, name='m1.index'),  # 模块主页
-    url(r'index$', views.stroke_search, name='m1.stroke-search'),  # 模块主页
-    url(r'stroke_search$', views.stroke_search, name='m1.stroke-search'),
-    url(r'stroke_ajax_search$', views.stroke_ajax_search, name='m1.stroke-ajax-search'),
-    url(r'inverse_search$', views.inverse_search, name='m1.inverse-search'),
-    url(r'variant_search$', views.variant_search, name='m1.variant-search'),
-    url(r'variant_detail$', views.variant_detail, name='m1.variant-detail'),
-    url(r'dicts$', views.dicts, name="m1.dicts"),
-    url(r'dicts_search$', views.dicts_search, name='m1.dicts-search'),
-
-    # url(r'^variant$',views.variant),
-    # url(r'^yitizi/', views.show_yitizi),
-    # url(r'^urA',views.show_ura),
-    # url(r'^wa',views.show_wa),
-    # url(r'^sa',views.show_sa),
-    # url(r'^fua',views.show_fua),
-    # url(r'^wa\d{1,5}.htm$',views.show_tw_wa),
-    # url(r'^wa',viewsBig5.show_tw_wa),
-    # url(r'^loginpage$',views.loginpage),
-    # url(r'^login$',views.login),
-    # url(r'^logout$',views.logout),
-    # url(r'^GetUserList/$',views.GetUserList),
-    # url(r'^DleUser/$',views.DleUser),
-    # url(r'^ModUser/$',views.ModUser),
+    url(r'^$', RedirectView.as_view(url='/index', permanent=False), name='m1.index'),
+    url(r'^index$', RedirectView.as_view(url='/stroke_search', permanent=False), name='m1.stroke-search'),
+    url(r'stroke_search$', stroke.stroke_search, name='m1.stroke-search'),
+    url(r'stroke_normal_search$', stroke.stroke_normal_search, name='m1.stroke-normal-search'),
+    url(r'stroke_advanced_search$', stroke.stroke_normal_search, name='m1.stroke-advanced-search'),
+    url(r'inverse_search$', stroke.inverse_search, name='m1.inverse-search'),
+    url(r'variant_search$', variant.variant_search, name='m1.variant-search'),
+    url(r'variant_detail$', variant.variant_detail, name='m1.variant-detail'),
+    url(r'^dicts/?$', RedirectView.as_view(url='/dicts/taiwan', permanent=False), name='m1.dicts'),
+    url(r'dicts/taiwan$', dicts.taiwan, name="m1.dicts-taiwan"),
+    # url(r'dicts/korean', dicts.korean, name="m1.dicts-korean"),
+    # url(r'dicts/Chinese', dicts.Chinese, name="m1.dicts-Chinese"),
+    # url(r'dicts/dunhuang', dicts.dunhuang, name="m1.dicts-dunhuang"),
+    url(r'dicts_search$', dicts.dicts_search, name='m1.dicts-search'),
 
 ]
