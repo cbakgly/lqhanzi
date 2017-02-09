@@ -100,7 +100,7 @@
                 }
             },
             show: function(success, msg) {
-                var m = JSON.parse(msg);
+                var m = msg;
                 if (success) {
                     this.content = m.detail;
                     this.is_success = true;
