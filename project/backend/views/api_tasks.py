@@ -7,28 +7,18 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from django.core.exceptions import MultipleObjectsReturned
 from django.db.models.query import RawQuerySet
 
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage
-from ..enums import getenum_business_type, getenum_task_status, getenum_business_stage
+from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage, TaskPackages
+from ..enums import getenum_business_type, getenum_business_stage
 import api_variants_input
 import api_variants_dedup
 import api_variants_split
 import api_korean_dup_characters
-from task_func import assign_task
-
-
-def reset_task(task):
-    task.task_package = None
-    task.assigned_at = None
-    task.user = None
-    task.task_status = 0
-    task.save()
-
-    return task
+from task_func import assign_task, reset_task, get_working_task
 
 
 # Task Packages management
@@ -99,217 +89,98 @@ class TasksViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            qs = Tasks.objects.all()
-        else:
-            qs = Tasks.objects.filter(user_id=user.id)
+        qs = Tasks.objects.filter(user_id=user.id)
         return qs
 
-    # 拆字
     @list_route()
     def ongoing_split(self, request, *args, **kwargs):
+        """
+        列出当前进行中的拆字任务
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         user = self.request.user
-        source = self.request.query_params["source"]
-        hanzi_char = self.request.query_params["hanzi_char"]
-        similar_parts = self.request.query_params["similar_parts"]
-        task_package = request.query_params["task_package"]
-        business_type = getenum_business_type("split")
-        if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
+        task_package_id = request.query_params.get("task_package_id", 0)
+        if task_package_id == 0:
+            return HttpResponseBadRequest(_("ID invalid."))
+
+        task_package = TaskPackages.objects.get(pk=task_package_id)
+
+        task = get_working_task(task_package, user)
+        if not task:
+            task = assign_task(task_package.business_type, task_package.business_stage, task_package, user)
+
+        if task:
+            serializer = self.get_serializer([task], many=True)
+            return Response(serializer.data)
+
+        return Response({"error": _("No more task today, have a try tommorrow!")}, status=status.HTTP_204_NO_CONTENT)
+
+    @detail_route(methods=["PATCH", "GET", "PUT"])
+    def submit_split(self, request, *args, **kwargs):
+        pass
+
+    @detail_route(methods=["PATCH", "GET", "PUT"])
+    def submit_next_split(self, request, *args, **kwargs):
+        """
+        提交并返回下一条任务数据
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        business_stage = request.data['business_stage']
+        business_type = request.data['business_type']
+        task = Tasks.objects.get(pk=request.data['id'])
+        split = task.content_object
+
+        if business_stage == getenum_business_stage('init'):
+            if request.data['task_ele']['dup_id_draft'] != '':
+                split.dup_id_draft = request.data['task_ele']['dup_id_draft']
+            else:
+                split.init_split_draft = request.data['task_ele']['init_split_draft']
+                split.other_init_split_draft = request.data['task_ele']['other_init_split_draft']
+                split.deform_split_draft = request.data['task_ele']['deform_split_draft']
+                split.similar_parts_draft = request.data['task_ele']['similar_parts_draft']
+        elif business_stage == getenum_business_stage('review'):
+            if request.data['task_ele']['dup_id_review'] != '':
+                split.dup_id_review = request.data['task_ele']['dup_id_review']
+            else:
+                split.init_split_review = request.data['task_ele']['init_split_review']
+                split.other_init_split_review = request.data['task_ele']['other_init_split_review']
+                split.deform_split_review = request.data['task_ele']['deform_split_review']
+                split.similar_parts_review = request.data['task_ele']['similar_parts_review']
+        elif business_stage == getenum_business_stage('final'):
+            if request.data['task_ele']['dup_id_final'] != '':
+                split.dup_id_final = request.data['task_ele']['dup_id_final']
+            else:
+                split.init_split_final = request.data['task_ele']['init_split_final']
+                split.other_init_split_final = request.data['task_ele']['other_init_split_final']
+                split.deform_split_final = request.data['task_ele']['deform_split_final']
+                split.similar_parts_final = request.data['task_ele']['similar_parts_final']
+        split.save()
+        
+        new_task = assign_task(business_type, business_stage, task.task_package, task.user)
+
+        if new_task:
+            serializer = self.get_serializer([new_task], many=True)
+            return Response(serializer.data)
         else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
+            return Response({"error": _("No more task today, have a try tommorrow!")}, status=status.HTTP_204_NO_CONTENT)
 
-        serializer = self.serializer_class(tasks, many=True)
-        split_variants = [v["task_ele"] for v in serializer.data]
-        business_stage = serializer.data[0]["business_stage"]
-        if business_stage == getenum_business_stage("init"):
-            similar_parts_comp = "similar_parts_draft"
-        elif business_stage == getenum_business_stage("review"):
-            similar_parts_comp = "similar_parts_review"
-        else:
-            similar_parts_comp = "similar_parts_final"
-        results = []
-        staged_result = []
-        key_list = {
-            1: [
-                "id",
-                'skip_num_draft',
-                'init_split_draft',
-                'other_init_split_draft',
-                'deform_split_draft',
-                'similar_parts_draft',
-                'dup_id_draft'
-            ],
-            2: [
-                "id",
-                'skip_num_review',
-                'init_split_review',
-                'other_init_split_review',
-                'deform_split_review',
-                'similar_parts_review',
-                'dup_id_review'
-            ],
-            3: [
-                "id",
-                'skip_num_final',
-                'init_split_final',
-                'other_init_split_final',
-                'deform_split_final',
-                'similar_parts_final',
-                'dup_id_final'
-            ]
-        }
 
-        for split_variant in split_variants:
-            if split_variant["source"] == int(source) and (hanzi_char in split_variant["hanzi_char"] or similar_parts in split_variant[similar_parts_comp]):
-                results.append(split_variant)
-        for result in results:
-            tmp = {}
-            for key in key_list[business_stage]:
-                tmp[key] = result[key]
-            staged_result.append(tmp)
-        return_dict = {
-            "task_package": int(task_package),
-            "models": staged_result
-        }
-
-        return Response(return_dict)
-
-    # 按页查看录入任务-进行中
-    @list_route()
-    def ongoing_inputpage(self, request, *args, **kwargs):
-        user = self.request.user
-        if self.request.query_params["task_package"]:
-            task_package = self.request.query_params["task_package"]
-        business_type = getenum_business_type("input_page")
-        if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-        else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-
-        serializer = self.serializer_class(tasks, many=True)
-        input_pages = [v["task_ele"] for v in serializer.data]
-
-        return_dict = {
-            "task_package": int(task_package),
-            "models": input_pages
-        }
-
-        return Response(return_dict)
-
-    # 搜索录入任务
-    @list_route()
-    def select_input(self, request, *args, **kwargs):
-        user = self.request.user
-        hanzi_char = self.request.query_params["hanzi_char"]
-        note = self.request.query_params["note"]
-        task_package = self.request.query_params["task_package"]
-        business_type = getenum_business_type("input")
-        if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-        else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-
-        serializer = self.serializer_class(tasks, many=True)
-        input_variants = [v["task_ele"] for v in serializer.data]
-        business_stage = serializer.data[0]["business_stage"]
-        if business_stage == getenum_business_stage("init"):
-            hanzi_char_comp = "hanzi_char_draft"
-            variant_type_comp = "variant_type_draft"
-            notes_comp = "notes_draft"
-        elif business_stage == getenum_business_stage("review"):
-            hanzi_char_comp = "hanzi_char_review"
-            variant_type_comp = "variant_type_review"
-            notes_comp = "notes_review"
-        else:
-            hanzi_char_comp = "hanzi_char_final"
-            variant_type_comp = "variant_type_final"
-            notes_comp = "notes_final"
-        staged_result = []
-        key_list = {
-            1: [
-                "id",
-                'page_num',
-                'seq_num_draft',
-                'hanzi_char_draft',
-                'hanzi_pic_id_draft',
-                'variant_type_draft',
-                'std_hanzi_draft',
-                'notes_draft',
-                'is_del_draft'
-            ],
-            2: [
-                "id",
-                'page_num',
-                'seq_num_review',
-                'hanzi_char_review',
-                'hanzi_pic_id_review',
-                'variant_type_review',
-                'std_hanzi_review',
-                'notes_review',
-                'is_del_review'
-            ],
-            3: [
-                "id",
-                'page_num',
-                'seq_num_final',
-                'hanzi_char_final',
-                'hanzi_pic_id_final',
-                'variant_type_final',
-                'std_hanzi_final',
-                'notes_final',
-                'is_del_final'
-            ]
-        }
-
-        if self.request.query_params["page_num"]:
-            page_num = int(self.request.query_params["page_num"])
-            input_variants = [input_variant for input_variant in input_variants if page_num == input_variant["page_num"]]
-        if self.request.query_params["variant_type"]:
-            variant_type = int(self.request.query_params["variant_type"])
-            input_variants = [input_variant for input_variant in input_variants if variant_type == input_variant[variant_type_comp]]
-        if note:
-            input_variants = [input_variant for input_variant in input_variants if note in str(input_variant[notes_comp])]
-        if hanzi_char:
-            input_variants = [input_variant for input_variant in input_variants if hanzi_char in input_variant[hanzi_char_comp]]
-
-        for result in input_variants:
-            tmp = {}
-            for key in key_list[business_stage]:
-                tmp[key] = result[key]
-            staged_result.append(tmp)
-        return_dict = {
-            "business_stage": business_stage,
-            "task_package": int(task_package),
-            "models": staged_result
-        }
-
-        return Response(return_dict)
-
-    # 按字头查看高台去重任务-进行中
-    @list_route()
-    def ongoing_dedup(self, request, *args, **kwargs):
-        user = self.request.user
-        task_package = request.query_params["task_package"]
-        business_type = getenum_business_type("dedup")
-        if user.is_superuser == 1:
-            tasks = Tasks.objects.filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-        else:
-            tasks = Tasks.objects.filter(user_id=user.id).filter(business_type=business_type).filter(task_status=getenum_task_status("ongoing")).filter(task_package=task_package)
-
-        serializer = self.serializer_class(tasks, many=True)
-        dedup_variants = [v["task_ele"] for v in serializer.data]
-        return_dict = {
-            "task_package": int(task_package),
-            "models": dedup_variants
-        }
-
-        return Response(return_dict)
-
-    # 太难跳过，仅拆字
     @detail_route(methods=["PATCH", "GET", "PUT"])
     def skip_task(self, request, *args, **kwargs):
-        origin_task = self.get_object()
+        """
+        太难跳过当前任务, 返回下一条
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        origin_task = Tasks.objects.get(pk=kwargs['pk'])
         work_ele = origin_task.content_object
 
         business_type = origin_task.business_type
@@ -324,17 +195,25 @@ class TasksViewSet(viewsets.ModelViewSet):
         else:
             work_ele.skip_num_final += 1
         work_ele.save()
-        reset_task(origin_task)
 
         new_task = assign_task(business_type, business_stage, task_package, user)
+        reset_task(origin_task)
+
         if new_task:
-            serializer = api_variants_split.VariantsSplitSerializer(new_task.content_object)
+            serializer = self.get_serializer([new_task], many=True)
             return Response(serializer.data)
         else:
-            return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
+            return Response({"error": _("No more task today, have a try tommorrow!")}, status=status.HTTP_204_NO_CONTENT)
 
     @list_route()
     def split_search(self, request, *args, **kwargs):
+        """
+        拆字任务包内容查看
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         hanzi_char = request.query_params.get('hanzi_char', False)
         hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
 
@@ -367,6 +246,13 @@ class TasksViewSet(viewsets.ModelViewSet):
 
     @list_route()
     def input_search(self, request, *args, **kwargs):
+        """
+        录入任务包内容查看
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         hanzi_char = request.query_params.get('hanzi_char', False)
         hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
         page_num = request.query_params.get('page_num', False)
@@ -406,6 +292,13 @@ class TasksViewSet(viewsets.ModelViewSet):
 
     @list_route()
     def dedup_search(self, request, *args, **kwargs):
+        """
+        去重任务包内容查看
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         hanzi_char = request.query_params.get('hanzi_char', False)
 
         sql = '''

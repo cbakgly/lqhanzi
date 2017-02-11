@@ -56,21 +56,6 @@
   <script src="{{STATIC_URL}}js/workbench/m2-template-specific.js"></script>
   <!--m2-template-specific js-->
   <script src="{{STATIC_URL}}js/js.cookie.js"></script>
-  <script type="text/javascript">
-      // expose user info in javascript context.
-      var user={
-          "id": {{ user.id }},
-          "name": "{{ user.username }}"
-      };
-
-      // For api with token, need passing it via header.
-      $(document).ajaxSend(function(event, xhr, settings) {
-          if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)
-                  && !settings.crossDomain) {
-              xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
-          }
-      });
-   </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -235,6 +220,91 @@
     {% block right_side %}
     <!-- / .content -->
     <section class="content">
+    <div id="msg-bar">
+      <transition name="fade">
+      <div class="alert alert-dismissible" :class="show_type()"v-show="showup">
+          <button type="button" class="close" @click="dismiss()">&times;</button>
+          <h4><i class="icon fa" :class="symbol_type()"></i> #[ header ]]</h4>
+          #[ content ]]
+      </div>
+      </transition>
+      </div>
+      <script type="text/javascript">
+        var msg_bar = new Vue({
+            delimiters: ['#[', ']]'],
+            el: '#msg-bar',
+            data: {
+                header: "{% trans 'Alert!' %}",
+                is_success: true,
+                content: '',
+                showup: false,
+            },
+            methods: {
+                show_type: function() {
+                    return {
+                        'alert-success': this.is_success,
+                        'alert-warning': !this.is_success,
+                    }
+                },
+                symbol_type: function() {
+                    return {
+                        'fa-check': this.is_success,
+                        'fa-warning': !this.is_success,
+                    }
+                },
+                show: function(success, msg) {
+                    var m = msg;
+                    if (success) {
+                        this.content = m.detail;
+                        this.is_success = true;
+                    } else {
+                        this.content = m.detail;
+                        this.is_success = false;
+                    }
+                    this.showup = true;
+                },
+                dismiss: function() {
+                    this.showup = false;
+                }
+            },
+        });
+
+      // expose user info in javascript context.
+      var user={
+          "id": {{ user.id }},
+          "name": "{{ user.username }}"
+      };
+
+      // For api with token, need passing it via header.
+      $(document).ajaxSend(function(event, xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)
+                  && !settings.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+          }
+      }).ajaxError(function(event, xhr, o){
+          if (xhr.status >= 400) {
+            msg_bar.show(false, {'detail': xhr.status + ' ' + xhr.statusText + ' ' + xhr.responseText});
+          }
+      });
+
+      if (Vue) {
+        Vue.http.interceptors.push((request, next) => {
+            request.headers.set("X-CSRFToken", Cookies.get('csrftoken'));
+
+            next((response) => {
+                if (response.status == 204) {
+                  msg_bar.show(false, {'detail': '{% trans 'No more task. All tasks may have been done. Please report.' %}'});
+                } else if (response.status == 403) {
+                  msg_bar.show(false, {'detail': '{% trans "Login expires, please login again." %}'});
+                } else if (response.status >= 400) {
+                  msg_bar.show(false, {'detail': response.status + ' ' + response.statusText});
+                  console.log(response.data);
+                }
+                return response
+            })
+        });
+      }
+      </script>
       {% block content %}
 
       {% endblock %}

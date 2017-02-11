@@ -41,9 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'guardian',
-    # 'storages',
     # 'debug_toolbar',
-    # 'crispy_forms',
     'registration',
     'hanzi',
     'sysadmin',
@@ -52,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'django.middleware.transaction.TransactionMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'lqconfig.urls'
@@ -100,9 +101,10 @@ DATABASES = {
         'NAME': 'lqhanzi',
         'USER': 'lq',
         'PASSWORD': '123456',
-        'HOST': '192.168.16.3',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
-        'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'}
+        'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -137,7 +139,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-LANGUAGE_CODE = 'zh-CN'
+LANGUAGE_CODE = 'zh-Hans'
 TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 USE_L10N = True
@@ -147,7 +149,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static/']
-# User uploaded files
 MEDIA_ROOT = 'static/uploads/'
 MEDIA_URL = '/media/'
 
@@ -177,8 +178,7 @@ LOGIN_URL = '/accounts/login/'
 REGISTRATION_EMAIL_SUBJECT_PREFIX = '[龙泉字库注册邮件]'
 SEND_ACTIVATION_EMAIL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'alqdzj@126.com'
-# 原始密码同aws密码
+DEFAULT_FROM_EMAIL = 'alqdzj@126.com' # 账号密码同aws密码
 EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
@@ -187,6 +187,8 @@ EMAIL_PORT = 25
 
 
 # Redis Cache Settings
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -196,22 +198,5 @@ CACHES = {
         },
     },
 }
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 # Redis Cache Settings end
 
-
-# http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY', '')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', '')
-AWS_STORAGE_BUCKET_NAME = 'lqhanzi-static'
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = False
-# see http://developer.yahoo.com/performance/rules.html#expires
-# AWS_HEADERS = {
-#     'Expires': 'Thu, 15 Apr 2010 20:00:00 GMT',
-#     'Cache-Control': 'max-age=86400',
-# }
