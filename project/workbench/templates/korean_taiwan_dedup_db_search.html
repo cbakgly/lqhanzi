@@ -148,7 +148,7 @@
               </td>
               <td v-show="filter_draft">
                   <span v-if="item.is_draft_pic">
-                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_draft_path" alt=""></span>
+                    <span class="pic" v-if="item.inter_dict_dup_hanzi_draft_path"><img :src="item.inter_dict_dup_hanzi_draft_path" alt=""></span>
                     <span class="small"><em>#[ item.inter_dict_dup_hanzi_draft ]]</em></span>
                   </span>
                   <span v-else>
@@ -157,7 +157,7 @@
               </td>
               <td v-show="filter_review">
                   <span v-if="item.is_review_pic">
-                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_review_path" alt=""></span>
+                    <span class="pic" v-if="item.inter_dict_dup_hanzi_review_path"><img :src="item.inter_dict_dup_hanzi_review_path" alt=""></span>
                     <span class="small"><em>#[ item.inter_dict_dup_hanzi_review ]]</em></span>
                   </span>
                   <span v-else>
@@ -166,7 +166,7 @@
               </td>
               <td v-show="filter_final">
                   <span v-if="item.is_final_pic">
-                    <span class="pic"><img :src="item.inter_dict_dup_hanzi_final_path" alt=""></span>
+                    <span class="pic" v-if="item.inter_dict_dup_hanzi_final_path"><img :src="item.inter_dict_dup_hanzi_final_path" alt=""></span>
                     <span class="small"><em>#[ item.inter_dict_dup_hanzi_final ]]</em></span>
                   </span>
                   <span v-else>

@@ -8,7 +8,8 @@ from backend.views.api_redeem import RedeemViewSet
 from backend.views.api_credits import CreditViewSet
 from backend.views.api_variants_split import VariantsSplitViewSet
 from backend.views.api_variants_input import VariantsInputViewSet, InputPageViewSet
-from backend.views.api_variants_dedup import InterDictDedupViewSet, KoreanDedupViewSet
+from backend.views.api_variants_dedup import InterDictDedupViewSet
+from backend.views.api_variants_korean_dedup import KoreanDedupViewSet
 from backend.views.api_korean_dup_characters import KoreanTaiwanDupCharactersViewSet
 from backend.views.api_hanzi_set import HanziSetViewSet
 from backend.views.api_hanzi_parts import HanziPartViewSet
