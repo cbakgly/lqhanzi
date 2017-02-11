@@ -13,7 +13,7 @@ from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
 from backend.models import HanziParts, HanziSet, HanziRadicals
 from backend.enums import SOURCE_ENUM
-from appendix_hanzi import fuluzi
+from tw_fuluzi import fuluzi
 from django.http import JsonResponse
 import operator
 
@@ -62,6 +62,49 @@ def taiwan(request):
 
 
 @csrf_exempt
+def taiwan_detail(request):
+    """
+    显示台湾异体字详细信息
+    """
+    seq_id = request.GET.get('seq_id', False).lower()
+    if not seq_id:
+        content = {'error': 'not found' + seq_id}
+    else:
+        base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
+        std_code = seq_id.split('-')[0]
+        anchor = False
+        if len(seq_id.split('-')) > 1:
+            anchor = '#bm_' + '-'.join(seq_id.split('-')[1:])
+        std_type = std_code[0]
+        up_url = "%s/yiti%s/w%s/w%s.htm" % (base, std_type, std_type, std_code)
+        right_url = "%s/yiti%s/s%s/s%s.htm" % (base, std_type, std_type, std_code)
+        if seq_id in fuluzi:
+            down_url = "%s/yiti%s/fu%s/fu%s.htm" % (base, std_type, std_type, std_code)
+        elif anchor:
+            down_url = "%s/yiti%s/yd%s/yd%s.htm%s" % (base, std_type, std_type, std_code, anchor)
+        else:
+            down_url = "%s/yiti%s/%s_std/%s.htm" % (base, std_type, std_type, std_code)
+
+        content = {
+            'seq_id': seq_id.upper(),
+            'up_url': up_url,
+            'down_url': down_url,
+            'right_url': right_url,
+        }
+
+    return render(request, 'hanzi_taiwan.html', context=content)
+
+
+@csrf_exempt
+def taiwan_std_hanzi(request, *args, **kwargs):
+    """
+    根据类型获取台湾异体字正字集
+    """
+    type = kwargs['type']
+    return type
+
+
+@csrf_exempt
 def dicts_search(request):
     """
     根据部首、来源获取相应的汉字集
@@ -87,13 +130,14 @@ def dicts_search(request):
             return []
 
     total_count = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
-    hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'max_strokes', 'hanzi_char', 'hanzi_pic_id').order_by(
+    hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'max_strokes', 'hanzi_char', 'hanzi_pic_id', 'seq_id').order_by(
         'max_strokes')[(page_num - 1) * page_size: page_num * page_size]
     hanzi_set = list(hanzi_set)
 
     for item in hanzi_set:
         item['pic_url'] = get_pic_url_by_source_pic_name(source, item['hanzi_pic_id'])
         item['remain_strokes_num'] = item['max_strokes'] - radical_stroke
+        item['seq_id'] = item['seq_id'].split(';')[0]
 
     return JsonResponse({
         'q': radical,

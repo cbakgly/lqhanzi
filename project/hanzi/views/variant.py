@@ -13,7 +13,7 @@ from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
 from backend.models import HanziParts, HanziSet, HanziRadicals
-from appendix_hanzi import fuluzi
+from tw_fuluzi import fuluzi
 
 
 def is_has_letter(s):
