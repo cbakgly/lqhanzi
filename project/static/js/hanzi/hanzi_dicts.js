@@ -60,6 +60,19 @@ $(document).ready(function () {
         });
     });
 
+    // 点击检索结果集
+    $(document).on('click', '.strokes-item .hanzi-item', function () {
+        $(".popup").hide("normal");
+        var seq_id = $(this).attr('alt');
+        $('#iframe-content').attr('src', '/dicts/taiwan/detail?seq_id=' + seq_id);
+    });
+
+    // 点击目录索引
+    $(document).on('click', '.treeview a.inner', function () {
+        $('#iframe-content').attr('src', $(this).attr("href"));
+        return false;
+    });
+
 });
 
 
@@ -126,11 +139,11 @@ function render_dicts_panel(data) {
 
             for (var j = i; j < len; j++) {
                 if (source == 4 && hanzi_set[j].hanzi_pic_id != '') {     // 如果是高丽异体字，优先显示图片
-                    str += '<span class="hanzi-item"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
+                    str += '<span class="hanzi-item" alt="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
                 } else if (hanzi_set[j].hanzi_char != '') {
-                    str += '<span class="hanzi-item">' + hanzi_set[j].hanzi_char + '</span>';
+                    str += '<span class="hanzi-item" alt="' + hanzi_set[j].seq_id + '">' + hanzi_set[j].hanzi_char + '</span>';
                 } else {
-                    str += '<span class="hanzi-item"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
+                    str += '<span class="hanzi-item" alt="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
                 }
 
                 // 如果下一个字的剩余笔划数有变化，就跳出
@@ -166,4 +179,3 @@ function render_dicts_panel(data) {
         $('.pages-box').hide();
     }
 }
-
