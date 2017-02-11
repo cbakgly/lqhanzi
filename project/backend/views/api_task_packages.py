@@ -107,6 +107,5 @@ class TaskPackagesViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
 
     def get_queryset(self):
-        user = self.request.user
         # TODO: will return object basing on user's group(role)
         return TaskPackages.objects.filter(user_id=self.request.user.id)

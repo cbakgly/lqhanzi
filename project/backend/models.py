@@ -9,15 +9,12 @@ from guardian.mixins import GuardianUserMixin
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
-VARIANT_TYPE_CHOICES = (
-    (0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'),
-    (8, u'其他不入库类型'), (9, u'其他入库类型'))
+VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
 INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
 HANZI_TYPE_CHOICES = ((0, u'文字'), (1, u'图片'), (2, u'文字且图片'))
 SOURCE_CHOICES = ((1, 'Unicode'), (2, u'台湾异体字典'), (3, u'汉语大字典'), (4, u'高丽大藏经'), (5, u'敦煌俗字典'))
 YESNO_CHOICES = ((0, u'否'), (1, u'是'))
-BUSINESS_TYPE_CHOICES = (
-    (1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
+BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'))
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
 TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -528,3 +525,13 @@ class HanziParts(models.Model):
     @property
     def input(self):
         return self.part_char
+
+
+class UserTaskProfile(models.Model):
+    user = models.ForeignKey(User)
+    last_split_id = models.IntegerField(blank=True, default=0)
+    last_dedup_id = models.IntegerField(blank=True, default=0)
+    last_input_id = models.IntegerField(blank=True, default=0)
+
+    class Meta:
+        db_table = 'lq_user_task_profile'

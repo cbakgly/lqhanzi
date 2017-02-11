@@ -1,9 +1,13 @@
 {% extends "m2_base.html" %}
+{% load i18n %}
+
 {% block headercss %}
 <link rel="stylesheet" href="{{STATIC_URL}}css/hanzi_parts.css" type="text/css"/>
 {% endblock %}
-{% load staticfiles %} {% block content %} {% verbatim %}
+{% load staticfiles %}
 
+{% block content %}
+{% verbatim %}
 <!-- component template -->
 <script type="text/x-template" id="parts-template">
     <div class="box box-blue con-right">
@@ -55,7 +59,7 @@
 </script>
 {% endverbatim %}
 <div id="hanzi-split" class='row'>
-    <div class='col-md-6 col-xm-12'>
+    <div class='col-md-8 col-xm-12'>
         <div class="box box-blue">
             <div class="box-header">
                 <div class="hanzi-content">
@@ -65,12 +69,19 @@
                     <div class="split-top">
                         <div class="header-img pull-left">
                             <div class="zi">
-                                <div class="single-zi">庆</div>
+                                <div class="single-zi">
+                                  <span v-if="model.task_ele.hanzi_type == 0">
+                                    #[model.task_ele.hanzi_pic_path]]
+                                  </span>
+                                  <span v-else>
+                                    <img :src="model.task_ele.hanzi_pic_path">
+                                  </span>
+                                </div>
                             </div>
                         </div>
                         <div class="hanzi-info pull-left">
-                            <p class="hanzi-origin">来源：<em>台湾异体字字典</em></p>
-                            <p class="hanzi-code">编码：<a href="#">A00109-001</a></p>
+                            <p class="hanzi-origin">来源：<em>#[model.task_ele.source_display]]</em></p>
+                            <p class="hanzi-code">编码：<a href="#">#[model.task_ele.seq_id]]</a></p>
                         </div>
                     </div>
                 </div>
@@ -83,21 +94,21 @@
                             <th>
                                 <div class="checkbox icheck">
                                     <label>
-                                        <input type="checkbox" checked>初次
+                                        <input type="checkbox" v-model="draft_checked" >初次
                                     </label>
                                 </div>
                             </th>
                             <th>
                                 <div class="checkbox icheck">
                                     <label>
-                                        <input type="checkbox" disabled>回查
+                                        <input type="checkbox" v-model="review_checked">回查
                                     </label>
                                 </div>
                             </th>
                             <th>
                                 <div class="checkbox icheck">
                                     <label>
-                                        <input type="checkbox" disabled>审查
+                                        <input type="checkbox" v-model="final_checked">审查
                                     </label>
                                 </div>
                             </th>
@@ -107,54 +118,74 @@
                         <tr>
                             <td>重复值</td>
                             <td>
-                                <input type="text" class="form-control split-step" placeholder="若能输入该图字，请填写，不须继续拆分" autofocus @click="set_main_input">
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="draft_disabled" v-model="model.task_ele.dup_id_draft" autofocus @click="set_main_input">
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="review_disabled" v-model="model.task_ele.dup_id_review" autofocus @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="final_disabled" v-model="model.task_ele.dup_id_final" autofocus @click="set_main_input">
+                            </td>
                         </tr>
                         <tr>
                             <td>初步拆分一</td>
                             <td>
-                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.task_ele.init_split_draft" @click="set_main_input">
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.task_ele.init_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.task_ele.init_split_final" @click="set_main_input">
+                            </td>
                         </tr>
                         <tr>
                             <td>初步拆分二</td>
                             <td>
-                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.task_ele.other_init_split_draft" @click="set_main_input">
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.task_ele.other_init_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.task_ele.other_init_split_final" @click="set_main_input">
+                            </td>
                         </tr>
                         <tr>
                             <td>调笔拆分</td>
                             <td>
-                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.task_ele.deform_split_draft" @click="set_main_input">
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.task_ele.deform_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.task_ele.deform_split_final" @click="set_main_input">
+                            </td>
                         </tr>
                         <tr>
                             <td>相似部件</td>
                             <td>
-                                <input type="text" class="form-control split-step" placeholder="" @click="set_main_input">
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.task_ele.similar_parts_draft" @click="set_main_input">
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.task_ele.similar_parts_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.task_ele.similar_parts_final" @click="set_main_input">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="btn-group btns-tr split-btns pull-right">
-                    <button class="btn btn-blue btn-sm z-btn-sm">提交</button>
-                    <button class="btn btn-blue btn-sm z-btn-sm">提交并转下一条</button>
-                    <button class="btn btn-blue btn-sm z-btn-sm">太难跳过</button>
+                    <!--<button class="btn btn-blue btn-sm z-btn-sm" @click="submit">提交</button>-->
+                    <button class="btn btn-blue btn-sm z-btn-sm" @click="submit_go_next">提交并转下一条</button>
+                    <button class="btn btn-blue btn-sm z-btn-sm" @click="go_next">太难跳过</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class='col-md-6 col-xm-12'>
+    <div class='col-md-4 col-xm-12'>
         <div>
             <parts-inputmethod :data="hanziComponents">
             </parts-inputmethod>
@@ -389,15 +420,67 @@ Vue.component('parts-inputmethod', {
 })
 
 var part_input = new Vue({
+    delimiters: ['#[', ']]'],
     el: '#hanzi-split',
     data: {
         searchQuery: '',
         hanziComponents: [],
+        dup_id: "",
+        init_split: "",
+        other_init_split: "",
+        deform_split: "",
+        similar_parts: "",
+        model_default: {task_ele: {}},
+        model: {task_ele: {}},
         mainInput: $('#hanzi-split input[type=text]:first'),
+    },
+    computed: {
+        draft_checked: function() {
+          return this.model.business_stage == {{business_stage_enum.init}};
+        },
+        review_checked: function() {
+          return this.model.business_stage == {{business_stage_enum.review}};
+        },
+        final_checked: function() {
+          return this.model.business_stage == {{business_stage_enum.final}};
+        },
+        draft_disabled: function() {
+          return this.model.business_stage == {{business_stage_enum.init}} ? false: true;
+        },
+        review_disabled: function() {
+          return this.model.business_stage == {{business_stage_enum.review}} ? false: true;
+        },
+        final_disabled: function() {
+          return this.model.business_stage == {{business_stage_enum.final}} ? false: true;
+        }
     },
     methods: {
         set_main_input: function(evt) {
             this.mainInput = $(evt.target);
+        },
+        submit_go_next: function() {
+          this.$http.put("{% url 'tasks-submit-next-split' version='v1' pk=0 %}".replace(0, this.model.id), this.model).then((response)=>{
+            console.log(response);
+             if (response.status == 204) {
+              this.model = this.model_default;
+              return;
+            }
+            this.model = response.data[0];
+          }, (response)=>{
+            console.log(response);
+          });
+        },
+        go_next: function() {
+          this.$http.get("{% url 'tasks-skip-task' version="v1" pk=0 %}".replace(0, this.model.id)).then((response)=>{
+            console.log(response);
+             if (response.status == 204) {
+              this.model = this.model_default;
+              return;
+            }
+            this.model = response.data[0];
+          },(response)=>{
+            console.log(response);
+          });
         },
     },
     created: function() {
@@ -405,19 +488,33 @@ var part_input = new Vue({
         this.$on('emit-part', function(a) {
             part_input.mainInput.val(part_input.mainInput.val() + a)
         })
-         this.$http.get('/api/v1/parts/?is_split_part=1').then((response) => {
-            // success callback
-            part_input.hanziComponents = response.data
-          }, (response) => {
-            // error callback
-          });
+        this.$http.get('{% url "hanzi-parts-list" version="v1" %}?is_split_part=1').then((response) => {
+          // success callback
+          part_input.hanziComponents = response.data
+        }, (response) => {
+          // error callback
+        });
+        this.$http.get('{% url "tasks-ongoing-split" version="v1" %}?task_package_id={{task_package_id}}').then((response) => {
+          // success callback
+          console.log(response);
+          if (response.status == 204) {
+            this.model = this.model_default;
+            return;
+          }
+          this.model = response.data[0];
+          Vue.nextTick(function () {  }); // DOM 更新了
+        }, (response) => {
+          // error callback
+        });
     },
-    mounted: function() {
-        $("input[type=checkbox]").iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        })
-    }
-})
+    <!--mounted: function() {-->
+        <!--$("input[type=checkbox]").iCheck({-->
+            <!--checkboxClass: 'icheckbox_flat-blue',-->
+            <!--radioClass: 'iradio_flat-blue'-->
+        <!--})-->
+    <!--}-->
+});
+
+
 </script>
 {% endblock %}

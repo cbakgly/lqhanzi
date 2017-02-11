@@ -26,6 +26,9 @@ SECRET_KEY = 'nej4uf&$0-18*bb)--qjx3vc6-ahsxt!c!z92g^h$qjl4036*x'
 DEBUG = False
 ALLOWED_HOSTS = ["*", ]
 
+# Use S3 path to get hanzi pictures
+USE_S3_HANZI_PICTURE = True
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +41,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'guardian',
-    # 'crispy_forms',
     'registration',
     'hanzi',
     'sysadmin',
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'lqconfig.urls'
@@ -70,8 +74,11 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'backend.context_processors.today_credits',
+                'backend.context_processors.model_enum',
             ],
         },
     },
@@ -93,7 +100,9 @@ DATABASES = {
         'USER': 'lq',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -138,7 +147,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static/']
-# User uploaded files
 MEDIA_ROOT = 'static/uploads/'
 MEDIA_URL = '/media/'
 
@@ -147,7 +155,7 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     'PAGE_SIZE': 10,
     'DEFAULT_VERSION': 'v1',
-    'ALLOWED_VERSIONS': ['v1', None],
+    'ALLOWED_VERSIONS': ['v1'],
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework_filters.backends.DjangoFilterBackend',
     ),
@@ -168,8 +176,7 @@ LOGIN_URL = '/accounts/login/'
 REGISTRATION_EMAIL_SUBJECT_PREFIX = '[龙泉字库注册邮件]'
 SEND_ACTIVATION_EMAIL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'alqdzj@126.com'
-# 原始密码同aws密码
+DEFAULT_FROM_EMAIL = 'alqdzj@126.com' # 账号密码同aws密码
 EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
@@ -178,6 +185,9 @@ EMAIL_PORT = 25
 
 
 # Redis Cache Settings
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -187,7 +197,4 @@ CACHES = {
         },
     },
 }
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 # Redis Cache Settings end

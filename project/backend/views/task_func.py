@@ -1,33 +1,74 @@
 # -*- coding:utf8 -*-
-from django.utils.translation import ugettext_lazy as _
-from rest_framework.response import Response
-from rest_framework import status
-from django.utils import timezone
-from ..models import Tasks, TaskPackages, VariantsInput
-from ..enums import getenum_task_status, getenum_business_type, getenum_business_stage
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
+
+from ..models import Tasks, TaskPackages, VariantsInput, UserTaskProfile
+from ..enums import getenum_task_status, getenum_business_type, getenum_business_stage
+
+
+def get_user_task_profile(user):
+    profile = UserTaskProfile.objects.filter(user=user).first()
+    if not profile:
+        profile = UserTaskProfile(user=user)
+        profile.save()
+    return profile
+
+
+def convert_profile_to_dict(profile):
+    return {"id": profile.id, getenum_business_type('split'): profile.last_split_id, getenum_business_type('dedup'): profile.last_dedup_id, getenum_business_type('input'): profile.last_input_id}
+
+
+def update_user_task_profile(**kwargs):
+    user = kwargs['user']
+    task_id = kwargs['task_id']
+    business_type = kwargs['business_type']
+
+    profile = get_user_task_profile(user)
+    if business_type == getenum_business_type('split'):
+        profile.last_split_id = task_id
+    elif business_type == getenum_business_type('dedup'):
+        profile.last_dedup_id = task_id
+    else:
+        profile.last_input_id = task_id
+    profile.save()
+    return profile
+
+
+def reset_task(task):
+    task.task_package = None
+    task.assigned_at = None
+    task.user = None
+    task.task_status = getenum_task_status('to_be_arranged')
+    task.save()
+
+    return task
+
+
+def get_working_task(task_package, user):
+    task = Tasks.objects.filter(user=user).filter(task_package=task_package).filter(task_status=getenum_task_status('ongoing'))
+    if task:
+        return task[0]
+    return {}
 
 
 # 分配新任务
 def assign_task(business_type, business_stage, task_package, user):
-    tasks = list(Tasks.objects.filter(business_type=business_type).filter(business_stage=business_stage).filter(task_status=getenum_task_status("to_be_arranged")))
-    if len(tasks):
-        task = tasks[0]
+    profile = convert_profile_to_dict(get_user_task_profile(user))
+
+    task = Tasks.objects.filter(business_type=business_type)\
+                        .filter(business_stage=business_stage)\
+                        .filter(task_status=getenum_task_status("to_be_arranged"))\
+                        .filter(id__gt=profile[business_type]).first()
+    if task:
         task.user = user
         task.task_package = task_package
         task.task_status = getenum_task_status("ongoing")
-        # task.credits = list(TaskCredit.objects.filter(business_type=business_type).filter(business_stage=business_stage))[0].business_credit
-        if business_type in [getenum_business_type("input_page"), getenum_business_type("dedup")]:
-            task.credits = 0
-        else:
-            task.credits = 2
+        task.credits = 0 if business_type in [getenum_business_type("input_page"), getenum_business_type("dedup")] else 2
         task.assigned_at = timezone.now()
         task.save()
-        # if business_type == getenum_business_type("input_page"):
-        # inputs = VariantsInput.objects.filter(page_num=task.content_object.page_num)
+        update_user_task_profile(user=user, business_type=business_type, task_id=task.id)
         return task
-    else:
-        return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
+    return {}
 
 
 def assign_task_by_task_ele(task_ele, business_stage, task_package, user):
