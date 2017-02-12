@@ -1,66 +1,106 @@
 @font-face {
-    font-family: 'myFont';
-    src:  url('/static/fonts/myFont.eot');
-    src:  url('/static/fonts/myFont.eot') format('embedded-opentype'),
-    url('/static/fonts/myFont.ttf') format('truetype'),
-    url('/static/fonts/myFont.woff') format('woff'),
-    url('/static/fonts/myFont.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'myFont';
+  src:  url('../fonts/myFont.eot?yw3ud9');
+  src:  url('../fonts/myFont.eot?yw3ud9#iefix') format('embedded-opentype'),
+  url('../fonts/myFont.ttf?yw3ud9') format('truetype'),
+  url('../fonts/myFont.woff?yw3ud9') format('woff'),
+  url('../fonts/myFont.svg?yw3ud9#myFont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'KaiXinSong';
+  src:  url('../fonts/lqhanzi.eot?yw3ud9');
+  src:  url('../fonts/lqhanzi.eot?yw3ud9#iefix') format('embedded-opentype'),
+  url('../fonts/lqhanzi.ttf?yw3ud9') format('truetype'),
+  url('../fonts/lqhanzi.woff?yw3ud9') format('woff'),
+  url('../fonts/lqhanzi.svg?yw3ud9#lqhanzi') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'myFont' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'myFont' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  display: inline-block;
+  width:15px;
+  font-size:14px;
+  position: relative;
+  top:2px;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-d-arrow:before {
-    content: "\e900";
-}
 .icon-help:before {
-    content: "\e901";
+  content: "\e900";
+}
+.icon-score:before {
+  content: "\e901";
+}
+.icon-all:before {
+  content: "\e902";
+}
+.icon-task:before {
+  content: "\e903";
+}
+.icon-back:before {
+  content: "\e904";
+}
+.icon-clock:before {
+  content: "\e905";
+}
+.icon-comments:before {
+  content: "\e906";
+}
+.icon-del:before {
+  content: "\e907";
+}
+.icon-down-arrow:before {
+  content: "\e908";
+}
+.icon-edit:before {
+  content: "\e909";
+}
+.icon-forum:before {
+  content: "\e90a";
+}
+.icon-left:before {
+  content: "\e90b";
+}
+.icon-like:before {
+  content: "\e90c";
+}
+.icon-query:before {
+  content: "\e90d";
+}
+.icon-right:before {
+  content: "\e90e";
+}
+.icon-search:before {
+  content: "\e90f";
+}
+.icon-time:before {
+  content: "\e910";
+}
+.icon-top:before {
+  content: "\e911";
+}
+.icon-up-arrow:before {
+  content: "\e912";
+}
+.icon-zomIn:before {
+  content: "\e913";
+}
+.icon-zoomOut:before {
+  content: "\e914";
 }
 
-.icon-home:before {
-    content: "\e902";
-}
-.icon-l-arrow:before {
-    content: "\e903";
-}
-.icon-l-arrow2:before {
-    content: "\e904";
-}
-.icon-r-arrow:before {
-    content: "\e905";
-}
-.icon-ser:before {
-    content: "\e906";
-}
-.icon-sidebar-toggle:before {
-    content: "\e907";
-}
-.icon-user:before {
-    content: "\e908";
-}
-/*.icon-user1:before {
-    content: "\e909";
-}*/
-.icon-user2:before {
-    content: "\e90a";
-}
-
-
-/*.dropdown-toggle:before {
-    content: "\e909";
-}
-*/
