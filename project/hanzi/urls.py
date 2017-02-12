@@ -16,10 +16,10 @@ urlpatterns = [
     url(r'^dicts/?$', RedirectView.as_view(url='/dicts/taiwan', permanent=False), name='m1.dicts'),
     url(r'^dicts/taiwan$', dicts.taiwan, name="m1.dicts-taiwan"),
     url(r'^dicts/taiwan/detail$', dicts.taiwan_detail, name="m1.dicts-taiwan-detail$"),
-    url(r'^dicts/taiwan/std_hanzi/(?P<type>[abcnABCN])$', dicts.taiwan_std_hanzi, name="m1.dicts-taiwan-std-hanzi$"),
-    # url(r'^dicts/korean$', dicts.korean, name="m1.dicts-korean"),
-    # url(r'^dicts/Chinese$', dicts.Chinese, name="m1.dicts-Chinese"),
-    # url(r'^dicts/dunhuang$', dicts.dunhuang, name="m1.dicts-dunhuang"),
+    url(r'^dicts/taiwan/std_hanzi$', dicts.taiwan_std_hanzi, name="m1.dicts-taiwan-std-hanzi"),
+    url(r'^dicts/korean$', dicts.korean, name="m1.dicts-korean"),
+    url(r'^dicts/hanyu', dicts.hanyu, name="m1.dicts-hanyu"),
+    url(r'^dicts/dunhuang$', dicts.dunhuang, name="m1.dicts-dunhuang"),
     url(r'^dicts/dicts_search$', dicts.dicts_search, name='m1.dicts-search'),
 
 ]
