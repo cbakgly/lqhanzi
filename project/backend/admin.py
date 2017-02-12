@@ -1,7 +1,6 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from guardian.admin import GuardedModelAdmin
 from backend.models import Diaries, Credits, VariantsSplit, TaskPackages, Tasks, CreditsRedeem, User, HanziSet, KoreanDupCharacters, InputPage
 
 
@@ -130,9 +129,8 @@ admin.site.register(TaskPackages, TaskPackagesAdmin)
 admin.site.register(Tasks, TasksAdmin)
 admin.site.register(VariantsSplit, VariantsSplitAdmin)
 admin.site.register(CreditsRedeem, CreditsRedeemAdmin)
-admin.site.register(User, GuardedModelAdmin)
-admin.site.register(Permission, GuardedModelAdmin)
+admin.site.register(User)
+admin.site.register(Permission)
 admin.site.register(HanziSet)
-# admin.site.register(Reward, RewardAdmin)
 admin.site.register(KoreanDupCharacters, KoreanDupChaAdmin)
 admin.site.register(InputPage, InputPageAdmin)

@@ -1,24 +1,33 @@
 # -*- coding:utf8 -*-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
 from backend.models import HanziSet, InterDictDedup, Tasks
 from backend.enums import getenum_source, getenum_task_status
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
+from backend.utils import has_business_type_perm
 
 
 @login_required
 def task_split(request, *args, **kwargs):
-    return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
+    if has_business_type_perm(request.user, 'split'):
+        return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
+    return render(request, '401.html')
 
 
 @login_required
 def task_input(request, *args, **kwargs):
-    return render(request, 'task_input.html', {'task_package_id': request.GET.get('pk')})
+    if has_business_type_perm(request.user, 'input'):
+        return render(request, 'task_input.html', {'task_package_id': request.GET.get('pk')})
+    return render(request, '401.html')
 
 
 @login_required
 def task_dedup(request, *args, **kwargs):
+    if not has_business_type_perm(request.user, 'dedup'):
+        return render(request, '401.html')
+
     pk = int(request.GET.get('pk'))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:
@@ -48,6 +57,9 @@ def task_dedup(request, *args, **kwargs):
 
 @login_required
 def task_dedup2(request, *args, **kwargs):
+    if not has_business_type_perm(request.user, 'dedup'):
+        return render(request, '401.html')
+
     pk = int(request.GET.get('pk'))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:

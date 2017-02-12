@@ -5,6 +5,7 @@ from django.utils import timezone
 from lqconfig.settings import STATIC_URL, USE_S3_HANZI_PICTURE
 from functional import timeout_cache
 from models import Tasks
+from enums import PERMS
 
 
 # https://docs.djangoproject.com/en/dev/topics/i18n/timezones/#selecting-the-current-time-zone
@@ -107,3 +108,19 @@ def is_int(n):
         return True
     except Exception:
         return False
+
+
+def has_workbench_perm(user):
+    user_perms = user.get_group_permissions()
+    perms = PERMS.values()
+    for p in user_perms:
+        if p in perms:
+            return True
+    return False
+
+
+def has_business_type_perm(user, type):
+    split_perms = [p for p in PERMS.values() if p.find(type)]
+    if user.has_perms(split_perms):
+        return True
+    return False

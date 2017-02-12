@@ -19,41 +19,6 @@ class DiariesSerializer(serializers.ModelSerializer):
         model = Diaries
         fields = "__all__"
 
-    # def create(self, validated_data):
-    #     user = self.context['request'].user
-    #     start = now().date()
-    #     end = start + timedelta(days=1)
-    #     today_tasks = user.user_task.all().filter(completed_at__range=(start, end))
-    #     work_summary = {
-    #         0: 0,
-    #         1: 0,
-    #         2: 0
-    #     }
-    #     work_types = ""
-    #     work_brief = ""
-    #     for t in today_tasks:
-    #         if t.business_type == 0:
-    #             work_summary[0] += 1
-    #         elif t.business_type == 1:
-    #             work_summary[1] += 1
-    #         else:
-    #             work_summary[2] += 1
-    #
-    #     business_types = ["录入", "去重", "拆字"]
-    #
-    #     for i, item in enumerate(business_types):
-    #         if work_summary[i] != 0:
-    #             work_types += item + " "
-    #             work_brief += item + str(work_summary[i]) + "个 "
-    #
-    #     diary = Diaries(user=User(id=user.id), tag=validated_data['tag'],
-    #                     work_brief=work_brief, work_types=work_types,
-    #                     content=validated_data['content'],
-    #                     c_t=timezone.now(),
-    #                     u_t=timezone.now())
-    #     diary.save()
-    #     return diary
-
     def update(self, instance, validated_data):
         instance.user = validated_data.get('user', instance.user)
         instance.tag = validated_data.get('tag', instance.tag)

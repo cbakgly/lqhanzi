@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework',
-    'guardian',
+    # 'guardian',
     # 'debug_toolbar',
     'registration',
     'hanzi',
@@ -127,15 +127,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend'
+    # 'guardian.backends.ObjectPermissionBackend'
 )
 
 # For abstract user
 AUTH_USER_MODEL = 'backend.User'
 
 # For customized user model, guardian must be tuned
-GUARDIAN_MONKEY_PATCH = False
-INTERNAL_IPS = ('127.0.0.1',)
+# GUARDIAN_MONKEY_PATCH = False
+# INTERNAL_IPS = ('127.0.0.1',)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

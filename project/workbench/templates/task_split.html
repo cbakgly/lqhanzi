@@ -419,6 +419,22 @@ Vue.component('parts-inputmethod', {
     }
 })
 
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set("X-CSRFToken", Cookies.get('csrftoken'));
+
+    next((response) => {
+        if (response.status == 204) {
+          msg_bar.show(false, {'detail': '{% trans 'No more task. All tasks may have been done. Please report.' %}'});
+        } else if (response.status == 403) {
+          msg_bar.show(false, {'detail': '{% trans "Login expires, please login again." %}'});
+        } else if (response.status >= 400) {
+          msg_bar.show(false, {'detail': response.status + ' ' + response.statusText});
+          console.log(response.data);
+        }
+        return response
+    })
+});
+
 var part_input = new Vue({
     delimiters: ['#[', ']]'],
     el: '#hanzi-split',
