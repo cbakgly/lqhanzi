@@ -161,7 +161,7 @@ class TasksViewSet(viewsets.ModelViewSet):
                 split.deform_split_final = request.data['task_ele']['deform_split_final']
                 split.similar_parts_final = request.data['task_ele']['similar_parts_final']
         split.save()
-        
+
         new_task = assign_task(business_type, business_stage, task.task_package, task.user)
 
         if new_task:
@@ -169,7 +169,6 @@ class TasksViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response({"error": _("No more task today, have a try tommorrow!")}, status=status.HTTP_204_NO_CONTENT)
-
 
     @detail_route(methods=["PATCH", "GET", "PUT"])
     def skip_task(self, request, *args, **kwargs):

@@ -23,19 +23,29 @@
           <div class="task-item">
             <div class="task-name fl">任务类型：</div>
             <div class="radio fl">
+              {% if perms.backend.op_draft_split or perms.backend.op_review_split or perms.backend.op_final_split %}
             <label><input type="radio" name="business_type" data-val="{{business_type_enum.split}}" checked="checked">拆字</label>
-            <label><input type="radio" name="business_type" data-val="{{business_type_enum.input}}">录入</label>
-            <label><input type="radio" name="business_type" data-val="{{business_type_enum.dedup}}">去重</label>
+              {% endif %}
+              {% if perms.backend.op_draft_dedup or perms.backend.op_review_dedup or perms.backend.op_final_dedup %}
+            <label><input type="radio" name="business_type" data-val="{{business_type_enum.input}}" checked="checked">录入</label>
+              {% endif %}
+              {% if perms.backend.op_draft_input or perms.backend.op_review_input or perms.backend.op_final_input %}
+            <label><input type="radio" name="business_type" data-val="{{business_type_enum.dedup}}" checked="checked">去重</label>
+              {% endif %}
             </div>
           </div>
           <div class="task-item">
             <div class="task-name fl">任务阶段：</div>
             <div class="radio fl">
-            {% for key,value in business_stage_choices %}
-                <label><input type="radio" name="business_stage" data-val="{{key}}"
-                {% if key == 1 %} checked="checked" {% endif %}
-                >{{value}}</label>
-            {% endfor %}
+              {% if perms.backend.op_draft_split or perms.backend.op_draft_dedup or perms.backend.op_draft_input %}
+                <label><input type="radio" name="business_stage" data-val="{{business_stage_enum.init}}" checked="checked">初次</label>
+              {% endif %}
+              {% if perms.backend.op_review_split or perms.backend.op_review_dedup or perms.backend.op_review_input %}
+                <label><input type="radio" name="business_stage" data-val="{{business_stage_enum.review}}" checked="checked">回查</label>
+              {% endif %}
+              {% if perms.backend.op_final_split or perms.backend.op_final_dedup or perms.backend.op_final_input %}
+                <label><input type="radio" name="business_stage" data-val="{{business_stage_enum.final}}" checked="checked">审查</label>
+              {% endif %}
             </div>
           </div>
           <div class="task-item">
