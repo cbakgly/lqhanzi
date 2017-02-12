@@ -12,6 +12,7 @@ from ..models import Credits, Tasks
 from ..pagination import LimitOffsetPagination
 from ..auth import IsBusinessMember
 
+
 class CreditSerializer(serializers.ModelSerializer):
     rank = serializers.SerializerMethodField()
     sort_name = serializers.SerializerMethodField()

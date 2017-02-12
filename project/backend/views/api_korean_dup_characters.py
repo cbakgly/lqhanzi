@@ -19,6 +19,7 @@ from api_variants_dedup import InterDictDedupSerializer
 from task_func import assign_task
 from ..auth import IsBusinessMember
 
+
 class KoreanDupCharactersSerializer(serializers.ModelSerializer):
     korean_hanzi_sets = serializers.SerializerMethodField()
     tw_hanzi_sets = serializers.SerializerMethodField()
@@ -31,6 +32,7 @@ class KoreanDupCharactersSerializer(serializers.ModelSerializer):
     '''def get_korean_hanzi_sets(self, obj):
         hanzi_set_qs = HanziSet.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('korean'))
         return HanziSetDedupSerializer(hanzi_set_qs, many=True).data'''
+
     def get_korean_hanzi_sets(self, obj):
         hanzi_set_qs = InterDictDedup.objects.filter(std_hanzi=obj.korean_variant).filter(source=getenum_source('korean'))
         return InterDictDedupSerializer(hanzi_set_qs, many=True).data
@@ -44,7 +46,6 @@ class KoreanDupCharactersSerializer(serializers.ModelSerializer):
 
 
 class KoreanDupCharSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = KoreanDupCharacters
         exclude = ["c_t", "u_t", "remark", "relation"]

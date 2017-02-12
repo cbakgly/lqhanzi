@@ -20,6 +20,7 @@ from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_
 from ..pagination import NumberPagination
 from ..auth import IsBusinessMember
 
+
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):
     tasks = serializers.SerializerMethodField('get_today_tasks')
