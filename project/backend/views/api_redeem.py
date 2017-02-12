@@ -10,7 +10,7 @@ import django_filters
 
 from ..pagination import NumberPagination
 from ..models import CreditsRedeem
-
+from ..auth import IsBusinessMember
 
 class RedeemFilter(django_filters.FilterSet):
     """
@@ -40,7 +40,7 @@ class RedeemViewSet(viewsets.ModelViewSet):
     积分兑换
     """
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = CreditsRedeem.objects.all()
     filter_class = RedeemFilter

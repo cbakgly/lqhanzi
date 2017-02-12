@@ -16,7 +16,7 @@ from ..filters import fields_or_filter_method
 from ..enums import getenum_source, getenum_task_status, getenum_business_stage
 from task_func import create_task
 from ..functional import timeout_cache
-
+from ..auth import IsBusinessMember
 
 class InterDictDedupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -119,7 +119,7 @@ def update_tasks_status(variants_dedup):
 
 class InterDictDedupViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = InterDictDedup.objects.all()
     filter_class = InterDictDedupFilter
