@@ -120,7 +120,8 @@ def has_workbench_perm(user):
 
 
 def has_business_type_perm(user, type):
-    split_perms = [p for p in PERMS.values() if p.find(type)]
-    if user.has_perms(split_perms):
-        return True
+    split_perms = [p for p in PERMS.values() if p.find(type) != -1]
+    for p in split_perms:
+        if user.has_perm(p):
+            return True
     return False
