@@ -256,7 +256,7 @@ def dunhuang(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
+        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/dh-dict/A01.png',
     }
 
-    return render(request, 'hanzi_dicts.html', context=content)
+    return render(request, 'hanzi_dunhuang.html', context=content)
