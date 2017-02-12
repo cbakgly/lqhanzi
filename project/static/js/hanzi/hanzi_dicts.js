@@ -8,7 +8,7 @@ $(document).ready(function () {
         $(this).addClass("active");
     })
 
-    // 点击部首索引/剩余笔画查询 or 目录索引/笔画查询
+    // 点击结果面板：部首索引/剩余笔画查询 or 目录索引/笔画查询
     $(document).on('click', '#search_by_strokes', function () {
         // 当前激活Tab
         var active_tab = $("#left-tabs .active").text();
@@ -50,28 +50,6 @@ $(document).ready(function () {
         return false;
     });
 
-    // 点击目录索引/正字字表/(常用字、次常用字、罕用字、新增正字)
-    $(document).on('click', '.treeview-menu .tw-std-hanzi', function () {
-        // 弹出结果面板
-        $(".popup").show("slow");
-
-        if ($(this).text() == $(".treeview-menu .tw-std-hanzi.active").text()) {
-            return false;
-        }
-
-        $(".treeview-menu .tw-std-hanzi.active").removeClass("active");
-        $(this).addClass("active");
-
-        // 清空部首输入框
-        $('#input-strokes').val('');
-
-        var url = $(this).attr("href");
-        $.get(url, function (data) {
-            // 渲染数据
-            render_dicts_panel(data);
-        });
-        return false;
-    });
 
     // 导航上一页、下一页
     $(document).on('click', '.stroke_page', function () {
@@ -100,13 +78,6 @@ $(document).ready(function () {
             // 渲染数据
             render_dicts_panel(data);
         });
-    });
-
-    // 点击检索结果集
-    $(document).on('click', '.strokes-item .hanzi-item', function () {
-        $(".popup").hide("normal");
-        var seq_id = $(this).attr('title');
-        $('#iframe-content').attr('src', '/dicts/taiwan/detail?seq_id=' + seq_id);
     });
 
 });

@@ -1,271 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>{{ dict_name }}</title>
+{% extends "hanzi_dicts_base.html" %}
 
-  {% load static %}
+{% block title %}汉语大字典{% endblock %}
 
-  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/myfont.css' %}">
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+{% load static %}
+{% block headerjs %}
+  <script src="{% static 'js/hanzi/hanzi_dicts_hanyu.js' %}"></script>
+{% endblock %}
 
-  <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-  <script src="{% static 'js/sidebar.js' %}"></script>
-  <script src="{% static 'js/hanzi/hanzi_dicts.js' %}"></script>
+{% block right-tabs %}
+  <li class="active">部首索引</li>
+  <li>目录索引</li>
+{% endblock %}
 
-</head>
-
-<body class="sidebar-mini">
-<div class="wrapper">
-  <div class="dictionary-header">
-    <div class="shortcut clearfix">
-      <div class="home fl nav-tab">
-        <ul class="ul-dicts-tab clearfix">
-          <li>
-            <a class="home-icon" href="{% url 'm1.index' %}"></a>
-          </li>
-          <!--未登录前-->
-          <li class="dropdown">
-            <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                <p>未登录</p>
-              </li>
-              <li class="user-footer clearfix">
-                <div class="fl">
-                  <a href="#" class="btn btn-default btn-flat">注册</a>
-                </div>
-                <div class="fr">
-                  <a href="#" class="btn btn-default btn-flat">登录</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!--./未登录-->
-          <!--登录后-->
-          <!-- 默认display:none;登录后显示-->
-          <li class="dropdown user-menu">
-            <!-- The user image in the nav-->
-            <a href="javascript:;">
-              <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-              <span>贤二</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                <p>贤二</p>
-              </li>
-              <li class="user-footer clearfix">
-                <div class="fl">
-                  <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                </div>
-                <div class="fr">
-                  <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!--./登录后-->
-        </ul>
-      </div>
-      <div class="dict-tabs fr">
-        <ul class="clearfix dict-tabs-nav">
-          <li {% if 'taiwan' in request.path %} class="active" {% endif %}><a href="/dicts/taiwan">台湾异体字字典</a></li>
-          <li {% if 'korean' in request.path %} class="active" {% endif %}><a href="/dicts/korean">高丽异体字字典</a></li>
-          <li {% if 'hanyu' in request.path %} class="active" {% endif %}><a href="/dicts/hanyu">汉语大字典</a></li>
-          <li {% if 'dunhuang' in request.path %} class="active" {% endif %}><a href="/dicts/dunhuang">敦煌俗字典</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="dictionary-content" id="dictionary-content">
-    <aside class="main-sidebar">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="icon-sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-      <ul class="tab-nav-custom clearfix">
-        <li class="active">部首索引</li>
-        <li>目录索引</li>
+{% block catalog-index %}
+  <!-- catalog Menu -->
+  <ul class="sidebar-menu">
+    <li class="treeview">
+      <a class="inner" href="javascript:;" alt="A12">
+        <span>第二版修订说明</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="A15">
+        <span>前言</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="A17">
+        <span>凡例</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="1">
+        <span>正文</span>
+        <span class="pull-right-container"><i class="fa icon-l-arrow2 pull-right"></i></span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" href="javascript:;" alt="1"><i class="fa fa-circle-o"></i> 第一卷（一部至戈部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="607"><i class="fa fa-circle-o"></i> 第二卷（小部至无部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="1231"><i class="fa fa-circle-o"></i> 第三卷（木部至水部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="1929"><i class="fa fa-circle-o"></i> 第四卷（手部至毋部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="2553"><i class="fa fa-circle-o"></i> 第五卷（示部至竹部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="3239"><i class="fa fa-circle-o"></i> 第六卷（臼部至豕部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="3861"><i class="fa fa-circle-o"></i> 第七卷（貝部至阜部）</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="4485"><i class="fa fa-circle-o"></i> 第八卷（金部至󰽚部）</a></li>
       </ul>
-      <div class="tab-con">
-        <section class="sidebar tab-panel showing">
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            {% for key, item in radical_dict.items %}
-              <li class="treeview">
-                <a href="javascript:;">
-                  <i class="type type{{ item.strokes }}">{{ item.strokes_str }}</i>
-                  <span class="pull-right-container">
-                    <i class="fa icon-l-arrow2 pull-right"></i>
-                  </span>
-                </a>
-                <ul class="treeview-menu clearfix">
-                  {% for radical in item.radicals %}
-                    <li class="hanzi-item">{{ radical }}</li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% endfor %}
-          </ul>
-          <!-- /.sidebar-menu -->
-        </section>
-
-        <section class="sidebar tab-panel catalog-panel">
-          <!-- catalog Menu -->
-          <ul class="sidebar-menu">
-            <li class="treeview">
-              <a class="inner" href="https://s3.cn-north-1.amazonaws.com.cn/yitizi/ex.htm">
-                <span>系统用语</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm" target="_blank">
-                <span>编辑说明</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="javascript:;">
-                <span>正字字表</span>
-                <span class="pull-right-container">
-                  <i class="fa icon-l-arrow2 pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=a"><i
-                        class="fa fa-circle-o"></i> 常用字</a></li>
-                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=b"><i
-                        class="fa fa-circle-o"></i> 次常用字</a></li>
-                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=c"><i
-                        class="fa fa-circle-o"></i> 罕用字</a></li>
-                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=n"><i
-                        class="fa fa-circle-o"></i> 新增正字</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm" target="_blank">
-                <span>异体字字表</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm" target="_blank">
-                <span>附录索引</span>
-              </a>
-            </li>
-          </ul>
-          <!-- /.catalog-menu -->
-        </section>
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!--浮层-->
-    <div class="popup" id="search_result">
-      <span class="toggler"><i class="close"></i></span>
-      <div class="popup-hd clearfix">
-        <p class="fl" id="tips"></p>
-        <div class="parts-ser pull-right">
-          <input class="input-ser fl" id="input-strokes" type="text" placeholder="请输入剩余笔画数">
-          <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i>
-          </button>
-          <span id="search_tip"></span>
-        </div>
-      </div>
-
-      <ul class="strokes-lists">
-        <!--<li class="strokes-item">
-            <span class="num">一画</span>
-            <div class="strokes-item-bd clearfix">
-                <span class="hanzi-item">八</span>
-                <span class="hanzi-item"><img src="/static/img/200C9.gif" alt=""></span>
-                <span class="hanzi-item">八</span>
-            </div>
-        </li>
-        <li class="strokes-item">
-            <span class="num">二画</span>
-            <div class="strokes-item-bd clearfix">
-            </div>
-        </li>-->
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="5129">
+        <span>附录</span>
+        <span class="pull-right-container"><i class="fa icon-l-arrow2 pull-right"></i></span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" href="javascript:;" alt="5131"><i class="fa fa-circle-o"></i> 新旧字形对照表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5132"><i class="fa fa-circle-o"></i> 汉语拼音方案</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5133"><i class="fa fa-circle-o"></i> 国际音标表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5134"><i class="fa fa-circle-o"></i> 简化字总表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5148"><i class="fa fa-circle-o"></i> 现代汉语常用字表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5154"><i class="fa fa-circle-o"></i> 现代汉语通用字表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5170"><i class="fa fa-circle-o"></i> 普通话异读词审音表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5182"><i class="fa fa-circle-o"></i> 中国历史纪年表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5243"><i class="fa fa-circle-o"></i> 主要引用书目表</a></li>
       </ul>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="5351">
+        <span>索引</span>
+        <span class="pull-right-container"> <i class="fa icon-l-arrow2 pull-right"></i></span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" href="javascript:;" alt="5353"><i class="fa fa-circle-o"></i> 笔画检字表</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="5547"><i class="fa fa-circle-o"></i> 音序检字表</a></li>
+      </ul>
+    </li>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="5726">
+        <span>后记</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="B01">
+        <span>附：初版《汉语大字典》部首表</span>
+      </a>
+    </li>
+  </ul>
+  <!-- /.catalog-menu -->
+{% endblock %}
 
-      <div class="pages-box hide clearfix">
-        <ul class="pagination fl">
-        </ul>
-        <span>跳至&nbsp;<input id="new_page" type="text">&nbsp;页/<span id="pages"></span>页</span>
-        <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
-        <span id="search_tip2"></span>
-      </div>
-    </div>
-    <!--./浮层-->
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper tab-con">
-      <!-- Main content -->
-      <div class="content-wrapper-inner tab-panel showing">
-        <iframe src="{{ welcome_url }}" style="overflow:scroll; width:100%; border: 1px solid #eee;" id="iframe-content"
-                onload="iFrameHeight('iframe-content')"></iframe>
-      </div>
-      <!-- /.content -->
-    </div>
+{% block content %}
+  <div class="button-group" style="position:absolute; float:left;">
+    <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"></button>
+    <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"
+            onmouseup="window.clearTimeout(oTime);"></button>
+    <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"
+            onmouseup="window.clearTimeout(oTime);"></button>
+    <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward"></button>
   </div>
-</div>
+  <div style="text-align: center; overflow-y: auto;">
+    <img class="dict-image align-center" id="image-page" src="{{ welcome_url }}" alt="" style="width: 85%;">
+  </div>
+{% endblock %}
 
-<script>
-    // user dropdownmenu
-    $(function () {
-        $(".nav-tab .dropdown").mouseenter(function () {
-            if (!$(this).children(".dropdown-menu").is(":animated")) {
-                $(this).children(".dropdown-menu").fadeIn(600);
-            }
-        });
-        $(".nav-tab .dropdown").mouseleave(function () {
-            $(this).children(".dropdown-menu").fadeOut(600);
-        });
-    });
-
-    //tab切换
-    $(function () {
-        $(".main-sidebar .tab-nav-custom li").click(function () {
-            var $this = $(this),
-                index = $this.index();
-            $this.addClass("active").siblings("li").removeClass("active");
-            $(".main-sidebar .tab-con .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
-        });
-        $(".dict-tabs-nav li").click(function () {
-            var $this = $(this),
-                index = $this.index();
-            $this.addClass("active").siblings("li").removeClass("active");
-            $(".content-wrapper .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
-        });
-    });
-
-    //tab切换
-    $(function () {
-        $(".treeview-menu .hanzi-item").each(function (index, el) {
-            $(this).click(function () {
-                var radical = $(this).html();
-                clickRadical(radical);
-                $(".treeview-menu .active").removeClass("active");
-                $(this).addClass("active");
-            })
-        })
-        $(".toggler").click(function () {
-            $(".popup").hide("normal");
-        })
-    });
-
-    // iframe高度自适应
-    function iFrameHeight(id) {
-        var ifm = document.getElementById(id);
-        ifm.height = document.getElementById('dictionary-content').clientHeight - 90;
-    }
-
-</script>
-
-</body>
-</html>

@@ -1480,6 +1480,17 @@
     padding: 12px 5px 12px 15px;
 }
 
+/*add by xiandu*/
+.dict-image {
+    width: 100%;
+}
+
+.align-center {
+    clear: both;
+    display: block;
+    margin: auto;
+}
+
 /*表格*/
 .table {
     border-collapse: collapse;

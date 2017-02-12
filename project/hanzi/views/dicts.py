@@ -50,9 +50,7 @@ def taiwan(request):
                 'radicals': [item['radical']]
             }
     content = {
-        'active': 'taiwan',
         'radical_dict': radical_dict,
-        'dict_name': '台湾异体字字典',
         'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
     }
 
@@ -229,13 +227,11 @@ def hanyu(request):
                 'radicals': [item['radical']]
             }
     content = {
-        'active': 'hanyu',
         'radical_dict': radical_dict,
-        'dict_name': '高丽异体字字典',
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
+        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/Z01.jpg',
     }
 
-    return render(request, 'hanzi_dicts.html', context=content)
+    return render(request, 'hanzi_hanyu.html', context=content)
 
 
 @csrf_exempt
