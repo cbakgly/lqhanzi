@@ -1,7 +1,6 @@
 // 全局变量
 var base_url = 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
-var max_page = 5727;
-var cur_page;
+var cur_page = 'A01';
 
 // 点击目录索引
 $(document).on('click', '.catalog-panel .treeview a', function () {
@@ -25,7 +24,7 @@ function set_page(page) {
     if (padding_page.match(/^\d+$/) != null) {
         var pad = "0000"
         padding_page = pad.substring(0, pad.length - page.length) + page;
-    } else if (page.match(/Z\d\d/) != null) {
+    } else if (page.match(/A0[12]/) != null) {
         suffix = '.jpg';
     }
     var url = base_url + padding_page + suffix;
@@ -46,15 +45,45 @@ document.onmouseup = function () {
     window.clearTimeout(o_time);
 }
 
+
 // 后一页
 $(document).on('click', '#page-backward', function () {
-    var last_page = parseInt(cur_page) > 1 ? parseInt(cur_page) - 1 : 1;
+    var page = cur_page;
+    var type = '';
+    var matches = page.match(/(A)(\d+)/);
+    if (matches != null) {
+        type = matches[1];
+        page = matches[2];
+    }
+    var last_page = parseInt(page) > 1 ? parseInt(page) - 1 : 1;
+    if (type == 'A' && last_page < 10) {
+        last_page = '0' + last_page;
+    }
+    last_page = '' + type + last_page;
+    if (last_page == '1') {
+        last_page = 'A25';
+    }
     set_page(last_page);
 });
 
 // 前一页
 $(document).on('click', '#page-forward', function () {
-    var next_page = parseInt(cur_page) + 1 < max_page ? parseInt(cur_page) + 1 : max_page;
+    var page = cur_page;
+    var type = '';
+    var matches = page.match(/(A)(\d+)/);
+    if (matches != null) {
+        type = matches[1];
+        page = matches[2];
+    }
+    var max_page_map = {'A': 25, '': 5727};
+    var max_page = max_page_map[type];
+    var next_page = parseInt(page) + 1 < max_page ? parseInt(page) + 1 : max_page;
+    if (type == 'A' && next_page < 10) {
+        next_page = '0' + next_page;
+    }
+    next_page = '' + type + next_page;
+    if (next_page == 'A25')
+        next_page = 1;
     set_page(next_page);
 });
 

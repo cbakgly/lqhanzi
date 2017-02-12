@@ -1,10 +1,10 @@
 {% extends "hanzi_dicts_base.html" %}
 
-{% block title %}汉语大字典{% endblock %}
+{% block title %}敦煌俗字典{% endblock %}
 
 {% load static %}
 {% block headerjs %}
-  <script src="{% static 'js/hanzi/hanzi_dicts_hanyu.js' %}"></script>
+  <script src="{% static 'js/hanzi/hanzi_dicts_dunhuang.js' %}"></script>
 {% endblock %}
 
 {% block right-tabs %}
@@ -16,17 +16,17 @@
   <!-- catalog Menu -->
   <ul class="sidebar-menu">
     <li class="treeview">
-      <a class="inner" href="javascript:;" alt="A14">
+      <a class="inner" href="javascript:;" alt="A12">
         <span>第二版修订说明</span>
       </a>
     </li>
     <li class="treeview">
-      <a href="javascript:;" alt="A17">
+      <a href="javascript:;" alt="A15">
         <span>前言</span>
       </a>
     </li>
     <li class="treeview">
-      <a href="javascript:;" alt="A19">
+      <a href="javascript:;" alt="A17">
         <span>凡例</span>
       </a>
     </li>
@@ -80,7 +80,7 @@
       </a>
     </li>
     <li class="treeview">
-      <a href="javascript:;" alt="A23">
+      <a href="javascript:;" alt="B01">
         <span>附：初版《汉语大字典》部首表</span>
       </a>
     </li>
@@ -92,9 +92,9 @@
   <div class="button-group" style="position:absolute; float:left;">
     <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"></button>
     <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"
-            onmouseup="window.clearTimeout(o_time);"></button>
+            onmouseup="window.clearTimeout(oTime);"></button>
     <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"
-            onmouseup="window.clearTimeout(o_time);"></button>
+            onmouseup="window.clearTimeout(oTime);"></button>
     <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward"></button>
   </div>
   <div style="text-align: center; overflow-y: auto;">

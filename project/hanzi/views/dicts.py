@@ -228,7 +228,7 @@ def hanyu(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/Z01.jpg',
+        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/A01.jpg',
     }
 
     return render(request, 'hanzi_hanyu.html', context=content)
@@ -255,9 +255,7 @@ def dunhuang(request):
                 'radicals': [item['radical']]
             }
     content = {
-        'active': 'dunhuang',
         'radical_dict': radical_dict,
-        'dict_name': '高丽异体字字典',
         'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
     }
 
