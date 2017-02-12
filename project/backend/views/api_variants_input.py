@@ -16,6 +16,7 @@ from ..filters import NumberInFilter
 from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type, getenum_source
 from task_func import assign_task
 from ..utils import get_pic_url_by_source_pic_name
+from ..auth import IsBusinessMember
 
 
 def update_tasks_status(variants_input):
@@ -164,7 +165,7 @@ class VariantsInputFilter(django_filters.FilterSet):
 
 class VariantsInputViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
     filter_class = VariantsInputFilter
     pagination_class = NumberPagination
     serializer_class = VariantsInputSerializer
@@ -265,7 +266,7 @@ class InputPageFilter(django_filters.FilterSet):
 
 class InputPageViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = InputPage.objects.all()
     filter_class = InputPageFilter

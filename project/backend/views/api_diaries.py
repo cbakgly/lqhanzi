@@ -11,6 +11,7 @@ import django_filters
 from backend.models import Diaries, BUSINESS_TYPE_CHOICES
 from backend.pagination import NumberPagination
 from backend.utils import is_int
+from backend.auth import IsBusinessMember
 
 
 # Operation log management
@@ -83,7 +84,7 @@ class DiariesViewSet(viewsets.ModelViewSet):
     允许查看打卡记录的API endpoint
     """
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = Diaries.objects.all()
     serializer_class = DiariesSerializer

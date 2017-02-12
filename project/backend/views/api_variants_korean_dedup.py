@@ -15,7 +15,7 @@ from ..models import KoreanDedup
 from ..utils import get_pic_url_by_source_pic_name, is_search_request
 from ..filters import NotEmptyFilter
 from ..enums import getenum_source
-
+from ..auth import IsBusinessMember
 
 class KoreanDedupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,7 +43,7 @@ class KoreanDedupFilter(django_filters.FilterSet):
 
 class KoreanDedupViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     sql = """
     select r.* from `lq_korean_dup_zheng_codes` h

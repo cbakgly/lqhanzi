@@ -19,7 +19,7 @@ import api_variants_dedup
 import api_variants_split
 import api_korean_dup_characters
 from task_func import assign_task, reset_task, get_working_task
-
+from ..auth import IsBusinessMember
 
 # Task Packages management
 class TasksSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class TasksFilter(django_filters.FilterSet):
 
 class TasksViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
     pagination_class = NumberPagination
     serializer_class = TasksSerializer
     filter_class = TasksFilter

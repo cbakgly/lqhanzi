@@ -10,7 +10,7 @@ import django_filters
 
 from ..models import Credits, Tasks
 from ..pagination import LimitOffsetPagination
-
+from ..auth import IsBusinessMember
 
 class CreditSerializer(serializers.ModelSerializer):
     rank = serializers.SerializerMethodField()
@@ -58,7 +58,7 @@ class CreditViewSet(viewsets.ModelViewSet):
     积分
     """
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = Credits.objects.all()
     serializer_class = CreditSerializer

@@ -16,6 +16,7 @@ from task_func import assign_task
 from ..enums import getenum_task_status, getenum_business_stage
 from ..utils import get_pic_url_by_source_pic_name
 from ..filters import fields_or_filter_method
+from ..auth import IsBusinessMember
 
 
 class VariantsSplitSerializer(serializers.ModelSerializer):
@@ -47,7 +48,6 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
 
 
 class VariantsSplitFilter(django_filters.FilterSet):
-
     """
     异体字拆字过滤器
     """
@@ -105,7 +105,6 @@ def update_tasks_status(variants_split):
 
 
 class SingleSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = VariantsSplit
         fields = "__all__"
@@ -113,7 +112,7 @@ class SingleSerializer(serializers.ModelSerializer):
 
 class VariantsSplitViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = VariantsSplit.objects.all()
     filter_class = VariantsSplitFilter

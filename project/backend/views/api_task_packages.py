@@ -18,7 +18,7 @@ from ..enums import getenum_task_package_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 from ..pagination import NumberPagination
-
+from ..auth import IsBusinessMember
 
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):
@@ -100,12 +100,11 @@ class TaskPackagesFilter(django_filters.FilterSet):
 
 class TaskPackagesViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     serializer_class = TaskPackagesSerializer
     filter_class = TaskPackagesFilter
     pagination_class = NumberPagination
 
     def get_queryset(self):
-        # TODO: will return object basing on user's group(role)
         return TaskPackages.objects.filter(user_id=self.request.user.id)

@@ -17,7 +17,7 @@ from ..enums import getenum_source, getenum_business_stage, getenum_task_status
 from api_hanzi_set import HanziSetDedupSerializer
 from api_variants_dedup import InterDictDedupSerializer
 from task_func import assign_task
-
+from ..auth import IsBusinessMember
 
 class KoreanDupCharactersSerializer(serializers.ModelSerializer):
     korean_hanzi_sets = serializers.SerializerMethodField()
@@ -101,7 +101,7 @@ def update_tasks_status(variants_dedup):
 
 class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsBusinessMember)
 
     queryset = KoreanDupCharacters.objects.all()
     filter_class = KoreanDupCharactersFilter
