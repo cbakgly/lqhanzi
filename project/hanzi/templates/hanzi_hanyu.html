@@ -77,10 +77,10 @@
       </div>
       <div class="dict-tabs fr">
         <ul class="clearfix dict-tabs-nav">
-          <li class="active">台湾异体字字典</li>
-          <li>高丽异体字字典</li>
-          <li>汉语大字典</li>
-          <li>敦煌俗字典</li>
+          <li {% if 'taiwan' in request.path %} class="active" {% endif %}><a href="/dicts/taiwan">台湾异体字字典</a></li>
+          <li {% if 'korean' in request.path %} class="active" {% endif %}><a href="/dicts/korean">高丽异体字字典</a></li>
+          <li {% if 'hanyu' in request.path %} class="active" {% endif %}><a href="/dicts/hanyu">汉语大字典</a></li>
+          <li {% if 'dunhuang' in request.path %} class="active" {% endif %}><a href="/dicts/dunhuang">敦煌俗字典</a></li>
         </ul>
       </div>
     </div>
@@ -137,11 +137,14 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{% url 'm1.dicts-taiwan-std-hanzi' 'a' %} "><i class="fa fa-circle-o"></i> 常用字</a>
-                </li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> 次常用字</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> 罕用字</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> 新增正字</a></li>
+                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=a"><i
+                        class="fa fa-circle-o"></i> 常用字</a></li>
+                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=b"><i
+                        class="fa fa-circle-o"></i> 次常用字</a></li>
+                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=c"><i
+                        class="fa fa-circle-o"></i> 罕用字</a></li>
+                <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=n"><i
+                        class="fa fa-circle-o"></i> 新增正字</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -165,9 +168,9 @@
     <div class="popup" id="search_result">
       <span class="toggler"><i class="close"></i></span>
       <div class="popup-hd clearfix">
-        <p class="fl">当前部首为<span id="search_item"></span>，检索到<span id="search_count"></span>个字。</p>
+        <p class="fl" id="tips"></p>
         <div class="parts-ser pull-right">
-          <input class="input-ser fl" type="text" placeholder="请输入剩余笔画数">
+          <input class="input-ser fl" id="input-strokes" type="text" placeholder="请输入剩余笔画数">
           <button type="submit" class="btn btn-default fl" id="search_by_left"><i class="icon-ser"></i>
           </button>
           <span id="search_tip"></span>
@@ -193,7 +196,7 @@
       <div class="pages-box hide clearfix">
         <ul class="pagination fl">
         </ul>
-        <span>跳至<input id="new_page" type="text">页/<span id="pages"></span>页</span>
+        <span>跳至&nbsp;<input id="new_page" type="text">&nbsp;页/<span id="pages"></span>页</span>
         <span id="dict_page_btn" class="page-btn" data-url="test">GO</span>
         <span id="search_tip2"></span>
       </div>
@@ -249,7 +252,6 @@
                 clickRadical(radical);
                 $(".treeview-menu .active").removeClass("active");
                 $(this).addClass("active");
-                $(".popup").show("slow");
             })
         })
         $(".toggler").click(function () {

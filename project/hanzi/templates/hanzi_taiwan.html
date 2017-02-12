@@ -1,16 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>台湾异体字-{{ seq_id }}</title>
-</head>
+{% extends "hanzi_dicts_base.html" %}
 
-<frameset cols="70%,30%">
-  <frameset rows="20%,80%">
-    <frame src="{{ up_url }}" name="up">
-    <frame src="{{ down_url }}" name="down">
-  </frameset>
-  <frame src="{{ right_url }}" name="right">
-</frameset>
+{% block title %}台湾异体字字典{% endblock %}
 
-</html>
+{% block right-tabs %}
+  <li class="active">部首索引</li>
+  <li>目录索引</li>
+{% endblock %}
+
+{% block catalog-index %}
+  <!-- catalog Menu -->
+  <ul class="sidebar-menu">
+    <li class="treeview">
+      <a class="inner" href="https://s3.cn-north-1.amazonaws.com.cn/yitizi/ex.htm">
+        <span>系统用语</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="http://dict.variants.moe.edu.tw/bian/fbian.htm" target="_blank">
+        <span>编辑说明</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;">
+        <span>正字字表</span>
+        <span class="pull-right-container">
+                  <i class="fa icon-l-arrow2 pull-right"></i>
+                </span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=a"><i
+                class="fa fa-circle-o"></i> 常用字</a></li>
+        <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=b"><i
+                class="fa fa-circle-o"></i> 次常用字</a></li>
+        <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=c"><i
+                class="fa fa-circle-o"></i> 罕用字</a></li>
+        <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=n"><i
+                class="fa fa-circle-o"></i> 新增正字</a></li>
+      </ul>
+    </li>
+    <li class="treeview">
+      <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm" target="_blank">
+        <span>异体字字表</span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="http://dict.variants.moe.edu.tw/fulu/suoc.htm" target="_blank">
+        <span>附录索引</span>
+      </a>
+    </li>
+  </ul>
+  <!-- /.catalog-menu -->
+{% endblock %}
+
+{% block content %}
+  <iframe src="{{ welcome_url }}" style="overflow:scroll; width:100%; border: 1px solid #eee;"
+          id="iframe-content" onload="iFrameHeight('iframe-content')"></iframe>
+{% endblock %}
+
+{% load static %}
+{% block headerjs %}
+  <script src="{% static 'js/hanzi/hanzi_dicts_taiwan.js' %}"></script>
+{% endblock %}
