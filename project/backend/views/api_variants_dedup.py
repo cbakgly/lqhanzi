@@ -18,6 +18,7 @@ from task_func import create_task
 from ..functional import timeout_cache
 from ..auth import IsBusinessMember
 
+
 class InterDictDedupSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterDictDedup

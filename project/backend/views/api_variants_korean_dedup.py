@@ -17,6 +17,7 @@ from ..filters import NotEmptyFilter
 from ..enums import getenum_source
 from ..auth import IsBusinessMember
 
+
 class KoreanDedupSerializer(serializers.ModelSerializer):
     class Meta:
         model = KoreanDedup

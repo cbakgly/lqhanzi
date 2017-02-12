@@ -21,6 +21,7 @@ import api_korean_dup_characters
 from task_func import assign_task, reset_task, get_working_task
 from ..auth import IsBusinessMember
 
+
 # Task Packages management
 class TasksSerializer(serializers.ModelSerializer):
     task_ele = serializers.SerializerMethodField()
