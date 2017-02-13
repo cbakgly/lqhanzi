@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+{% load static %}
 {% load i18n %}
 <html>
 <head>
@@ -26,43 +26,18 @@
     <![endif]-->
 </head>
 <body class="hold-transition register-page">
+<div style="background-color: #3c7bbe;height: 58px;">
+  <div style="position: relative;left: 10%;padding-top: 10px;"><a href="{% url 'm2.home-page' %}"><img src="{{STATIC_URL}}img/logo3.png"></a></div>
+</div>
 <div class="login-box">
     <div class="register-logo">
-        <a href="{% url 'm2.home-page' %}"><b>{% trans 'Long Quan Hanzi Lib' %}</b></a>
+        <b>{% block subtitle %}{% trans 'Longquan Hanzi Variants Foundation' %}{% endblock %}</b>
     </div>
-    <div id="header">
-    {% block header %}
-    <a href="{% url 'm1.index' %}">{% trans "Home" %}</a> |
 
-    {% if user.is_authenticated %}
-    {% trans "Logged in" %}: {{ user.username }}
-    <a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> | <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>
-    {% else %}
-    <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
-    {% endif %}
-    <hr/>
-    {% endblock %}
-    </div>
 
 {% block content %}
 
 {% endblock %}
 </div>
-<!-- jQuery 2.2.3 -->
-<script src="{{STATIC_URL}}js/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="{{STATIC_URL}}js/plugins/iCheck/icheck.min.js"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-
-</script>
 </body>
 </html>
