@@ -2,14 +2,15 @@
 {% load i18n %}
 
 {% block title %}{% trans "Logged out" %}{% endblock %}
+{% block subtitle %}{% trans "Logged out" %}{% endblock %}
 
 {% block content %}
     <div class="login-box-body">
-        <p class="login-box-msg">{% trans "Successfully logged out" %}.</p>
+        <p class="login-box-msg">{% trans "Thanks for spending some quality time with the Web site today." %}</p>
 
         <div class="social-auth-links text-center">
-            <a href="#" class="btn btn-block btn-danger">
-            {% trans "Logged out" %}</a>
+            <a href="{% url 'auth_login' %}" class="btn btn-block btn-danger">
+            {% trans "Log in again" %}</a>
         </div>
         <!-- /.social-auth-links -->
     </div>

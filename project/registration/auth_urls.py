@@ -22,7 +22,7 @@ include these views. Other backends may or may not include them;
 consult a specific backend's documentation for details.
 
 """
-
+import os
 from distutils.version import LooseVersion
 from django import get_version
 from django.conf.urls import url
@@ -40,20 +40,25 @@ urlpatterns = [
         name='auth_logout'),
     url(r'^password/change/$',
         auth_views.password_change,
-        {'post_change_redirect': reverse_lazy('password_change_done')},
+        {'post_change_redirect': reverse_lazy('password_change_done'),
+         'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_change_form.html'},
         name='auth_password_change'),
     url(r'^password/change/done/$',
         auth_views.password_change_done,
+        {'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_change_done.html'},
         name='password_change_done'),
     url(r'^password/reset/$',
         auth_views.password_reset,
-        {'post_reset_redirect': reverse_lazy('auth_password_reset_done')},
+        {'post_reset_redirect': reverse_lazy('auth_password_reset_done'),
+         'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_reset_form.html'},
         name='auth_password_reset'),
     url(r'^password/reset/complete/$',
         auth_views.password_reset_complete,
+        {'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_reset_complete.html'},
         name='password_reset_complete'),
     url(r'^password/reset/done/$',
         auth_views.password_reset_done,
+        {'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_reset_done.html'},
         name='auth_password_reset_done'),
 ]
 
@@ -61,13 +66,15 @@ if (LooseVersion(get_version()) >= LooseVersion('1.6')):
     urlpatterns += [
         url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
             auth_views.password_reset_confirm,
-            {'post_reset_redirect': reverse_lazy('password_reset_complete')},
+            {'post_reset_redirect': reverse_lazy('password_reset_complete'),
+             'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_reset_confirm.html'},
             name='password_reset_confirm')
     ]
 else:
     urlpatterns += [
         url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             auth_views.password_reset_confirm,
-            {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
+            {'post_reset_redirect': reverse_lazy('auth_password_reset_complete'),
+             'template_name': os.path.dirname(os.path.abspath(__file__)) + '/templates/registration/password_reset_confirm.html'},
             name='auth_password_reset_confirm')
     ]
