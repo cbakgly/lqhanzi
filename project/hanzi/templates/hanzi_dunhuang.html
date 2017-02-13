@@ -1,0 +1,71 @@
+{% extends "hanzi_dicts_base.html" %}
+
+{% block title %}敦煌俗字典{% endblock %}
+
+{% load static %}
+{% block headerjs %}
+  <script src="{% static 'js/hanzi/hanzi_dicts_dunhuang.js' %}"></script>
+{% endblock %}
+
+{% block right-tabs %}
+  <li class="active">部首索引</li>
+  <li>目录索引</li>
+{% endblock %}
+
+{% block catalog-index %}
+  <!-- catalog Menu -->
+  <ul class="sidebar-menu">
+    <li class="treeview">
+      <a class="inner" href="javascript:;" alt="A05"> <span>序言</span> </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="A06"> <span>前言</span> </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="A41"> <span>凡例</span> </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="A44"> <span>音序检字表</span> </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="1">
+        <span>正文</span>
+        <span class="pull-right-container"><i class="fa icon-l-arrow2 pull-right"></i></span>
+      </a>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="581">
+        <span>附录</span>
+        <span class="pull-right-container"><i class="fa icon-l-arrow2 pull-right"></i></span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" href="javascript:;" alt="581"><i class="fa fa-circle-o"></i> 《正名要錄完整圖版》</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="598"><i class="fa fa-circle-o"></i> 原卷字形筆畫索引</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="740"><i class="fa fa-circle-o"></i> 使用卷號順序索引</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="746"><i class="fa fa-circle-o"></i> 使用卷號分類索引</a></li>
+        <li><a class="treeview-item" href="javascript:;" alt="752"><i class="fa fa-circle-o"></i> 敦煌俗子研究參考文獻目錄</a></li>
+      </ul>
+    </li>
+    <li class="treeview">
+      <a href="javascript:;" alt="766">
+        <span>後記</span>
+      </a>
+    </li>
+  </ul>
+  <!-- /.catalog-menu -->
+{% endblock %}
+
+{% block content %}
+  <div class="button-group" style="position:absolute; float:left;">
+    <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"></button>
+    <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"
+            onmouseup="window.clearTimeout(oTime);"></button>
+    <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"
+            onmouseup="window.clearTimeout(oTime);"></button>
+    <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward"></button>
+  </div>
+  <div style="text-align: center; overflow-y: auto;">
+    <img class="dict-image align-center" id="image-page" src="{{ welcome_url }}" alt="" style="width: 85%;">
+  </div>
+{% endblock %}
+

@@ -2,6 +2,9 @@
 
 {% block title %}台湾异体字字典{% endblock %}
 
+{% load static %}
+{% block headerjs %}<script src="{% static 'js/hanzi/hanzi_dicts_taiwan.js' %}"></script>{% endblock %}
+
 {% block right-tabs %}
   <li class="active">部首索引</li>
   <li>目录索引</li>
@@ -57,7 +60,3 @@
           id="iframe-content" onload="iFrameHeight('iframe-content')"></iframe>
 {% endblock %}
 
-{% load static %}
-{% block headerjs %}
-  <script src="{% static 'js/hanzi/hanzi_dicts_taiwan.js' %}"></script>
-{% endblock %}
