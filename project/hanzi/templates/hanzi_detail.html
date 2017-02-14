@@ -16,63 +16,74 @@
     <script src="{% static 'js/jquery-2.2.3.min.js'  %}"></script>
 
 <style type="text/css">
+/*.hanzi-origin dl:nth-of-type(1){ width:150px;}
+.hanzi-origin dl:nth-of-type(2){ width:220px;}
+.hanzi-origin dl:nth-of-type(3){ width:150px;}*/
 
 
-#up,#down{margin:0;padding:0;overflow:hidden;}
+.tab-content
+{
+    margin:0px;
+    padding:0px;
+    border-left:1px solid #82abd5;
+    border-bottom:1px solid #82abd5;
+    border-right:1px solid #82abd5;
+}
+.tab-panel
+{
+    margin:0px;
+    padding:0px;
+/*    border-left:1px solid #82abd5;
+    border-bottom:1px solid #82abd5;
+    border-right:1px solid #82abd5;*/
+}
 
-#left,#right{ margin:0;float:left;overflow:hidden;}
+.tab-panel iframe
+{
+    position:relative;
+    top:-2px;left:-2px;
+}
 
-/*#middle img{ display:block; margin:0 auto; width:22px; height:30px; padding-top:335px;}*/
+#up
+{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    border-bottom:1px solid #82abd5;
 
-.tab-panel iframe{ width:100%;height:100%;position:relative;top:-2px;left:-2px;}
+    width:1198px;
+    height:150px;
+}
 
-#up { border-bottom:1px solid #82abd5;}
+#down
+{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    width:1198px;
+    height:700px;
+}
 
-#left { border-right:1px solid #82abd5;}
+#left
+{
+    margin:0;
+    float:left;
+    overflow:hidden;
+    width:837px;
+    height:700px;
+    border-right:1px solid #82abd5;
+}
 
-/*#middle { border-right:1px solid #82abd5;border-bottom:1px solid #82abd5; background-color:#e6e6e6;}*/
-
-/*#right { border-right:1px solid #82abd5;border-bottom:1px solid #82abd5;}
-*/
-
+#right
+{
+    margin:0;
+    float:left;
+    overflow:hidden;
+    width:359px;
+    height:700px;
+}
 
 </style>
-
-<script type="text/javascript">
-
-$(document).ready(function()
-{
-    $(".tab-content").css("padding",0);
-    $(".tab-panel").css("padding",0);
-    $(".tab-panel").css("border-left","1px solid #82abd5");
-    $(".tab-panel").css("border-bottom","1px solid #82abd5");
-    $(".tab-panel").css("border-right","1px solid #82abd5");
-
-    var w = $(".tab-content").width();
-    var h = $(".tab-content").height();
-
-    $("#up").css("width",w-2);
-    $("#up").css("height",150);
-
-    $("#down").css("width",w-2);
-    $("#down").css("height",700);
-
-    $("#left").css("width",w*0.7-2);
-    $("#left").css("height",700);
-
-    // $("#middle").css("width",30);
-    // $("#middle").css("height",700);
-
-    // $("#right").css("width",w*0.3-30);
-    // $("#right").css("height",700);
-
-    $("#right").css("width",w*0.3-1);
-    $("#right").css("height",700);
-});
-
-
-</script>
-
 
 </head>
 <body>
@@ -92,49 +103,7 @@ $(document).ready(function()
                         <ul  class="tabs clearfix">
                             <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
                             <li><a href="{% url 'm1.dicts' %}">字典</a></li>
-                            <!--未登录前-->
-                            <li class="dropdown">
-                                <a  class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                                        <p>未登录</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">注册</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./未登录-->
-                            <!--登录后-->
-                            <!-- 默认display:none;登录后显示-->
-                            <li class="dropdown user-menu">
-                                <!-- The user image in the nav-->
-                                <a href="javascript:;">
-                                    <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-                                    <span>贤二</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                                        <p>贤二</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./登录后-->
+                            <li><a href="{% url 'm2.home-page' %}">工作台</a></li>
                         </ul>
                     </div>
                 </div>
@@ -270,9 +239,6 @@ $(document).ready(function()
                                         <div id="left">
                                             <iframe width="100%" height="100%" seamless src="{{item|list:2}}" name="down"></iframe>
                                         </div>
-<!--                                         <div id="middle">
-                                            <img src="{% static 'img/arrow-right-33.png' %}">
-                                        </div> -->
                                         <div id="right">
                                             <iframe width="100%" height="100%" seamless src="{{item|list:3}}" name="right"></iframe>
                                         </div>

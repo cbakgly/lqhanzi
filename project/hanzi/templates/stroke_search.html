@@ -47,49 +47,7 @@
           <ul class="tabs clearfix">
             <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
             <li><a href="{% url 'm1.dicts' %}">字典</a></li>
-            <!--未登录前-->
-            <li class="dropdown">
-              <a class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
-              <ul class="dropdown-menu">
-                <li class="user-header">
-                  <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                  <p>未登录</p>
-                </li>
-                <li class="user-footer clearfix">
-                  <div class="fl">
-                    <a href="#" class="btn btn-default btn-flat">注册</a>
-                  </div>
-                  <div class="fr">
-                    <a href="#" class="btn btn-default btn-flat">登录</a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <!--./未登录-->
-            <!--登录后-->
-            <!-- 默认display:none;登录后显示-->
-            <li class="dropdown user-menu">
-              <!-- The user image in the nav-->
-              <a href="javascript:;">
-                <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-                <span>贤二</span>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="user-header">
-                  <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                  <p>贤二</p>
-                </li>
-                <li class="user-footer clearfix">
-                  <div class="fl">
-                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                  </div>
-                  <div class="fr">
-                    <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <!--./登录后-->
+            <li><a href="{% url 'm2.home-page' %}">工作台</a></li>
           </ul>
         </div>
       </div>
@@ -105,9 +63,10 @@
             <span class="ser-btn" id="strock_search_btn">搜索</span>
           </div>
           <div class="search-bottom">
-            <label><input type="radio" name="r" value="2" checked="checked">&nbsp;一般检索</label>
-            <label><input type="radio" name="r" value="1">&nbsp;正则检索</label>
+            <label><input type="radio" name="r" value="1">&nbsp;一般检索</label><!-- checked="checked" -->
+            <label><input type="radio" name="r" value="2">&nbsp;正则检索</label>
             <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
+            <label id="current_order" hidden></label>
           </div>
         </div>
         <div class="help fr">
@@ -182,7 +141,8 @@
                 <button type="submit" class="btn btn-default fl" ><i class="icon-ser"></i></button>
                 </div> -->
                 <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
-                <div class="fl" id="radical_input">筛选条件在这里显示</div>
+                <!-- <div class="fl" id="radical_input">筛选条件在这里显示</div> -->
+                <input type="text" class="fl" id="radical_input" placeholder="点选笔画笔顺或输入查询条件">
                 <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
                 <!-- 帮助图标 -->
                 <div class="help fl">
@@ -198,7 +158,7 @@
                   <i class="icon-help"></i>
                 </div>
                 <!-- 错误信息提示 -->
-                <span class="error-msg fl">检索格式有误!</span>
+                <span class="error-msg fl" id="searcherror"></span>
               </div>
 
               <!--笔画-->
@@ -280,37 +240,33 @@
             <div class="fl" id="bline2"></div>
           </li>
           <li class="clearfix">
-            <span class="fl">类型：</span>
+            <span class="fl">编码：</span>
             <div class="fl" id="bline3"></div>
           </li>
           <li class="clearfix">
-            <span class="fl">正字：</span>
+            <span class="fl">部首：</span>
             <div class="fl" id="bline4"></div>
+            <span class="fl">笔画：</span>
+            <div class="fl" id="bline5"></div>
+            <span class="fl">所属正字：</span>
+            <div class="fl" id="bline6"></div>
           </li>
           <li class="clearfix">
-            <span class="fl">兼正字：</span>
-            <div class="fl" id="bline5"></div>
+            <span class="fl">初步折分：</span>
+            <div class="fl" id="bline7"></div>
           </li>
         </ul>
+        <hr class="split_line">
+        <span class="other_title">
+            <span id="search1" class="other_style fl" data-value="">异体字检索</span>
+            <span id="search2" class="other_style fr" data-value="">反查编码</span> 
+        </span> 
       </div>
-      <!-- div class="bubble-bd">
-          <ul class="bd-lists">
-              <li class="clearfix">
-                  <span class="fl">相似部件：</span>
-                  <div class="fl"> <em>水</em> <em>瓜</em></div>
-              </li>
-              <li class="clearfix">
-                  <span class="fl">拆字序列：</span>
-                  <div class="fl">
-                      <p>⿶水</p>
-                      <p>⿶水</p>
-                      <p>⿶水⿶水⿶水</p>
-                  </div>
-              </li>
-          </ul>
-      </div> -->
+
     </div>
+
   </div>
+
   <!--./bubble-->
   <!-- loading:数据请求时动画-->
   <div class="loading">

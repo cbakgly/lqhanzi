@@ -28,49 +28,7 @@
                         <ul class="tabs clearfix">
                             <li><a href="{% url 'm1.index' %}">部件笔画检字法</a></li>
                             <li><a href="{% url 'm1.dicts' %}">字典</a></li>
-                            <!--未登录前-->
-                            <li class="dropdown">
-                                <a  class="dropdown-toggle"><img src="{% static 'img/user_figure.png' %}"></a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                                        <p>未登录</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">注册</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./未登录-->
-                            <!--登录后-->
-                            <!-- 默认display:none;登录后显示-->
-                            <li class="dropdown user-menu">
-                                <!-- The user image in the nav-->
-                                <a href="javascript:;">
-                                    <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-                                    <span>贤二</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="user-header">
-                                        <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                                        <p>贤二</p>
-                                    </li>
-                                    <li class="user-footer clearfix">
-                                        <div class="fl">
-                                            <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                                        </div>
-                                        <div class="fr">
-                                            <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--./登录后-->
+                            <li><a href="{% url 'm2.home-page' %}">工作台</a></li>
                         </ul>
                     </div>
                 </div>
@@ -91,6 +49,7 @@
                         <div class="h13 mt20"></div>
                     </div>
                         <div class="help fr"><i class="icon-help"></i></div>
+                        <label id="ext" hidden>{{ext}}</label>
                 </div>
 
             </div>
