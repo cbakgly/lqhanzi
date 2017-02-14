@@ -15,7 +15,11 @@ def get_user_task_profile(user):
 
 
 def convert_profile_to_dict(profile):
-    return {"id": profile.id, getenum_business_type('split'): profile.last_split_id, getenum_business_type('dedup'): profile.last_dedup_id, getenum_business_type('input'): profile.last_input_id}
+    return {"id": profile.id,
+            getenum_business_type('split'): profile.last_split_id,
+            getenum_business_type('dedup'): profile.last_dedup_id,
+            getenum_business_type('input'): profile.last_input_id
+            }
 
 
 def update_user_task_profile(**kwargs):
@@ -55,9 +59,9 @@ def get_working_task(task_package, user):
 def assign_task(business_type, business_stage, task_package, user):
     profile = convert_profile_to_dict(get_user_task_profile(user))
 
-    task = Tasks.objects.filter(business_type=business_type)\
+    task = list(Tasks.objects.filter(business_type=business_type)\
                         .filter(business_stage=business_stage)\
-                        .filter(task_status=getenum_task_status("to_be_arranged"))\
+                        .filter(task_status=getenum_task_status("to_be_arranged")))[0]\
                         .filter(id__gt=profile[business_type]).first()
     if task:
         task.user = user

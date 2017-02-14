@@ -274,6 +274,41 @@ class InputPageFilter(django_filters.FilterSet):
         fields = "__all__"
 
 
+def update_status(inputpage):
+    tasks = list(inputpage.task.all())
+    task_dict = {}
+    for t in tasks:
+        task_dict[t.business_stage] = t
+    draft = task_dict[getenum_business_stage('init')]
+    review = task_dict[getenum_business_stage('review')]
+    final = task_dict[getenum_business_stage('final')]
+    origin_task = draft
+    if draft.task_status == getenum_task_status("ongoing"):
+        draft.task_status = getenum_task_status("completed")
+        draft.completed_at = timezone.now()
+        review.task_status = getenum_task_status("to_be_arranged")
+        inputpage.save()
+        draft.save()
+        review.save()
+    elif review.task_status == getenum_task_status("ongoing"):
+        review.task_status = getenum_task_status("completed")
+        review.completed_at = timezone.now()
+        final.task_status = getenum_task_status("to_be_arranged")
+        inputpage.save()
+        review.save()
+        final.save()
+        origin_task = review
+    elif final.task_status == getenum_task_status("ongoing"):
+        final.task_status = getenum_task_status("completed")
+        final.completed_at = timezone.now()
+        inputpage.save()
+        final.save()
+        origin_task = final
+    else:
+        pass
+    return origin_task
+
+
 class InputPageViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated, IsBusinessMember)
@@ -283,12 +318,14 @@ class InputPageViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = InputPageSerializer
 
+
+
     # 提交并转下一页
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
         input_page = self.get_object()
 
-        origin_task = update_tasks_status(input_page)
+        origin_task = update_status(input_page)
         task_package = origin_task.task_package
         task_plan = task_package.size
         task_num = len(list(task_package.tasks.all()))
@@ -297,8 +334,8 @@ class InputPageViewSet(viewsets.ModelViewSet):
             user = origin_task.user
             new_task = assign_task(getenum_business_type("input_page"), business_stage, task_package, user)
             if new_task:
-                serializer = self.serializer_class(new_task.content_object)
-                return Response(serializer.data['id'])
+                id = new_task.object_id
+                return Response(id)
             else:
                 return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
         else:
