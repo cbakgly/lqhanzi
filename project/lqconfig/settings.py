@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework',
-    'guardian',
+    # 'guardian',
     # 'debug_toolbar',
     'registration',
     'hanzi',
@@ -104,7 +104,6 @@ DATABASES = {
         'HOST': '192.168.16.3',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
-        'ATOMIC_REQUESTS': True,
     }
 }
 
