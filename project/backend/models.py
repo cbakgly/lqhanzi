@@ -5,9 +5,10 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-# from guardian.mixins import GuardianUserMixin
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext_lazy as _
 
 VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
 INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
@@ -21,6 +22,17 @@ TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), 
 
 
 class User(AbstractUser):
+    username_validator = UnicodeUsernameValidator()
+    username = models.CharField(
+            _('username'),
+            max_length=150,
+            unique=True,
+            help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+            validators=[username_validator],
+            error_messages={
+                'unique': _("A user with that username already exists."),
+            },
+    )
     gender_choices = ((0, 'Male'), (1, 'Female'))
     gender = models.IntegerField(u'性别', choices=gender_choices, default=0)
     mb = models.CharField(u'手机号', max_length=32, blank=True, null=True)

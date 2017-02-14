@@ -57,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
@@ -101,7 +100,6 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
-        'ATOMIC_REQUESTS': True,
     }
 }
 
