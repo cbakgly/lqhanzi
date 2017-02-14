@@ -1,0 +1,25 @@
+{% extends "hanzi_dicts_base.html" %}
+
+{% block title %}高丽异体字字典{% endblock %}
+
+{% load static %}
+{% block headerjs %}
+  <script src="{% static 'js/hanzi/hanzi_dicts_korean.js' %}"></script>
+{% endblock %}
+
+{% block right-tabs %}
+  <li class="active">部首索引</li>
+{% endblock %}
+
+
+{% block content %}
+  <div id="korean-hanzi-set" style="text-align: center; overflow-y: auto;">
+    <img class="dict-image align-center" id="image-page" src="{{ welcome_url }}" alt="" style="width: 85%;">
+  </div>
+{% endblock %}
+
+<div class="std_hanzi"></div>
+<div class="variants">
+  <div class="variant"></div>
+</div>
+

@@ -25,7 +25,7 @@ $(document).on('click', '.treeview-menu .tw-std-hanzi', function () {
 // 点击检索结果集
 $(document).on('click', '.strokes-item .hanzi-item', function () {
     $(".popup").hide("normal");
-    var seq_id = $(this).attr('title');
+    var seq_id = $(this).attr('alt');
     $('#iframe-content').attr('src', '/dicts/taiwan/detail?seq_id=' + seq_id);
 });
 

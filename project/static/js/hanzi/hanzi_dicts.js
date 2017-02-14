@@ -153,6 +153,7 @@ function render_dicts_panel(data) {
     );
     var len = hanzi_set.length;
     var cur_remain_strokes_num = -1;
+    var trans_hash = {0: '正字', 1: '狭义异体字', 2: '广义且正字', 3: '广义异体字', null: ''};
     for (var i = 0; i < len; i++) {
         if (cur_remain_strokes_num != hanzi_set[i].remain_strokes_num) {
             cur_remain_strokes_num = hanzi_set[i].remain_strokes_num;
@@ -160,12 +161,17 @@ function render_dicts_panel(data) {
             str += '<div class="strokes-item-bd clearfix">';
 
             for (var j = i; j < len; j++) {
-                if (source == 4 && hanzi_set[j].hanzi_pic_id != '') {     // 如果是高丽异体字，优先显示图片
-                    str += '<span class="hanzi-item" title="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
+                var suffix_title = "&#xa;" + trans_hash[hanzi_set[j].variant_type];
+                if (source == 4 && hanzi_set[j].variant_type == 0) {     // 如果是高丽正字，优先显示图片
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].hanzi_char + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
+                } else if (source == 2 && hanzi_set[j].hanzi_char == '') {  // 如果是台湾图片字，title提示为seq_id
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].seq_id + suffix_title + '" alt="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
+                } else if (source == 2 && hanzi_set[j].hanzi_char != '') {  // 如果是台湾文字，alt提示为seq_id
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].seq_id + '">' + hanzi_set[j].hanzi_char + '</span>';
                 } else if (hanzi_set[j].hanzi_char != '') {
-                    str += '<span class="hanzi-item" title="' + hanzi_set[j].seq_id + '">' + hanzi_set[j].hanzi_char + '</span>';
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].hanzi_char + '">' + hanzi_set[j].hanzi_char + '</span>';
                 } else {
-                    str += '<span class="hanzi-item" title="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '" alt="' + hanzi_set[j].hanzi_pic_id + '"></span>';
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_pic_id + suffix_title + '" alt="' + hanzi_set[j].hanzi_pic_id + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
                 }
 
                 // 如果下一个字的剩余笔划数有变化，就跳出
