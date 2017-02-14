@@ -14,6 +14,7 @@
       <!-- /.box-header -->
       <div class="box-header" id="search-box">
         <div class="box-header-inner">
+        <form>
           <div class="box-tools pull-right">
             <div class="input-group input-group-sm" style="width: 180px;">
               <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入" v-model="hanzi">
@@ -23,8 +24,9 @@
               </div>
             </div>
           </div>
+        </  form>
         </div>
-        <p class="total-data">共搜索到<span>900</span>条数据</p>
+        <p class="total-data">共搜索到<span>#[search_count]]</span>条数据</p>
       </div>
       <div id="content-box">
       <div class="box-body table-responsive">
@@ -47,7 +49,7 @@
             <td>#[item.id]]</td>
             <td>#[item.business_stage_display]]</td>
             <td v-if="item.task_ele.hanzi_char">#[item.task_ele.hanzi_char]]</td>
-            <td v-else><img :src="item.task_ele.hanzi_pic_path"></td>
+            <td v-else><img :src="item.task_ele.hanzi_pic_path" :alt="item.task_ele.hanzi_pic_id"></td>
             <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.dup_id_draft]]</td>
             <td v-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.dup_id_review]]</td>
             <td v-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.dup_id_final]]</td>
@@ -110,6 +112,7 @@
         console.log(data);
         content_box.models = data.models;
         content_box.paging = data.html_context;
+        search_box.search_count = data.count;
       },
       error: function(jqXHR, status, error) {
         console.log(error);
@@ -121,6 +124,7 @@
     delimiters: ["#[", "]]"],
     data: {
       hanzi: "",
+      search_count: 0,
     },
     el: '#search-box',
     methods: {

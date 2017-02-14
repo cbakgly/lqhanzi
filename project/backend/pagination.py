@@ -54,6 +54,7 @@ class NumberPagination(pagination.PageNumberPagination):
         return Response({
             'html_context': self.get_html_context(),
             'models': data,
+            'count': self.page.paginator.count,
         })
 
 
