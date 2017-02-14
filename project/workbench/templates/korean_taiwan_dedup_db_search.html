@@ -178,7 +178,7 @@
               <td v-show="filter_review_eq_final">#[ item.is_review_equals_final_display ]]</td>
               <td v-show="filter_checked">#[ item.is_checked_display ]]</td>
               <td v-show="filter_submitted">#[ item.is_submitted_display ]]</td>
-              <td v-show="filter_update_time">#[ item.u_t ]]</td>
+              <td v-show="filter_update_time">#[ new Date(item.u_t).toLocaleString() ]]</td>
               <!--// TODO: add real url-->
               <td><a href="#">查看</a></td>
             </tr>

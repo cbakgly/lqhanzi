@@ -177,7 +177,7 @@
                   <td v-show="titles[21]['show']">#[item.is_draft_equals_review_display]]</td>
                   <td v-show="titles[22]['show']">#[item.is_review_equals_final_display]]</td>
                   <td v-show="titles[23]['show']">#[item.is_checked_display]]</td>
-                  <td v-show="titles[24]['show']">#[item.u_t]]</td>
+                  <td v-show="titles[24]['show']">#[new Date(item.u_t).toLocaleString()]]</td>
                   <td v-show="titles[25]['show']">#[item.remark]]</td>
                   <td><a href="#">查看</a></td>
                 </tr>
