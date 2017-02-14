@@ -7,12 +7,12 @@ from django.core.serializers import serialize
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, render_to_response
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
-from backend.models import HanziParts, HanziSet, HanziRadicals
+from backend.models import HanziSet
 from tw_fuluzi import fuluzi
 
 
@@ -23,21 +23,27 @@ def is_has_letter(s):
         return False
 
 
-@csrf_exempt
+
 def variant_search(request):
     """
     异体字查询函数
     """
-    # 得到参数
-    q = request.GET.get('q', None)
 
-    # 较验参数有效性
+    q = request.GET.get('q', None)
+    mark = request.GET.get('mark', None)
+
     # 如果缺少参数q就输出页面本身
     if (q is None):
         return render(request, 'variant_search.html')
+ 
+    # 如果两个参数都有，输出别的页面
+    if (q is not None and mark is not None):
+        context = {}
+        context["ext"] = q
+        return render(request, 'variant_search.html', context)
 
     # 做检索操作
-    result = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q)).order_by('source')
+    result = HanziSet.objects.filter(Q(hanzi_char__contains=q)|Q(hanzi_pic_id=q)).order_by('source')
     ret = []
     for item in result:
         # 对于台湾异体字
@@ -248,17 +254,21 @@ def variant_search(request):
             else:
                 item2['content'].append(d2)
 
-                # d['content'] = item.seq_id
-                # d['pic_url'] = get_pic_url_by_source_pic_name(5,item.seq_id)
 
-    r = json.dumps(ret, ensure_ascii=False)
-    # write_log("variant_search.txt",r)
-    return HttpResponse(r, content_type="application/json")
+    if len(ret)==0:
+        return HttpResponse("none")
+    else:
+        r = json.dumps(ret, ensure_ascii=False)
+        return HttpResponse(r, content_type="application/json")
 
 
-# 输入参数为list，返回值也是list
-# 输入参数必须是A00111-001 或者A00111这样的字符串
+
 def get_tw_page(code_list):
+    """
+    对输入的列表进行处理，返回一个新列表
+    比如，如果输入列表是["aaa-001","bbb"]
+    那么，返回的列表是["aaa","bbb"]
+    """
     tmp_list = []
     for item in code_list:
         if (item.find('-') != -1):
@@ -269,6 +279,11 @@ def get_tw_page(code_list):
 
 
 def get_tw_iframe_up(code_list):
+    """
+    构造上窗格中iframe的src属性，放在list中返回
+    输入参数为一个list，包含台湾异体字的图片ID
+    """
+    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
     tmp_list = []
     for item in code_list:
         # 如果不是附录字
@@ -277,20 +292,27 @@ def get_tw_iframe_up(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            #up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            up = base +'/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            #up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            up = base +'/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
     return tmp_list
 
 
 def get_tw_iframe_left(code_list):
+    """
+    构造左窗格中iframe的src属性，放在list中返回
+    输入参数为一个list，包含台湾异体字的图片ID
+    """
     tmp_list = []
+    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
     for item in code_list:
         # 如果不是附录字
         if fuluzi.count(item) == 0:
@@ -298,20 +320,27 @@ def get_tw_iframe_left(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base +'/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base +'/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
     return tmp_list
 
 
 def get_tw_iframe_right(code_list):
+    """
+    构造右窗格中iframe的src属性，放在list中返回
+    输入参数为一个list，包含台湾异体字的图片ID
+    """
     tmp_list = []
+    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
     for item in code_list:
         # 如果不是附录字
         if fuluzi.count(item) == 0:
@@ -319,20 +348,25 @@ def get_tw_iframe_right(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base +'/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base +'/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
     return tmp_list
 
 
-# 输入参数为list，返回值也是list
 def get_tw_url(code_list):
+    """
+    输入参数：台湾异体字ID数组，放在list中
+    输出数据：台湾异体字在台湾网站的URL，放在list中返回
+    """
     tmp_list = []
     for item in code_list:
 
@@ -348,22 +382,31 @@ def get_tw_url(code_list):
 
 
 def get_gl_url(char):
+    """
+    简单地输出高丽异体字的原始查询网址
+    """
     return 'http://kb.sutra.re.kr/ritk_eng/etc/chinese/chineseBitSearch.do'
 
 
 def get_hy_page(text):
+    """
+    输入参数：页码字符串，比如200-14，表示200页中的第14个字
+    输出数据：页码，如上边的200
+    """
     return text.split('-')[0]
 
 
-@csrf_exempt
-def show_yitizi(request):
-    path = request.path.encode("utf-8")
-    addr = path[7:len(path)]
-    return render_to_response(addr)
+# def show_yitizi(request):
+#     path = request.path.encode("utf-8")
+#     addr = path[7:len(path)]
+#     return render_to_response(addr)
 
 
-@csrf_exempt
+
 def variant_detail(request):
+    """
+    输出显示异体字综合信息的网页
+    """
     source = request.GET['source']  # char or pic
     kind = request.GET['type']  # char or pic
     text = request.GET['text']  # 可能是文字，也可能是图片字的文件名
@@ -374,16 +417,15 @@ def variant_detail(request):
     DH = {}  # 如果属于敦煌俗字典，其页码存入变量DH_char_page、
 
     result = HanziSet.objects.filter(Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text)).order_by('source')
-    # 得到台湾字的信息
+
     for item in result:
+    # 得到台湾字的信息
         if (item.source == 2):
             if (item.variant_type == 0):  # 如果是正字
 
                 TW['dict'] = "台湾异体字"
                 TW['type'] = "正字"
-                tmp_list = []
-                tmp_list.append(item.seq_id)
-                TW['addr'] = tmp_list
+                TW['addr'] = item.seq_id.split(';')
                 TW['page'] = get_tw_page(TW['addr'])
                 TW['url'] = get_tw_url(TW['page'])
 
@@ -401,9 +443,7 @@ def variant_detail(request):
 
                 TW['dict'] = "台湾异体字"
                 TW['type'] = "狭义异体字"
-                tmp_list = []
-                tmp_list.append(item.seq_id)
-                TW['addr'] = tmp_list
+                TW['addr'] = item.seq_id.split(';')
                 TW['page'] = get_tw_page(TW['addr'])
                 TW['url'] = get_tw_url(TW['page'])
 
