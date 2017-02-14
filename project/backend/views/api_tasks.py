@@ -7,19 +7,21 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
-from django.http import HttpResponseNotFound, HttpResponseBadRequest
+from django.http import HttpResponseNotFound, HttpResponseBadRequest, HttpResponseForbidden
 from django.core.exceptions import MultipleObjectsReturned
 from django.db.models.query import RawQuerySet
 
+from api_variants_input import VariantsInputSerializer, InputPageSerializer
+from api_variants_dedup import InterDictDedupSerializer
+from api_variants_split import VariantsSplitSerializer
+from api_korean_dup_characters import KoreanDupCharactersSerializer
+from api_variants_korean_dedup import KoreanDedupSerializer
+from task_func import assign_task, reset_task, get_working_task
 from ..pagination import NumberPagination
 from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage, TaskPackages
 from ..enums import getenum_business_type, getenum_business_stage
-import api_variants_input
-import api_variants_dedup
-import api_variants_split
-import api_korean_dup_characters
-from task_func import assign_task, reset_task, get_working_task
 from ..auth import IsBusinessMember
+from ..utils import has_business_type_perm
 
 
 # Task Packages management
@@ -55,17 +57,17 @@ class TasksSerializer(serializers.ModelSerializer):
     def get_task_ele(self, obj):
         task_ele = obj.content_object
         if isinstance(task_ele, VariantsInput):
-            ele_serializer = api_variants_input.VariantsInputSerializer
+            ele_serializer = VariantsInputSerializer
         elif isinstance(task_ele, VariantsSplit):
-            ele_serializer = api_variants_split.VariantsSplitSerializer
+            ele_serializer = VariantsSplitSerializer
         elif isinstance(task_ele, KoreanDedup):
-            ele_serializer = api_variants_dedup.KoreanDedupSerializer
+            ele_serializer = KoreanDedupSerializer
         elif isinstance(task_ele, KoreanDupCharacters):
-            ele_serializer = api_korean_dup_characters.KoreanDupCharactersSerializer
+            ele_serializer = KoreanDupCharactersSerializer
         elif isinstance(task_ele, InputPage):
-            ele_serializer = api_variants_input.InputPageSerializer
+            ele_serializer = InputPageSerializer
         else:
-            ele_serializer = api_variants_dedup.InterDictDedupSerializer
+            ele_serializer = InterDictDedupSerializer
 
         serialized_data = ele_serializer(task_ele).data
         return serialized_data
@@ -103,6 +105,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         :return:
         """
         user = self.request.user
+        if not has_business_type_perm(user, 'split'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         task_package_id = request.query_params.get("task_package_id", 0)
         if task_package_id == 0:
             return HttpResponseBadRequest(_("ID invalid."))
@@ -132,6 +137,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         :param kwargs:
         :return:
         """
+        if not has_business_type_perm(request.user, 'split'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         business_stage = request.data['business_stage']
         business_type = request.data['business_type']
         task = Tasks.objects.get(pk=request.data['id'])
@@ -175,11 +183,15 @@ class TasksViewSet(viewsets.ModelViewSet):
     def skip_task(self, request, *args, **kwargs):
         """
         太难跳过当前任务, 返回下一条
+        目前只拆字用
         :param request:
         :param args:
         :param kwargs:
         :return:
         """
+        if not has_business_type_perm(request.user, 'split'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         origin_task = Tasks.objects.get(pk=kwargs['pk'])
         work_ele = origin_task.content_object
 
@@ -214,13 +226,16 @@ class TasksViewSet(viewsets.ModelViewSet):
         :param kwargs:
         :return:
         """
+        if not has_business_type_perm(request.user, 'split'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         hanzi_char = request.query_params.get('hanzi_char', False)
         hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
 
         if hanzi_char:
-            qs_split = VariantsSplit.objects.filter(hanzi_char=hanzi_char)
+            qs_split = VariantsSplit.objects.filter(user=request.user).filter(hanzi_char=hanzi_char)
         elif hanzi_pic_id:
-            qs_split = VariantsSplit.objects.filter(hanzi_pic_id=hanzi_pic_id)
+            qs_split = VariantsSplit.objects.filter(user=request.user).filter(hanzi_pic_id=hanzi_pic_id)
         else:
             qs_split = None
 
@@ -253,6 +268,10 @@ class TasksViewSet(viewsets.ModelViewSet):
         :param kwargs:
         :return:
         """
+
+        if not has_business_type_perm(request.user, 'input'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         hanzi_char = request.query_params.get('hanzi_char', False)
         hanzi_pic_id = request.query_params.get('hanzi_pic_id', False)
         page_num = request.query_params.get('page_num', False)
@@ -299,6 +318,9 @@ class TasksViewSet(viewsets.ModelViewSet):
         :param kwargs:
         :return:
         """
+        if not has_business_type_perm(request.user, 'dedup'):
+            return HttpResponseForbidden(_("You don't have permission to view."))
+
         hanzi_char = request.query_params.get('hanzi_char', False)
 
         sql = '''
