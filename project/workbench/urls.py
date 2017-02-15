@@ -34,5 +34,5 @@ urlpatterns = [
     url(r'search/korean-taiwan-dedup$', search.korean_taiwan_dedup_db_search, name='m2.korean-taiwan-dedup-search'),
     url(r'forum', forum.index, name='m2.forum'),
 
-    url(r'^$', diaries.index, name='m2.home-page')
+    url(r'^$', task_package.task_package_ongoing, name='m2.home-page')
 ]
