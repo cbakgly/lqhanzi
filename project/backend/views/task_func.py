@@ -59,9 +59,9 @@ def get_working_task(task_package, user):
 def assign_task(business_type, business_stage, task_package, user):
     profile = convert_profile_to_dict(get_user_task_profile(user))
 
-    task = list(Tasks.objects.filter(business_type=business_type)\
+    task = Tasks.objects.filter(business_type=business_type)\
                         .filter(business_stage=business_stage)\
-                        .filter(task_status=getenum_task_status("to_be_arranged")))[0]\
+                        .filter(task_status=getenum_task_status("to_be_arranged"))\
                         .filter(id__gt=profile[business_type]).first()
     if task:
         task.user = user
