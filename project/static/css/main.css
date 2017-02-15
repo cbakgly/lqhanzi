@@ -688,7 +688,7 @@
 
 .pages-box li {
     float: left;
-    width: 60px;
+    width: 28px;    /*modified by xiandu*/
     height: 28px;
     line-height: 28px;
     text-align: center;
@@ -1489,6 +1489,10 @@
     margin-top: 7px; /*wenxiaofeng modified*/
     color: #fff;
     cursor: pointer;
+}
+
+.dictionary-header .dict-tabs ul li a {
+    color: #fff;
 }
 
 .dictionary-header .dict-tabs ul li.active {

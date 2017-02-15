@@ -12,7 +12,7 @@ $(document).on('click', '.catalog-panel .treeview a', function () {
 // 点击检索结果集
 $(document).on('click', '.strokes-item .hanzi-item', function () {
     $(".popup").hide("normal");
-    var page = $(this).attr('title');
+    var page = $(this).attr('alt');
     set_page(page);
 });
 

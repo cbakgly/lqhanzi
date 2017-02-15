@@ -166,10 +166,8 @@ function render_dicts_panel(data) {
                     str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].hanzi_char + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
                 } else if (source == 2 && hanzi_set[j].hanzi_char == '') {  // 如果是台湾图片字，title提示为seq_id
                     str += '<span class="hanzi-item" title="' + hanzi_set[j].seq_id + suffix_title + '" alt="' + hanzi_set[j].seq_id + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
-                } else if (source == 2 && hanzi_set[j].hanzi_char != '') {  // 如果是台湾文字，alt提示为seq_id
-                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].seq_id + '">' + hanzi_set[j].hanzi_char + '</span>';
                 } else if (hanzi_set[j].hanzi_char != '') {
-                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].hanzi_char + '">' + hanzi_set[j].hanzi_char + '</span>';
+                    str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_char + suffix_title + '" alt="' + hanzi_set[j].seq_id + '">' + hanzi_set[j].hanzi_char + '</span>';
                 } else {
                     str += '<span class="hanzi-item" title="' + hanzi_set[j].hanzi_pic_id + suffix_title + '" alt="' + hanzi_set[j].hanzi_pic_id + '"><img src="' + hanzi_set[j].pic_url + '"></span>';
                 }
