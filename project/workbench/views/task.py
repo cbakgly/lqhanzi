@@ -1,8 +1,7 @@
 # -*- coding:utf8 -*-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
-from backend.models import HanziSet, InterDictDedup, Tasks
+from backend.models import HanziSet, InterDictDedup, Tasks, InputPage, VariantsInput, INPUT_VARIANT_TYPE_CHOICES
 from backend.enums import getenum_source, getenum_task_status
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
@@ -19,7 +18,21 @@ def task_split(request, *args, **kwargs):
 @login_required
 def task_input(request, *args, **kwargs):
     if has_business_type_perm(request.user, 'input'):
-        return render(request, 'task_input.html', {'task_package_id': request.GET.get('pk')})
+        pk = int(kwargs["pk"])
+        task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
+        if task:
+            task = task[0]
+            input_page = task.content_object
+            inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+
+            return render(request, 'task_input.html',
+                          {
+                              'inputpage': input_page,
+                              'inputs': inputs,
+                              'task_package_id': request.GET.get('pk'),
+                              'business_stage': task.business_stage,
+                              'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
+                          })
     return render(request, '401.html')
 
 

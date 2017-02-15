@@ -1,263 +1,214 @@
 {% extends "m2_base.html" %}
 
 {% block content %}
-  <div class="content-header">
-    <ol class="breadcrumb">
-      <li><a href="javascript:;">我的任务</a></li>
-      <li class="active">录入</li>
-    </ol>
-  </div>
-  <div class="row">
+    <div class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">我的任务</a></li>
+            <li class="active">录入</li>
+        </ol>
+    </div>
+    <div class="row">
         <!-- /.box-header -->
-      <div class="col-md-7">
-        <div class="box box-blue">
-          <!-- /.box-header -->
-          <div class="box-header with-border">
-            <h3 class="box-title box-title-nobor"></h3>
-            <div class="pull-right box-tools">
-              <!--<a id="prev" class="btn btn-default btn-sm"><i class="fa fa-bars"></i></a>-->
-              <button id="prev" class="btn btn-default btn-sm"><i class="icon-left"></i></button>
-              <div class="btn-group">
-                <button id="zoomIn" class="btn btn-default btn-sm"><i class="icon-zomIn"></i></button>
-                <button id="zoomOut" class="btn btn-default btn-sm"><i class="icon-zoomOut"></i></button>
-              </div>
-              <button id="next" class="btn btn-default btn-sm"><i class="icon-right"></i></button>
+        <div class="col-md-7">
+            <div class="box box-blue">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title box-title-nobor"></h3>
+                    <div class="pull-right box-tools">
+                        <!--<a id="prev" class="btn btn-default btn-sm"><i class="fa fa-bars"></i></a>-->
+                        <button id="prev" class="btn btn-default btn-sm"><i class="icon-left"></i></button>
+                        <div class="btn-group">
+                            <button id="zoomIn" class="btn btn-default btn-sm"><i class="icon-zomIn"></i></button>
+                            <button id="zoomOut" class="btn btn-default btn-sm"><i class="icon-zoomOut"></i></button>
+                        </div>
+                        <button id="next" class="btn btn-default btn-sm"><i class="icon-right"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" id="box-input-img">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <div class="item active">
+                            <div class="imgContainer"><img class="imageFullScreen" src="/static/img/zoomSmall.jpg"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
             </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body" id="box-input-img">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <div class="item active">
-                <div class="imgContainer"> <img class="imageFullScreen" src="../img/zoomSmall.jpg"/></div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
+            <!-- /.box -->
         </div>
-        <!-- /.box -->
-      </div>
-      <div class="col-md-5">
-        <div class="nav-tabs-custom z-tabs">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#first" data-toggle="tab">初次</a></li>
-            <li><a href="#checkback" data-toggle="tab">回查</a></li>
-            <li><a href="#checkup" data-toggle="tab">审查</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="active tab-pane" id="first">
-              <div class="box-body table-responsive no-padding z-table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>字头</th>
-                      <th>类型</th>
-                      <th>通行字</th>
-                      <th>备注</th>
-                      <th>存疑</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" value="与">
-                      </td>
-                      <td>
-                        <div class="input-group">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                            <option>狭义异体字及正字</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                      <td><input type="text" value=""></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="checkback">
+        <div class="col-md-5">
+            <div class="nav-tabs-custom z-tabs">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#first" data-toggle="tab">初次</a></li>
+                    <li><a href="#checkback" data-toggle="tab">回查</a></li>
+                    <li><a href="#checkup" data-toggle="tab">审查</a></li>
+                </ul>
+                <div id="com" class="tab-content">
+                    <div class="active tab-pane" id="first">
+                        <div class="box-body table-responsive no-padding z-table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>字头</th>
+                                    <th>类型</th>
+                                    <th>通行字</th>
+                                    <th>备注</th>
+                                    <!--<th>存疑</th>-->
+                                </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-striped">
 
+                                <tbody>
+                                {% for input_char in inputs %}
+                                    <input_var
+                                            id="{{ input_char.id }}"
+                                            pic_id="{{ input_char.hanzi_pic_id_draft }}"
+                                            char="{{ input_char.hanzi_char_draft }}"
+                                            std_hanzi="{{ input_char.std_hanzi_draft }}"
+                                            notes="{{ input_char.notes_draft }}"
+                                            input_type="{{ input_char.variant_type_draft }}"
+                                            stage="first"
+                                    ></input_var>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="checkback">
+                        {% for input_char in inputs %}
+                            <input_var
+                                    id="{{ input_char.id }}"
+                                    pic_id="{{ input_char.hanzi_pic_id_review }}"
+                                    char="{{ input_char.hanzi_char_review }}"
+                                    std_hanzi="{{ input_char.std_hanzi_review}}"
+                                    notes="{{ input_char.notes_review }}"
+                                    input_type="{{ input_char.variant_type_review }}"
+                                    stage="review"
+                            ></input_var>
+                        {% endfor %}
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="checkup">
+                        {% for input_char in inputs %}
+                            <input_var
+                                    id="{{ input_char.id }}"
+                                    pic_id="{{ input_char.hanzi_pic_id_final }}"
+                                    char="{{ input_char.hanzi_char_final }}"
+                                    std_hanzi="{{ input_char.std_hanzi_final}}"
+                                    notes="{{ input_char.notes_final }}"
+                                    input_type="{{ input_char.variant_type_final }}"
+                                    stage="final"
+                            ></input_var>
+                        {% endfor %}
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+                <div id="nextpage" class="btns btns-r">
+                    <button @click="submit_and_next" class="btn btn-blue btn-sm next-page">下一页</button>
+                </div>
             </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="checkup">
-
-            </div>
-            <!-- /.tab-pane -->
-          </div>
-          <!-- /.tab-content -->
-          <div class="btns btns-r">
-            <button class="btn btn-blue btn-sm next-page">下一页</button>
-          </div>
+            <!-- /.nav-tabs-custom -->
         </div>
-        <!-- /.nav-tabs-custom -->
-      </div>
-  </div>
+    </div>
+    <script type="text/javascript">
+
+        Vue.component('input_var', {
+            delimiters: ["#[", "]]"],
+            props: ['id', 'pic_id', 'char', 'std_hanzi', 'notes', "input_type", "stage"],
+            template: '<tr @click="edit($event)">\
+                        <td v-if="pic_id!=\'\'">\
+                            <img :src= "pic_id">\
+                        </td>\
+                        <td v-else>\
+                            <dd style="width:100px;text-align:center">#[local_char]]</dd>\
+                        </td>\
+                        <td>\
+                            <div>\
+                                <select v-model="local_input_type" style="width:120px; height:30px;">\
+                                    <option>请选择</option>\
+                                    {% for input_types in input_variant_type %}\
+                                        <option value="{{ input_types.0 }}">{{ input_types.1 }}</option>\
+                                    {% endfor %}\
+                                </select>\
+                            </div>\
+                        </td>\
+                        <td>\
+                        <input type="text"  v-model="local_std_hanzi" @dbclick="edit($event)"  @blur = "leave($event)" readonly="readonly" style="background-color:#EDEDED"></td>\
+                        <td>\
+                        <input type="text"  v-model="local_notes" @dbclick="edit($event)" @blur="leave($event)" readonly="readonly" style="background-color:#EDEDED"></td>\
+                    </tr>',
+            data: function () {
+                return {
+                    local_input_type: this.input_type,
+                    local_pic_id: this.pic_id,
+                    local_char: this.char,
+                    local_std_hanzi: this.std_hanzi,
+                    local_notes: this.notes
+                }
+            },
+            methods: {
+                edit: function (e) {
+                    element = e.target;
+                    element.removeAttribute("readonly");
+                    element.style.backgroundColor="white";
+                },
+                save_draft:function(){
+                    $.ajax({
+                        url: "/api/v1/inputs/" + this.id + "/submit_single_input/",
+                        method: 'PATCH',
+                        dataType: 'json',
+                        data: {
+                            'stage': this.stage,
+                            'variant_type': this.local_input_type,
+                            'std_hanzi': this.local_std_hanzi,
+                            'notes': this.local_notes
+                        }
+                    })
+                },
+                leave: function(e){
+                    element = e.target;
+                    element.setAttribute("readonly", true);
+                    element.style.backgroundColor="#EDEDED";
+                    this.save_draft();
+                }
+
+            }
+        });
+
+        var com = new Vue({
+            delimiters: ["[[", "]]"],
+            el: '#com',
+            data: {}
+        });
+        var nextpage = new Vue({
+            delimiters: ["[[", "]]"],
+            el: '#nextpage',
+            data: {
+                page_num: {{ inputpage.page_num }}
+            },
+            methods:{
+                submit_and_next:function(){
+                    $.ajax({
+                        url: "/api/v1/inputpage/" + this.page_num + "/submit_and_next/",
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {
+                        },
+                        success: function (response) {
+                            alert("success!");
+                            window.location.reload();
+                        },
+                        error: function (xhr, status, err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            }
+        });
+    </script>
 {% endblock %}
