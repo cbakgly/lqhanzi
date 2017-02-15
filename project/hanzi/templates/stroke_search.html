@@ -63,9 +63,9 @@
             <span class="ser-btn" id="strock_search_btn">搜索</span>
           </div>
           <div class="search-bottom">
-            <label><input type="radio" name="r" value="1">&nbsp;一般检索</label><!-- checked="checked" -->
-            <label><input type="radio" name="r" value="2">&nbsp;正则检索</label>
-            <label><input type="radio" name="r" value="3">&nbsp;反查编码</label>
+            <label><input type="radio" name="r" value="1" checked="checked">一般检索</label><!-- checked="checked" -->
+            <label><input type="radio" name="r" value="2">正则检索</label>
+            <label><input type="radio" name="r" value="3">反查编码</label>
             <label id="current_order" hidden></label>
           </div>
         </div>
@@ -92,20 +92,16 @@
       <div class="con-left">
         <p class="total">共有<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条</p>
         <ul class="hanzi-wrap clearfix">
-
         </ul>
-
         <div class="pages-box">
           <ul class="pagination">
           </ul>
-
           <span>跳至:&nbsp;<input id="new_page" type="text">&nbsp;页</span>
           <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span>
           <span id="search_tip"></span>
         </div>
-
-
       </div>
+
       <div class="con-right">
         <!--结构-->
         <div class="compontent clearfix">
@@ -142,7 +138,7 @@
                 </div> -->
                 <!-- <span class="fl" id="radical_input">筛选条件在这里显示</span> -->
                 <!-- <div class="fl" id="radical_input">筛选条件在这里显示</div> -->
-                <input type="text" class="fl" id="radical_input" placeholder="点选笔画笔顺或输入查询条件">
+                <input type="text" class="fl" id="radical_input" placeholder="请点选或输入笔画及笔顺">
                 <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
                 <!-- 帮助图标 -->
                 <div class="help fl">
@@ -203,29 +199,38 @@
           </div>
           <!--部件结果-->
           <div class="parts-results">
-
             {% for item in part_list %}
-
               {% if item.flag %}
                 <span class="result-stoke" data-stroke="{{ item.flag }}-">{{ item.flag }}</span>
               {% else %}
                 <span class="result-item"
                       data-stroke="{{ item.strokes }}-{{ item.stroke_order }}">{{ item.part_char }}</span>
               {% endif %}
-
             {% endfor %}
-
-            <!-- <span class="result-stoke">1</span>
-            <span class="result-item">乀</span>
-            <span class="result-item"><img src="/static/img/200C9.gif" alt=""></span>
-             -->
           </div>
+
         </div>
         <!--./部件-->
       </div>
     </div>
   </div>
   <!--./content-->
+
+  <div class="bottom">
+    <div class="bottom-content">
+      <div style="padding: 15px 0">
+        <div class="copy-right pull-left">Copyright@2017 hanzi.lqdzj.cn All right Reserved</div>
+        <ul class="links pull-right">
+          <li><a>关于我们</a>|</li>
+          <li><a>免责申请</a>|</li>
+          <li><a>帮助中心</a></li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+      <div class="record-code" style="padding: 10px 0">版权所有 京ICP备16061775号</div>
+    </div>
+  </div>
+
   <!--bubble-->
   <div class="bubble" id="btip">
     <div class="bubble-inner">
@@ -260,7 +265,7 @@
         <span class="other_title">
             <span id="search1" class="other_style fl" data-value="">异体字检索</span>
             <span id="search2" class="other_style fr" data-value="">反查编码</span> 
-        </span> 
+        </span>
       </div>
 
     </div>

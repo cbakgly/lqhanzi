@@ -33,6 +33,26 @@
     line-height: 48px;
 }
 
+.bottom {
+    width: 100%;
+    height: 70px;
+    background-color: #243060;
+    color: #fff;
+}
+
+.bottom .bottom-content {
+    margin: 0 50px;
+}
+
+.bottom li {
+    float: left;
+}
+
+.bottom .links a {
+    margin: 0 5px;
+    color: #fff;
+}
+
 .nav-tab > ul.tabs {
     overflow: hidden;
 }
@@ -177,7 +197,7 @@
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     box-sizing: border-box;
-    font-size: 20px;
+    font-size: 16px;
     color: #333;
 }
 
@@ -495,7 +515,6 @@
     padding: 0 3px 0px 3px;
     font-size: 14px;
     border: 1px solid #ddd;
-    text-align: center;
     border-top-left-radius: 3px;
     -webkit-border-top-left-radius: 3px;
     -moz-border-top-left-radius: 3px;
@@ -688,7 +707,7 @@
 
 .pages-box li {
     float: left;
-    width: 28px;    /*modified by xiandu*/
+    width: 28px; /*modified by xiandu*/
     height: 28px;
     line-height: 28px;
     text-align: center;

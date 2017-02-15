@@ -19,7 +19,7 @@ ul, ol {
 input {
     padding-top: 0;
     padding-bottom: 0;
-    font-family: KaiXinSong, Arial, Helvetica, sans-serif, lqhanzi;
+    font-family: Arial, Helvetica, 宋体, KaiXinSong, sans-serif, lqhanzi;
 }
 
 select {
