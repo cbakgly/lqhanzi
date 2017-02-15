@@ -2,8 +2,6 @@
  * Created by zf on 2016/12/22.
  */
 $(function () {
-    //bootstrap WYSIHTML5 - text editor
-    $(".pad .textarea").wysihtml5();
     //Date range picker with time picker
     $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
 });

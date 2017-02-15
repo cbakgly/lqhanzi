@@ -18,7 +18,7 @@ var appvm = new Vue({
     delimiters: ["#[", "]"],
     el: '#app',
     data: {
-        //username: "wangwei",
+        username: "",
         selected: 1,
         cdata: [],
         //pagination: {},
