@@ -25,7 +25,7 @@ class CreditSerializer(serializers.ModelSerializer):
     def get_rank(self, obj):
         ranks = {}
         credit_set = Credits.objects.all()
-        for i in range(1, 6):
+        for i in range(0, 10):
             ranks[i] = []
 
         for c in credit_set:
@@ -33,7 +33,7 @@ class CreditSerializer(serializers.ModelSerializer):
             cs = c.sort
             if cd not in ranks[cs]:
                 ranks[cs].append(cd)
-        for i in range(1, 6):
+        for i in range(0, 10):
             ranks[i].sort()
             ranks[i].reverse()
         return ranks[obj.sort].index(obj.credit) + 1
