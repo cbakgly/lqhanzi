@@ -204,7 +204,7 @@ class InputPage(models.Model):
     task = GenericRelation(Tasks, related_query_name="page_task")
 
     class Meta:
-        db_table = 'backend_inputpage'
+        db_table = 'lq_input_page'
 
 
 class VariantsInput(models.Model):
