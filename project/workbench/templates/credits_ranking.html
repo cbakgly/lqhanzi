@@ -54,11 +54,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item, index) in cdata">
+                <tr v-for="for (item, index) in cdata">
                   <td v-text="index+1"></td>
-
+                    <td v-text="item.user.username"></td>
                   <td v-text="item.credit"></td>
-                  <td v-text="item.sort"></td>
+                  <td v-text="credits_arr[item.sort]"></td>
                   <td v-text="item.rank"></td>
                 </tr>
                 </tbody>

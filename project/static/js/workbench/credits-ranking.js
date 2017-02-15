@@ -1,11 +1,8 @@
 /**
  * Created by wangwei on 16-12-20.
  */
-var credits_arr = new Array("总积分",
-    "拆字积分",
-    "去重积分",
-    "录入积分",
-    "互助积分")
+
+
 var indexOf = function (value) {
     for (var i = 0, vlen = credits_arr.length; i < vlen; i++) {
         if (credits_arr[i] == value) {
@@ -28,21 +25,22 @@ var appvm = new Vue({
         offset: 0,
         mycredit: 0,
         myrank: 1,
+        credits_arr :{0:"总积分",1:"拆字积分",5:"去重积分",2:"录入积分",3:"图书校对",4:"论文下载"}
     },
     watch:{
 
     },
     methods: {
-        //trim: function(stri) {
-        //    return stri.replace(/(^\s*)|(\s*$)/g, ""); },
+        trim: function(stri) {
+            return stri.replace(/(^\s*)|(\s*$)/g, ""); },
         gen_url: function () {
 
-            var username = document.getElementsByClassName("hidden-xs")[0].innerHTML
-            username = appvm.trim(username)
+            var username = document.getElementsByClassName("hidden-xs")[0].innerHTML;
+            username = appvm.trim(username);
 
-            //base_url += "&user__username=" + username
+            base_url += "&user__username=" + username
             //base_url +=
-            //return base_url
+            return base_url
         },
         /*get_offset: function () {
             var url = this.gen_url()
@@ -67,15 +65,14 @@ var appvm = new Vue({
         load_pages: function () {
             //this.current_page = page_num
             //appvm.get_offset()
-            var url = "/api/v1/credits/?sort=" + appvm.selected
-            //var url = "/api/workbench/credits/certain_user_credits/"
+            var url = "/api/v1/credits/?sort=" + appvm.selected;
             //url = url + "&offset=" + appvm.offset
             $.ajax({
                 url: url,
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    appvm.cdata = data
+                    appvm.cdata = data;
                     //appvm.pagination = data.pagination
                 },
                 error: function (xhr, status, err) {
@@ -95,7 +92,7 @@ var appvm = new Vue({
                 success: function (data) {
                     appvm.cdata = data;
                     for (var i = 0; i < data.length; i++) {
-                        if (data[i].sort == "总积分") {
+                        if (data[i].sort == 0) {
                             appvm.mycredit = data[i].credit;
                             appvm.myrank = data[i].rank;
                             break;
