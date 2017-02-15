@@ -84,7 +84,7 @@ var appvm = new Vue({
             })
         },
         get_login_user: function () {
-            var base_url = "/api/v1/credits/certain_user_credits/"
+            var base_url = "/api/v1/credits/certain_user_credits/";
 
             //console.log(username)
             //var url = base_url+"&user__username="+username+"&sort=1"
@@ -93,12 +93,12 @@ var appvm = new Vue({
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    appvm.cdata = data
+                    appvm.cdata = data;
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].sort == "总积分") {
-                            appvm.mycredit = data[i].credit
-                            appvm.myrank = data[i].rank
-                            break
+                            appvm.mycredit = data[i].credit;
+                            appvm.myrank = data[i].rank;
+                            break;
                         }
                     }
                 },
@@ -106,7 +106,7 @@ var appvm = new Vue({
                     console.log('error');
                 }
             })
-        },
+        }
     }
 });
 appvm.get_login_user();
