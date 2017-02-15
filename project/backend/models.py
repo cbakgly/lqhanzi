@@ -427,6 +427,7 @@ class Credits(models.Model):
     credit = models.IntegerField(u"积分值", default=0)
     user = models.ForeignKey(User, verbose_name=u"用户", related_name="user_credits")
     sort = models.IntegerField(u"积分类型", choices=sort_choices, default=1)
+    u_t = models.DateTimeField(u'更新时间', auto_now=True)
 
     class Meta:
         verbose_name = u"积分"
@@ -496,6 +497,7 @@ class UserTaskProfile(models.Model):
     last_split_id = models.IntegerField(u'上次拆分工作的ID', default=0)
     last_dedup_id = models.IntegerField(u'上次去重工作的ID', default=0)
     last_input_id = models.IntegerField(u'上次录入工作的ID', default=0)
+    u_t = models.DateTimeField(u'更新时间', auto_now=True)
 
     class Meta:
         db_table = 'lq_user_task_profile'
