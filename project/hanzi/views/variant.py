@@ -3,12 +3,9 @@
 # hanzi/variant.py
 import json
 import re
-from django.core.serializers import serialize
 from django.db.models import Q
-from django.forms.models import model_to_dict
 from django.http import HttpResponse
-# from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.utils import get_dunhuang_dict_path
 from backend.utils import get_hanyu_dict_path
@@ -23,7 +20,6 @@ def is_has_letter(s):
         return False
 
 
-
 def variant_search(request):
     """
     异体字查询函数
@@ -35,7 +31,7 @@ def variant_search(request):
     # 如果缺少参数q就输出页面本身
     if (q is None):
         return render(request, 'variant_search.html')
- 
+
     # 如果两个参数都有，输出别的页面
     if (q is not None and mark is not None):
         context = {}
@@ -43,7 +39,7 @@ def variant_search(request):
         return render(request, 'variant_search.html', context)
 
     # 做检索操作
-    result = HanziSet.objects.filter(Q(hanzi_char__contains=q)|Q(hanzi_pic_id=q)).order_by('source')
+    result = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q)).order_by('source')
     ret = []
     for item in result:
         # 对于台湾异体字
@@ -84,12 +80,12 @@ def variant_search(request):
             """
             #处理兼正字的情况
             """
-            if (item.as_std_hanzi != '' and item.as_std_hanzi[0] != '#'):
+            if item.as_std_hanzi != '' and item.as_std_hanzi[0] != '#':
                 d1 = {}
-                if (item.hanzi_char != ''):
+                if item.hanzi_char != '':
                     d1["stdchar"] = item.hanzi_char
                     d1["type"] = 'char'
-                elif (item.hanzi_pic_id != ''):
+                elif item.hanzi_pic_id != '':
                     d1["stdchar"] = item.hanzi_pic_id
                     d1["type"] = 'pic'
                     d1["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
@@ -97,10 +93,10 @@ def variant_search(request):
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
                 result = HanziSet.objects.filter(Q(std_hanzi__contains=d1["stdchar"]) & Q(source=2)).exclude(
-                    variant_type=0)
+                        variant_type=0)
                 for item in result:
                     d2 = {}
-                    if (item.hanzi_char != ''):
+                    if item.hanzi_char != '':
                         d2["type"] = "char"
                         d2["text"] = item.hanzi_char
                     else:
@@ -115,7 +111,7 @@ def variant_search(request):
             ret.append(d)
 
         # 对于汉语大字典
-        elif (item.source == 3):
+        elif item.source == 3:
             # d = {}
             # d['source'] = 3
             # d['content'] = item.seq_id
@@ -123,7 +119,7 @@ def variant_search(request):
             # ret.append(d)
 
             d2 = {}
-            if (item.hanzi_char != ''):
+            if item.hanzi_char != '':
                 d2["type"] = "char"
                 d2["text"] = item.hanzi_char
             else:
@@ -138,7 +134,7 @@ def variant_search(request):
                     flag = True
                     break
 
-            if flag == False:
+            if flag:
                 d = {}
                 d['source'] = 3
                 d['content'] = []
@@ -147,9 +143,8 @@ def variant_search(request):
             else:
                 item2['content'].append(d2)
 
-
         # 对于高丽异体字
-        elif (item.source == 4):
+        elif item.source == 4:
 
             # 如果ret里已经包含了高丽异体字信息，就返回
             flag = False
@@ -157,7 +152,7 @@ def variant_search(request):
                 if item2['source'] == 4:
                     flag = True
                     break
-            if flag == True:
+            if flag:
                 continue
 
             # 如果ret里没有包含了高丽异体字信息，就继续
@@ -209,8 +204,7 @@ def variant_search(request):
 
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
-                result = HanziSet.objects.filter(Q(std_hanzi__contains=d1["stdchar"]) & Q(source=4)).exclude(
-                    variant_type=0)
+                result = HanziSet.objects.filter(Q(std_hanzi__contains=d1["stdchar"]) & Q(source=4)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
                     if (item.hanzi_char != ''):
@@ -245,7 +239,7 @@ def variant_search(request):
                     flag = True
                     break
 
-            if flag == False:
+            if flag:
                 d = {}
                 d['source'] = 5
                 d['content'] = []
@@ -254,13 +248,11 @@ def variant_search(request):
             else:
                 item2['content'].append(d2)
 
-
-    if len(ret)==0:
+    if len(ret) == 0:
         return HttpResponse("none")
     else:
         r = json.dumps(ret, ensure_ascii=False)
         return HttpResponse(r, content_type="application/json")
-
 
 
 def get_tw_page(code_list):
@@ -292,15 +284,15 @@ def get_tw_iframe_up(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            #up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
-            up = base +'/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            # up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            up = base + '/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            #up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
-            up = base +'/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            # up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
+            up = base + '/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
     return tmp_list
@@ -321,14 +313,14 @@ def get_tw_iframe_left(code_list):
             item = item.lower()
             first_letter = item[0].lower()
             # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
-            left = base +'/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base + '/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
             # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
-            left = base +'/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base + '/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
     return tmp_list
@@ -349,14 +341,14 @@ def get_tw_iframe_right(code_list):
             item = item.lower()
             first_letter = item[0].lower()
             # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
-            right = base +'/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base + '/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
             # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
-            right = base +'/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base + '/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
     return tmp_list
@@ -401,8 +393,6 @@ def get_hy_page(text):
 #     addr = path[7:len(path)]
 #     return render_to_response(addr)
 
-
-
 def variant_detail(request):
     """
     输出显示异体字综合信息的网页
@@ -419,7 +409,7 @@ def variant_detail(request):
     result = HanziSet.objects.filter(Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text)).order_by('source')
 
     for item in result:
-    # 得到台湾字的信息
+        # 得到台湾字的信息
         if (item.source == 2):
             if (item.variant_type == 0):  # 如果是正字
 
@@ -497,7 +487,6 @@ def variant_detail(request):
             elif (item.variant_type == 4):
                 continue
 
-
         # 得到汉语大字典中的信息。处理起来比较简单。得到页码即可。
         elif (item.source == 3):
             HY['dict'] = "汉语大字典"
@@ -519,8 +508,7 @@ def variant_detail(request):
             # 如果已经有记录了，就返回，以免信息多余
             # if len(GL)>0:
             # 	continue
-            obj = HanziSet.objects.filter(
-                Q(source=4) & (Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text))).first()
+            obj = HanziSet.objects.filter(Q(source=4) & (Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text))).first()
             result = HanziSet.objects.filter(Q(source=4) & Q(std_hanzi=obj.std_hanzi)).exclude(hanzi_pic_id='')
             vraiant = []
             for item in result:

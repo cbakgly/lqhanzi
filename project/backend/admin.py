@@ -1,7 +1,11 @@
 # -*- coding:utf8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from backend.models import *
+
+from models import User, HanziSet, TaskPackages, Tasks, TaskTypes, InputPage
+from models import VariantsSplit, VariantsInput, KoreanVariantsDict, HanziRadicals
+from models import KoreanDupCharacters, KoreanDupZhengCodes, KoreanDedup
+from models import InterDictDedup, Reward, CreditsRedeem, Diaries, Credits, HanziParts, UserTaskProfile
 
 
 class DiaryAdmin(admin.ModelAdmin):
