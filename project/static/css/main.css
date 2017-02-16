@@ -38,10 +38,13 @@
     height: 70px;
     background-color: #243060;
     color: #fff;
+
 }
 
 .bottom .bottom-content {
     margin: 0 50px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .bottom li {
@@ -329,7 +332,7 @@
 }
 
 .content {
-    padding: 10px 0 70px 0; /*wenxiaofeng modified*/
+    padding: 10px 0 50px 0; /*wenxiaofeng modified*/
 }
 
 .stroke-helppanel-bubble {
@@ -1516,6 +1519,8 @@
 .dictionary-header .dict-tabs ul li a {
     color: #fff;
     display: block;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .dictionary-header .dict-tabs ul li.active {
