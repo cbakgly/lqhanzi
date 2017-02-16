@@ -8,10 +8,10 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
-from ..models import Credits, Tasks, User
+from ..models import Credits, Tasks
 from ..pagination import LimitOffsetPagination
 from ..auth import IsBusinessMember
-from ..enums import get_credit_type
+
 
 class CreditSerializer(serializers.ModelSerializer):
     rank = serializers.SerializerMethodField()

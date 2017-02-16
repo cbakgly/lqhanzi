@@ -318,8 +318,6 @@ class InputPageViewSet(viewsets.ModelViewSet):
     pagination_class = NumberPagination
     serializer_class = InputPageSerializer
 
-
-
     # 提交并转下一页
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
