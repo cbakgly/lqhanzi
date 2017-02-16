@@ -70,8 +70,7 @@
                         <div class="header-img pull-left">
                             <div class="zi">
                                 <div class="single-zi">
-                                  <span v-if="model.task_ele.hanzi_type == 0">
-                                    #[model.task_ele.hanzi_pic_path]]
+                                  <span v-if="model.task_ele.hanzi_type == 0" v-text="model.task_ele.hanzi_char">
                                   </span>
                                   <span v-else>
                                     <img :src="model.task_ele.hanzi_pic_path">
@@ -194,7 +193,7 @@
 </div>
 </div>
 {% endblock %} {% block footerjs %}
-<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+<script src="{{STATIC_URL}}js/vue-resource.min.js"></script>
 <script type="text/javascript">
 // register the parts-inputmethod component
 Vue.component('parts-inputmethod', {
