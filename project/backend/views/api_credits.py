@@ -78,3 +78,12 @@ class CreditViewSet(viewsets.ModelViewSet):
         user = request.user
         sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
         return Response(sum_credits)
+
+    @list_route()
+    def searchcredit(self, request, *args, **kwargs):
+        data = request.data
+
+        sort = request.query_params['select_sort']
+        name = request.query_params['search_name']
+        search_result = Credits.objects.filter(user__username__contains=name, sort=sort)
+        return Response(self.serializer_class(search_result,many=True).data)
