@@ -56,13 +56,13 @@
 {% endblock %}
 
 {% block content %}
-  <div class="button-group" style="position:absolute; float:left;">
-    <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"></button>
+  <div class="button-group">
+    <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"><i class="icon-left"></i></button>
     <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"
-            onmouseup="window.clearTimeout(o_time);"></button>
+            onmouseup="window.clearTimeout(o_time);"><i class="icon-zomIn"></i></button>
     <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"
-            onmouseup="window.clearTimeout(o_time);"></button>
-    <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward"></button>
+            onmouseup="window.clearTimeout(o_time);"><i class="icon-zoomOut"></i></button>
+    <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward"><i class="icon-right"></i></button>
   </div>
   <div style="text-align: center; overflow-y: auto;">
     <img class="dict-image align-center" id="image-page" src="{{ welcome_url }}" alt="" style="width: 85%;">
