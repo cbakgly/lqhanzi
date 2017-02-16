@@ -473,7 +473,7 @@ class Credits(models.Model):
     """
     积分
     """
-    sort_choices = ((1, u"总积分"), (2, u"拆字积分"), (3, u"去重积分"), (4, u"录入积分"), (5, u"互助积分"))
+    sort_choices = ((0, u"总积分"), (1, u"拆字积分"), (5, u"去重积分"), (2, u"录入积分"), (3, u"图书校对"), (4, u"论文下载"))
 
     # user_id = models.IntegerField(u'用户id', null=True)
     credit = models.IntegerField(u"积分值", default=0)
@@ -488,7 +488,7 @@ class Credits(models.Model):
         ordering = ["-credit"]
 
     def __unicode__(self):
-        return self.sort.credit_sort
+        return str(self.sort)+str(self.credit)
 
 
 # Operation log table

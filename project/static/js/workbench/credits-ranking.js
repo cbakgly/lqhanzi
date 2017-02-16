@@ -15,7 +15,7 @@ var appvm = new Vue({
     el: '#app',
     data: {
         searchname: "",
-        selected: 1,
+        selected: -1,
         cdata: [],
         offset: 0,
         mycredit: 0,

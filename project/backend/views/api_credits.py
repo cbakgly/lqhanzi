@@ -25,18 +25,19 @@ class CreditSerializer(serializers.ModelSerializer):
     def get_rank(self, obj):
         ranks = {}
         credit_set = Credits.objects.all()
-        for i in range(0, 10):
-            ranks[i] = []
+        if obj:
+            for i in range(0, 10):
+                ranks[i] = []
 
-        for c in credit_set:
-            cd = c.credit
-            cs = c.sort
-            if cd not in ranks[cs]:
-                ranks[cs].append(cd)
-        for i in range(0, 10):
-            ranks[i].sort()
-            ranks[i].reverse()
-        return ranks[obj.sort].index(obj.credit) + 1
+            for c in credit_set:
+                cd = c.credit
+                cs = c.sort
+                if cd not in ranks[cs]:
+                    ranks[cs].append(cd)
+            for i in range(0, 10):
+                ranks[i].sort()
+                ranks[i].reverse()
+            return ranks[obj.sort].index(obj.credit) + 1
 
     def get_sort_name(self, obj):
         for sc in Credits.sort_choices:
@@ -76,14 +77,18 @@ class CreditViewSet(viewsets.ModelViewSet):
     @list_route()
     def calculate_user_credits(self, request, *args, **kwargs):
         user = request.user
-        sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
-        return Response(sum_credits)
+        #sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
+        user_credit = self.serializer_class(Credits.objects.filter(user_id=user.id).exclude(credit=0),many=True)
+        r = Response(user_credit.data)
+        print r['1']
+        return Response(user_credit.data)
 
     @list_route()
     def searchcredit(self, request, *args, **kwargs):
-        data = request.data
-
         sort = request.query_params['select_sort']
         name = request.query_params['search_name']
-        search_result = Credits.objects.filter(user__username__contains=name, sort=sort)
+        if sort is -1:
+            search_result = Credits.objects.filter(user__username__contains=name)
+        else:
+            search_result = Credits.objects.filter(user__username__contains=name, sort=sort)
         return Response(self.serializer_class(search_result,many=True).data)
