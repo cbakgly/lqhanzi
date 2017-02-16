@@ -201,6 +201,7 @@ def stroke_search(request):
 	"""
 	content = {}
 	content['part_list'] = get_parts()
+	content['lqhanzi_font_path'] = get_lqhanzi_font_path()
 	return render(request,'stroke_search.html',content)
 
 
