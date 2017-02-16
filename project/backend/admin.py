@@ -13,15 +13,11 @@ class CreditsAdmin(admin.ModelAdmin):
 
 
 class TaskPackagesAdmin(admin.ModelAdmin):
-    fields = (
-        "user", "business_type", "business_stage", "size",
-        "status", "daily_plan", "due_date", "completed_num", "completed_at",
-        "c_t"
-    )
+    list_display = ('id', "user", "business_type", "business_stage", "size", "status", "daily_plan", "due_date", "completed_num", "completed_at", "c_t")
 
 
 class KoreanDupChaAdmin(admin.ModelAdmin):
-    fields = ("korean_variant", "unicode")
+    list_display = ("korean_variant", "unicode")
 
 
 # class TasksInline(admin.TabularInline):
@@ -29,22 +25,11 @@ class KoreanDupChaAdmin(admin.ModelAdmin):
 
 
 class TasksAdmin(admin.ModelAdmin):
-    fields = ("user",
-              "task_package",
-              "business_type",
-              "business_stage",
-              "task_status",
-              "credits",
-              "remark",
-              "assigned_at",
-              "completed_at",
-              "c_t",
-              "content_type",
-              "object_id",
-              )
+    list_display = ('id', "user", "task_package", "business_type", "business_stage", "task_status", "credits", "remark", "assigned_at", "completed_at", "c_t", "content_type", "object_id",)
 
 
 class VariantsSplitAdmin(admin.ModelAdmin):
+    list_display = ('id', 'source', 'hanzi_type', 'hanzi_char', 'hanzi_pic_id', 'variant_type', 'std_hanzi', 'as_std_hanzi', 'seq_id', 'is_redundant',)
     fieldsets = [
         ('基础信息', {
             'fields':
@@ -115,10 +100,7 @@ class CreditRedeemInline(admin.TabularInline):
 
 
 class CreditsRedeemAdmin(admin.ModelAdmin):
-    list_display = (
-        "applied_by", "accepted_by", "c_t", "completed_by", "accepted_at", "completed_at",
-        "reward_name", "cost_credits", "status", "remark"
-    )
+    list_display = ('id', "applied_by", "accepted_by", "c_t", "completed_by", "accepted_at", "completed_at", "reward_name", "cost_credits", "status", "remark")
 
 
 class InputPageAdmin(admin.ModelAdmin):
@@ -126,11 +108,11 @@ class InputPageAdmin(admin.ModelAdmin):
 
 
 class VariantsInputAdmin(admin.ModelAdmin):
-    model = VariantsInput
+    list_display = ('id', 'page_num', 'seq_num_draft', 'hanzi_char_draft', 'hanzi_pic_id_draft', 'variant_type_draft', 'std_hanzi_draft', 'notes_draft', 'is_del_draft',)
 
 
 class TaskTypeAdmin(admin.ModelAdmin):
-    model = TaskTypes
+    list_display = ('id', 'business_type', 'business_name', 'credits', 'is_active',)
 
 
 class KoreanVariantsDictAdmin(admin.ModelAdmin):
@@ -138,7 +120,7 @@ class KoreanVariantsDictAdmin(admin.ModelAdmin):
 
 
 class HanziRadicalsAdmin(admin.ModelAdmin):
-    model = HanziRadicals
+    list_display = ('id', 'radical', 'strokes', 'is_un_radical', 'is_tw_radical', 'is_zh_radical', 'is_kr_radical', 'is_dh_radical',)
 
 
 class KoreanDupZhengCodesAdmin(admin.ModelAdmin):
@@ -146,23 +128,23 @@ class KoreanDupZhengCodesAdmin(admin.ModelAdmin):
 
 
 class KoreanDedupAdmin(admin.ModelAdmin):
-    model = KoreanDedup
+    list_display = ('id', 'source', 'hanzi_type', 'hanzi_char', 'hanzi_pic_id', 'korean_dup_hanzi',)
 
 
 class InterDictDedupAdmin(admin.ModelAdmin):
-    model = InterDictDedup
+    list_display = ('id', 'source', 'hanzi_type', 'hanzi_char', 'hanzi_pic_id', 'variant_type', 'std_hanzi', 'as_std_hanzi', 'inter_dict_dup_hanzi_draft',)
 
 
 class RewardAdmin(admin.ModelAdmin):
-    model = Reward
+    list_display = ('id', 'reward_name', 'reward_quantity', 'need_credits',)
 
 
 class HanziPartsAdmin(admin.ModelAdmin):
-    model = HanziParts
+    list_display = ('id', 'part_char', 'is_split_part', 'is_search_part', 'replace_parts', 'strokes', 'stroke_order', 'remark',)
 
 
 class UserTaskProfileAdmin(admin.ModelAdmin):
-    model = UserTaskProfile
+    list_display = ('id', 'user', 'last_split_id', 'last_dedup_id', 'last_input_id',)
 
 
 admin.site.register(User)
