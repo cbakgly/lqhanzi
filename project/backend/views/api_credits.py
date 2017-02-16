@@ -8,10 +8,10 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
-from ..models import Credits, Tasks
+from ..models import Credits, Tasks, User
 from ..pagination import LimitOffsetPagination
 from ..auth import IsBusinessMember
-
+from ..enums import get_credit_type
 
 class CreditSerializer(serializers.ModelSerializer):
     rank = serializers.SerializerMethodField()
@@ -20,7 +20,7 @@ class CreditSerializer(serializers.ModelSerializer):
     class Meta:
         model = Credits
         fields = "__all__"
-        depth = 0
+        depth = 1
 
     def get_rank(self, obj):
         ranks = {}
@@ -69,7 +69,7 @@ class CreditViewSet(viewsets.ModelViewSet):
     @list_route()
     def certain_user_credits(self, request, *args, **kwargs):
         user = request.user
-        user_credits = user.user_credits.all()
+        user_credits = user.user_credits.exclude(credit=0)
         serializer = self.serializer_class(user_credits, many=True)
         return Response(serializer.data)
 
