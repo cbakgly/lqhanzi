@@ -19,6 +19,8 @@ BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
 TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
+SUPERUSER_ENUM = ((0, u'普通用户'), (1, u'超级管理员'))
+ISACTIVE = ((0, 'inactive'), (1, 'active'))
 
 
 class User(AbstractUser):
@@ -43,9 +45,11 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'user'
+        verbose_name_plural = u"用户记录"
+        verbose_name = u"用户记录"
 
     def __unicode__(self):
-        return self.username
+        return SUPERUSER_ENUM[self.is_superuser][1] + ':' + ISACTIVE[self.is_active][1] + ':' + self.username + ':' + self.email
 
 
 class HanziSet(models.Model):
@@ -87,6 +91,11 @@ class HanziSet(models.Model):
 
     class Meta:
         db_table = 'lq_hanzi_set'
+        verbose_name = u"汉字"
+        verbose_name_plural = u"汉字"
+
+    def __unicode__(self):
+        return self.hanzi_char + ':' + self.hanzi_pic_id
 
 
 class TaskPackages(models.Model):
@@ -104,6 +113,8 @@ class TaskPackages(models.Model):
 
     class Meta:
         db_table = 'lq_task_packages'
+        verbose_name = u"任务包"
+        verbose_name_plural = u"任务包"
 
     def __unicode__(self):
         return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][
@@ -118,6 +129,8 @@ class TaskTypes(models.Model):
 
     class Meta:
         db_table = 'lq_task_types'
+        verbose_name = u"任务类型积分"
+        verbose_name_plural = u"任务类型积分"
 
 
 class Tasks(models.Model):
@@ -144,6 +157,8 @@ class Tasks(models.Model):
     class Meta:
         db_table = 'lq_tasks'
         ordering = ['id']
+        verbose_name = u"任务"
+        verbose_name_plural = u"任务"
 
     def __unicode__(self):
         return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][
@@ -194,9 +209,11 @@ class VariantsSplit(models.Model):
 
     class Meta:
         db_table = 'lq_variants_split'
+        verbose_name = u"拆分"
+        verbose_name_plural = u"拆分"
 
     def __unicode__(self):
-        return self.hanzi_char
+        return self.hanzi_char + ':' + self.hanzi_pic_id
 
 
 class InputPage(models.Model):
@@ -204,7 +221,10 @@ class InputPage(models.Model):
     task = GenericRelation(Tasks, related_query_name="page_task")
 
     class Meta:
-        db_table = 'backend_inputpage'
+        db_table = 'lq_input_page'
+
+    def __unicode__(self):
+        return str(self.page_num)
 
 
 class VariantsInput(models.Model):
@@ -248,6 +268,11 @@ class VariantsInput(models.Model):
 
     class Meta:
         db_table = 'lq_variants_input'
+        verbose_name = u"录入"
+        verbose_name_plural = u"录入"
+
+    def __unicode__(self):
+        return '#' + str(self.page_num) + ':' + self.hanzi_char_draft + ':' + self.hanzi_pic_id_draft
 
 
 class KoreanVariantsDict(models.Model):
@@ -269,6 +294,11 @@ class KoreanVariantsDict(models.Model):
 
     class Meta:
         db_table = 'lq_korean_variants_dict'
+        verbose_name = u"高丽异体字典"
+        verbose_name_plural = u"高丽异体字典"
+
+    def __unicode__(self):
+        return self.glyph + ':' + self.code
 
 
 class HanziRadicals(models.Model):
@@ -282,11 +312,13 @@ class HanziRadicals(models.Model):
     remark = models.CharField(u'备注', max_length=128, blank=True, default='')
 
     def __unicode__(self):
-        return self.radical
+        return self.radical + ':' + self.strokes
 
     class Meta:
         db_table = 'lq_hanzi_radicals'
         ordering = ['strokes', 'id']
+        verbose_name = u"汉字部首"
+        verbose_name_plural = u"汉字部首"
 
 
 class KoreanDupZhengCodes(models.Model):
@@ -296,6 +328,11 @@ class KoreanDupZhengCodes(models.Model):
 
     class Meta:
         db_table = 'lq_korean_dup_zheng_codes'
+        verbose_name = u"高丽郑码"
+        verbose_name_plural = u"高丽郑码"
+
+    def __unicode__(self):
+        return self.zheng_code + ':' + self.page_num
 
 
 class KoreanDedup(models.Model):
@@ -313,6 +350,11 @@ class KoreanDedup(models.Model):
 
     class Meta:
         db_table = 'lq_korean_dedup'
+        verbose_name = u"高丽去重结果"
+        verbose_name_plural = u"高丽去重结果"
+
+    def __unicode__(self):
+        return self.hanzi_char + ':' + self.hanzi_pic_id + ':' + self.korean_dup_hanzi
 
 
 class KoreanDupCharacters(models.Model):
@@ -326,6 +368,8 @@ class KoreanDupCharacters(models.Model):
 
     class Meta:
         db_table = 'lq_korean_dup_characters'
+        verbose_name = u"高台去重字头"
+        verbose_name_plural = u"高台去重字头"
 
     def __unicode__(self):
         return self.korean_variant + " vs." + self.unicode
@@ -353,6 +397,11 @@ class InterDictDedup(models.Model):
 
     class Meta:
         db_table = 'lq_inter_dict_dedup'
+        verbose_name = u"高台去重结果"
+        verbose_name_plural = u"高台去重结果"
+
+    def __unicode__(self):
+        return self.hanzi_char + ':' + self.hanzi_pic_id + ':' + self.inter_dict_dup_hanzi_draft
 
 
 class Reward(models.Model):
@@ -367,7 +416,7 @@ class Reward(models.Model):
         db_table = 'lq_reward'
 
     def __unicode__(self):
-        return self.reward_name
+        return self.reward_name + ':' + self.reward_quantity
 
 
 class CreditsRedeem(models.Model):
@@ -390,6 +439,9 @@ class CreditsRedeem(models.Model):
     class Meta:
         db_table = 'lq_credits_redeem'
         verbose_name = verbose_name_plural = u"积分兑换"
+
+    def __unicode__(self):
+        return self.redeem_status_choices[self.status] + ':' + self.reward_name
 
 
 class Diaries(models.Model):
@@ -414,7 +466,7 @@ class Diaries(models.Model):
         db_table = 'lq_diaries'
 
     def __unicode__(self):
-        return self.work_brief
+        return self.tag_choices[self.tag][1] + ':' + self.work_brief
 
 
 class Credits(models.Model):
@@ -427,6 +479,7 @@ class Credits(models.Model):
     credit = models.IntegerField(u"积分值", default=0)
     user = models.ForeignKey(User, verbose_name=u"用户", related_name="user_credits")
     sort = models.IntegerField(u"积分类型", choices=sort_choices, default=1)
+    u_t = models.DateTimeField(u'更新时间', auto_now=True)
 
     class Meta:
         verbose_name = u"积分"
@@ -477,6 +530,8 @@ class HanziParts(models.Model):
 
     class Meta:
         db_table = 'lq_hanzi_parts'
+        verbose_name = u"汉字部件"
+        verbose_name_plural = u"汉字部件"
 
     @property
     def stroke_hspnz(self):
@@ -496,6 +551,9 @@ class UserTaskProfile(models.Model):
     last_split_id = models.IntegerField(u'上次拆分工作的ID', default=0)
     last_dedup_id = models.IntegerField(u'上次去重工作的ID', default=0)
     last_input_id = models.IntegerField(u'上次录入工作的ID', default=0)
+    u_t = models.DateTimeField(u'更新时间', auto_now=True)
 
     class Meta:
         db_table = 'lq_user_task_profile'
+        verbose_name = u'用户任务状态'
+        verbose_name_plural = u'用户任务状态'
