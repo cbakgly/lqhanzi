@@ -125,3 +125,7 @@ def has_business_type_perm(user, type):
         if user.has_perm(p):
             return True
     return False
+
+
+def get_lqhanzi_font_path():
+    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/lqhanzi.ttf'

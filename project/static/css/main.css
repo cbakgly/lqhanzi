@@ -623,6 +623,7 @@
 }
 
 .con-right .result-stoke, .con-right .result-item {
+    font-family: "lqhanzi" !important;
     display: inline-block;
     width: 40px;
     height: 40px;
