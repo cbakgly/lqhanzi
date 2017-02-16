@@ -35,9 +35,8 @@ body.hold-transition .main-sidebar {
     -o-transition: none;
     transition: none;
 }
-
 .content-wrapper .content-wrapper-inner {
-    min-height: 500px;
+    min-height: 711px;
     margin-right: 10px;
     margin-left: 15px;
     padding: 10px;
