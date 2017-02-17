@@ -19,7 +19,7 @@
                                     <span class="z-total">总积分：<b>#[ aquireCredit ]</b></span>
                                     <span>#[ credit_des ]</span>
                                     <a class="exchange" href="{% url 'm2.credits-redeem' %}"
-                                       title="查看我的兑换">已兑换：<b>800</b></a>
+                                       title="查看我的兑换">已兑换：<b>#[ redeemcredits ]</b></a>
                                 </div>
                                 <div class="col col-md-4 col-sm-6 col-xs-12">
                                     <div class="input-group">
@@ -84,6 +84,7 @@
                 sort: 1,
                 total_credit: 0,
                 credit_des:"",
+                redeemcredits: 0,
                 options: [
                     {text: '总积分', value: 0},
                     {text: '拆字积分', value: 1},
@@ -103,6 +104,7 @@
                         success: function (response) {
                             creditsSort.total_credit = response['sum_credit'];
                             creditsSort.credit_des = response['credit_detail'];
+                            creditsSort.redeemcredits = response['credit_redeem'];
                         },
                         error: function (xhr, status, err) {
                             console.log(err);

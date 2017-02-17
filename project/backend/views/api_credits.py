@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from django.db.models import Sum
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
@@ -7,7 +8,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 import django_filters
 
-from ..models import Credits, Tasks
+from ..models import Credits, CreditsRedeem
 from ..pagination import LimitOffsetPagination
 from ..auth import IsBusinessMember
 
@@ -95,7 +96,8 @@ class CreditViewSet(viewsets.ModelViewSet):
         dedup = dedup/total*100
         other = other/total*100
         credit_des = "拆字：%.0f%%，录入：%.0f%%，去重:%.0f%%，其他：%.0f%%" % (split,input,dedup,other)
-        r = Response({'sum_credit':total,'credit_detail':credit_des})
+        credit_redeem = CreditsRedeem.objects.filter(applied_by=user).values("cost_credits").aggregate(Sum("cost_credits"))
+        r = Response({'sum_credit':total,'credit_detail':credit_des,'credit_redeem':credit_redeem['cost_credits__sum']})
         return r
 
     @list_route()
