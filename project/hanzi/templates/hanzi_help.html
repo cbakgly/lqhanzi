@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>首页-帮助信息页面</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+    <script src="{% static 'js/hanzi_help.js' %}"></script>
+</head>
+<body>
+    <div class="wrapper">
+    <!-- help-header -->
+        <div class="hanzi-sets-header">
+            <div class="shortcut">
+                <div class="w">
+                    <div class="hanzi-sets-logo fl">
+                        <h1><a href="{% url 'm1.index' %}">龙泉字库</a></h1>
+                    </div>
+                    <div class="nav-tab nav-tab-r fr">
+                        <ul class="tabs clearfix">
+                            <li><a href="{% url 'm1.index' %}">部件笔画检字法</a></li>
+                            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
+                            <li><a href="{% url 'm2.home-page' %}">工作台</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./help-header -->
+        <!-- help-content -->
+        <div class="help-content">
+            <div class="w">
+            <!-- 左侧目录 -->
+                <div class="help-catalog">
+                    <div id="Catalog_box">
+                        <ul>
+                            <li class="cate-item1">
+                                <span>— </span> <!-- 左侧横线 -->
+                                <a href="#1">如何开始工作</a> <!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#1_1">准备</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#1_2">学习业务</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#1_3">领任务+每日打卡</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#2">部件笔画检字法</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#2_1">简介</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#2_2">拆字编码篇</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#2_3">检索篇</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item1">
+                                <span>— </span>
+                                <a href="#3">异体字拆字实例</a>
+                            </li>
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#4">汉字部件表简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#4_1">部件面板</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#4_2">检索式</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#4_3">点选</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#5">异体字录入简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#5_1">字头信息核对</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#5_2">通行字类型选择记录</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#6">异体字去重简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#6_1">404</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#6_2">404</a></li><!-- 锚点跳转 -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- ./左侧目录 -->
+                <!-- 右侧内容 -->
+                <div class="help-main">
+                     <div class="help-inner" id="help_inner">
+                        <!-- 1如何开始工作 -->
+                         <h2><a name="1">如何开始工作</a></h2>
+                         <h3><a name="1_1">一、准备</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>创建账户<a class="link" href="#">http://......</a></p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(二) 下载安装KaixinSong字体</p>
+                         <p>字体文件见链接：<a class="link" href="#">http://......</a></p>
+                         <h3><a name="1_2">二、学习业务</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <h3><a name="1_3">三、领任务+每日打卡</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(一) 领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>1、领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>2、进行中</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>3、已完成</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>4、详情</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="f14">(二) 每日打卡</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <!-- 2部件笔画检字法 -->
+                         <h2><a name="2">部件笔画检字法</a></h2>
+                         <h3><a name="2_1">一、准备</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>创建账户http://...</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(二) 下载安装KaixinSong字体</p>
+                         <p>字体文件见链接：http://...</p>
+                         <h3><a name="2_2">二、学习业务</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <h3><a name="2_3">三、领任务+每日打卡</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(一) 领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>1、领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>2、进行中</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>3、已完成</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>4、详情</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="f14">(二) 每日打卡</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <!-- 3异体字拆字实例-->
+                         <h2><a name="3">异体字拆字实例</a></h2>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <!-- 4汉字部件表简介 -->
+                         <h2><a name="4">汉字部件表简介</a></h2>
+                         <h3><a name="4_1">一、准备</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>创建账户http://...</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(二) 下载安装KaixinSong字体</p>
+                         <p>字体文件见链接：http://...</p>
+                         <h3><a name="4_2">二、学习业务</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <h3><a name="4_3">三、领任务+每日打卡</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(一) 领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>1、领任务</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>2、进行中</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>3、已完成</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>4、详情</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="f14">(二) 每日打卡</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛</p>
+                         <!-- 5异体字录入简介 -->
+                         <h2><a name="5">异体字录入简介</a></h2>
+                         <h3><a name="5_1">一、字头信息核对</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>创建账户http://...</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(二) 阿弥陀佛</p>
+                         <p>字体文件见链接：http://...</p>
+                         <h3><a name="5_2">二、通行字类型选择记录</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <!--6-->
+                         <h2><a name="6">异体字去重简介</a></h2>
+                         <h3><a name="6_1">一、字头信息核对</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>创建账户http://...</p>
+                         <p class="pic"><img src="/static/img/user-login.jpg" alt=""></p>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                         <p class="f14">(二) 阿弥陀佛</p>
+                         <p>字体文件见链接：http://...</p>
+                         <h3><a name="6_2">二、通行字类型选择记录</a></h3>
+                         <p>南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛南无阿弥陀佛。</p>
+                     </div>
+                </div>
+                <!-- ./右侧内容 -->
+            </div>
+        </div>
+        <!-- ./help-content -->
+        <!-- 返回顶部 -->
+        <div class="gotop"></div>
+        <!-- ./返回顶部 -->
+    </div>
+    <!-- 调用 -->
+    <script type="text/javascript">
+        $(function(){
+            $.CateNav('#help_inner','#Catalog_box');//第一个参数为存放文章内容的box,第二个参数为存放生成目录的box；
+        })
+    </script>
+</body>
+</html>
