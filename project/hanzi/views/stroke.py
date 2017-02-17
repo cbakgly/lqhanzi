@@ -87,7 +87,7 @@ def is_part(char):
 	"""
 	判断一个字符是不是部件
 	"""
-	if is_structure(char)==True or is_regular(char)==True: 
+	if is_structure(char)==True or is_regular(char)==True:
 		return False
 	else:
 		return True
@@ -181,7 +181,7 @@ def get_parts():
 	parts = HanziParts.objects.filter(is_search_part=1)\
 		.values('part_char','strokes','stroke_order')\
 		.order_by('strokes','stroke_order')
-		
+
 	d = []
 	flag = 0
 	length = len(parts)
@@ -200,7 +200,8 @@ def stroke_search(request):
 	输出部件笔画页面
 	"""
 	content = {}
-	content['part_list'] = get_parts()	
+	content['part_list'] = get_parts()
+	content['lqhanzi_font_path'] = get_lqhanzi_font_path()
 	return render(request,'stroke_search.html',content)
 
 
@@ -265,7 +266,7 @@ def stroke_normal_search(request):
 	#开始检索
 	if(mode==1):
 		total = HanziSet.objects.filter( Q(structure__contains=structure)&Q(stroke_serial__regex=parts_rex)&Q(similar_parts__regex=similar_parts_rex)&Q(is_for_search=1) ).count()
-		
+
 		pages = get_pages(total,page_size)
 
 		result = HanziSet.objects.filter( Q(structure__contains=structure)&Q(stroke_serial__regex=parts_rex)&Q(similar_parts__regex=similar_parts_rex)&Q(is_for_search=1) )\
@@ -297,7 +298,7 @@ def stroke_normal_search(request):
 		max_num = parts_stroke+int(t[1])
 
 		total = HanziSet.objects.filter( Q(max_strokes__lte=max_num)&Q(max_strokes__gte=min_num)&Q(structure__contains=structure)&Q(stroke_serial__regex=parts_rex)&Q(similar_parts__regex=similar_parts_rex)&Q(is_for_search=1) ).count()
-		
+
 		pages = get_pages(total,page_size)
 
 		result = HanziSet.objects.filter( Q(max_strokes__lte=max_num)&Q(max_strokes__gte=min_num)&Q(structure__contains=structure)&Q(stroke_serial__regex=parts_rex)&Q(similar_parts__regex=similar_parts_rex)&Q(is_for_search=1) )\
@@ -311,7 +312,7 @@ def stroke_normal_search(request):
 
 	r = {}
 	r['q'] = request.GET.get('q')
-	r['total'] = total	
+	r['total'] = total
 	r['page_num'] = page_num
 	r['pages'] = pages
 	r['page_size'] = page_size
@@ -430,7 +431,7 @@ def stroke_advanced_search(request):
 
 	r = {}
 	r['q'] = q
-	r['total'] = total	
+	r['total'] = total
 	r['page_num'] = page_num
 	r['pages'] = pages
 	r['page_size'] = page_size

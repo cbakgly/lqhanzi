@@ -15,7 +15,11 @@ def get_user_task_profile(user):
 
 
 def convert_profile_to_dict(profile):
-    return {"id": profile.id, getenum_business_type('split'): profile.last_split_id, getenum_business_type('dedup'): profile.last_dedup_id, getenum_business_type('input'): profile.last_input_id}
+    return {"id": profile.id,
+            getenum_business_type('split'): profile.last_split_id,
+            getenum_business_type('dedup'): profile.last_dedup_id,
+            getenum_business_type('input'): profile.last_input_id
+            }
 
 
 def update_user_task_profile(**kwargs):

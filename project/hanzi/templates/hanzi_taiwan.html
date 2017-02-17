@@ -3,7 +3,8 @@
 {% block title %}台湾异体字字典{% endblock %}
 
 {% load static %}
-{% block headerjs %}<script src="{% static 'js/hanzi/hanzi_dicts_taiwan.js' %}"></script>{% endblock %}
+{% block headerjs %}
+  <script src="{% static 'js/hanzi/hanzi_dicts_taiwan.js' %}"></script>{% endblock %}
 
 {% block right-tabs %}
   <li class="active">部首索引</li>
@@ -40,6 +41,11 @@
         <li><a class="tw-std-hanzi" href="{% url 'm1.dicts-taiwan-std-hanzi' %}?type=n"><i
                 class="fa fa-circle-o"></i> 新增正字</a></li>
       </ul>
+    </li>
+    <li class="treeview">
+      <a class="inner" href="https://s3.cn-north-1.amazonaws.com.cn/yitizi/suob/suob.htm">
+        <span>笔画索引</span>
+      </a>
     </li>
     <li class="treeview">
       <a href="http://dict.variants.moe.edu.tw/fulu/fu13/biau/bp0001.htm" target="_blank">

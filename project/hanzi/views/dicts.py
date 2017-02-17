@@ -130,53 +130,6 @@ def taiwan_std_hanzi(request):
 
 
 @csrf_exempt
-def dicts_search(request):
-    """
-    根据部首、来源获取相应的汉字集
-    """
-    if not request.GET.get('q', False) or not request.GET.get('source', False):
-        return JsonResponse({'error': 'key does not exist.'})
-
-    radical = request.GET.get('q')
-    source = int(request.GET.get('source'))
-    page_size = int(request.GET.get('page_size', 100))  # 默认每页显示100个字
-    page_num = int(request.GET.get('page_num', 1))
-
-    query_list = [Q(radical__exact=radical), Q(source__exact=source)]
-    radical_stroke = 0
-    if request.GET.get('left_stroke', False):
-        total_stroke = int(request.GET.get('left_stroke'))
-        try:
-            radical_stroke = int(HanziRadicals.objects.get(radical=radical).strokes)
-            total_stroke += radical_stroke
-            query_list.append(Q(max_strokes__gte=total_stroke))
-            query_list.append(Q(min_strokes__lte=total_stroke))
-        except Exception:
-            return []
-
-    total_count = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
-    hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'max_strokes', 'hanzi_char', 'hanzi_pic_id', 'seq_id').order_by(
-        'max_strokes')[(page_num - 1) * page_size: page_num * page_size]
-    hanzi_set = list(hanzi_set)
-
-    for item in hanzi_set:
-        item['pic_url'] = get_pic_url_by_source_pic_name(source, item['hanzi_pic_id'])
-        item['remain_strokes_num'] = item['max_strokes'] - radical_stroke
-        item['seq_id'] = item['seq_id'].split(';')[0]
-
-    return JsonResponse({
-        'data_type': 'dicts_search',
-        'q': radical,
-        'source': source,
-        'left_stroke': request.GET.get('left_stroke', ''),
-        'page_size': page_size,
-        'page_num': page_num,
-        'total_count': total_count,
-        'result': hanzi_set,
-    })
-
-
-@csrf_exempt
 def korean(request):
     # get radicals
     source = SOURCE_ENUM['korean']
@@ -197,13 +150,65 @@ def korean(request):
                 'radicals': [item['radical']]
             }
     content = {
-        'active': 'korean',
         'radical_dict': radical_dict,
-        'dict_name': '高丽异体字字典',
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
+        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/kr-dict/korean_cover.jpg',
     }
 
-    return render(request, 'hanzi_dicts.html', context=content)
+    return render(request, 'hanzi_korean.html', context=content)
+
+
+@csrf_exempt
+def korean_detail(request):
+    """
+    显示高丽异体字详细信息
+    """
+    title = request.GET.get('title', False).lower()
+    if not title:
+        return JsonResponse({'error': 'not found' + title})
+    else:
+        query_list = [Q(source__exact=SOURCE_ENUM['korean'])]
+        if 'kr' in title:
+            query_list.append(Q(hanzi_pic_id__exact=title))
+        else:
+            query_list.append(Q(hanzi_char__exact=title))
+        hanzi = HanziSet.objects.filter(reduce(operator.and_, query_list))[0]
+        std_hanzis = [hanzi.std_hanzi]
+        ids = [hanzi.id]
+
+        if hanzi.variant_type == 3:  # 广义异体字
+            dup_hanzi_pic_ids = hanzi.korean_dup_hanzi.split(';')
+            hanzis = HanziSet.objects.filter(Q(source__exact=SOURCE_ENUM['korean']) & Q(hanzi_pic_id__in=dup_hanzi_pic_ids)).values('id', 'std_hanzi')
+            for item in hanzis:
+                std_hanzis.append(item['std_hanzi'])
+                ids.append(item['id'])
+
+        hanzi_set = HanziSet.objects.filter(Q(source__exact=SOURCE_ENUM['korean']) & Q(std_hanzi__in=std_hanzis)).values('id', 'source', 'std_hanzi', 'max_strokes', 'hanzi_char', 'hanzi_pic_id', 'variant_type').order_by('std_hanzi')
+        hanzi_set = list(hanzi_set)
+        for item in hanzi_set:
+            if item['variant_type'] == 0:  # 高丽正字
+                item['pic_url'] = get_pic_url_by_source_pic_name(SOURCE_ENUM['korean'], item['hanzi_char'])
+            else:
+                item['pic_url'] = get_pic_url_by_source_pic_name(SOURCE_ENUM['korean'], item['hanzi_pic_id'])
+
+        # transform hanzi_set
+        result = {}
+        for item in hanzi_set:
+            # 设置是否为请求参数
+            if item['id'] in ids:
+                item['target'] = True
+
+            if item['std_hanzi'] not in result:
+                result[item['std_hanzi']] = {}
+
+            if item['variant_type'] == 0:  # 正字
+                result[item['std_hanzi']]['std_hanzi'] = item
+            else:
+                if 'variants' not in result[item['std_hanzi']]:
+                    result[item['std_hanzi']]['variants'] = [item]
+                else:
+                    result[item['std_hanzi']]['variants'].append(item)
+
+        return JsonResponse(result)
 
 
 @csrf_exempt
@@ -260,3 +265,53 @@ def dunhuang(request):
     }
 
     return render(request, 'hanzi_dunhuang.html', context=content)
+
+
+@csrf_exempt
+def dicts_search(request):
+    """
+    根据部首、来源获取相应的汉字集
+    """
+    if not request.GET.get('q', False) or not request.GET.get('source', False):
+        return JsonResponse({'error': 'key does not exist.'})
+
+    radical = request.GET.get('q')
+    source = int(request.GET.get('source'))
+    page_size = int(request.GET.get('page_size', 100))  # 默认每页显示100个字
+    page_num = int(request.GET.get('page_num', 1))
+
+    query_list = [Q(radical__exact=radical), Q(source__exact=source)]
+    radical_stroke = 0
+    if request.GET.get('left_stroke', False):
+        total_stroke = int(request.GET.get('left_stroke'))
+        try:
+            radical_stroke = int(HanziRadicals.objects.get(radical=radical).strokes)
+            total_stroke += radical_stroke
+            query_list.append(Q(max_strokes__gte=total_stroke))
+            query_list.append(Q(min_strokes__lte=total_stroke))
+        except Exception:
+            return []
+
+    total_count = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
+    hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'max_strokes', 'hanzi_char', 'hanzi_pic_id', 'variant_type', 'seq_id').order_by(
+        'max_strokes')[(page_num - 1) * page_size: page_num * page_size]
+    hanzi_set = list(hanzi_set)
+
+    for item in hanzi_set:
+        if source == SOURCE_ENUM['korean'] and item['variant_type'] == 0:  # 高丽正字
+            item['pic_url'] = get_pic_url_by_source_pic_name(source, item['hanzi_char'])
+        else:
+            item['pic_url'] = get_pic_url_by_source_pic_name(source, item['hanzi_pic_id'])
+        item['remain_strokes_num'] = item['max_strokes'] - radical_stroke
+        item['seq_id'] = item['seq_id'].split(';')[0]
+
+    return JsonResponse({
+        'data_type': 'dicts_search',
+        'q': radical,
+        'source': source,
+        'left_stroke': request.GET.get('left_stroke', ''),
+        'page_size': page_size,
+        'page_num': page_num,
+        'total_count': total_count,
+        'result': hanzi_set,
+    })

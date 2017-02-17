@@ -3,73 +3,74 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-blue">
-            <!-- /.box-header -->
-            <div class="box-header">
-                <div class="box-header-inner">
-                    <h3 class="box-title">积分排行:</h3>
-                    
-                    <div id="app" class="ser-bd">
-                        <div class="z-ser z1-ser">
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div id="test" class="input-group">
-                                    <span class="input-group-addon">姓名:</span>
-                                    <input v-model.lazy="username" type="text" class="form-control" placeholder="请输入姓名">
-                                </div>
-                            </div>
-                            <div class="col col-md-4 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">类型:</span>
-                                    <!-- select -->
-                                    <div class="form-group">
-                                        <select v-model="selected" class="form-control">
-                                            <option value=1>总积分</option>
-                                            <option value=2>拆字积分</option>
-                                            <option value=3>去重积分</option>
-                                            <option value=4>录入积分</option>
-                                            <option value=5>互助积分</option>
-                                        </select>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-blue">
+                <!-- /.box-header -->
+                <div class="box-header">
+                    <div class="box-header-inner">
+                        <h3 class="box-title">积分排行:</h3>
+
+                        <div id="app" class="ser-bd">
+                            <div class="z-ser z1-ser">
+                                <div class="col col-md-4 col-sm-6 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">姓名:</span>
+                                        <input v-model="searchname" type="text" class="form-control" placeholder="请输入姓名">
                                     </div>
                                 </div>
-                           </div>
+                                <div class="col col-md-4 col-sm-6 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">类型:</span>
+                                        <!-- select -->
+                                        <div class="form-group">
+                                            <select v-model="selected" class="form-control">
+                                                <option value=0>总积分</option>
+                                                <option value=1>拆字积分</option>
+                                                <option value=5>去重积分</option>
+                                                <option value=2>录入积分</option>
+                                                <option value=3>图书校对</option>
+                                                <option value=4>论文下载</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btns">
+                                <button v-on:click="load_pages" class="btn btn-blue btn-sm">查询</button>
+                            </div>
+                            <div class="z-info">
+                                <a class="z-score" href="/workbench/credits-details"
+                                   title="查看积分详情">我的总积分：<b>#[mycredit]</b></a>
+                                <span class="z-sort">我的排名：<b>#[myrank]</b></span>
+                            </div>
+                            <div class="box-body table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>姓名</th>
+                                        <th>积分</th>
+                                        <th>积分类型</th>
+                                        <th>排名</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="for (item, index) in cdata">
+                                        <td v-text="index+1"></td>
+                                        <td v-text="item.user.username"></td>
+                                        <td v-text="item.credit"></td>
+                                        <td v-text="credits_arr[item.sort]"></td>
+                                        <td v-text="item.rank"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
                         </div>
-                        <div class="btns">
-                            <button v-on:click="load_pages()" class="btn btn-blue btn-sm">查询</button>
-                        </div>
-                        <div class="z-info">
-                            <a class="z-score" href="/workbench/credits-details" title="查看积分详情">我的总积分：<b>#[mycredit]</b></a>
-                            <span class="z-sort">我的排名：<b>#[myrank]</b></span>
-                        </div>
-                        <div class="box-body table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>姓名</th>
-                                    <th>积分</th>
-                                    <th>积分类型</th>
-                                    <th>排名</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(item, index) in cdata">
-                                    <td v-text="index+1"></td>
-
-                                    <td v-text="item.credit"></td>
-                                    <td v-text="item.sort"></td>
-                                    <td v-text="item.rank"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div><!-- /.box-body -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div><!-- /.box -->
-
-<script src="{{STATIC_URL}}js/workbench/credits-ranking.js" type="text/javascript"></script>
+    </div><!-- /.box -->
+    <script src="{{ STATIC_URL }}js/workbench/credits-ranking.js" type="text/javascript"></script>
 {% endblock %}

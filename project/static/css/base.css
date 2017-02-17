@@ -19,10 +19,10 @@ ul, ol {
 input {
     padding-top: 0;
     padding-bottom: 0;
-    font-family: KaiXinSong, Arial, Helvetica, sans-serif, lqhanzi;
+    font-family: Arial, Helvetica, 宋体, KaiXinSong, sans-serif, lqhanzi;
 }
 
-select {
+select,input{
     vertical-align: middle;
 }
 
@@ -48,7 +48,7 @@ table {
 }
 
 body {
-    font-family: Arial, Helvetica, 宋体, KaiXinSong, sans-serif, lqhanzi;
+    font-family: Arial, Helvetica, "宋体", KaiXinSong, sans-serif, lqhanzi;
     font-size: 12px;
     font-weight: 400;
     overflow-x: hidden;

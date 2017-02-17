@@ -26,6 +26,11 @@ urlpatterns = [
     url(r'task/input$', task.task_input, name='m2.task-input'),
     url(r'task/dedup$', task.task_dedup, name='m2.task-dedup'),
 
+    url(r'task/split/(?P<pk>\d+)/$', task.task_split, name='m2.task-split-detail'),
+    url(r'task/input/(?P<pk>\d+)/$', task.task_input, name='m2.task-input-detail'),
+    url(r'task/dedup/(?P<pk>\d+)/$', task.task_dedup, name='m2.task-dedup-detail'),
+    url(r'task/dedup2/(?P<pk>\d+)/$', task.task_dedup2, name='m2.task-dedup-detail'),
+
     url(r'search/lq-hanzi$', search.lq_hanzi_db_search, name='m2.lq-hanzi-search'),
     url(r'search/lq-split$', search.lq_split_db_search, name='m2.lq-split-search'),
     url(r'search/cn-dict-input$', search.cn_dict_input_db_search, name='m2.cn-dict-input-search'),
@@ -34,5 +39,5 @@ urlpatterns = [
     url(r'search/korean-taiwan-dedup$', search.korean_taiwan_dedup_db_search, name='m2.korean-taiwan-dedup-search'),
     url(r'forum', forum.index, name='m2.forum'),
 
-    url(r'^$', diaries.index, name='m2.home-page')
+    url(r'^$', task_package.task_package_ongoing, name='m2.home-page')
 ]

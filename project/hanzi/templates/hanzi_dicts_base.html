@@ -29,49 +29,6 @@
           <li>
             <a class="home-icon" href="{% url 'm1.index' %}"></a>
           </li>
-          <!--未登录前-->
-          <li class="dropdown">
-            <a href="javascript:;" class="dropdown-toggle"><i class="user-icon"></i></a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="{% static 'img/login-ahead.jpg' %}" class="img-circle" alt="User Image">
-                <p>未登录</p>
-              </li>
-              <li class="user-footer clearfix">
-                <div class="fl">
-                  <a href="#" class="btn btn-default btn-flat">注册</a>
-                </div>
-                <div class="fr">
-                  <a href="#" class="btn btn-default btn-flat">登录</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!--./未登录-->
-          <!--登录后-->
-          <!-- 默认display:none;登录后显示-->
-          <li class="dropdown user-menu">
-            <!-- The user image in the nav-->
-            <a href="javascript:;">
-              <img src="{% static 'img/user-login.jpg' %}" class="user-image" alt="头像">
-              <span>贤二</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="{% static 'img/user-login.jpg' %}" class="img-circle" alt="头像">
-                <p>贤二</p>
-              </li>
-              <li class="user-footer clearfix">
-                <div class="fl">
-                  <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                </div>
-                <div class="fr">
-                  <a href="#" class="btn btn-default btn-flat">退出登录</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!--./登录后-->
         </ul>
       </div>
       <div class="dict-tabs fr">
@@ -169,10 +126,26 @@
         {% block content %}
         {% endblock %}
       </div>
-
       <!-- /.content -->
     </div>
+
   </div>
+
+  <div class="bottom">
+    <div class="bottom-content">
+      <div style="padding: 15px 0">
+        <div class="copy-right pull-left">Copyright@2017 hanzi.lqdzj.cn All right Reserved</div>
+        <ul class="links pull-right">
+          <li><a>关于我们</a>|</li>
+          <li><a>免责申请</a>|</li>
+          <li><a>帮助中心</a></li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+      <div class="record-code" style="padding: 10px 0">版权所有 京ICP备16061775号</div>
+    </div>
+  </div>
+
 </div>
 
 </body>

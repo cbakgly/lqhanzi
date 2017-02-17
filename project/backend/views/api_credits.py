@@ -20,12 +20,12 @@ class CreditSerializer(serializers.ModelSerializer):
     class Meta:
         model = Credits
         fields = "__all__"
-        depth = 0
+        depth = 1
 
     def get_rank(self, obj):
         ranks = {}
         credit_set = Credits.objects.all()
-        for i in range(1, 6):
+        for i in range(0, 10):
             ranks[i] = []
 
         for c in credit_set:
@@ -33,7 +33,7 @@ class CreditSerializer(serializers.ModelSerializer):
             cs = c.sort
             if cd not in ranks[cs]:
                 ranks[cs].append(cd)
-        for i in range(1, 6):
+        for i in range(0, 10):
             ranks[i].sort()
             ranks[i].reverse()
         return ranks[obj.sort].index(obj.credit) + 1
@@ -69,7 +69,7 @@ class CreditViewSet(viewsets.ModelViewSet):
     @list_route()
     def certain_user_credits(self, request, *args, **kwargs):
         user = request.user
-        user_credits = user.user_credits.all()
+        user_credits = user.user_credits.exclude(credit=0)
         serializer = self.serializer_class(user_credits, many=True)
         return Response(serializer.data)
 
@@ -78,3 +78,12 @@ class CreditViewSet(viewsets.ModelViewSet):
         user = request.user
         sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
         return Response(sum_credits)
+
+    @list_route()
+    def searchcredit(self, request, *args, **kwargs):
+        data = request.data
+
+        sort = request.query_params['select_sort']
+        name = request.query_params['search_name']
+        search_result = Credits.objects.filter(user__username__contains=name, sort=sort)
+        return Response(self.serializer_class(search_result,many=True).data)

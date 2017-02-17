@@ -14,6 +14,7 @@ GROUPS = {"guest": 1, "member": 2, "volunteer ": 3, "forum_manager ": 4, "op_man
 PERMS = {'draft_input': 'backend.op_draft_input', 'review_input': 'backend.op_review_input', 'final_input': 'backend.op_final_input',
          'draft_split': 'backend.op_draft_split', 'review_split': 'backend.op_review_split', 'final_split': 'backend.op_final_split',
          'draft_dedup': 'backend.op_draft_dedup', 'review_dedup': 'backend.op_review_dedup', 'final_dedup': 'backend.op_final_dedup'}
+CREDIT_TYPE = {0: '总积分', 1: '拆字积分', 2: '录入积分', 3: '图书校对', 4: '论文下载', 5: '去重积分'}
 
 
 def getenum_task_package_status(name):
@@ -42,3 +43,7 @@ def getenum_group_id(name):
 
 def getenum_perm_code(name):
     return PERMS[name]
+
+
+def getenum_credit_type(no):
+    return CREDIT_TYPE[no]

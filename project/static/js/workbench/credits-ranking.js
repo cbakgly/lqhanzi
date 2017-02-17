@@ -1,11 +1,8 @@
 /**
  * Created by wangwei on 16-12-20.
  */
-var credits_arr = new Array("总积分",
-    "拆字积分",
-    "去重积分",
-    "录入积分",
-    "互助积分")
+
+
 var indexOf = function (value) {
     for (var i = 0, vlen = credits_arr.length; i < vlen; i++) {
         if (credits_arr[i] == value) {
@@ -13,70 +10,36 @@ var indexOf = function (value) {
         }
     }
 }
-//var username = "ww";
 var appvm = new Vue({
     delimiters: ["#[", "]"],
     el: '#app',
     data: {
-        //username: "wangwei",
+        searchname: "",
         selected: 1,
         cdata: [],
-        //pagination: {},
-        //page_size: 10,
-        //current_page: 1,
-        //first_entry: true,
         offset: 0,
         mycredit: 0,
         myrank: 1,
+        credits_arr :{0:"总积分",1:"拆字积分",5:"去重积分",2:"录入积分",3:"图书校对",4:"论文下载"}
     },
     watch:{
 
     },
     methods: {
-        //trim: function(stri) {
-        //    return stri.replace(/(^\s*)|(\s*$)/g, ""); },
-        gen_url: function () {
-
-            var username = document.getElementsByClassName("hidden-xs")[0].innerHTML
-            username = appvm.trim(username)
-
-            //base_url += "&user__username=" + username
-            //base_url +=
-            //return base_url
-        },
-        /*get_offset: function () {
-            var url = this.gen_url()
-            var app = this
-            axios({
-                method:"get",
-                url: url,
-                xsrfCookieName: 'csrftoken',
-                xsrfHeaderName: 'X-CSRFToken'
-            })
-                .then(function(data){
-                    for (var i = 0; i < data.length; i++) {
-                        if (indexof(data[i].sort) == app.selected) {
-                            app.offset = data[i].rank - 2
-                            break
-                        }
-                    }
-                }).catch(function(error){
-                    console.log(error);
-            })
-        },*/
         load_pages: function () {
-            //this.current_page = page_num
-            //appvm.get_offset()
-            var url = "/api/v1/credits/?sort=" + appvm.selected
-            //var url = "/api/workbench/credits/certain_user_credits/"
-            //url = url + "&offset=" + appvm.offset
+            var url = "/api/v1/credits/searchcredit/";
             $.ajax({
                 url: url,
+                method:'GET',
+                enctype : "multipart/form-data",
                 dataType: 'json',
+                data:{
+                    'select_sort':this.selected,
+                    'search_name':this.searchname
+                },
                 cache: false,
                 success: function (data) {
-                    appvm.cdata = data
-                    //appvm.pagination = data.pagination
+                    appvm.cdata = data;
                 },
                 error: function (xhr, status, err) {
                     console.log('error');
@@ -84,21 +47,19 @@ var appvm = new Vue({
             })
         },
         get_login_user: function () {
-            var base_url = "/api/v1/credits/certain_user_credits/"
-
-            //console.log(username)
-            //var url = base_url+"&user__username="+username+"&sort=1"
+            var base_url = "/api/v1/credits/certain_user_credits/";
             $.ajax({
                 url: base_url,
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    appvm.cdata = data
+                    console.log(data);
+                    appvm.cdata = data;
                     for (var i = 0; i < data.length; i++) {
-                        if (data[i].sort == "总积分") {
-                            appvm.mycredit = data[i].credit
-                            appvm.myrank = data[i].rank
-                            break
+                        if (data[i].sort == 0) {
+                            appvm.mycredit = data[i].credit;
+                            appvm.myrank = data[i].rank;
+                            break;
                         }
                     }
                 },
@@ -106,7 +67,7 @@ var appvm = new Vue({
                     console.log('error');
                 }
             })
-        },
+        }
     }
 });
 appvm.get_login_user();

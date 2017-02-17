@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework',
-    'guardian',
+    # 'guardian',
     # 'debug_toolbar',
     'registration',
     'hanzi',
@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,8 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'django.middleware.transaction.TransactionMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'lqconfig.urls'
@@ -104,7 +101,6 @@ DATABASES = {
         'HOST': '192.168.16.3',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
-        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -181,7 +177,7 @@ LOGIN_URL = '/accounts/login/'
 REGISTRATION_EMAIL_SUBJECT_PREFIX = '[龙泉字库注册邮件]'
 SEND_ACTIVATION_EMAIL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'alqdzj@126.com' # 账号密码同aws密码
+DEFAULT_FROM_EMAIL = 'alqdzj@126.com'  # 账号密码同aws密码
 EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
@@ -189,17 +185,12 @@ EMAIL_PORT = 25
 # Registration Settings end
 
 
-# Redis Cache Settings
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '127.0.0.1:6379',
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'lqhanzi',
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
         },
     },
 }
-# Redis Cache Settings end
-

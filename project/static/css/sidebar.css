@@ -35,9 +35,8 @@ body.hold-transition .main-sidebar {
     -o-transition: none;
     transition: none;
 }
-
 .content-wrapper .content-wrapper-inner {
-    min-height: 500px;
+    min-height: 711px;
     margin-right: 10px;
     margin-left: 15px;
     padding: 10px;
@@ -61,6 +60,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
     margin-left: 230px;
     z-index: 820;
+    padding-bottom: 30px;
 }
 
 .icon-sidebar-toggle {
@@ -171,7 +171,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .sidebar {
-    padding-bottom: 10px;
+    padding-bottom: 50px;
 }
 
 .sidebar-menu {

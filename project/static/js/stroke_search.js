@@ -1,5 +1,5 @@
 
-//string必须是"source=unicode;code=;variant_type=null;std_hanzi=;as_std_hanzi="这样的格式 
+//string必须是"source=unicode;code=;variant_type=null;std_hanzi=;as_std_hanzi="这样的格式
 function FindPropertyValue(string,property)
 {
     var rex = new RegExp( property+"=(.*?)\\|");
@@ -70,7 +70,7 @@ $(document).ready(function()
 
     $(document).on('mouseout', '#btip', function()
     {
-        $("#btip").hide(); 
+        $("#btip").hide();
     });
 
 
@@ -94,7 +94,7 @@ $(document).ready(function()
         $('.search-bottom input:last').click();
 
         //触发按纽的点击事件
-        $("#strock_search_btn").trigger("click"); 
+        $("#strock_search_btn").trigger("click");
 
     });
 
@@ -235,7 +235,7 @@ $(document).ready(function()
                   //渲染数据
                   render_inverse_result(data);
               });
-            return;    
+            return;
         }
 
     });
@@ -247,7 +247,7 @@ $(document).ready(function()
     {
         var current_order = $("#current_order").text();
         var url = $(this).attr("data-url");
-      
+
         if(current_order=='1')
         {
             url = 'stroke_normal_search?' + url;
@@ -284,7 +284,7 @@ $(document).ready(function()
         {
             $("#search_tip").html("页码超过范围啦");
             return;
-        }  
+        }
 
         var current_order = $("#current_order").text();
         var url = $(this).attr("data-url") + '&page_num=' + new_page;
@@ -315,7 +315,7 @@ $(document).ready(function()
 
 
 
-var g_stroke_alias = 
+var g_stroke_alias =
 {
     "h":"1",
     "s":"2",
@@ -343,7 +343,7 @@ function strokes_filter3()
     //1、hs3-5，表示前两画为横、竖，剩余3-5画；
     //2、3-5hs，表示总笔画为3-5，前两画为横、竖。
     //又细分为以下5种
-    
+
     $("#searcherror").text("");
 
     var regex1 = /^(\d{1,2})([hspndz]*)$/;
@@ -366,17 +366,19 @@ function strokes_filter3()
 
     //经检查无问题
     if(m = input.match(regex1))
-    { 
+    {
         var num = m[1];
         var strokes = letters_to_numbers(m[2]);
         var fliter = num+'-'+strokes;
+       
 
         $(".parts-results span").hide();
         var array = $(".parts-results span[data-stroke^=" + fliter +"]");
         if(array.length>0)
         {
             $(".parts-results span[data-stroke^=" + fliter +"]").show();
-            $(".result-stoke[data-stroke^=" + num +'-' +"]").show();    
+
+            $(".result-stoke[data-stroke^=" + num +'-' +"]").show();
         }
     }
 
@@ -407,7 +409,7 @@ function strokes_filter3()
 
         for(var i=small;i<=large;i++)
         {
-            $(".result-stoke[data-stroke^=" + i +'-'+"]").show();    
+            $(".result-stoke[data-stroke^=" + i +'-'+"]").show();
         }
 
     }
@@ -429,7 +431,7 @@ function strokes_filter3()
     }
     // 已满足
     else if(m = input.match(regex4))
-    {  
+    {
         var strokes = letters_to_numbers(m[1]);
         var array = m[2].split('-');
 
@@ -458,7 +460,7 @@ function strokes_filter3()
     }
     //已满足
     else if(m = input.match(regex5))
-    { 
+    {
         var strokes = letters_to_numbers(m[1]);
         $(".parts-results span").hide();
         for(var i=1;i<=22;i++)
@@ -468,7 +470,7 @@ function strokes_filter3()
             if(array.length>0)
             {
                 $(".parts-results span[data-stroke^=" + fliter +"]").show();
-                $(".result-stoke[data-stroke^=" + i + '-'+ "]").show();    
+                $(".result-stoke[data-stroke^=" + i + '-'+ "]").show();
             }
         }
     }
@@ -504,7 +506,7 @@ function render_stroke_result(data)
         $('.hanzi-wrap').html('没有检索到数据！');
         $(".con-left").fadeIn(600);
         $(".con-right").addClass("con-right-new");
-        return;  
+        return;
     }
 
 
@@ -544,8 +546,8 @@ function render_stroke_result(data)
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
-                char += data[i].hanzi_char; 
-                char += '</a></li>';              
+                char += data[i].hanzi_char;
+                char += '</a></li>';
             }
             else
             {
@@ -573,7 +575,7 @@ function render_stroke_result(data)
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
-                char += data[i].hanzi_char; 
+                char += data[i].hanzi_char;
                 char += '</a></li>';
             }
             else
@@ -586,7 +588,7 @@ function render_stroke_result(data)
                 char += data[i].hanzi_pic_id;
 
                 char += '" data-value="';
-                char += data_value + '"><img src="'; 
+                char += data_value + '"><img src="';
                 char += data[i].pic_url;
                 char += '" alt="';
                 char += data[i].hanzi_pic_id;
@@ -618,12 +620,12 @@ function render_stroke_result(data)
                 char += data[i].hanzi_pic_id;
 
                 char += '" data-value="';
-                char += data_value + '"><img src="'; 
+                char += data_value + '"><img src="';
                 char += data[i].pic_url;
                 char += '" alt="';
                 char += data[i].hanzi_pic_id;
                 char += '"></a></li>';
-            }                     
+            }
         }
         else if(data[i].source == 5)   //如果是敦煌俗字典
         {
@@ -655,7 +657,7 @@ function render_stroke_result(data)
             }
         }
         //把字填到左面板里去
-        $('.hanzi-wrap').append(char);   
+        $('.hanzi-wrap').append(char);
     }
 
     var str = '';
@@ -685,12 +687,12 @@ function render_stroke_result(data)
         str += '<li class="stroke_page" data-url="' + url + '">下一页</li>';
     }
 
-    $('.pagination').append(str);  
+    $('.pagination').append(str);
 
 
     //给翻页按纽增加data-url属性， 以便单击时利用
     var new_url = 'q=' + q + '&page_size=' + page_size;
-    $('#stroke_page_btn').attr("data-url",new_url); 
+    $('#stroke_page_btn').attr("data-url",new_url);
 
 
     //让隐藏的左面板显示出来
@@ -713,7 +715,7 @@ function render_inverse_result(data)
         $('.hanzi-wrap').html('没有检索到数据！');
         $(".con-left").fadeIn(600);
         $(".con-right").addClass("con-right-new");
-        return;  
+        return;
     }
 
     $("#total").html(1);
@@ -739,5 +741,5 @@ function render_inverse_result(data)
     $('.hanzi-wrap').append(str);
 
     $(".con-left").fadeIn(600);
-    $(".con-right").addClass("con-right-new");   
+    $(".con-right").addClass("con-right-new");
 }

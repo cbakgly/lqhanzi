@@ -273,7 +273,7 @@
               <td v-show="filter_is_checked">#[ item.is_checked_display ]]</td>
               <td v-show="filter_is_submitted">#[ item.is_submitted_display ]]</td>
               <td v-show="filter_remark">#[ item.remark ]]</td>
-              <td v-show="filter_u_t">#[ item.u_t ]]</td>
+              <td v-show="filter_u_t">#[ new Date(item.u_t).toLocaleString() ]]</td>
               <td><a href="#">查看</a></td>
             </tr>
             </tbody>
