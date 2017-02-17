@@ -176,17 +176,12 @@ EMAIL_PORT = 25
 # Registration Settings end
 
 
-# Redis Cache Settings
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
-
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '127.0.0.1:6379',
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'lqhanzi',
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
         },
     },
 }
-# Redis Cache Settings end

@@ -177,7 +177,7 @@ LOGIN_URL = '/accounts/login/'
 REGISTRATION_EMAIL_SUBJECT_PREFIX = '[龙泉字库注册邮件]'
 SEND_ACTIVATION_EMAIL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'alqdzj@126.com' # 账号密码同aws密码
+DEFAULT_FROM_EMAIL = 'alqdzj@126.com'  # 账号密码同aws密码
 EMAIL_HOST_PASSWORD = 'dongpeilou404'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST = 'smtp.126.com'
@@ -185,17 +185,12 @@ EMAIL_PORT = 25
 # Registration Settings end
 
 
-# Redis Cache Settings
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '127.0.0.1:6379',
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'lqhanzi',
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
         },
     },
 }
-# Redis Cache Settings end
-
