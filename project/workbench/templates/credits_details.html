@@ -17,7 +17,7 @@
                             <div class="z-ser z1-ser">
                                 <div class="z-myScore">
                                     <span class="z-total">总积分：<b>#[ aquireCredit ]</b></span>
-                                    <span>(去重:<b>30%</b>,&nbsp;录入:<b>30%</b>,&nbsp;拆字:<b>30%</b>,&nbsp;互助:<b>30%</b>);</span>
+                                    <span>#[ credit_des ]</span>
                                     <a class="exchange" href="{% url 'm2.credits-redeem' %}"
                                        title="查看我的兑换">已兑换：<b>800</b></a>
                                 </div>
@@ -82,7 +82,8 @@
             data: {
                 result: null,
                 sort: 1,
-                total_credit: null,
+                total_credit: 0,
+                credit_des:"",
                 options: [
                     {text: '总积分', value: 0},
                     {text: '拆字积分', value: 1},
@@ -100,7 +101,8 @@
                         dataType: 'json',
                         data: {},
                         success: function (response) {
-                            this.total_credit = response.credits__sum;
+                            creditsSort.total_credit = response['sum_credit'];
+                            creditsSort.credit_des = response['credit_detail'];
                         },
                         error: function (xhr, status, err) {
                             console.log(err);
@@ -116,9 +118,9 @@
             computed: {
                 aquireCredit: function () {
                     this.get_total();
-                    for (item in this.result) {
-                        this.total_credit = this.result[item].credit
-                    }
+                    //for (item in this.result) {
+                      //  this.total_credit = this.result[item].credit
+                    //}
                     return this.total_credit
                 }
             },

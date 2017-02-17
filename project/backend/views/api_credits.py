@@ -1,5 +1,4 @@
 # -*- coding:utf8 -*-
-from django.db.models import Sum
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
@@ -78,10 +77,26 @@ class CreditViewSet(viewsets.ModelViewSet):
     def calculate_user_credits(self, request, *args, **kwargs):
         user = request.user
         #sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
-        user_credit = self.serializer_class(Credits.objects.filter(user_id=user.id).exclude(credit=0),many=True)
-        r = Response(user_credit.data)
-        print r['1']
-        return Response(user_credit.data)
+
+        user_credits = list(Credits.objects.filter(user_id=user.id).exclude(credit=0))
+        total, split, input, dedup, other = 0, 0, 0, 0, 0
+        for user_credit in user_credits:
+            if user_credit.sort == 0:
+                total = float(user_credit.credit)
+            elif user_credit.sort == 1:
+                split = user_credit.credit
+            elif user_credit.sort == 2:
+                input = user_credit.credit
+            elif user_credit.sort == 5:
+                dedup = user_credit.credit
+        other = total - split -input - dedup
+        split = split/total*100
+        input = input/total*100
+        dedup = dedup/total*100
+        other = other/total*100
+        credit_des = "拆字：%.0f%%，录入：%.0f%%，去重:%.0f%%，其他：%.0f%%" % (split,input,dedup,other)
+        r = Response({'sum_credit':total,'credit_detail':credit_des})
+        return r
 
     @list_route()
     def searchcredit(self, request, *args, **kwargs):
