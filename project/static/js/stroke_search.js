@@ -376,9 +376,10 @@ function strokes_filter3()
         if(array.length>0)
         {
             $(".parts-results span[data-stroke^=" + fliter +"]").show();
-            $(".result-stoke[data-stroke^=" + num +"]").show();    
+            $(".result-stoke[data-stroke^=" + num +'-' +"]").show();    
         }
     }
+
     //无问题
     else if(m = input.match(regex2))
     {
@@ -406,7 +407,7 @@ function strokes_filter3()
 
         for(var i=small;i<=large;i++)
         {
-            $(".result-stoke[data-stroke^=" + i +"]").show();    
+            $(".result-stoke[data-stroke^=" + i +'-'+"]").show();    
         }
 
     }
@@ -423,7 +424,7 @@ function strokes_filter3()
         if(array.length>0)
         {
             $(".parts-results span[data-stroke^=" + fliter +"]").show();
-            $(".result-stoke[data-stroke^=" + total +"]").show();    
+            $(".result-stoke[data-stroke^=" + total + '-'+"]").show();    
         }
     }
     // 已满足
@@ -451,20 +452,8 @@ function strokes_filter3()
             if(array.length>0)
             {
                 $(".parts-results span[data-stroke^=" + fliter +"]").show();
-                $(".result-stoke[data-stroke^=" + total +"]").show();    
+                $(".result-stoke[data-stroke^=" + total + '-'+"]").show();    
             }
-
-            // var rex = new RegExp( total + '-' + strokes + "[hspndz]{i}" );
-
-            // $(".parts-results span").each(function()
-            // {
-            //     var string = $(this).attr("data-stroke");
-            //     if(string.match(rex))
-            //     {
-            //         $(this).show();
-            //         $(".result-stoke[data-stroke^=" + total +"]").show(); 
-            //     }
-            // });
         }
     }
     //已满足
@@ -479,10 +468,11 @@ function strokes_filter3()
             if(array.length>0)
             {
                 $(".parts-results span[data-stroke^=" + fliter +"]").show();
-                $(".result-stoke[data-stroke^=" + i +"]").show();    
+                $(".result-stoke[data-stroke^=" + i + '-'+ "]").show();    
             }
         }
     }
+
     else
     {
         $("#searcherror").text("格式错误");
