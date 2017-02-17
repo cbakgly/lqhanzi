@@ -22,6 +22,7 @@ from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 from django.views.generic.base import RedirectView
 from settings import DEBUG, MEDIA_ROOT, MEDIA_URL, STATIC_URL
+from hanzi.views.help import help
 
 admin.autodiscover()
 
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^api/(?P<version>\w+)/', include('backend.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^help/', help),
 ]
 
 if DEBUG:
