@@ -1,7 +1,7 @@
 # -*- coding:utf8 -*-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES
+from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES, CreditsRedeem, Reward
 from backend.enums import getenum_source, getenum_task_status
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
@@ -98,3 +98,8 @@ def task_dedup2(request, *args, **kwargs):
                        'business_stage': task.business_stage,
                        'korean_dedup_id': dedup_character.id
                        })
+
+
+@login_required
+def credit_redeem(request, *args, **kwargs):
+    user = request.user
