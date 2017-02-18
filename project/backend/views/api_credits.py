@@ -77,7 +77,7 @@ class CreditViewSet(viewsets.ModelViewSet):
     @list_route()
     def calculate_user_credits(self, request, *args, **kwargs):
         user = request.user
-        #sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
+        # sum_credits = Tasks.objects.filter(user_id=user.id).values("credits").aggregate(Sum("credits"))
 
         user_credits = list(Credits.objects.filter(user_id=user.id).exclude(credit=0))
         total, split, input, dedup, other = 0, 0, 0, 0, 0
@@ -90,14 +90,14 @@ class CreditViewSet(viewsets.ModelViewSet):
                 input = user_credit.credit
             elif user_credit.sort == 5:
                 dedup = user_credit.credit
-        other = total - split -input - dedup
-        split = split/total*100
-        input = input/total*100
-        dedup = dedup/total*100
-        other = other/total*100
-        credit_des = "拆字：%.0f%%，录入：%.0f%%，去重:%.0f%%，其他：%.0f%%" % (split,input,dedup,other)
+        other = total - split - input - dedup
+        split = split / total * 100
+        input = input / total * 100
+        dedup = dedup / total * 100
+        other = other / total * 100
+        credit_des = "拆字：%.0f%%，录入：%.0f%%，去重:%.0f%%，其他：%.0f%%" % (split, input, dedup, other)
         credit_redeem = CreditsRedeem.objects.filter(applied_by=user).values("cost_credits").aggregate(Sum("cost_credits"))
-        r = Response({'sum_credit':total,'credit_detail':credit_des,'credit_redeem':credit_redeem['cost_credits__sum']})
+        r = Response({'sum_credit': total, 'credit_detail': credit_des, 'credit_redeem': credit_redeem['cost_credits__sum']})
         return r
 
     @list_route()
@@ -108,4 +108,4 @@ class CreditViewSet(viewsets.ModelViewSet):
             search_result = Credits.objects.filter(user__username__contains=name)
         else:
             search_result = Credits.objects.filter(user__username__contains=name, sort=sort)
-        return Response(self.serializer_class(search_result,many=True).data)
+        return Response(self.serializer_class(search_result, many=True).data)
