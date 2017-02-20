@@ -2,7 +2,7 @@
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 from rest_framework import viewsets
 from rest_framework import serializers
 
@@ -55,3 +55,11 @@ class RedeemViewSet(viewsets.ModelViewSet):
         serializer = RedeemSerializer(user_credits, many=True)
 
         return Response(serializer.data)
+
+
+    @list_route(methods=['POST'])
+    def create_redeen(self, request, *args, **kwargs):
+        user = request.user
+        reward_id = request.query_params['reward_id']
+
+

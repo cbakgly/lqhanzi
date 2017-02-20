@@ -407,7 +407,7 @@ class InterDictDedup(models.Model):
 class Reward(models.Model):
     reward_name = models.CharField(u'奖品名称', max_length=64)
     reward_quantity = models.SmallIntegerField(u'奖品数量', default=1)
-    reward_pic = models.ImageField(u'奖品图片', upload_to='reward')
+    reward_pic = models.CharField(u'奖品图片', max_length=128)
     need_credits = models.SmallIntegerField(u'所需积分')
 
     class Meta:
