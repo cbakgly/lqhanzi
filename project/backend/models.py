@@ -432,9 +432,9 @@ class CreditsRedeem(models.Model):
     remark = models.CharField(u'备注', max_length=64, null=True, blank=True)
     c_t = models.DateTimeField(u'创建时间', null=True, default=timezone.now)
     u_t = models.DateTimeField(u'修改时间', null=True, auto_now=True)
-    accepted_by = models.ForeignKey(User, verbose_name=u"受理人", related_name="acceptor", null=True)
-    applied_by = models.ForeignKey(User, verbose_name=u"申请人", related_name="applier", null=True)
-    completed_by = models.ForeignKey(User, verbose_name=u"完成人", related_name="completor", null=True)
+    accepted_by = models.ForeignKey(User, verbose_name=u"受理人", related_name="acceptor", null=True, blank=True)
+    applied_by = models.ForeignKey(User, verbose_name=u"申请人", related_name="applier", null=True, blank=True)
+    completed_by = models.ForeignKey(User, verbose_name=u"完成人", related_name="completor", null=True, blank=True)
 
     class Meta:
         db_table = 'lq_credits_redeem'

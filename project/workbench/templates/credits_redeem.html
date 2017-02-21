@@ -36,9 +36,16 @@
                                         <td v-text="item.completed_at"></td>
                                         <td v-text="item.reward_name"></td>
                                         <td v-text="item.cost_credits"></td>
-                                        <td v-text="item.status"></td>
+                                        <td v-text="item.status_name"></td>
                                         <td v-text="item.remark"></td>
-                                        <td v-text="item.id"></td>
+                                        <td v-if="item.status==0">
+                                            <button type="button" class="btn btn-blue btn-sm" @click="withdraw(item.id)">
+                                                取消
+                                            </button>
+                                        </td>
+                                        <td v-else>
+
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -112,126 +119,211 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
 
-        function MyCreditsRedeemSearch(url) {
-            $.ajax({
-                url: url,
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    creditsSort.result = response;
-                },
-                error: function (xhr, status, err) {
-                    console.log(err);
-                }
-            })
-        }
+    <div id="modals" style="display: block;">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {#                 <div class="modal-header">#}
+                        {#                   <button type="button" class="close" data-dismiss="modal" @click="displayModal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>#}
+                        {#                   <h4 class="modal-title" id="myModalLabel">Modal title</h4>#}
+                        {#                 </div>#}
+                        <div class="modal-body" style="display:none;">
 
-        Vue.component('reward', {
-            delimiters: ["#[", "]]"],
-            props: ['id', 'reward_name', 'reward_quantity', 'reward_pic', 'need_credits'],
-            template: '<div class="z-exchangeItem">\
+                        </div>
+                        <div class="modal-footer" style="text-align:left;">
+                            <div class="input-group" style="padding-bottom: 15px;"><span
+                                    class="input-group-addon">你即将用#[ need_credits ]分兑换《#[ reward_name ]》:</span>
+                            </div>
+                            <div class="input-group" style="padding-bottom: 15px"><span
+                                    class="input-group-addon">备注:</span>
+                                <input type="text" placeholder="如果有什么特殊的要求请写在这里！" class="form-control"
+                                       v-model="remark">
+                            </div>
+                            <div class="modal-footer" style="text-align:left;">
+                                <div class="btns">
+                                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"
+                                            @click="displayModal">取消
+                                    </button>
+                                    <button type="button" class="btn btn-blue btn-sm" @click="apply_for_redeem">确定
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            var bus = new Vue();
+            function MyCreditsRedeemSearch(url) {
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        creditsSort.result = response;
+                    },
+                    error: function (xhr, status, err) {
+                        console.log(err);
+                    }
+                })
+            }
+
+            Vue.component('reward', {
+                delimiters: ["#[", "]]"],
+                props: ['id', 'reward_name', 'reward_quantity', 'reward_pic', 'need_credits'],
+                template: '<div class="z-exchangeItem">\
                         <img :src="pic" alt="">\
                         <div class="z-txt">\
                             <p class="z-name">#[reward_name]]</p>\
                             <p class="z-needScore">兑换分值:<span>#[need_credits]]</span>分</p>\
-                            <button @click="apply" class="btn btn-primary btn-sm btn-mt">申请兑换</button>\
+                            <button @click="showModal" class="btn btn-primary btn-sm btn-mt">申请兑换</button>\
                         </div>\
                     </div>',
-            data: function () {
-                return {
-                    local_id : this.id,
-                    pic: "{{ STATIC_URL }}uploads/reward/"+this.reward_pic
+                data: function () {
+                    return {
+                        local_id: this.id,
+                        pic: "{{ STATIC_URL }}uploads/reward/" + this.reward_pic
+                    };
+                },
+                methods: {
+                    showModal: function () {
+                        modals.reward_id = this.id;
+                        modals.need_credits = this.need_credits;
+                        modals.reward_name = this.reward_name;
+                        document.getElementById("myModal").style.display = "block";
+                    },
                 }
-            },
-            methods: {
-                apply: function(e){
-                    element = e.target;
-                    $.ajax({
-                        url: "{% url 'redeems-create-redeen' version='v1' %}",
-                        method: 'POST',
-                        data:{
-                            reward_id:this.id
-                        },
-                        dataType: 'json',
-                        success: function (response) {
+            });
+            var reward_list = new Vue({
+                delimiters: ["#[", "]"],
+                el: '#reward-list',
+                data: {
+                    rewards: null
+                },
+                methods: {
+                    reward_list: function () {
+                        $.ajax({
+                            url: "{% url 'reward-list' version='v1' %}",
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+                                reward_list.rewards = response.models;
+                            },
+                            error: function (xhr, status, err) {
+                                console.log(err);
+                            }
+                        })
+                    }
+                },
+                created: function () {
+                    this.reward_list();
+                }
+            });
 
-                        },
-                        error: function (xhr, status, err) {
-                            console.log(err);
-                        }
-                    })
+            var creditsSort = new Vue({
+                delimiters: ["#[", "]"],
+                el: '#credits-sort',
+                data: {
+                    total_credit: 0,
+                    credit_des: "",
+                    redeemcredits: 0,
+                    result: null,
+                    status: {
+                        0: '申请中',
+                        1: '已受理',
+                        2: '已完成'
+                    }
+                },
+                methods: {
+                    get_total: function () {
+                        $.ajax({
+                            url: "{% url 'credits-calculate-user-credits' version='v1' %}",
+                            method: 'GET',
+                            dataType: 'json',
+                            data: {},
+                            success: function (response) {
+                                creditsSort.total_credit = response['sum_credit'];
+                                creditsSort.credit_des = response['credit_detail'];
+                                creditsSort.redeemcredits = response['credit_redeem'];
+                            },
+                            error: function (xhr, status, err) {
+                                console.log(err);
+                            }
+                        })
+                    },
+                    withdraw: function(id){
+                       $.ajax({
+                            url: "{% url 'redeems-delete-redeem' version='v1' %}",
+                            method: 'POST',
+                            data: {
+                                redeem_id: id
+                            },
+                            dataType: 'json',
+                            success: function (response) {
+                                window.location.reload();
+                            },
+                            error: function (xhr, status, err) {
+                                console.log(err);
+                            }
+                        })
+                    }
+                },
+                watch: {},
+                computed: {
+                    aquireCredit: function () {
+                        this.get_total();
+                        return this.total_credit
+                    }
+                },
+                created: function () {
+                    redeem_url = "{% url 'redeems-certain-user-redeem'  version='v1' %}";
+                    MyCreditsRedeemSearch(redeem_url);
+                }
+            });
+
+            var modals = new Vue({
+                delimiters: ["#[", "]"],
+                el: '#modals',
+                data: {
+                    reward_id: 0,
+                    remark: "",
+                    need_credits: 0,
+                    reward_name: ""
+                },
+                methods: {
+                    apply_for_redeem: function () {
+                        $.ajax({
+                            url: "{% url 'redeems-create-redeem' version='v1' %}",
+                            method: 'POST',
+                            data: {
+                                reward_id: this.reward_id,
+                                remark: this.remark,
+                                need_credits: this.need_credits
+                            },
+                            dataType: 'json',
+                            success: function (response) {
+                                modals.displayModal();
+                                //creditsSort.$router.go(0);
+                                window.location.reload();
+                            },
+                            error: function (xhr, status, err) {
+                                console.log(err);
+                            }
+                        })
+                    },
+                    displayModal: function () {
+                        document.getElementById("myModal").style.display = "none";
+                    }
+                },
+                created: function () {
 
                 }
+            });
 
-            }
-        });
-        var reward_list = new Vue({
-            delimiters: ["#[", "]"],
-            el: '#reward-list',
-            data: {
-                rewards: null
-            },
-            methods: {
-                reward_list:function(){
-                    $.ajax({
-                        url: "{% url 'reward-list' version='v1' %}",
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function (response) {
-                            reward_list.rewards = response.models;
-                        },
-                        error: function (xhr, status, err) {
-                            console.log(err);
-                        }
-                    })
-                }
-            },
-            created: function () {
-                this.reward_list();
-            }
-        });
-
-        var creditsSort = new Vue({
-            delimiters: ["#[", "]"],
-            el: '#credits-sort',
-            data: {
-                total_credit: 0,
-                credit_des: "",
-                redeemcredits: 0,
-                result: null
-            },
-            methods: {
-                get_total: function () {
-                    $.ajax({
-                        url: "{% url 'credits-calculate-user-credits' version='v1' %}",
-                        method: 'GET',
-                        dataType: 'json',
-                        data: {},
-                        success: function (response) {
-                            creditsSort.total_credit = response['sum_credit'];
-                            creditsSort.credit_des = response['credit_detail'];
-                            creditsSort.redeemcredits = response['credit_redeem'];
-                        },
-                        error: function (xhr, status, err) {
-                            console.log(err);
-                        }
-                    })
-                }
-            },
-            watch: {},
-            computed: {
-                aquireCredit: function () {
-                    this.get_total();
-                    return this.total_credit
-                }
-            },
-            created: function () {
-                redeem_url = "{% url 'redeems-certain-user-redeem'  version='v1' %}";
-                MyCreditsRedeemSearch(redeem_url);
-            }
-        })
-
-    </script>
+        </script>
 {% endblock %}
