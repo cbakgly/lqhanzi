@@ -5,7 +5,6 @@ import re
 from django.core.serializers import serialize
 from django.db.models import Q
 from django.http import HttpResponse
-# from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render,render_to_response
 from backend.utils import *
 from backend.models import HanziParts,HanziSet
@@ -173,7 +172,7 @@ def extract_parts(string):
 	return r
 
 
-# @csrf_exempt
+
 def get_parts():
 	"""
 	取部件
@@ -227,30 +226,24 @@ def stroke_normal_search(request):
 	if m:
 		if(m.group(2)):
 			stroke_range = m.group(2)
-			print 'stroke_range=',stroke_range
 			if stroke_range.find('-')!=-1:
 				mode=3
-				print 'mode=3'
 			else:
 				mode=2
-				print 'mode=2'
 		else:
 			mode=1
-			print 'mode=1'
 	else:return HttpResponse("Invalid input")
 
 
 	#提取相似部件,构建查询相似部件所用到的正则表达式
 	similar_parts = extract_similar_parts(q)
 	similar_parts_rex = create_regex( similar_parts )
-	print '11111',similar_parts,similar_parts_rex
 
 	#去掉相似部件,包括前边的~号
 	q = remove_similar_parts(q)
 
 	#提取结构字符
 	structure = extract_structure(q)
-	print '22222',structure
 
 	#提取部件（去掉相似部件之后的）,构建查询所有部件所用到的正则表达式
 	parts = extract_parts(q)
@@ -260,7 +253,6 @@ def stroke_normal_search(request):
 	parts = "".join(tmp_list)
 
 	parts_rex = create_regex( parts )
-	print '33333',parts,'aaaa',parts_rex
 
 	write_log('parts',parts)
 	#开始检索
@@ -330,10 +322,6 @@ def stroke_advanced_search(request):
 	page_size = request.GET.get('page_size', None)
 	page_num = request.GET.get('page_num', None)
 
-	print q
-	print page_size
-	print page_num
-
 	if( q is None or page_size is None or page_num is None):return HttpResponse("Invalid input 22222")
 
 	page_size = int(page_size)
@@ -347,39 +335,27 @@ def stroke_advanced_search(request):
 	m=re.match(r'^(\S+?)(\d+-\d+)$',q)
 	if m:
 		parts = m.group(1)
-		print 'parts=',parts
 		stroke_range = m.group(2)
-		print 'stroke_range=',stroke_range
 		mode=3
-		print 'mode=3'
 	else:
 		m=re.match(r'^(\S+?)(\d+)$',q)
 		if m:
 			parts = m.group(1)
-			print 'parts=',parts
 			stroke_range = m.group(2)
-			print 'stroke_range=',stroke_range
 			mode=2
-			print 'mode=2'
 		else:
 			parts = q
 			mode=1
-			print 'mode=1'
 
 	#提取相似部件,构建查询相似部件所用到的正则表达式
 	similar_parts = extract_similar_parts(q)
 	similar_parts_rex = create_regex( similar_parts )
-	print '11111',similar_parts,similar_parts_rex
 
 	#去掉相似部件,包括前边的~号
 	q = remove_similar_parts(q)
 
 	#解析结构及部件查询字符串
 	query_rex = create_query_regex( parts )
-
-	print '33333',query_rex
-
-	write_log("query_rex",query_rex)
 
 	try:
 		#开始检索
@@ -422,8 +398,8 @@ def stroke_advanced_search(request):
 					.order_by('source')[(page_num-1)*page_size : page_num*page_size]
 
 	except HanziSet.OperationalError,e:
-		print repr(e)
-
+		pass
+		# print repr(e)
 
 	for item in result:
 		if(item['hanzi_pic_id'] != ""):
@@ -441,8 +417,6 @@ def stroke_advanced_search(request):
 	return HttpResponse(d,content_type="application/json")
 
 
-
-# @csrf_exempt
 def inverse_search(request):
 	"""
 	反查
@@ -459,35 +433,5 @@ def inverse_search(request):
 		return HttpResponse(d,content_type="application/json")
 
 	except BaseException,e:
-		print repr(e)
+		# print repr(e)
 		return HttpResponse("none")
-
-
-#从一个字符串中检出所有部件来,返回一个字符串
-# def get_only_parts(parts_list):
-
-# 	if parts_list is None or len(parts_list)==0:
-# 		return None
-
-#  	r = ''
-# 	for item in parts_list:
-# 		if is_structure(item) == False :
-# 			r += item
-# 	return r
-
-#代码片断
-	# c = json.dumps(result,ensure_ascii=False)
-
-	# a = serialize("json", result,ensure_ascii=False)
-	# b = json.loads(a)
-	# c = []
-	# for item in b:
-	# 	c.append(item['fields'])
-	# for item in c:
-	# 	if(item['hanzi_pic_id'] != ""):
-	# 		item['pic_url'] = get_pic_url_by_source_pic_name( item['source'],item['hanzi_pic_id'] )
-
-
-
-
-

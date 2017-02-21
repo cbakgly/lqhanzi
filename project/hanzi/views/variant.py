@@ -6,9 +6,7 @@ import re
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from backend.utils import get_pic_url_by_source_pic_name
-from backend.utils import get_dunhuang_dict_path
-from backend.utils import get_hanyu_dict_path
+from backend.utils import *
 from backend.models import HanziSet
 from tw_fuluzi import fuluzi
 
@@ -388,10 +386,6 @@ def get_hy_page(text):
     return text.split('-')[0]
 
 
-# def show_yitizi(request):
-#     path = request.path.encode("utf-8")
-#     addr = path[7:len(path)]
-#     return render_to_response(addr)
 
 def variant_detail(request):
     """
@@ -495,10 +489,8 @@ def variant_detail(request):
             HY['page'] = ''
             if (len(get_hy_page(item.seq_id)) == 3):
                 HY['page'] = get_hanyu_dict_path() + '0' + get_hy_page(item.seq_id) + '.png'
-                print HY['page']
             elif (len(get_hy_page(item.seq_id)) == 4):
                 HY['page'] = get_hanyu_dict_path() + get_hy_page(item.seq_id) + '.png'
-                print HY['page']
             HY['zhengzhi'] = item.hanzi_char
             continue
 
