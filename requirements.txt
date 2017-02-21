@@ -20,3 +20,4 @@ boto
 pillow
 pudb
 ipdb
+uwsgi
