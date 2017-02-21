@@ -121,18 +121,6 @@ class TaskPackages(models.Model):
             1] + str(self.size) + str(self.id)
 
 
-class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True)
-    business_name = models.CharField(u'任务名称', max_length=64, default='', blank=True)
-    credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.BooleanField(u'是否启用', default=True)
-
-    class Meta:
-        db_table = 'lq_task_types'
-        verbose_name = u"任务类型积分"
-        verbose_name_plural = u"任务类型积分"
-
-
 class Tasks(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="user_task")  # 用户，拆字员
     task_package = models.ForeignKey(TaskPackages, related_name='tasks', on_delete=models.SET_NULL, null=True)
