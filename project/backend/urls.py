@@ -13,6 +13,7 @@ from backend.views.api_variants_korean_dedup import KoreanDedupViewSet
 from backend.views.api_korean_dup_characters import KoreanTaiwanDupCharactersViewSet
 from backend.views.api_hanzi_set import HanziSetViewSet
 from backend.views.api_hanzi_parts import HanziPartViewSet
+from backend.views.api_rewards import RewardViewSet
 
 router = SimpleRouter()
 router.register(r'operations', OperationViewSet, base_name='operations')
@@ -30,4 +31,5 @@ router.register(r'korean-taiwan-dup-charaters', KoreanTaiwanDupCharactersViewSet
 router.register(r'korean-dedups', KoreanDedupViewSet, base_name='korean-dedups')
 router.register(r'hanzi-set', HanziSetViewSet, base_name='hanzi-set')
 router.register(r'inputpage', InputPageViewSet, base_name='inputpage')
+router.register(r'reward', RewardViewSet, base_name='reward')
 urlpatterns = router.urls
