@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from models import User, HanziSet, TaskPackages, Tasks, TaskTypes, InputPage
+from models import User, HanziSet, TaskPackages, Tasks, InputPage
 from models import VariantsSplit, VariantsInput, KoreanVariantsDict, HanziRadicals
 from models import KoreanDupCharacters, KoreanDupZhengCodes, KoreanDedup
 from models import InterDictDedup, Reward, CreditsRedeem, Diaries, Credits, HanziParts, UserTaskProfile
@@ -115,10 +115,6 @@ class VariantsInputAdmin(admin.ModelAdmin):
     list_display = ('id', 'page_num', 'seq_num_draft', 'hanzi_char_draft', 'hanzi_pic_id_draft', 'variant_type_draft', 'std_hanzi_draft', 'notes_draft', 'is_del_draft',)
 
 
-class TaskTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'business_type', 'business_name', 'credits', 'is_active',)
-
-
 class KoreanVariantsDictAdmin(admin.ModelAdmin):
     model = KoreanVariantsDict
 
@@ -156,7 +152,6 @@ admin.site.register(Permission)
 admin.site.register(HanziSet)
 admin.site.register(TaskPackages, TaskPackagesAdmin)
 admin.site.register(Tasks, TasksAdmin)
-admin.site.register(TaskTypes, TaskTypeAdmin)
 admin.site.register(InputPage, InputPageAdmin)
 admin.site.register(VariantsSplit, VariantsSplitAdmin)
 admin.site.register(VariantsInput, VariantsInputAdmin)

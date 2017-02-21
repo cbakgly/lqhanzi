@@ -26,14 +26,14 @@ ISACTIVE = ((0, 'inactive'), (1, 'active'))
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
-            _('username'),
-            max_length=150,
-            unique=True,
-            help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-            validators=[username_validator],
-            error_messages={
-                'unique': _("A user with that username already exists."),
-            },
+        _('username'),
+        max_length=150,
+        unique=True,
+        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
     )
     gender_choices = ((0, 'Male'), (1, 'Female'))
     gender = models.IntegerField(u'性别', choices=gender_choices, default=0)
@@ -119,18 +119,6 @@ class TaskPackages(models.Model):
     def __unicode__(self):
         return "#" + BUSINESS_TYPE_CHOICES[self.business_type - 1][1] + BUSINESS_STAGE_CHOICES[self.business_stage - 1][
             1] + str(self.size) + str(self.id)
-
-
-class TaskTypes(models.Model):
-    business_type = models.SmallIntegerField(u'任务类型', choices=BUSINESS_TYPE_CHOICES, null=True)
-    business_name = models.CharField(u'任务名称', max_length=64, default='', blank=True)
-    credits = models.SmallIntegerField(u'单个任务积分', default=0)
-    is_active = models.BooleanField(u'是否启用', default=True)
-
-    class Meta:
-        db_table = 'lq_task_types'
-        verbose_name = u"任务类型积分"
-        verbose_name_plural = u"任务类型积分"
 
 
 class Tasks(models.Model):
@@ -445,6 +433,7 @@ class CreditsRedeem(models.Model):
 
 
 class Diaries(models.Model):
+
     """
     打卡记录
     """
@@ -470,6 +459,7 @@ class Diaries(models.Model):
 
 
 class Credits(models.Model):
+
     """
     积分
     """

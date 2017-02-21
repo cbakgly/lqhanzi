@@ -14,6 +14,7 @@ from ..auth import IsBusinessMember
 
 
 class RedeemFilter(django_filters.FilterSet):
+
     """
     根据用户来获取
     """
@@ -23,7 +24,7 @@ class RedeemFilter(django_filters.FilterSet):
         fields = ["applied_by__username", "status"]
 
 
-redeem_status_choices = {0:u'申请中', 1:u'已受理', 2: u'已完成'}
+redeem_status_choices = {0: u'申请中', 1: u'已受理', 2: u'已完成'}
 
 
 class RedeemSerializer(serializers.ModelSerializer):
@@ -33,11 +34,13 @@ class RedeemSerializer(serializers.ModelSerializer):
         model = CreditsRedeem
         fields = "__all__"
 
-    def get_status_name(self,obj):
+    def get_status_name(self, obj):
         status = obj.status
         return redeem_status_choices[status]
 
+
 class RedeemSerializerVersion1(serializers.ModelSerializer):
+
     class Meta:
         model = CreditsRedeem
         fields = "__all__"
@@ -45,6 +48,7 @@ class RedeemSerializerVersion1(serializers.ModelSerializer):
 
 
 class RedeemViewSet(viewsets.ModelViewSet):
+
     """
     积分兑换
     """
@@ -64,18 +68,16 @@ class RedeemViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-
     @list_route(methods=['POST'])
     def create_redeem(self, request, *args, **kwargs):
-        user = request.user
         reward_id = request.data['reward_id']
         reward = list(Reward.objects.filter(pk=reward_id))[0]
         data = {
-            'applied_by':request.user,
-            'reward_name':reward.reward_name,
-            'cost_credits':request.data['need_credits'],
-            'status':0,
-            'remark':request.data['remark']
+            'applied_by': request.user,
+            'reward_name': reward.reward_name,
+            'cost_credits': request.data['need_credits'],
+            'status': 0,
+            'remark': request.data['remark']
         }
         new_redeem = CreditsRedeem(applied_by=data["applied_by"])
         for key in data.keys():
@@ -89,6 +91,3 @@ class RedeemViewSet(viewsets.ModelViewSet):
         redeem_to_withdraw = CreditsRedeem.objects.get(pk=redeem_id)
         delete_status = redeem_to_withdraw.delete()
         return Response(delete_status)
-
-
-
