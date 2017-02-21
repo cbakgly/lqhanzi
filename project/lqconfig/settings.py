@@ -169,7 +169,7 @@ REGISTRATION_OPEN = True
 # One-week activation window; you may, of course, use a different value.
 ACCOUNT_ACTIVATION_DAYS = 3
 # If True, the user will be automatically logged in.
-REGISTRATION_AUTO_LOGIN = False
+REGISTRATION_AUTO_LOGIN = True
 # The page you want users to arrive at after they successfully log in
 LOGIN_REDIRECT_URL = '/workbench/'
 # The page users are directed to if they are not logged in,
@@ -185,7 +185,6 @@ EMAIL_HOST = 'smtp.126.com'
 EMAIL_PORT = 25
 # Registration Settings end
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -195,3 +194,11 @@ CACHES = {
         },
     },
 }
+
+#SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+#SESSION_COOKIE_HTTPONLY = True
+#SESSION_COOKIE_SECURE = True
+
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SECURE_REDIRECT_EXEMPT = ['index', 'stroke_', 'inverse_', 'variant_', 'dicts\/', '']
