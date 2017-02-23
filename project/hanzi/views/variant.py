@@ -6,7 +6,9 @@ import re
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from backend.utils import *
+from backend.utils import get_pic_url_by_source_pic_name
+from backend.utils import get_hanyu_dict_path
+from backend.utils import get_dunhuang_dict_path
 from backend.models import HanziSet
 from tw_fuluzi import fuluzi
 
@@ -37,7 +39,8 @@ def variant_search(request):
         return render(request, 'variant_search.html', context)
 
     # 做检索操作
-    result = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q)).order_by('source')
+    result = HanziSet.objects.filter(
+        Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q)).order_by('source')
     ret = []
     for item in result:
         # 对于台湾异体字
@@ -60,7 +63,8 @@ def variant_search(request):
                     d1["type"] = 'char'
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
-                result = HanziSet.objects.filter(Q(std_hanzi__contains=item) & Q(source=2)).exclude(variant_type=0)
+                result = HanziSet.objects.filter(
+                    Q(std_hanzi__contains=item) & Q(source=2)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
                     if (item.hanzi_char != ''):
@@ -69,7 +73,8 @@ def variant_search(request):
                     else:
                         d2["type"] = "pic"
                         d2["text"] = item.hanzi_pic_id
-                        d2["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
+                        d2["pic_url"] = get_pic_url_by_source_pic_name(
+                            2, item.hanzi_pic_id)
 
                     d1["variant"].append(d2)
 
@@ -86,12 +91,13 @@ def variant_search(request):
                 elif item.hanzi_pic_id != '':
                     d1["stdchar"] = item.hanzi_pic_id
                     d1["type"] = 'pic'
-                    d1["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
+                    d1["pic_url"] = get_pic_url_by_source_pic_name(
+                        2, item.hanzi_pic_id)
 
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
-                result = HanziSet.objects.filter(Q(std_hanzi__contains=d1["stdchar"]) & Q(source=2)).exclude(
-                        variant_type=0)
+                result = HanziSet.objects.filter(
+                    Q(std_hanzi__contains=d1["stdchar"]) & Q(source=2)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
                     if item.hanzi_char != '':
@@ -100,7 +106,8 @@ def variant_search(request):
                     else:
                         d2["type"] = "pic"
                         d2["text"] = item.hanzi_pic_id
-                        d2["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
+                        d2["pic_url"] = get_pic_url_by_source_pic_name(
+                            2, item.hanzi_pic_id)
 
                     d1["variant"].append(d2)
 
@@ -123,7 +130,8 @@ def variant_search(request):
             else:
                 d2["type"] = "pic"
                 d2["text"] = item.hanzi_pic_id
-                d2["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
+                d2["pic_url"] = get_pic_url_by_source_pic_name(
+                    2, item.hanzi_pic_id)
 
             # 先检测ret中有没有汉语大字典信息，如果有就直接添加，如果没有要建立新的对象
             flag = False
@@ -172,7 +180,8 @@ def variant_search(request):
                     d1["type"] = 'char'
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
-                result = HanziSet.objects.filter(Q(std_hanzi__contains=item) & Q(source=4)).exclude(variant_type=0)
+                result = HanziSet.objects.filter(
+                    Q(std_hanzi__contains=item) & Q(source=4)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
                     if (item.hanzi_char != ''):
@@ -181,7 +190,8 @@ def variant_search(request):
                     else:
                         d2["type"] = "pic"
                         d2["text"] = item.hanzi_pic_id
-                        d2["pic_url"] = get_pic_url_by_source_pic_name(4, item.hanzi_pic_id)
+                        d2["pic_url"] = get_pic_url_by_source_pic_name(
+                            4, item.hanzi_pic_id)
 
                     d1["variant"].append(d2)
 
@@ -198,11 +208,13 @@ def variant_search(request):
                 elif (item.hanzi_pic_id != ''):
                     d1["stdchar"] = item.hanzi_pic_id
                     d1["type"] = 'pic'
-                    d1["pic_url"] = get_pic_url_by_source_pic_name(4, item.hanzi_pic_id)
+                    d1["pic_url"] = get_pic_url_by_source_pic_name(
+                        4, item.hanzi_pic_id)
 
                 d1["variant"] = []
                 # 获得该类型正字的所有异体字
-                result = HanziSet.objects.filter(Q(std_hanzi__contains=d1["stdchar"]) & Q(source=4)).exclude(variant_type=0)
+                result = HanziSet.objects.filter(
+                    Q(std_hanzi__contains=d1["stdchar"]) & Q(source=4)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
                     if (item.hanzi_char != ''):
@@ -211,7 +223,8 @@ def variant_search(request):
                     else:
                         d2["type"] = "pic"
                         d2["text"] = item.hanzi_pic_id
-                        d2["pic_url"] = get_pic_url_by_source_pic_name(4, item.hanzi_pic_id)
+                        d2["pic_url"] = get_pic_url_by_source_pic_name(
+                            4, item.hanzi_pic_id)
 
                     d1["variant"].append(d2)
 
@@ -228,7 +241,8 @@ def variant_search(request):
             else:
                 d2["type"] = "pic"
                 d2["text"] = item.hanzi_pic_id
-                d2["pic_url"] = get_pic_url_by_source_pic_name(2, item.hanzi_pic_id)
+                d2["pic_url"] = get_pic_url_by_source_pic_name(
+                    2, item.hanzi_pic_id)
 
             # 先检测ret中有没有敦煌俗字典信息，如果有就直接添加，如果没有要建立新的对象
             flag = False
@@ -282,14 +296,12 @@ def get_tw_iframe_up(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            # up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             up = base + '/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            # up = '/hanzi/yitizi/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             up = base + '/yiti' + first_letter + '/w' + first_letter + '/w' + item + '.htm'
             tmp_list.append(up)
 
@@ -310,15 +322,15 @@ def get_tw_iframe_left(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
-            left = base + '/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base + '/yiti' + first_letter + '/' + \
+                first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            # left = '/hanzi/yitizi/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
-            left = base + '/yiti' + first_letter + '/' + first_letter + '_std/' + item + '.htm'
+            left = base + '/yiti' + first_letter + '/' + \
+                first_letter + '_std/' + item + '.htm'
             tmp_list.append(left)
 
     return tmp_list
@@ -338,15 +350,15 @@ def get_tw_iframe_right(code_list):
             # 构造模板路径
             item = item.lower()
             first_letter = item[0].lower()
-            # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
-            right = base + '/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base + '/yiti' + first_letter + \
+                '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
         else:
             item = item.lower()
             first_letter = item[0].lower()
-            # right = '/hanzi/yitizi/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
-            right = base + '/yiti' + first_letter + '/s' + first_letter + '/s' + item + '.htm'
+            right = base + '/yiti' + first_letter + \
+                '/s' + first_letter + '/s' + item + '.htm'
             tmp_list.append(right)
 
     return tmp_list
@@ -363,10 +375,12 @@ def get_tw_url(code_list):
         # 如果不是附录字
         if fuluzi.count(item) == 0:
             first_letter = item[0].lower()
-            url = 'http://dict.variants.moe.edu.tw/yiti' + first_letter + '/fr' + first_letter + '/fr' + item + '.htm'
+            url = 'http://dict.variants.moe.edu.tw/yiti' + \
+                first_letter + '/fr' + first_letter + '/fr' + item + '.htm'
         else:
             first_letter = item[0].lower()
-            url = 'http://dict.variants.moe.edu.tw/yiti' + first_letter + '/ur' + first_letter + '/ur' + item + '.htm'
+            url = 'http://dict.variants.moe.edu.tw/yiti' + \
+                first_letter + '/ur' + first_letter + '/ur' + item + '.htm'
         tmp_list.append(url)
     return tmp_list
 
@@ -386,7 +400,6 @@ def get_hy_page(text):
     return text.split('-')[0]
 
 
-
 def variant_detail(request):
     """
     输出显示异体字综合信息的网页
@@ -400,7 +413,8 @@ def variant_detail(request):
     GL = {}  # 如果属于高丽异体字，则找出对应正字的所有异体字，存入glyitizi
     DH = {}  # 如果属于敦煌俗字典，其页码存入变量DH_char_page、
 
-    result = HanziSet.objects.filter(Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text)).order_by('source')
+    result = HanziSet.objects.filter(Q(hanzi_char__contains=text) | Q(
+        hanzi_pic_id__exact=text)).order_by('source')
 
     for item in result:
         # 得到台湾字的信息
@@ -488,9 +502,11 @@ def variant_detail(request):
             HY['addr'] = item.seq_id
             HY['page'] = ''
             if (len(get_hy_page(item.seq_id)) == 3):
-                HY['page'] = get_hanyu_dict_path() + '0' + get_hy_page(item.seq_id) + '.png'
+                HY['page'] = get_hanyu_dict_path() + '0' + \
+                    get_hy_page(item.seq_id) + '.png'
             elif (len(get_hy_page(item.seq_id)) == 4):
-                HY['page'] = get_hanyu_dict_path() + get_hy_page(item.seq_id) + '.png'
+                HY['page'] = get_hanyu_dict_path(
+                ) + get_hy_page(item.seq_id) + '.png'
             HY['zhengzhi'] = item.hanzi_char
             continue
 
@@ -500,13 +516,16 @@ def variant_detail(request):
             # 如果已经有记录了，就返回，以免信息多余
             # if len(GL)>0:
             # 	continue
-            obj = HanziSet.objects.filter(Q(source=4) & (Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text))).first()
-            result = HanziSet.objects.filter(Q(source=4) & Q(std_hanzi=obj.std_hanzi)).exclude(hanzi_pic_id='')
+            obj = HanziSet.objects.filter(Q(source=4) & (
+                Q(hanzi_char__contains=text) | Q(hanzi_pic_id__exact=text))).first()
+            result = HanziSet.objects.filter(Q(source=4) & Q(
+                std_hanzi=obj.std_hanzi)).exclude(hanzi_pic_id='')
             vraiant = []
             for item in result:
                 t = {}
                 t['pic_id'] = item.hanzi_pic_id
-                t['pic_url'] = get_pic_url_by_source_pic_name(4, item.hanzi_pic_id)
+                t['pic_url'] = get_pic_url_by_source_pic_name(
+                    4, item.hanzi_pic_id)
                 vraiant.append(t)
 
             GL['dict'] = "高丽异体字"
