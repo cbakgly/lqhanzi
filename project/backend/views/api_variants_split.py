@@ -46,6 +46,14 @@ class VariantsSplitSerializer(serializers.ModelSerializer):
         ret['is_submitted_display'] = instance.get_is_submitted_display()
         return ret
 
+    def to_internal_value(self, data):
+        data['is_checked'] = 1 if data['is_checked'] else 0
+        data['is_draft_equals_review'] = 1 if data['is_draft_equals_review'] else 0
+        data['is_redundant'] = 1 if data['is_redundant'] else 0
+        data['is_review_equals_final'] = 1 if data['is_review_equals_final'] else 0
+        data['is_submitted'] = 1 if data['is_submitted'] else 0
+        return super(VariantsSplitSerializer, self).to_internal_value(data)
+
 
 class VariantsSplitFilter(django_filters.FilterSet):
     """
