@@ -10,9 +10,13 @@ from backend.utils import has_business_type_perm
 
 @login_required
 def task_split(request, *args, **kwargs):
-    if has_business_type_perm(request.user, 'split'):
-        return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
-    return render(request, '401.html')
+    if not has_business_type_perm(request.user, 'split'):
+        return render(request, '401.html')
+
+    if request.GET.get('id') is not None:
+        return render(request, 'task_split_view.html', {'char_id': request.GET.get('id')})
+
+    return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
 
 
 @login_required

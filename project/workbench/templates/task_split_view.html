@@ -1,0 +1,542 @@
+{% extends "m2_base.html" %}
+{% load i18n %}
+
+{% block headercss %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/hanzi_parts.css" type="text/css"/>
+{% endblock %}
+{% load staticfiles %}
+
+{% block content %}
+{% verbatim %}
+<!-- component template -->
+<script type="text/x-template" id="parts-template">
+    <div class="box box-blue con-right">
+        <div class="box-header">
+            <div class='box-inner'>
+                    <div class="compontent clearfix">
+                        <div class="compontent-hd">
+                            <span>结构：</span>
+                        </div>
+                        <div class="compontent-bd">
+                            <span v-for="item in structs" class='component-item'  :data-value="item.value" @click="input_it"><img :src="item.image_url" alt="" :data-value="item.value"></span>
+                        </div>
+                    </div>
+                 <div class="parts">
+                        <div class="parts-top clearfix">
+                            <div class="parts-hd">
+                                <span>部件：</span>
+                            </div>
+                            <div class="parts-bd">
+                                <div class="parts-ser">
+                                    <input class="input-ser fl" type="text" placeholder="请输入笔画或笔顺"  v-model="searchQuery">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <span v-if="input_error" class='hint-item'>输入无效，请输入数字或hspnz</span>
+                                </div>
+                                <!--笔画-->
+                                <div class="stroke">
+
+                                 <span class="stroke-hd">笔画：</span>
+                                    <div class="stroke-bd">
+                                    <span v-for="key in parts" class='btn btn-circle' :class="is_actived(key) ? 'active' : ''" @click="input_bishu_search(key)">{{display(key)}}</span>
+                                    </div>
+                                </div>
+                                <!--笔顺-->
+                                <div class="stroke">
+                                    <span class="stroke-hd">笔顺：</span>
+                                    <div class="stroke-bd">
+                                        <span v-for="item in bishus" class='btn btn-circle' :data-value="item.input"  @click="input_search">{{item.display}}<img v-if="is_image(item)" class='component-img' :src="image_path(item)" :data-value="item.input"/></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                <div class="parts-results">
+                    <span v-for="item in rebuild_result(search_result)" class="result-item" :class="item.input=='' ? 'result-stoke' : ''" :data-value="item.input" @click="input_it">{{item_display(item)}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+{% endverbatim %}
+<div id="hanzi-split" class='row'>
+    <div class='col-md-8 col-xm-12'>
+        <div class="box box-blue">
+            <div class="box-header">
+                <div class="hanzi-content">
+                    <a href="#" class="pull-right dropdown-toggle" style="color:#4abfec;">
+                        <i class="fa fa-question-circle" aria-hidden="true" style="font-size:18px;"></i>
+                    </a>
+                    <div class="split-top">
+                        <div class="header-img pull-left">
+                            <div class="zi">
+                                <div class="single-zi">
+                                  <span v-if="model.hanzi_type == 0" v-text="model.hanzi_char">
+                                  </span>
+                                  <span v-else>
+                                    <img :src="model.hanzi_pic_path">
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hanzi-info pull-left">
+                            <p class="hanzi-origin">来源：<em>#[model.source_display]]</em></p>
+                            <p class="hanzi-code">编码：<a href="#">#[model.seq_id]]</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" v-model="draft_checked" >初次
+                                    </label>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" v-model="review_checked">回查
+                                    </label>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" v-model="final_checked">审查
+                                    </label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>重复值</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="draft_disabled" v-model="model.dup_id_draft" autofocus @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="review_disabled" v-model="model.dup_id_review" autofocus @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="若能打出该字，不须拆分" :readonly="final_disabled" v-model="model.dup_id_final" autofocus @click="set_main_input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>初步拆分一</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.init_split_draft" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.init_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.init_split_final" @click="set_main_input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>初步拆分二</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.other_init_split_draft" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.other_init_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.other_init_split_final" @click="set_main_input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>调笔拆分</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.deform_split_draft" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.deform_split_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.deform_split_final" @click="set_main_input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>相似部件</td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="draft_disabled" v-model="model.similar_parts_draft" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="review_disabled" v-model="model.similar_parts_review" @click="set_main_input">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control split-step" placeholder="" :readonly="final_disabled" v-model="model.similar_parts_final" @click="set_main_input">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-group btns-tr split-btns pull-right">
+                    <button class="btn btn-blue btn-sm z-btn-sm" @click="submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='col-md-4 col-xm-12'>
+        <div>
+            <parts-inputmethod :data="hanziComponents">
+            </parts-inputmethod>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %} {% block footerjs %}
+<script src="{{STATIC_URL}}js/vue-resource.min.js"></script>
+<script type="text/javascript">
+// register the parts-inputmethod component
+Vue.component('parts-inputmethod', {
+    template: '#parts-template',
+    props: {
+        data: Array
+    },
+    data: function() {
+        var grp_parts = {}
+        var that = this;
+        var structs = [
+            { value: "⿱",
+              image_url: "/static/img/structs/01.gif" },
+            { value: "⿰",
+              image_url: "/static/img/structs/02.gif" },
+            { value: "⿵",
+              image_url: "/static/img/structs/03.gif" },
+            { value: "⿶",
+              image_url: "/static/img/structs/04.gif" },
+            { value: "⿷",
+              image_url: "/static/img/structs/05.gif" },
+            { value: "~⿷",
+              image_url: "/static/img/structs/06.gif" },
+            { value: "⿺",
+              image_url: "/static/img/structs/07.gif" },
+            { value: "~⿺",
+              image_url: "/static/img/structs/08.gif" },
+            { value: "⿹",
+              image_url: "/static/img/structs/09.gif" },
+            { value: "~⿹",
+              image_url: "/static/img/structs/10.gif" },
+            { value: "⿻",
+              image_url: "/static/img/structs/11.gif" },
+            { value: "⿴",
+              image_url: "/static/img/structs/12.gif" },
+        ]
+        var bishus = [{
+            "display": "一",
+            "input": "h",
+            "strokes": 1,
+            "stroke_hspnz": ""
+        }, {
+            "display": "丨",
+            "input": "s",
+            "strokes": 1,
+            "stroke_hspnz": ""
+        }, {
+            "display": "丿",
+            "input": "p",
+            "strokes": 1,
+            "stroke_hspnz": ""
+        }, {
+            "display": "乀",
+            "input": "n",
+            "strokes": 1,
+            "stroke_hspnz": ""
+        }, {
+            "display": "⺄",
+            "input": "z",
+            "strokes": 1,
+            "stroke_hspnz": ""
+        }, ];
+
+        return {
+            sortKey: '',
+            grp_parts: grp_parts,
+            selected: 1,
+            search_result: [],
+            searchQuery: '',
+            mainInput: {},
+            bishus: bishus,
+            structs: structs,
+            input_error: false
+        }
+
+    },
+    watch: {
+        searchQuery: function() {
+            if (typeof(this.searchQuery) == 'number') {
+                var that = this
+                this.search_result =  this.data.filter(function(item) {
+                    if (item.strokes == that.searchQuery) {
+                        return item;
+                    }
+                })
+                return
+            }
+            if (this.searchQuery == '') {
+                this.search_result = this.data
+                return;
+            }
+            var that = this;
+            var query = String(this.searchQuery)
+            if ((/^(\d*)[hspnz+.*]*(\d*)$/i).test(query)) {
+                result = query.match(/^(\d*)[hspnz+.*]*(\d*)$/i)
+                this.input_error = false
+                if (result[1].length!=0 && result[2].length!=0) {
+                    this.search_result = []
+                } else {
+                    var replace = query.replace(/\d*/g, '') ;
+                    var expression = "^" + replace + ".*$";
+                    result_1 = this.data.filter(function(item) {
+                        var re = new RegExp(expression, 'i');
+                        if (item.stroke_hspnz && item.stroke_hspnz.trim().match(re)) {
+                            return item
+                        }
+                    })
+                    var bishu = result[1] + result[2];
+                    if (bishu.length!=0) {
+                        this.search_result = result_1.filter(function(item) {
+                            if (String(item.strokes) == bishu) {
+                                return item
+                            }
+                        })
+                    } else {
+                        this.search_result = result_1
+                    }
+                }
+            } else {
+                this.input_error = true
+            }
+
+        }
+    },
+    created: function() {
+
+    },
+    computed: {
+        parts: function(){
+            var ret = _.uniqBy(this.data, 'strokes').map(function(t){ return t.strokes})
+            ret.unshift(0)
+            return ret
+        }
+    },
+    filters: {
+        capitalize: function(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1)
+        }
+    },
+    methods: {
+        is_flipx: function(input) {
+            return input[0] == '~'
+        },
+        is_actived: function(key) {
+            return this.selected == key
+        },
+        active_tab: function(key) {
+            this.selected = key
+            this.search_result = this.grp_parts[this.selected]
+        },
+        image_path: function(item) {
+            return "/static/img/components/" + item.display + ".png"
+        },
+        item_display: function(item) {
+            if (this.uniLen(item) == 1 || item.input == "") {
+                return item.display
+            }
+        },
+        hint_item: function(item) {
+            return item.input == ''
+        },
+        is_image: function(item) {
+            if (item.input == "")
+                return false
+            if (this.uniLen(item) != 1)
+                return true
+            return false
+        },
+        display: function(key) {
+            if (key == 0) {
+                return "All"
+            }
+            return key
+        },
+        uniLen: function(p) {
+            var str = p.display;
+            var total = 0,
+                c, i, len, sub;
+
+            for (i = 0, len = str.length; i < len; i++) {
+                sub = str.substr(i);
+                c = sub.charCodeAt(0);
+                if ((c >= 0xD800) && (c <= 0xDBFF)) c = ((c - 0xD800) << 10) + sub.charCodeAt(1) + 0x2400;
+
+                total += 1;
+                if (c >= 0x20000) {
+                    i++;
+                }
+            }
+            return total;
+        },
+        input_it: function(evt) {
+            var ele = $(evt.target);
+            this.$parent.$emit('emit-part', ele.data('value'))
+        },
+        input_search: function(evt) {
+            var ele = $(evt.target);
+            this.searchQuery = this.searchQuery + ele.data('value')
+        },
+        input_bishu_search: function(key) {
+            this.selected = key
+            if (key == 0) {
+                this.searchQuery = ''
+                return
+            }
+            this.searchQuery = key
+        },
+        rebuild_result: function(result) {
+            var parts = _.cloneDeep(result)
+            var part_index = _.uniqBy(parts, 'strokes').map(function(t){ return t.strokes})
+
+            _(part_index).forEach(function(i){
+              var item = {"display": i,
+                        "input": "",
+                        "strokes": i,
+                        "stroke_hspnz": ""}
+              var pos = _.findIndex(parts, function(t){return t.strokes==i})
+              parts.splice(pos, 0, item)
+            })
+            return parts
+        }
+    }
+})
+
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set("X-CSRFToken", Cookies.get('csrftoken'));
+
+    next((response) => {
+        if (response.status == 204) {
+          msg_bar.show(false, {'detail': '{% trans 'No more task. All tasks may have been done. Please report.' %}'});
+        } else if (response.status == 403) {
+          msg_bar.show(false, {'detail': '{% trans "Login expires, please login again." %}'});
+        } else if (response.status >= 400) {
+          msg_bar.show(false, {'detail': response.status + ' ' + response.statusText});
+          console.log(response.data);
+        }
+        return response
+    })
+});
+
+var part_input = new Vue({
+    delimiters: ['#[', ']]'],
+    el: '#hanzi-split',
+    data: {
+        searchQuery: '',
+        hanziComponents: [],
+        dup_id: "",
+        init_split: "",
+        other_init_split: "",
+        deform_split: "",
+        similar_parts: "",
+        model_default: {task_ele: {}},
+        model: {task_ele: {}},
+        mainInput: $('#hanzi-split input[type=text]:first'),
+    },
+    computed: {
+        draft_checked: function() {
+          return {{ perms.backend.op_draft_split|yesno:'1,0,0' }};
+        },
+        review_checked: function() {
+          return {{perms.backend.op_review_split|yesno:'1,0,0'}};
+        },
+        final_checked: function() {
+          return {{perms.backend.op_final_split|yesno:'1,0,0'}};
+        },
+        draft_disabled: function() {
+          return {{ perms.backend.op_draft_split|yesno:'1,0,0' }} ? false: true;
+        },
+        review_disabled: function() {
+          return {{perms.backend.op_review_split|yesno:'1,0,0'}} ? false: true;
+        },
+        final_disabled: function() {
+          return {{perms.backend.op_final_split|yesno:'1,0,0'}} ? false: true;
+        }
+    },
+    methods: {
+        set_main_input: function(evt) {
+            this.mainInput = $(evt.target);
+        },
+        submit: function() {
+          this.$http.put("{% url "splits-detail" version="v1" pk=char_id %}", this.model).then((response)=>{
+            console.log(response);
+            msg_bar.show(true, {'detail': '{% trans "success" %}'});
+            this.model = response.data;
+          }, (response)=>{
+            console.log(response);
+          });
+        },
+        submit_go_next: function() {
+          this.$http.put("{% url 'tasks-submit-next-split' version='v1' pk=0 %}".replace(0, this.model.id), this.model).then((response)=>{
+            console.log(response);
+             if (response.status == 204) {
+              this.model = this.model_default;
+              return;
+            }
+            this.model = response.data[0];
+          }, (response)=>{
+            console.log(response);
+          });
+        },
+        go_next: function() {
+          this.$http.get("{% url 'tasks-skip-task' version="v1" pk=0 %}".replace(0, this.model.id)).then((response)=>{
+            console.log(response);
+             if (response.status == 204) {
+              this.model = this.model_default;
+              return;
+            }
+            this.model = response.data[0];
+          },(response)=>{
+            console.log(response);
+          });
+        },
+    },
+    created: function() {
+        var that = this;
+        this.$on('emit-part', function(a) {
+            part_input.mainInput.val(part_input.mainInput.val() + a)
+        })
+        this.$http.get('{% url "hanzi-parts-list" version="v1" %}?is_split_part=1').then((response) => {
+          // success callback
+          part_input.hanziComponents = response.data
+        }, (response) => {
+          // error callback
+        });
+        this.$http.get('{% url "splits-detail" version="v1" pk=char_id %}').then((response) => {
+          // success callback
+          console.log(response);
+          if (response.status == 204) {
+            this.model = this.model_default;
+            return;
+          }
+          this.model = response.data;
+          Vue.nextTick(function () {  }); // DOM 更新了
+        }, (response) => {
+          // error callback
+        });
+    },
+    <!--mounted: function() {-->
+        <!--$("input[type=checkbox]").iCheck({-->
+            <!--checkboxClass: 'icheckbox_flat-blue',-->
+            <!--radioClass: 'iradio_flat-blue'-->
+        <!--})-->
+    <!--}-->
+});
+
+
+</script>
+{% endblock %}

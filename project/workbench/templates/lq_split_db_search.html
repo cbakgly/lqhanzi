@@ -274,7 +274,7 @@
               <td v-show="filter_is_submitted">#[ item.is_submitted_display ]]</td>
               <td v-show="filter_remark">#[ item.remark ]]</td>
               <td v-show="filter_u_t">#[ new Date(item.u_t).toLocaleString() ]]</td>
-              <td><a href="#">查看</a></td>
+              <td><a :href="get_detail_url(item)">查看</a></td>
             </tr>
             </tbody>
           </table>
@@ -299,6 +299,7 @@
   </div>
 <script type="text/javascript">
   var search_url = '{% url "splits-list" version="v1" %}';
+  var detail_url = "{% url 'm2.task-split'  %}";
 
   function hanzi_search(url, cond) {
     $.ajax({
@@ -423,6 +424,9 @@
     methods: {
       goto_page: function(url) {
         hanzi_search(url, null);
+      },
+      get_detail_url: function(item) {
+        return detail_url + '?id=' + item.id;
       }
     },
     created: function() {
