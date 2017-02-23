@@ -54,9 +54,12 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     color: #666;
-    background: #ebf0f5
+    background: #ebf0f5;
+    height:100%;
 }
-
+html,body{
+    height:100%;
+}
 .clearfix:before, .clearfix:after {
     content: "";
     display: table;
