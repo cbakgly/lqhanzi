@@ -65,6 +65,10 @@ class HanziSet(models.Model):
 
     pinyin = models.CharField(u'拼音', default='', blank=True, max_length=64)
     radical = models.CharField(u'部首', default='', blank=True, max_length=8)
+
+    #勿删
+    is_for_search = models.SmallIntegerField(u'是否可搜索', default=0)
+
     max_strokes = models.SmallIntegerField(u'最大笔画数', default='', blank=True)
     min_strokes = models.SmallIntegerField(u'最小笔画数', default='', blank=True)
 
