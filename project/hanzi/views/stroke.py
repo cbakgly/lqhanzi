@@ -256,7 +256,6 @@ def stroke_normal_search(request):
 
     parts_rex = create_regex(parts)
 
-    write_log('parts', parts)
     # 开始检索
     if(mode == 1):
         total = HanziSet.objects.filter(
@@ -359,6 +358,7 @@ def stroke_normal_search(request):
             item['pic_url'] = get_pic_url_by_source_pic_name(
                 item['source'], item['hanzi_pic_id'])
 
+    print page_num,'/',pages
     r = {}
     r['q'] = request.GET.get('q')
     r['total'] = total

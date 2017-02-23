@@ -494,8 +494,8 @@ function render_stroke_result(data)
     var total = data.total;
     var data = data.result;
 
-    $('.pages-box').empty();
-    $('.hanzi-wrap').html('');
+    //$('.pages-box').empty();
+    //$('.hanzi-wrap').html('');
 
     //如果没有检索到数据
     if(total==0)
@@ -659,6 +659,7 @@ function render_stroke_result(data)
         //把字填到左面板里去
         $('.hanzi-wrap').append(char);
     }
+
 
     var str = '';
     var prev = page_num-1;
