@@ -29,7 +29,9 @@ urlpatterns = [
     url(r'task/split/(?P<pk>\d+)/$', task.task_split, name='m2.task-split-detail'),
     url(r'task/input/(?P<pk>\d+)/$', task.task_input, name='m2.task-input-detail'),
     url(r'task/dedup/(?P<pk>\d+)/$', task.task_dedup, name='m2.task-dedup-detail'),
-    url(r'task/dedup2/(?P<pk>\d+)/$', task.task_dedup2, name='m2.task-dedup-detail'),
+    url(r'task/input_detail/(?P<pk>\d+)/$', task.input_detail, name='m2.input-detail'),
+    url(r'task/input_detail/$', task.input_detail, name='m2.input-detail'),
+    url(r'task/input_page_detail/$', task.input_page_detail, name='m2.input-page-detail'),
 
     url(r'search/lq-hanzi$', search.lq_hanzi_db_search, name='m2.lq-hanzi-search'),
     url(r'search/lq-split$', search.lq_split_db_search, name='m2.lq-split-search'),

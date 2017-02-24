@@ -1,7 +1,7 @@
 # -*- coding:utf8 -*-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES
+from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES, InputPage
 from backend.enums import getenum_source, getenum_task_status, getenum_business_type
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
@@ -21,12 +21,17 @@ def task_split(request, *args, **kwargs):
 
 @login_required
 def task_input(request, *args, **kwargs):
-    # TODO 取消注释
-    #if has_business_type_perm(request.user, 'input'):
-    pk = request.GET['pk']
-    task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
-    if task:
-        task = task[0]
+    if has_business_type_perm(request.user, 'input'):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
+        if task:
+            task = task[0]
+        else:
+            task = list(Tasks.objects.filter(business_type=9, task_package_id=pk))
+            task = task[0]
         input_page = task.content_object
         inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
 
@@ -34,11 +39,46 @@ def task_input(request, *args, **kwargs):
                       {
                           'inputpage': input_page,
                           'inputs': inputs,
-                          'task_package_id': request.GET.get('pk'),
+                          'task_package_id': pk,
                           'business_stage': task.business_stage,
                           'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
-                      })
-    #return render(request, '401.html')
+                  })
+    return render(request, '401.html')
+
+
+@login_required
+def input_detail(request, *args, **kwargs):
+    if 'pk' in kwargs.keys():
+        pk = kwargs['pk']
+    else:
+        pk = request.GET['pk']
+    input_object = VariantsInput.objects.get(pk=pk)
+
+    input_page =InputPage.objects.get(pk=input_object.page_num)
+    inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+
+    return render(request, 'input_detail.html',
+                  {
+                      'inputpage': input_page,
+                      'inputs': inputs,
+                      'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
+                  })
+
+@login_required
+def input_page_detail(request, *args, **kwargs):
+    if 'pk' in kwargs.keys():
+        pk = kwargs['pk']
+    else:
+        pk = request.GET['pk']
+    input_page =InputPage.objects.get(pk=pk)
+    inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+
+    return render(request, 'input_detail.html',
+                  {
+                      'inputpage': input_page,
+                      'inputs': inputs,
+                      'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
+                  })
 
 
 @login_required
