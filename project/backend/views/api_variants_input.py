@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -352,3 +352,24 @@ class InputPageViewSet(viewsets.ModelViewSet):
             return Response(_("Thanks for working, the package is not finished yet, please carry on!"), status=status.HTTP_100_CONTINUE)
         else:
             return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_303_SEE_OTHER)
+
+
+    @detail_route(methods=["GET"])
+    def next_page(self, request, *args, **kwargs):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        next_page = list(InputPage.objects.filter(page_num__gt=pk).order_by('page_num'))[0]
+
+        return Response({"next_page":next_page.page_num})
+
+    @detail_route(methods=["GET"])
+    def last_page(self, request, *args, **kwargs):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        last_page = list(InputPage.objects.filter(page_num__lt=pk).order_by('page_num'))[-1]
+
+        return Response({"last_page":last_page.page_num})

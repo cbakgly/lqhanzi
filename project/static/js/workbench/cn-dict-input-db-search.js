@@ -18,7 +18,7 @@ function AjaxHelper() {
     }
 }
 
-AjaxHelper.prototype.get = function(url, data, callback) {
+AjaxHelper.prototype.get = function (url, data, callback) {
     this.ajax(url, 'GET', 'json', data, callback)
 }
 
@@ -47,29 +47,29 @@ var hanzi_input = new Vue({
         models: [],
         context: {},
         bool: [
-          {text: '否', value: 0},
-          {text: '是', value: 1},
+            {text: '否', value: 0},
+            {text: '是', value: 1},
         ],
         add_tail: {
             1: 'review',
             2: 'final'
         },
         options_stage: [
-          {text: '初次', value: 0},
-          {text: '回查', value: 1},
-          {text: '审查', value: 2},
+            {text: '初次', value: 0},
+            {text: '回查', value: 1},
+            {text: '审查', value: 2},
         ],
         options_type: [
-          {text: '纯正字', value: 0},
-          {text: '狭义异体字', value: 1},
-          {text: '广义且正字', value: 2},
-          {text: '广义异体字', value: 3},
-          {text: '狭义且正字', value: 4},
-          {text: '特定异体字', value: 5},
-          {text: '特定且正字', value: 6},
-          {text: '误刻误印', value: 7},
-          {text: '其他不入库类型', value: 8},
-          {text: '其他入库类型', value: 9}
+            {text: '纯正字', value: 0},
+            {text: '狭义异体字', value: 1},
+            {text: '广义且正字', value: 2},
+            {text: '广义异体字', value: 3},
+            {text: '狭义且正字', value: 4},
+            {text: '特定异体字', value: 5},
+            {text: '特定且正字', value: 6},
+            {text: '误刻误印', value: 7},
+            {text: '其他不入库类型', value: 8},
+            {text: '其他入库类型', value: 9}
         ],
         titles: [
             {text: '序号', show: true},
@@ -101,15 +101,15 @@ var hanzi_input = new Vue({
             {text: '操作', show: true}
         ]
     },
-    created: function() {
+    created: function () {
         var vm = this;
-        ajaxHelper.get(vm.urls, null, function(data) {
+        ajaxHelper.get(vm.urls, null, function (data) {
             vm.context = data.html_context;
             vm.models = data.models;
         })
     },
     methods: {
-        searchResult: function() {
+        searchResult: function () {
             var vm = this;
 
             for (keyname in vm.params) {
@@ -127,23 +127,26 @@ var hanzi_input = new Vue({
                 }
             }
             delete vm.params['stage']
-            ajaxHelper.get(vm.urls, vm.params, function(data) {
+            ajaxHelper.get(vm.urls, vm.params, function (data) {
                 vm.models = data.models;
                 vm.context = data.html_context;
             })
         },
-        clearAllResult: function() {
-            for(var key in this.params) {
+        clearAllResult: function () {
+            for (var key in this.params) {
                 this.params[key] = "";
             }
             $('#reservationtime').val("");
         },
-        gotoPage: function(url) {
+        gotoPage: function (url) {
             var vm = this;
-            ajaxHelper.get(url, null, function(data){
+            ajaxHelper.get(url, null, function (data) {
                 vm.models = data.models;
                 vm.context = data.html_context;
             })
+        },
+        get_detail_url: function (item) {
+            return '/workbench/task/input_page_detail/?pk=' + item.id;
         }
     }
-})
+});

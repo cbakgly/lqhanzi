@@ -50,6 +50,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>字头</th>
                                     <th>类型</th>
                                     <th>通行字</th>
@@ -79,6 +80,18 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="checkback">
+                    <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>字头</th>
+                                    <th>类型</th>
+                                    <th>通行字</th>
+                                    <th>备注</th>
+                                    <!--<th>存疑</th>-->
+                                </tr>
+                                </thead>
+                            </table>
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
@@ -93,6 +106,18 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="checkup">
+                    <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>字头</th>
+                                    <th>类型</th>
+                                    <th>通行字</th>
+                                    <th>备注</th>
+                                    <!--<th>存疑</th>-->
+                                </tr>
+                                </thead>
+                            </table>
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
@@ -121,6 +146,7 @@
             delimiters: ["#[", "]]"],
             props: ['id', 'pic_id', 'char', 'std_hanzi', 'notes', "input_type", "stage"],
             template: '<tr @click="edit($event)">\
+                        <td>#[id]]</td>\
                         <td v-if="pic_id!=\'\'">\
                             <img :src= "pic_id">\
                         </td>\
@@ -200,7 +226,6 @@
                         data: {
                         },
                         success: function (response) {
-                            alert("success!");
                             window.location.reload();
                         },
                         error: function (xhr, status, err) {
