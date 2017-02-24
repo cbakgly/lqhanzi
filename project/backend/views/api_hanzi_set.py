@@ -37,7 +37,7 @@ class HanziSetDedupSerializer(serializers.ModelSerializer):
                    "as_std_hanzi",
                    "pinyin",
                    "radical",
-                   "strokes",
+                   # "strokes",
                    "zheng_code",
                    "wubi",
                    "dup_count",

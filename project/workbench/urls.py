@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'task/input_detail/(?P<pk>\d+)/$', task.input_detail, name='m2.input-detail'),
     url(r'task/input_detail/$', task.input_detail, name='m2.input-detail'),
     url(r'task/input_page_detail/$', task.input_page_detail, name='m2.input-page-detail'),
+    url(r'task/dedup_inter_detail/$', task.task_dedup_inter, name='m2.dedup-detail'),
 
     url(r'search/lq-hanzi$', search.lq_hanzi_db_search, name='m2.lq-hanzi-search'),
     url(r'search/lq-split$', search.lq_split_db_search, name='m2.lq-split-search'),
