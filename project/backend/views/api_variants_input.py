@@ -194,7 +194,7 @@ class VariantsInputViewSet(viewsets.ModelViewSet):
         variants_input.save()
         tasks = list(variants_input.task.all())
         for t in tasks:
-            if t.business_status == getenum_task_status("ongoing"):
+            if t.task_status == getenum_task_status("ongoing"):
                 t.save()
                 break
         return Response(VariantsInputSerializer(variants_input).data)
