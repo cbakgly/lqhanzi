@@ -13,37 +13,39 @@ def task_split(request, *args, **kwargs):
     if not has_business_type_perm(request.user, 'split'):
         return render(request, '401.html')
 
-    if request.GET.get('id') is not None:
+    if request.GET.get('id', 0):
         return render(request, 'task_split_view.html', {'char_id': request.GET.get('id')})
 
-    return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk')})
+    return render(request, 'task_split.html', {'task_package_id': request.GET.get('pk', 0)})
 
 
 @login_required
 def task_input(request, *args, **kwargs):
-    if has_business_type_perm(request.user, 'input'):
-        if 'pk' in kwargs.keys():
-            pk = kwargs['pk']
-        else:
-            pk = request.GET['pk']
-        task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
-        if task:
-            task = task[0]
-        else:
-            task = list(Tasks.objects.filter(business_type=9, task_package_id=pk))
-            task = task[0]
-        input_page = task.content_object
-        inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+    if not has_business_type_perm(request.user, 'input'):
+        return render(request, '401.html')
 
-        return render(request, 'task_input.html',
-                      {
-                          'inputpage': input_page,
-                          'inputs': inputs,
-                          'task_package_id': pk,
-                          'business_stage': task.business_stage,
-                          'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
+    if 'pk' in kwargs.keys():
+        pk = kwargs['pk']
+    else:
+        pk = request.GET['pk']
+    task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
+    if task:
+        task = task[0]
+    else:
+        task = list(Tasks.objects.filter(business_type=9, task_package_id=pk))
+        task = task[0]
+
+    input_page = task.content_object
+    inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+
+    return render(request, 'task_input.html',
+                  {
+                      'inputpage': input_page,
+                      'inputs': inputs,
+                      'task_package_id': pk,
+                      'business_stage': task.business_stage,
+                      'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
                   })
-    return render(request, '401.html')
 
 
 @login_required
@@ -54,7 +56,7 @@ def input_detail(request, *args, **kwargs):
         pk = request.GET['pk']
     input_object = VariantsInput.objects.get(pk=pk)
 
-    input_page =InputPage.objects.get(pk=input_object.page_num)
+    input_page = InputPage.objects.get(pk=input_object.page_num)
     inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
 
     return render(request, 'input_detail.html',
@@ -64,13 +66,14 @@ def input_detail(request, *args, **kwargs):
                       'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
                   })
 
+
 @login_required
 def input_page_detail(request, *args, **kwargs):
     if 'pk' in kwargs.keys():
         pk = kwargs['pk']
     else:
         pk = request.GET['pk']
-    input_page =InputPage.objects.get(pk=pk)
+    input_page = InputPage.objects.get(pk=pk)
     inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
 
     return render(request, 'input_detail.html',
@@ -86,7 +89,7 @@ def task_dedup(request, *args, **kwargs):
     if not has_business_type_perm(request.user, 'dedup'):
         return render(request, '401.html')
 
-    pk = int(kwargs["pk"])
+    pk = int(request.GET.get("pk", 0))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:
         task = task[0]
@@ -120,7 +123,7 @@ def task_dedup2(request, *args, **kwargs):
     if not has_business_type_perm(request.user, 'dedup'):
         return render(request, '401.html')
 
-    pk = int(request.GET.get('pk'))
+    pk = int(request.GET.get("pk", 0))
     task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
     if task:
         task = task[0]
