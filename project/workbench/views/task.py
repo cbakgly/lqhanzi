@@ -21,23 +21,24 @@ def task_split(request, *args, **kwargs):
 
 @login_required
 def task_input(request, *args, **kwargs):
-    if has_business_type_perm(request.user, 'input'):
-        pk = int(kwargs["pk"])
-        task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
-        if task:
-            task = task[0]
-            input_page = task.content_object
-            inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+    # TODO 取消注释
+    #if has_business_type_perm(request.user, 'input'):
+    pk = request.GET['pk']
+    task = list(Tasks.objects.filter(business_type=9, task_package_id=pk, task_status=getenum_task_status("ongoing")))
+    if task:
+        task = task[0]
+        input_page = task.content_object
+        inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
 
-            return render(request, 'task_input.html',
-                          {
-                              'inputpage': input_page,
-                              'inputs': inputs,
-                              'task_package_id': request.GET.get('pk'),
-                              'business_stage': task.business_stage,
-                              'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
-                          })
-    return render(request, '401.html')
+        return render(request, 'task_input.html',
+                      {
+                          'inputpage': input_page,
+                          'inputs': inputs,
+                          'task_package_id': request.GET.get('pk'),
+                          'business_stage': task.business_stage,
+                          'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
+                      })
+    #return render(request, '401.html')
 
 
 @login_required
@@ -104,8 +105,3 @@ def task_dedup2(request, *args, **kwargs):
                        'business_stage': task.business_stage,
                        'korean_dedup_id': dedup_character.id
                        })
-
-
-@login_required
-def credit_redeem(request, *args, **kwargs):
-    user = request.user
