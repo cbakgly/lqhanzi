@@ -490,9 +490,6 @@ function render_stroke_result(data)
     var total = data.total;
     var data = data.result;
 
-    //$('.pages-box').empty();
-    //$('.hanzi-wrap').html('');
-
     //如果没有检索到数据
     if(total==0)
     {
@@ -504,7 +501,6 @@ function render_stroke_result(data)
         $(".con-right").addClass("con-right-new");
         return;
     }
-
 
     //显示符合要求的条目数
     $("#total").html(total);

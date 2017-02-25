@@ -220,7 +220,7 @@ def stroke_normal_search(request):
     page_num = request.GET.get('page_num', None)
 
     if(q is None or page_size is None or page_num is None):
-        return HttpResponse("Invalid input   aaaa")
+        return HttpResponse("Invalid input")
 
     page_size = int(page_size)
     page_num = int(page_num)
@@ -231,7 +231,7 @@ def stroke_normal_search(request):
     # 模式3表示末尾两有个数字，中间有逗号
     # re.match(r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+-\d+)|([^\w,;:`%?&*^(){}@!|]+?)(\d+)|([^\w,;:`%?&*^(){}@!|]+)$',q):
     m = re.match(
-        r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&*^(){}@!|]+)$', q)
+        r'^([^\w,;:`%?&.+*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&.+*^(){}@!|]+)$', q)
     if m:
         if(m.group(2)):
             stroke_range = m.group(2)
