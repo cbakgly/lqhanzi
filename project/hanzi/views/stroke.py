@@ -212,7 +212,7 @@ def stroke_normal_search(request):
     """
     一般检索
     """
-    print 'stroke_normal_search'
+    # print 'stroke_normal_search'
     q = request.GET.get('q', None)
 
     print type(q)
@@ -262,7 +262,7 @@ def stroke_normal_search(request):
 
     parts_rex = create_regex(parts)
 
-    print 'parts_rex=',parts_rex.encode('utf-8')
+    # print 'parts_rex=',parts_rex.encode('utf-8')
 
     # 开始检索
     if(mode == 1):
@@ -383,7 +383,7 @@ def stroke_advanced_search(request):
     """
     正则检索
     """
-    print 'stroke_advanced_search'
+    # print 'stroke_advanced_search'
 
     q = request.GET.get('q', None)
     page_size = request.GET.get('page_size', None)
