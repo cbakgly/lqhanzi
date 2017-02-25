@@ -1,6 +1,5 @@
 # coding=utf-8
-
-# hanzi/variant.py
+from __future__ import unicode_literals
 import json
 import re
 from django.db.models import Q
