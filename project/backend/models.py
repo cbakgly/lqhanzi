@@ -15,7 +15,7 @@ INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'
 HANZI_TYPE_CHOICES = ((0, u'文字'), (1, u'图片'), (2, u'文字且图片'))
 SOURCE_CHOICES = ((0, u'未分类'), (1, 'Unicode'), (2, u'台湾异体字典'), (3, u'汉语大字典'), (4, u'高丽大藏经'), (5, u'敦煌俗字典'))
 YESNO_CHOICES = ((0, u'否'), (1, u'是'))
-BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'),(9, u'录入页'))
+BUSINESS_TYPE_CHOICES = ((1, u'拆字'), (2, u'录入'), (3, u'图书校对'), (4, u'论文下载'), (5, u'去重'), (6, u'高台拆字'), (7, u'互助'), (8, u'去重子任务'), (9, u'录入页'))
 BUSINESS_STAGE_CHOICES = ((1, u'初次'), (2, u'回查'), (3, u'审查'))
 TASK_PACKAGE_STATUS_CHOICES = ((0, u'进行中'), (1, u'已完成'))
 TASK_STATUS_CHOICES = ((0, u'未开放'), (1, u'待分配'), (2, u'进行中'), (3, u'已完成'))
@@ -66,7 +66,7 @@ class HanziSet(models.Model):
     pinyin = models.CharField(u'拼音', default='', blank=True, max_length=64)
     radical = models.CharField(u'部首', default='', blank=True, max_length=8)
 
-    #勿删
+    # 勿删
     is_for_search = models.SmallIntegerField(u'是否可搜索', default=0)
 
     max_strokes = models.SmallIntegerField(u'最大笔画数', default='', blank=True)

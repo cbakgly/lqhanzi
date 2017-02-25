@@ -2,13 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db.models import Q
-from django.http import HttpResponse
-from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
-from backend.utils import get_dunhuang_dict_path, get_hanyu_dict_path
-from backend.models import HanziParts, HanziSet, HanziRadicals
+from backend.models import HanziSet, HanziRadicals
 from backend.enums import SOURCE_ENUM
 from tw_fuluzi import fuluzi
 from django.http import JsonResponse
