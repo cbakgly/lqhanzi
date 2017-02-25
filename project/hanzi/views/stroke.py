@@ -65,11 +65,7 @@ def is_structure(ch):
     """
     #判断ch是不是结构字符
     """
-    s = '⿰⿱⿴⿵⿶⿷󰃾⿸⿹⿺󰃿⿻'
-    if(s.find(ch) != -1):
-        return True
-    else:
-        return False
+    return ch in u'⿰⿱⿴⿵⿶⿷󰃾⿸⿹⿺󰃿⿻'
 
 
 def is_regular(ch):
