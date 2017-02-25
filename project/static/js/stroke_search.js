@@ -146,6 +146,13 @@ $(document).ready(function()
         $("#searchinput").val(text);
     });
 
+    //给输入框添加回车键相应
+    $('#searchinput').keydown(function(e){
+    if(e.keyCode==13){
+       $('#strock_search_btn').click();
+    }
+    });
+
     //点击部件笔画搜索按钮时的响应函数
     $("#strock_search_btn").click( function ()
     {

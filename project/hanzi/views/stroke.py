@@ -214,8 +214,6 @@ def stroke_normal_search(request):
     """
     # print 'stroke_normal_search'
     q = request.GET.get('q', None)
-
-    print type(q)
     page_size = request.GET.get('page_size', None)
     page_num = request.GET.get('page_num', None)
 
@@ -234,32 +232,32 @@ def stroke_normal_search(request):
         r'^([^\w,;:`%?&.+*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&.+*^(){}@!|]+)$', q)
     if m:
         if(m.group(2)):
+            parts = m.group(1)
             stroke_range = m.group(2)
             if stroke_range.find('-') != -1:
                 mode = 3
             else:
                 mode = 2
         else:
+            parts = m.group(1)
             mode = 1
     else:
         return HttpResponse("Invalid input")
 
     # 提取相似部件,构建查询相似部件所用到的正则表达式
-    similar_parts = extract_similar_parts(q)
+    similar_parts = extract_similar_parts(parts)
     similar_parts_rex = create_regex(similar_parts)
 
     # 去掉相似部件,包括前边的~号
-    q = remove_similar_parts(q)
+    parts = remove_similar_parts(parts)
 
     # 提取结构字符
-    structure = extract_structure(q)
+    structure = extract_structure(parts)
 
     # 提取部件（去掉相似部件之后的）,构建查询所有部件所用到的正则表达式
-    parts = extract_parts(q)
-
+    parts = extract_parts(parts)
     tmp_list = sorted(parts)
     parts = "".join(tmp_list)
-
     parts_rex = create_regex(parts)
 
     # print 'parts_rex=',parts_rex.encode('utf-8')
@@ -367,7 +365,7 @@ def stroke_normal_search(request):
                 item['source'], item['hanzi_pic_id'])
 
     r = {}
-    r['q'] = request.GET.get('q')
+    r['q'] = q
     r['total'] = total
     r['page_num'] = page_num
     r['pages'] = pages
