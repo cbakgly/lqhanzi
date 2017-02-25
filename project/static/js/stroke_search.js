@@ -49,7 +49,7 @@ $(document).ready(function()
         var btip_height = $("#btip").height();
         var new_left_offset = (btip_width - w)/2;
 
-        $("#btip").css({ "visibility":"visible","left":offset.left-new_left_offset-5,"top":offset.top-btip_height-5});
+        $("#btip").css({ "visibility":"visible","left":offset.left-new_left_offset-5,"top":offset.top-btip_height-9});
 
         //显示bubble
         $("#btip").show();
