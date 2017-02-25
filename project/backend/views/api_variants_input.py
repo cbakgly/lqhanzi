@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 import django_filters
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -57,6 +57,7 @@ def update_tasks_status(variants_input):
 
 
 class VariantsInputSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = VariantsInput
         fields = "__all__"
@@ -81,6 +82,7 @@ class VariantsInputSerializer(serializers.ModelSerializer):
 
 
 class VariantsDraftSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = VariantsInput
         fields = [
@@ -98,6 +100,7 @@ class VariantsDraftSerializer(serializers.ModelSerializer):
 
 
 class VariantsReviewSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = VariantsInput
         fields = [
@@ -122,6 +125,7 @@ class VariantsReviewSerializer(serializers.ModelSerializer):
 
 
 class VariantsFinalSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = VariantsInput
         fields = [
@@ -153,6 +157,7 @@ class VariantsFinalSerializer(serializers.ModelSerializer):
 
 
 class VariantsInputFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
@@ -265,6 +270,7 @@ class InputPageSerializer(serializers.ModelSerializer):
 
 
 class InputPageFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
@@ -353,7 +359,6 @@ class InputPageViewSet(viewsets.ModelViewSet):
         else:
             return Response(_("This package is completed, please apply for a new one!"), status=status.HTTP_303_SEE_OTHER)
 
-
     @detail_route(methods=["GET"])
     def next_page(self, request, *args, **kwargs):
         if 'pk' in kwargs.keys():
@@ -362,7 +367,7 @@ class InputPageViewSet(viewsets.ModelViewSet):
             pk = request.GET['pk']
         next_page = list(InputPage.objects.filter(page_num__gt=pk).order_by('page_num'))[0]
 
-        return Response({"next_page":next_page.page_num})
+        return Response({"next_page": next_page.page_num})
 
     @detail_route(methods=["GET"])
     def last_page(self, request, *args, **kwargs):
@@ -372,4 +377,4 @@ class InputPageViewSet(viewsets.ModelViewSet):
             pk = request.GET['pk']
         last_page = list(InputPage.objects.filter(page_num__lt=pk).order_by('page_num'))[-1]
 
-        return Response({"last_page":last_page.page_num})
+        return Response({"last_page": last_page.page_num})

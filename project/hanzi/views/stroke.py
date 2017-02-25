@@ -1,5 +1,6 @@
 # coding=utf-8
 # hanzi/stroke.py
+from __future__ import unicode_literals
 import json
 import re
 from django.db.models import Q
@@ -354,7 +355,7 @@ def stroke_normal_search(request):
             item['pic_url'] = get_pic_url_by_source_pic_name(
                 item['source'], item['hanzi_pic_id'])
 
-    print page_num,'/',pages
+    print page_num, '/', pages
     r = {}
     r['q'] = request.GET.get('q')
     r['total'] = total
