@@ -160,9 +160,9 @@ $(document).ready(function()
 
         if(order=='1')
         {
-            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
-            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)(\d{1,3})$/;
-            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)$/;
+            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
+            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3})$/;
+            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)$/;
 
             //检验输入数据
             var m = new Array;
@@ -184,7 +184,6 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-
                 //渲染数据
                 render_stroke_result(data);
               });
@@ -215,18 +214,15 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-                  //alert(data);
                   //渲染数据
                   render_stroke_result(data);
               });
         }
         else if(order=='3')
         {
+
             //检验输入数据
-            //
-            //
-            //
-            //
+
             $.get(
               "inverse_search",
               {"q":$(".ser-input").val()},

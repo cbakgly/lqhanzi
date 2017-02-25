@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^index$', RedirectView.as_view(url='/stroke_search', permanent=False), name='m1.stroke-search'),
     url(r'^stroke_search$', stroke.stroke_search, name='m1.stroke-search'),
     url(r'^stroke_normal_search$', stroke.stroke_normal_search, name='m1.stroke-normal-search'),
-    url(r'^stroke_advanced_search$', stroke.stroke_normal_search, name='m1.stroke-advanced-search'),
+    url(r'^stroke_advanced_search$', stroke.stroke_advanced_search, name='m1.stroke-advanced-search'),
     url(r'^inverse_search$', stroke.inverse_search, name='m1.inverse-search'),
     url(r'^variant_search$', variant.variant_search, name='m1.variant-search'),
     url(r'^variant_detail$', variant.variant_detail, name='m1.variant-detail'),

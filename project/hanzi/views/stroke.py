@@ -9,6 +9,10 @@ from backend.utils import get_lqhanzi_font_path
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.models import HanziParts, HanziSet
 
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
+
 
 def write_log(filename, string):
     """
@@ -208,7 +212,10 @@ def stroke_normal_search(request):
     """
     一般检索
     """
+    print 'stroke_normal_search'
     q = request.GET.get('q', None)
+
+    print type(q)
     page_size = request.GET.get('page_size', None)
     page_num = request.GET.get('page_num', None)
 
@@ -222,7 +229,6 @@ def stroke_normal_search(request):
     # 模式1表示末尾无数字
     # 模式2表示末尾有一个数字,
     # 模式3表示末尾两有个数字，中间有逗号
-    # if
     # re.match(r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+-\d+)|([^\w,;:`%?&*^(){}@!|]+?)(\d+)|([^\w,;:`%?&*^(){}@!|]+)$',q):
     m = re.match(
         r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&*^(){}@!|]+)$', q)
@@ -255,6 +261,8 @@ def stroke_normal_search(request):
     parts = "".join(tmp_list)
 
     parts_rex = create_regex(parts)
+
+    print 'parts_rex=',parts_rex.encode('utf-8')
 
     # 开始检索
     if(mode == 1):
@@ -358,7 +366,6 @@ def stroke_normal_search(request):
             item['pic_url'] = get_pic_url_by_source_pic_name(
                 item['source'], item['hanzi_pic_id'])
 
-    print page_num,'/',pages
     r = {}
     r['q'] = request.GET.get('q')
     r['total'] = total
@@ -371,16 +378,19 @@ def stroke_normal_search(request):
     return HttpResponse(d, content_type="application/json")
 
 
+
 def stroke_advanced_search(request):
     """
     正则检索
     """
+    print 'stroke_advanced_search'
+
     q = request.GET.get('q', None)
     page_size = request.GET.get('page_size', None)
     page_num = request.GET.get('page_num', None)
 
     if(q is None or page_size is None or page_num is None):
-        return HttpResponse("Invalid input 22222")
+        return HttpResponse("Invalid input")
 
     page_size = int(page_size)
     page_num = int(page_num)
@@ -405,11 +415,11 @@ def stroke_advanced_search(request):
             mode = 1
 
     # 提取相似部件,构建查询相似部件所用到的正则表达式
-    similar_parts = extract_similar_parts(q)
+    similar_parts = extract_similar_parts(parts)
     similar_parts_rex = create_regex(similar_parts)
 
     # 去掉相似部件,包括前边的~号
-    q = remove_similar_parts(q)
+    parts = remove_similar_parts(parts)
 
     # 解析结构及部件查询字符串
     query_rex = create_query_regex(parts)
