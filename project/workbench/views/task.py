@@ -139,7 +139,7 @@ def task_dedup_inter(request, *args, **kwargs):
         taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('taiwan')), many=True).data
         taiwan_char = dedup_character.korean_variant
 
-    task = Tasks.objects.filter(user=user,object_id=dedup_character.id)
+    task = Tasks.objects.filter(user=user, object_id=dedup_character.id)
     if task:
         task = list(task)[0]
 

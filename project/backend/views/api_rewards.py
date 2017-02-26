@@ -1,8 +1,6 @@
 # -*- coding:utf8 -*-
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.decorators import list_route
 from rest_framework import viewsets
 from rest_framework import serializers
 
@@ -14,6 +12,7 @@ from ..auth import IsBusinessMember
 
 
 class RewardFilter(django_filters.FilterSet):
+
     """
     根据用户来获取
     """
@@ -23,12 +22,14 @@ class RewardFilter(django_filters.FilterSet):
 
 
 class RewardSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Reward
         fields = "__all__"
 
 
 class RewardSerializerVersion1(serializers.ModelSerializer):
+
     class Meta:
         model = Reward
         fields = "__all__"
@@ -36,6 +37,7 @@ class RewardSerializerVersion1(serializers.ModelSerializer):
 
 
 class RewardViewSet(viewsets.ModelViewSet):
+
     """
     积分兑换
     """

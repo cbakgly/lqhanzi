@@ -975,13 +975,18 @@
     top:96.1%;
 }
 
-.bubble:after, .stroke-helppanel-bubble:after {
+.bubble:after{
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: #f5f5f5;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.stroke-helppanel-bubble:after {
     border-color: rgba(136, 183, 213, 0);
     border-top-color: #fff;
     border-width: 10px;
     margin-left: -10px;
 }
-
 .bubble:before, .stroke-helppanel-bubble:before {
     border-color: rgba(194, 225, 245, 0);
     border-top-color: #bcbcbc;
@@ -1585,6 +1590,7 @@
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 5px;
+    border-bottom:1px solid #ddd;
 }
 
 .hd-lists div {
@@ -1603,6 +1609,14 @@
     position: relative;
     height: 20px;
     width: 100%;
+    padding:8px 0 5px 0;
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-bottom-right-radius: 3px;
 }
 /*帮助页面css*/
 .help-content{

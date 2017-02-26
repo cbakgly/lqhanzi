@@ -99,7 +99,7 @@ DATABASES = {
         'USER': 'lq',
         'PASSWORD': '123456',
         'HOST': '192.168.16.3',
-        #'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4', 'init_command': 'SET default_storage_engine=InnoDB'},
     }
@@ -195,10 +195,10 @@ CACHES = {
     },
 }
 
-#SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-#SESSION_COOKIE_HTTPONLY = True
-#SESSION_COOKIE_SECURE = True
+# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_SECURE = True
 
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
 # SECURE_REDIRECT_EXEMPT = ['index', 'stroke_', 'inverse_', 'variant_', 'dicts\/', '']

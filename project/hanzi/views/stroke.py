@@ -1,5 +1,6 @@
 # coding=utf-8
 # hanzi/stroke.py
+from __future__ import unicode_literals
 import json
 import re
 from django.db.models import Q
@@ -8,11 +9,6 @@ from django.shortcuts import render
 from backend.utils import get_lqhanzi_font_path
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.models import HanziParts, HanziSet
-
-# import sys
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
-
 
 def write_log(filename, string):
     """
@@ -69,11 +65,7 @@ def is_structure(ch):
     """
     #判断ch是不是结构字符
     """
-    s = '⿰⿱⿴⿵⿶⿷󰃾⿸⿹⿺󰃿⿻'
-    if(s.find(ch) != -1):
-        return True
-    else:
-        return False
+    return ch in u'⿰⿱⿴⿵⿶⿷󰃾⿸⿹⿺󰃿⿻'
 
 
 def is_regular(ch):
