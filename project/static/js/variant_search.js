@@ -23,6 +23,13 @@ $(document).ready(function()
         //$(".loading").hide();
     }
 
+    //给输入框添加回车键相应
+    $('#variant_searchinput').keydown(function(e){
+    if(e.keyCode==13){
+       $('#variant_search_btn').click();
+    }
+    });
+
     //点击异体字搜索按钮时的响应函数
     $("#variant_search_btn").click( function ()
     {

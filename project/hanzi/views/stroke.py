@@ -10,7 +10,6 @@ from backend.utils import get_lqhanzi_font_path
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.models import HanziParts, HanziSet
 
-
 def write_log(filename, string):
     """
     输出调试信息到文件
@@ -205,12 +204,13 @@ def stroke_normal_search(request):
     """
     一般检索
     """
+    # print 'stroke_normal_search'
     q = request.GET.get('q', None)
     page_size = request.GET.get('page_size', None)
     page_num = request.GET.get('page_num', None)
 
     if(q is None or page_size is None or page_num is None):
-        return HttpResponse("Invalid input   aaaa")
+        return HttpResponse("Invalid input")
 
     page_size = int(page_size)
     page_num = int(page_num)
@@ -219,39 +219,40 @@ def stroke_normal_search(request):
     # 模式1表示末尾无数字
     # 模式2表示末尾有一个数字,
     # 模式3表示末尾两有个数字，中间有逗号
-    # if
     # re.match(r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+-\d+)|([^\w,;:`%?&*^(){}@!|]+?)(\d+)|([^\w,;:`%?&*^(){}@!|]+)$',q):
     m = re.match(
-        r'^([^\w,;:`%?&*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&*^(){}@!|]+)$', q)
+        r'^([^\w,;:`%?&.+*^(){}@!|]+?)(\d+.*)|([^\w,;:`%?&.+*^(){}@!|]+)$', q)
     if m:
         if(m.group(2)):
+            parts = m.group(1)
             stroke_range = m.group(2)
             if stroke_range.find('-') != -1:
                 mode = 3
             else:
                 mode = 2
         else:
+            parts = m.group(1)
             mode = 1
     else:
         return HttpResponse("Invalid input")
 
     # 提取相似部件,构建查询相似部件所用到的正则表达式
-    similar_parts = extract_similar_parts(q)
+    similar_parts = extract_similar_parts(parts)
     similar_parts_rex = create_regex(similar_parts)
 
     # 去掉相似部件,包括前边的~号
-    q = remove_similar_parts(q)
+    parts = remove_similar_parts(parts)
 
     # 提取结构字符
-    structure = extract_structure(q)
+    structure = extract_structure(parts)
 
     # 提取部件（去掉相似部件之后的）,构建查询所有部件所用到的正则表达式
-    parts = extract_parts(q)
-
+    parts = extract_parts(parts)
     tmp_list = sorted(parts)
     parts = "".join(tmp_list)
-
     parts_rex = create_regex(parts)
+
+    # print 'parts_rex=',parts_rex.encode('utf-8')
 
     # 开始检索
     if(mode == 1):
@@ -355,9 +356,8 @@ def stroke_normal_search(request):
             item['pic_url'] = get_pic_url_by_source_pic_name(
                 item['source'], item['hanzi_pic_id'])
 
-    print page_num, '/', pages
     r = {}
-    r['q'] = request.GET.get('q')
+    r['q'] = q
     r['total'] = total
     r['page_num'] = page_num
     r['pages'] = pages
@@ -368,16 +368,19 @@ def stroke_normal_search(request):
     return HttpResponse(d, content_type="application/json")
 
 
+
 def stroke_advanced_search(request):
     """
     正则检索
     """
+    # print 'stroke_advanced_search'
+
     q = request.GET.get('q', None)
     page_size = request.GET.get('page_size', None)
     page_num = request.GET.get('page_num', None)
 
     if(q is None or page_size is None or page_num is None):
-        return HttpResponse("Invalid input 22222")
+        return HttpResponse("Invalid input")
 
     page_size = int(page_size)
     page_num = int(page_num)
@@ -402,11 +405,11 @@ def stroke_advanced_search(request):
             mode = 1
 
     # 提取相似部件,构建查询相似部件所用到的正则表达式
-    similar_parts = extract_similar_parts(q)
+    similar_parts = extract_similar_parts(parts)
     similar_parts_rex = create_regex(similar_parts)
 
     # 去掉相似部件,包括前边的~号
-    q = remove_similar_parts(q)
+    parts = remove_similar_parts(parts)
 
     # 解析结构及部件查询字符串
     query_rex = create_query_regex(parts)

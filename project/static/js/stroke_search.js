@@ -146,6 +146,13 @@ $(document).ready(function()
         $("#searchinput").val(text);
     });
 
+    //给输入框添加回车键相应
+    $('#searchinput').keydown(function(e){
+    if(e.keyCode==13){
+       $('#strock_search_btn').click();
+    }
+    });
+
     //点击部件笔画搜索按钮时的响应函数
     $("#strock_search_btn").click( function ()
     {
@@ -160,9 +167,9 @@ $(document).ready(function()
 
         if(order=='1')
         {
-            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
-            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)(\d{1,3})$/;
-            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&*^(){}@!|]+)$/;
+            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
+            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3})$/;
+            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)$/;
 
             //检验输入数据
             var m = new Array;
@@ -184,7 +191,6 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-
                 //渲染数据
                 render_stroke_result(data);
               });
@@ -215,18 +221,15 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-                  //alert(data);
                   //渲染数据
                   render_stroke_result(data);
               });
         }
         else if(order=='3')
         {
+
             //检验输入数据
-            //
-            //
-            //
-            //
+
             $.get(
               "inverse_search",
               {"q":$(".ser-input").val()},
@@ -494,9 +497,6 @@ function render_stroke_result(data)
     var total = data.total;
     var data = data.result;
 
-    //$('.pages-box').empty();
-    //$('.hanzi-wrap').html('');
-
     //如果没有检索到数据
     if(total==0)
     {
@@ -508,7 +508,6 @@ function render_stroke_result(data)
         $(".con-right").addClass("con-right-new");
         return;
     }
-
 
     //显示符合要求的条目数
     $("#total").html(total);
