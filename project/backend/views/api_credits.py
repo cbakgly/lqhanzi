@@ -91,10 +91,16 @@ class CreditViewSet(viewsets.ModelViewSet):
             elif user_credit.sort == 5:
                 dedup = user_credit.credit
         other = total - split - input - dedup
-        split = split / total * 100
-        input = input / total * 100
-        dedup = dedup / total * 100
-        other = other / total * 100
+        if total == 0:
+            split = 0
+            input = 0
+            dedup = 0
+            other = 0
+        else:
+            split = split / total * 100
+            input = input / total * 100
+            dedup = dedup / total * 100
+            other = other / total * 100
         credit_des = "拆字：%.0f%%，录入：%.0f%%，去重:%.0f%%，其他：%.0f%%" % (split, input, dedup, other)
         credit_redeem = CreditsRedeem.objects.filter(applied_by=user).values("cost_credits").aggregate(Sum("cost_credits"))
         r = Response({'sum_credit': total, 'credit_detail': credit_des, 'credit_redeem': credit_redeem['cost_credits__sum']})
