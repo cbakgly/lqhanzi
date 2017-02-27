@@ -143,7 +143,7 @@ def task_dedup_inter(request, *args, **kwargs):
     if task:
         task = list(task)[0]
 
-        return render(request, 'task_dedup2.html',
+        return render(request, 'task_dedup.html',
                       {'korean_char': korean_char,
                        'korean_list': korean_list,
                        'taiwan_char': taiwan_char,
