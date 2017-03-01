@@ -1,5 +1,8 @@
 # coding=utf-8
+<<<<<<< HEAD
 from __future__ import unicode_literals
+=======
+>>>>>>> update m1
 
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
