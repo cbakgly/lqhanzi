@@ -1105,6 +1105,7 @@
 }
 
 .hanzi-variants a {
+    position: relative;/*add by wxf*/
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -1117,6 +1118,7 @@
 }
 
 .hanzi-variants a span {
+    position: relative;/*add by wxf*/
     display: block;
     width: 50px;
     height: 50px;
@@ -1130,8 +1132,9 @@
     margin-top: -6px;
 }
 
-/** add by wenxiaofeng */
+/* add by wenxiaofeng */
 .hanzi-variants2 a {
+    position: relative;
     display: inline-block;
     min-width: 50px;
     height: 50px;
@@ -1143,6 +1146,7 @@
 }
 
 .hanzi-variants2 a span {
+    position: relative;
     display: block;
     min-width: 50px;
     height: 50px;
@@ -1156,13 +1160,29 @@
     margin-top: -6px;
 }
 
-.normal {
+/*.normal {
     background-color: #e2eef5;
+}*/
+
+/*wxf added*/
+
+/*狭义异体字*/
+.variantColor1 {
+    background-color: #ffffff;
+}
+/*广义且正字*/
+.variantColor2 {
+    background-color: #fece4b;
+}
+/*广义异体字*/
+.variantColor3 {
+    background-color: #f8dbd7;
+}
+/*狭义且正字*/
+.variantColor4 {
+    background-color: #d8e8f2;
 }
 
-.variant {
-    background-color: rgba(221, 74, 57, 0.15);
-}
 
 .hanzi-normal a span.keyword::after {
     content: "";
@@ -1181,7 +1201,7 @@
 .hanzi-variants a span.keyword::after {
     content: "";
     position: absolute;
-    left: 10px;
+    left: 19px;
     bottom: -14px;
     width: 10px;
     height: 10px;
@@ -1190,6 +1210,23 @@
     -moz-border-radius: 5px;
     background-color: #dd4a39;
 }
+
+/*add by wxf*/
+.hanzi-variants2 a span.keyword::after {
+    content: "";
+    position: absolute;
+    left: 19px;
+    bottom: -14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-color: #dd4a39;
+}
+
+
+
 
 .desc a {
     color: #1e64f3;
@@ -1205,6 +1242,9 @@
     margin-right: 5px;
 }
 
+
+
+
 .instruction p:nth-child(2) span:first-child {
     display: inline-block;
     width: 10px;
@@ -1215,7 +1255,10 @@
     background-color: #dd4a39;
 }
 
-.instruction p:nth-child(3) span:first-child, .instruction p:nth-child(4) span:first-child, .instruction p:nth-child(5) span:first-child {
+.instruction p:nth-child(3) span:first-child,
+.instruction p:nth-child(4) span:first-child,
+.instruction p:nth-child(5) span:first-child ,
+.instruction p:nth-child(6) span:first-child{
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -1243,6 +1286,16 @@
     -moz-border-radius: 2px;
     background-color: rgba(221, 74, 57, 0.2);
 }
+
+/*WXF added*/
+.instruction p:nth-child(6) span:first-child {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: rgb(254, 206, 75);
+}
+
+
 
 /*部件笔画检字法结果详情页*/
 .hanzi-sets-header {
@@ -1313,13 +1366,26 @@
     background-color: #fff;
 }
 
-/*wenxiaofeng  zhushi*/
+
 .hanzi {
     position: relative;
     top: -40px;
 }
 
+/*wxf modified*/
 .hanzi .zi {
+    min-width: 142px;
+    height: 142px;
+    background: #fff url(../img/mi-bg.png) repeat-x;
+    background-size: 140px 140px;
+    text-align: center;
+    line-height: 140px;
+    border-radius: 5px;
+    font-size: 100px;
+}
+
+
+/*.hanzi .zi {
     width: 150px;
     height: 150px;
     background: #fff url(../img/mi-bg.png) no-repeat center center;
@@ -1327,29 +1393,20 @@
     text-align: center;
     line-height: 140px;
     border-radius: 5px;
-}
+}*/
 
-.hanzi .zi .single-zi {
-    font-size: 100px;
-}
+.zi img{ width: 100px;position: relative;top:-10px;}
 
 .hanzi-origin {
     flex: 1;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
-    margin: 0 5px 0 30px; /*wenxiaofeng modified*/
+    margin: 0 5px 0 30px; /*wxf modified*/
 }
 
-.hanzi-origin dl {
-    float: left;
-
-    /*wxf modified*/
-    /*width:20%;*/
-    min-width: 120px;
-
-    text-align: center;
-}
+/*wxf modified*/
+.hanzi-origin dl { float: left; min-width: 120px; text-align: center;}
 
 .hanzi-origin dl dt {
     font-size: 13px;
