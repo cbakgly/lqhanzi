@@ -12,8 +12,19 @@ from backend.models import HanziSet
 from tw_fuluzi import fuluzi
 
 
+def write_log(filename, string):
+    """
+    输出调试信息到文件
+    """
+    fo = open(filename, "w+")
+    fo.truncate()
+    fo.write(string.encode('utf-8'))
+    fo.close()
+
+
 def is_has_letter(s):
-    if re.findall(r'[A-Za-z]', s):
+
+    if len(re.findall(r'[A-Za-z]', s)):
         return True
     else:
         return False
@@ -23,7 +34,6 @@ def variant_search(request):
     """
     异体字查询函数
     """
-
     q = request.GET.get('q', None)
     mark = request.GET.get('mark', None)
 
@@ -41,6 +51,7 @@ def variant_search(request):
     result = HanziSet.objects.filter(
         Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q)).order_by('source')
     ret = []
+
     for item in result:
         # 对于台湾异体字
         if (item.source == 2):
@@ -66,6 +77,7 @@ def variant_search(request):
                     Q(std_hanzi__contains=item) & Q(source=2)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
+                    d2["variant_type"] = item.variant_type
                     if (item.hanzi_char != ''):
                         d2["type"] = "char"
                         d2["text"] = item.hanzi_char
@@ -99,6 +111,7 @@ def variant_search(request):
                     Q(std_hanzi__contains=d1["stdchar"]) & Q(source=2)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
+                    d2["variant_type"] = item.variant_type
                     if item.hanzi_char != '':
                         d2["type"] = "char"
                         d2["text"] = item.hanzi_char
@@ -116,12 +129,6 @@ def variant_search(request):
 
         # 对于汉语大字典
         elif item.source == 3:
-            # d = {}
-            # d['source'] = 3
-            # d['content'] = item.seq_id
-            # d['pic_url'] = get_pic_url_by_source_pic_name(3,item.seq_id)
-            # ret.append(d)
-
             d2 = {}
             if item.hanzi_char != '':
                 d2["type"] = "char"
@@ -140,13 +147,13 @@ def variant_search(request):
                     break
 
             if flag:
+                item2['content'].append(d2)
+            else:
                 d = {}
                 d['source'] = 3
                 d['content'] = []
                 d['content'].append(d2)
                 ret.append(d)
-            else:
-                item2['content'].append(d2)
 
         # 对于高丽异体字
         elif item.source == 4:
@@ -183,6 +190,7 @@ def variant_search(request):
                     Q(std_hanzi__contains=item) & Q(source=4)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
+                    d2["variant_type"] = item.variant_type
                     if (item.hanzi_char != ''):
                         d2["type"] = "char"
                         d2["text"] = item.hanzi_char
@@ -216,6 +224,7 @@ def variant_search(request):
                     Q(std_hanzi__contains=d1["stdchar"]) & Q(source=4)).exclude(variant_type=0)
                 for item in result:
                     d2 = {}
+                    d2["variant_type"] = item.variant_type
                     if (item.hanzi_char != ''):
                         d2["type"] = "char"
                         d2["text"] = item.hanzi_char
@@ -251,18 +260,20 @@ def variant_search(request):
                     break
 
             if flag:
+                item2['content'].append(d2)
+            else:
                 d = {}
                 d['source'] = 5
                 d['content'] = []
                 d['content'].append(d2)
                 ret.append(d)
-            else:
-                item2['content'].append(d2)
+
 
     if len(ret) == 0:
         return HttpResponse("none")
     else:
         r = json.dumps(ret, ensure_ascii=False)
+        # write_log('aaaa', r)
         return HttpResponse(r, content_type="application/json")
 
 
@@ -557,4 +568,5 @@ def variant_detail(request):
     context['HY'] = HY
     context['GL'] = GL
     context['DH'] = DH
+
     return render(request, 'hanzi_detail.html', context)

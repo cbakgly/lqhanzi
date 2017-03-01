@@ -10,6 +10,7 @@ from backend.utils import get_lqhanzi_font_path
 from backend.utils import get_pic_url_by_source_pic_name
 from backend.models import HanziParts, HanziSet
 
+
 def write_log(filename, string):
     """
     输出调试信息到文件
@@ -35,8 +36,6 @@ def get_parts_strokes(string):
     得到字符串中所有部件的笔画和
     """
     num = 0
-    if string is None:
-        return None
     for item in string:
         part = HanziParts.objects.filter(
             Q(part_char=item) & Q(is_search_part=1))  # .get()
@@ -49,8 +48,6 @@ def remove_similar_parts(s):
     """
     #去除相似部件,s是一个字符串，可能含有结构、部件、剩余笔画范围
     """
-    if s is None:
-        return None
     r = ''
     length = len(s)
     for i in range(length):
@@ -72,11 +69,7 @@ def is_regular(ch):
     """
     判断ch是不是正则表达式所用的字符
     """
-    s = '(){}[]/^$*+,?.:=!|-'
-    if(s.find(ch) != -1):
-        return True
-    else:
-        return False
+    return ch in '(){}[]/^$*+,?.:=!|-'
 
 
 def is_part(char):
@@ -93,8 +86,6 @@ def create_regex(string):
     """
     构造一个简单的正式表达式
     """
-    if string is None:
-        return None
     rex = '.*'
     for item in string:
         rex += item
@@ -106,8 +97,6 @@ def create_query_regex(string):
     """
     正则检索，解析输入，处理输入
     """
-    if string is None:
-        return None
     ret = ''
     length = len(string)
     for i in range(length):
@@ -129,8 +118,6 @@ def extract_similar_parts(string):
     """
     提取相似部件，存放返回字等串里
     """
-    if string is None:
-        return None
     r = ''
     length = len(string)
     for i in range(length):
@@ -143,8 +130,6 @@ def extract_structure(string):
     """
     如果首字符是结构字符，返回这个字符
     """
-    if string is None:
-        return None
     if(is_structure(string[0])):
         return string[0]
     else:
@@ -155,8 +140,6 @@ def extract_parts(string):
     """
     提取部件，写入返回字等串里
     """
-    if string is None:
-        return None
     r = ''
     length = len(string)
     for i in range(length):
@@ -231,7 +214,7 @@ def stroke_normal_search(request):
             else:
                 mode = 2
         else:
-            parts = m.group(1)
+            parts = m.group(0)
             mode = 1
     else:
         return HttpResponse("Invalid input")

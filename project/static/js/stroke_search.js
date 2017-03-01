@@ -210,11 +210,11 @@ $(document).ready(function()
                     var array = m[3].split('-');
                     var small = parseInt(array[0]);
                     var large = parseInt(array[1]);
-                    if(small>=large){alert("格式不对1");return;}
+                    if(small>=large){alert("格式不对");return;}
                 }
             }
             else
-            {alert("格式不对2");return;}
+            {alert("格式不对");return;}
 
             $.get(
               "stroke_advanced_search",
