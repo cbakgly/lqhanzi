@@ -5,7 +5,7 @@ include/
 lib/
 share/
 project/static/uploads/
-project/static/**/*.png
+#project/static/**/*.png
 project/static/**/*.jpg
 **/migrations/0*
 
