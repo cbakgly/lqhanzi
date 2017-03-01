@@ -414,6 +414,7 @@ def variant_detail(request):
     """
     输出显示异体字综合信息的网页
     """
+    print 'aaaaaaaaaaaaaaaaaa'
     source = request.GET['source']  # char or pic
     kind = request.GET['type']  # char or pic
     text = request.GET['text']  # 可能是文字，也可能是图片字的文件名
