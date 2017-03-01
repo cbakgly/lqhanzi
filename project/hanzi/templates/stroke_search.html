@@ -66,12 +66,15 @@
         </div>
         <div class="search fl">
           <div class="search-top">
-            <form>
+
+            <div id="checkinfo">
+              <div id="triangle"></div>
+              <div id="checkinfo_detail"></div>
+            </div>
+
             <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息">
             <span class="ser-btn" id="strock_search_btn">搜索</span>
-            <!-- <button type="submit" class="ser-btn" id="strock_search_btn">搜索</button> -->
-            
-            </form>
+
           </div>
           <div class="search-bottom">
             <label><input type="radio" name="r" value="1" checked="checked"> 一般检索</label>
@@ -92,7 +95,7 @@
                 </br>
                 剩余笔画可以输入单个数字，也可输入数字范围。如“⿰日月3-5”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-5画。
               </p>
-              <p class="ar"><a class="more" href="#">更多...</a></p>
+              <p class="ar"><a target="_blank" class="more" href="{% url 'm1.help' %}">更多...</a></p>
             </div>
           </div>
         </div>
@@ -164,7 +167,7 @@
                         </br>
                         2、3-5hs，表示总笔画为3-5，前两画为横、竖。
                       </p>
-                      <p class="ar"><a class="more" href="#">更多…</a></p>
+                      <p class="ar"><a target="_blank" class="more" href="{% url 'm1.help' %}">更多…</a></p>
                     </div>
                   </div>
                   <i class="icon-help"></i>

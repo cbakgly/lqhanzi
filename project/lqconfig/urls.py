@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^api/(?P<version>\w+)/', include('backend.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^help/', help),
+    url(r'^help/', help, name='m1.help'),
 ]
 
 if DEBUG:
