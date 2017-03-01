@@ -168,8 +168,9 @@ $(document).ready(function()
         var order = $('.search-bottom input[name="r"]:checked').val();
         $("#current_order").text(order);
 
-        //获取输入并去除空格
         var input=document.getElementById("searchinput");
+
+        //获取输入并去除空格        
         var q = $(".ser-input").val();
         q=q.replace(/\s/g,'');
         if(q=='')return;
@@ -191,14 +192,20 @@ $(document).ready(function()
                     var large = parseInt(array[1]);
                     if(small>=large)
                     {
-                        input.setCustomValidity("剩余笔画范围不对！");
+                        //input.setCustomValidity("剩余笔画范围不对！");
+                        $("#checkinfo_detail").html("剩余笔画范围不对！");
+                        $("#checkinfo").show();
+                        $("#checkinfo").fadeOut(2500);
                         return;
                     }
                 }
             }
             else
             {
-                input.setCustomValidity("检索条件不正确！");
+                //input.setCustomValidity("检索条件不正确！");
+                $("#checkinfo_detail").html("检索条件不正确！");
+                $("#checkinfo").show();
+                $("#checkinfo").fadeOut(2500);
                 return;
             }
 
@@ -228,14 +235,20 @@ $(document).ready(function()
                     var large = parseInt(array[1]);
                     if(small>=large)
                     {
-                        input.setCustomValidity("剩余笔画范围不对！");
+                        //input.setCustomValidity("剩余笔画范围不对！");
+                        $("#checkinfo_detail").html("剩余笔画范围不对！");
+                        $("#checkinfo").show();
+                        $("#checkinfo").fadeOut(2500);
                         return;
                     }
                 }
             }
             else
             {
-                input.setCustomValidity("检索条件不正确！");
+                //input.setCustomValidity("检索条件不正确！");
+                $("#checkinfo_detail").html("检索条件不正确！");
+                $("#checkinfo").show();
+                $("#checkinfo").fadeOut(2500);
                 return;
             }
 
@@ -250,7 +263,6 @@ $(document).ready(function()
         }
         else if(order=='3')
         {
-
             //检验输入数据
 
             $.get(

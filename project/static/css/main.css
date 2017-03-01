@@ -256,7 +256,7 @@
     height: 20px;
     font-size: 20px;
     cursor: pointer;
-    right: -60px;
+    right: -40px;
     margin-right: 15px;
     padding-bottom: 5px;
 }
@@ -528,6 +528,38 @@
     -moz-border-bottom-left-radius: 3px;
     color: #666;
 }
+
+
+/*以下三个样式由温晓峰添加*/
+#checkinfo
+{
+    position: absolute;
+    top:40px;
+    left:280px;
+    display: none;
+}
+#checkinfo_detail
+{
+    width:200px;
+    height:40px;
+    padding-top:12px;
+    border-radius: 3px;
+    font-size:20px;
+    background-color:#f4ffad;
+    text-align: center;
+}
+#triangle
+{
+    position: relative;
+    top:0px;
+    left:30px;
+    width: 0px;
+    height: 0px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #faffdb transparent;
+}
+
 
 .parts-ser button {
     border-top-left-radius: 0;
