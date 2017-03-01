@@ -66,11 +66,15 @@
         </div>
         <div class="search fl">
           <div class="search-top">
+            <form>
             <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息">
             <span class="ser-btn" id="strock_search_btn">搜索</span>
+            <!-- <button type="submit" class="ser-btn" id="strock_search_btn">搜索</button> -->
+            
+            </form>
           </div>
           <div class="search-bottom">
-            <label><input type="radio" name="r" value="1" checked="checked"> 一般检索</label><!-- checked="checked" -->
+            <label><input type="radio" name="r" value="1" checked="checked"> 一般检索</label>
             <label><input type="radio" name="r" value="2"> 正则检索</label>
             <label><input type="radio" name="r" value="3"> 反查编码</label>
             <label id="current_order" hidden></label>
@@ -108,7 +112,7 @@
           <ul class="pagination">
           </ul>
           <span>跳至:&nbsp;<input id="new_page" type="text">&nbsp;页</span>
-          <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span>
+          <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span><br>
           <span id="search_tip"></span>
         </div>
       </div>
