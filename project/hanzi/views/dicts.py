@@ -1,6 +1,6 @@
 # coding=utf-8
-from __future__ import unicode_literals
 
+from __future__ import unicode_literals
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
