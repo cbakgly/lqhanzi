@@ -48,7 +48,7 @@ def taiwan(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
+        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
     }
 
     return render(request, 'hanzi_taiwan.html', context=content)
@@ -63,7 +63,7 @@ def taiwan_detail(request):
     if not seq_id:
         content = {'error': 'not found' + seq_id}
     else:
-        base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
+        base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi'
         std_code = seq_id.split('-')[0]
         anchor = False
         if len(seq_id.split('-')) > 1:
@@ -148,7 +148,7 @@ def korean(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/kr-dict/korean_cover.jpg',
+        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/kr-dict/korean_cover.jpg',
     }
 
     return render(request, 'hanzi_korean.html', context=content)
@@ -230,7 +230,7 @@ def hanyu(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/A01.jpg',
+        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/A01.jpg',
     }
 
     return render(request, 'hanzi_hanyu.html', context=content)
@@ -258,7 +258,7 @@ def dunhuang(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/dh-dict/A01.png',
+        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/dh-dict/A01.png',
     }
 
     return render(request, 'hanzi_dunhuang.html', context=content)
