@@ -363,18 +363,20 @@
 .content .w {
     display: flex;
     display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    /*display: -webkit-box;*/
+    display: -ms-flex;
 }
 
-.con-left {
+.con-left,.ser-errormsg,.reverse-code{
     width: 52%;
     margin-right: 20px;
     background-color: #fff;
     padding: 10px;
     display: none;
 }
-
+.ser-errormsg,.reverse-code{
+    padding:0;
+}
 .con-left p {
     line-height: 30px;
     font-size: 13px;
@@ -1712,9 +1714,11 @@
     margin-top:20px;
     margin-bottom: 50px;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .help-catalog{
-    width:140px;
+    /*width:140px;*/
     float: left;
     position: relative;
 }
@@ -1795,6 +1799,23 @@
 .help-inner .pic img{
     margin:8px 0;
 }
+.help-img{
+    width:15px;
+    height:15px;
+}
+.help-img2{
+    width:70px;
+    height:70px;
+}
+.help-table > thead > tr > th{
+    padding-left:20px;
+}
+.help-table > tbody > tr > td p{
+    text-indent: 0;
+}
+.help-table > thead > tr > th,.help-table > tbody > tr > td{
+    text-align:left;
+}
 .gotop{
     position: fixed;
     right:20px;
@@ -1810,4 +1831,36 @@
 }
 .lq-content{
     padding-bottom:130px;
+}
+/*检索搜索错误信息提示*/
+.back{
+    height:40px;
+    line-height: 40px;
+    background-color: #f5f5f5;
+    padding-left:10px;
+    margin-bottom: 20px;
+    cursor:pointer;
+    color:#3d7abd;
+}
+.back .icon-left{
+    color:#3d7abd;
+    position: relative;
+    top:1px;
+}
+.ser-errormsg p{
+    padding:0 10px;
+    line-height: 18px;
+}
+.ser-errormsg .lead{
+    color:#04a0e4;
+    text-decoration: underline;
+}
+.reverse-table > tbody > tr > td{
+    border:1px solid #ddd;
+}
+.reverse-code .reverse-bd{
+    padding:0 10px;
+}
+.reverse-code .hanzi-tit{
+    font-size:20px;
 }

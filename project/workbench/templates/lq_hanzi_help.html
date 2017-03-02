@@ -1,0 +1,815 @@
+{% extends "m2_base_head.html" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- help-content -->
+        <div class="help-content">
+            <div class="w">
+            <!-- 左侧目录 -->
+                <div class="help-catalog">
+                    <div id="Catalog_box">
+                        <ul>
+                            <!-- 1如何开始工作 -->
+                            <li class="cate-item1">
+                                <span>— </span> <!-- 左侧横线 -->
+                                <a href="#1">如何开始工作</a> <!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#1_1">准备</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#1_2">学习业务</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#1_3">领任务＋每日打卡</a></li><!-- 锚点跳转 -->
+                            <!-- 2部件笔画检字法 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#2">部件笔画检字法</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#2_1">简介</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#2_2">拆字编码</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#2_3">检索篇</a></li><!-- 锚点跳转 -->
+                            <!-- 3异体字拆字实例 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#3">异体字拆字实例</a><!-- 锚点跳转 -->
+                            </li>
+                            <!-- 4汉字部件表简介 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#4">汉字部件表简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#4_1">部件面板</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#4_2">检索式</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#4_3">点选</a></li><!-- 锚点跳转 -->
+                            <!-- 5异体字录入简介 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#5">异体字录入简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#5_1">字头信息核对</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#5_2">通行字类型选择及记录</a></li><!-- 锚点跳转 -->
+                            <!-- 6异体字去重简介 -->
+                            <li class="cate-item1">
+                                <span>— </span><!-- 左侧横线 -->
+                                <a href="#6">异体字去重简介</a><!-- 锚点跳转 -->
+                            </li>
+                            <li class="cate-item2"><a href="#6_1">初次去重</a></li><!-- 锚点跳转 -->
+                            <li class="cate-item2"><a href="#6_2">回查去重</a></li><!-- 锚点跳转 -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- ./左侧目录 -->
+                <!-- 右侧内容 -->
+                <div class="help-main">
+                     <div class="help-inner" id="help_inner">
+                        <!-- 1检索规则简介 -->
+                         <h2><a name="1">如何开始工作</a></h2>
+                         <h3><a name="1_1">一、准备</a></h3>
+                         <p class="f14">(一) 建立账户</p>
+                         <p>注册账户<a class="link" href="http://hanzisplit.lqdzj.cn/accounts/register">http://hanzisplit.lqdzj.cn/accounts/register</a>，然后使用新建的账户登陆后，便可以登录工作台。</p>
+                         <p class="f14">(二) 下载安装kaixinSong、lqhanzi字体</p>
+                         <p>字体文件见链接：<a class="link" href="http://pan.baidu.com/s/1pLwHd6z ">http://pan.baidu.com/s/1pLwHd6z</a>&nbsp;(密码：z7r0)</p>
+                         <h3><a name="1_2">二、学习业务</a></h3>
+                         <p>目前平台中的工作主要包含异体字拆字、异体字录入两大块。异体字拆字是部件笔画检字法的基础。异体字录入目的在于识别、录入《汉语大字典》的字头及相关信息。</p>
+                         <p>可以向藏经办常住义工范中义（邮箱980604328@qq.com）了解如何得到相关的业务学习和培训。</p>
+                         <h3><a name="1_3">三、领任务+每日打卡</a></h3>
+                         <p>在“领任务+每日打卡”的工作模式下，每个人可以根据自己的时间情况，自定义工作包的大小以及每日计划完成工作量，完成本日工作后可以去打卡，在日志中记录自己的工作心得。</p>
+                         <p class="f14">(一) 领任务</p>
+                         <p>点击“我的任务→任务”，如下图示：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img1.png" alt=""></p>
+                         <p>1. 领任务</p>
+                         <p>它是领取工作包的入口。工作类型有两种：异体字拆字、异体字识别。可以自定义工作包的大小以及每日完成的工作量。</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img2.png" alt=""></p>
+                         <p>任务包是一个相对较长的阶段内的工作，工作量指的是这个阶段内的工作总量，日计划指的是每日计划完成的工作量。比如，工作量为100，计划为20，则需要5天完成这个工作包。</p>
+                         <p>2. 进行中</p>
+                         <p>表示正在进行中的任务包。</p>
+                         <p>“开始工作”是工作的入口，点击它之后可以开始这个工作包的工作。“设置”可以调整“每日计划”的工作量。如果当日完成了之前计划的工作量仍有多余的时间，想继续工作，可以通过设置来增加“每日计划”的工作量，然后继续工作。当然，这里并不鼓励大家这样做，更建议大家按计划去完成工作任务。</p>
+                         <p>注意，同一类型的任务，一次只能领取一个。任务包完成后，将自动移至“已完成”，然后才可以领下一个工作包。</p>
+                         <p>3. 已完成</p>
+                         <p>表示自己所有已经完成的工作包。通过这里可以看到自己的工作积累。</p>
+                         <p>4. 详情</p>
+                         <p>记录的是自己完成的所有拆字或识别的具体页面。</p>
+                         <p>点击“页码”可以跳转到自己所有的拆字或识别的页面。状态为“已移交”表示我的工作包已经完成，但是工作包中的这一页我只是完成了一部分，剩下的一部分需移交给其他人去做。</p>
+                         <p class="f14">(二) 每日打卡</p>
+                         <p>每日完成自己计划的工作后，系统将自动把您带到打卡页面，如下：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img3.png" alt=""></p>
+                         <p>可以在打卡日志中对自己的工作做一个总结，记录自己的心得。</p>
+                         <p>注意，同一个工作类型，每日只能打一次卡，但是可以修改打卡日志。</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img4.png" alt=""></p>
+                         <!-- 部件笔画检字法 -->
+                         <h2><a name="2">部件笔画检字法</a></h2>
+                         <h3><a name="2_1">一、简介</a></h3>
+                         <p class="f14">(一) 问题的提出</p>
+                         <p>古籍电子化过程中，面临大量的生僻字，这些生僻字不仅一般的输入法无法输入，有些字甚至字体文件都不包含，这就是所谓的“缺字问题”。解决“缺字问题”的核心在于对缺字进行合适的编码以及便利的检索。</p>
+                         <p class="f14">(二) 表意文字描述序列IDS</p>
+                         <p>针对缺字问题，Unicode自3.0起，提出一种“表意文字描述序列（Ideographic Description Sequence，IDS）”的解决方案 。该解决方案包括两部分：1、表意文字组合符（Ideographic Description Character，IDC），包含12个结构符（⿰、⿱、⿲、⿳、⿴、⿵、⿶、⿷、⿸、⿹、⿺、⿻），描述的是文字的结构特征；2、文字部件，是文字拆分后得到的更小的文字单位。</p>
+                         <p>如下表所示：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>字符</th>
+                                     <th>意义</th>
+                                     <th>例子</th>
+                                     <th>示例</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>⿰</td>
+                                     <td>左右结构，两个部件由左至右组成</td>
+                                     <td>相</td>
+                                     <td>⿰木目</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿱</td>
+                                     <td>上下结构，两个部件由上至下组成</td>
+                                     <td>志</td>
+                                     <td>⿱士心</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿲</td>
+                                     <td>左中右结构，三个部件由左至右组成</td>
+                                     <td>瞮</td>
+                                     <td>⿲目育攵</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿳</td>
+                                     <td>上中下结构，三个部件由上至下组成</td>
+                                     <td>糞</td>
+                                     <td>⿳米田共</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿴</td>
+                                     <td>全包围结构，两个部件由外而内组成</td>
+                                     <td>回</td>
+                                     <td>⿴囗口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿵</td>
+                                     <td>上包围结构，三面包围，下方开口</td>
+                                     <td>冋</td>
+                                     <td>⿵冂口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿵</td>
+                                     <td>上包围结构，三面包围，下方开口</td>
+                                     <td>冋</td>
+                                     <td>⿵冂口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿶</td>
+                                     <td>下包围结构，三面包围，上方开口</td>
+                                     <td>凶</td>
+                                     <td>⿶凵㐅</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿶</td>
+                                     <td>下包围结构，三面包围，上方开口</td>
+                                     <td>凶</td>
+                                     <td>⿶凵㐅</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿷</td>
+                                     <td>左包围结构，三面包围，右方开口</td>
+                                     <td>叵</td>
+                                     <td>⿷匚口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿸</td>
+                                     <td>左上包围结构，两面包围，右、下开口</td>
+                                     <td>病</td>
+                                     <td>⿸疒丙</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿹</td>
+                                     <td>右上包围结构，两面包围，左、下开口</td>
+                                     <td>戴</td>
+                                     <td>⿹𢦏異</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿺</td>
+                                     <td>左下包围结构，两面包围，右、上开口</td>
+                                     <td>起</td>
+                                     <td>⿺走己</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿻</td>
+                                     <td>交叉结构，两个部件重叠</td>
+                                     <td>巫</td>
+                                     <td>⿻工从</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <h3><a name="2_2">二、拆字编码篇</a></h3>
+                         <p>本“部件笔画检字法”基于IDS，对其拆字编码规则加以改进，同时加上笔画信息，一共包括三部分内容：改进的表意文字描述序列、难字问题、笔画。</p>
+                         <p class="f14">(一) 改进的表意文字描述序列</p>
+                         <p>1. 结构</p>
+                         <p>Unicode的方案中，某些字可能会有多种拆字方法，如“瞮”字，可拆为“⿲目育攵”“⿰目⿰育攵” “⿰⿰目育攵”等，为了消除这种拆分的歧义，本检字法取消“⿲”“⿳”两个结构符，分别用“⿰⿰”“⿱⿱”代替。对于N重左右结构，用N-1个连续⿰符号代替；对于N重上下结构，用N-1个连续⿱符号代替。</p>
+                         <p>另外，Unicode 12个结构符号，三面包围中没有右包围结构，本检字法用“~⿷”（对左包围取反，字形水平翻动可得）来替代；两面包围中，没有右下包围结构，本检字法用“~⿺”（对左下包围取反，字形水平翻动可得）替代。</p>
+                         <p>本检字法所采用的结构符如下：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>字符</th>
+                                     <th>意义</th>
+                                     <th>例子</th>
+                                     <th>示例</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>⿰</td>
+                                     <td>左右结构，两个部件由左至右组成</td>
+                                     <td>相</td>
+                                     <td>⿰木目</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿰⿰</td>
+                                     <td>三重左右结构，三个部件由左至右组成</td>
+                                     <td>瞮</td>
+                                     <td>⿰⿰目育攵</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿰⿰⿰</td>
+                                     <td>四重左右结构，四个部件由左至右组成</td>
+                                     <td>衚</td>
+                                     <td>⿰⿰⿰彳古月亍</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿱</td>
+                                     <td>上下结构，两个部件由上至下组成</td>
+                                     <td>志</td>
+                                     <td>⿱士心</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿱⿱</td>
+                                     <td>三重上下结构，三个部件由上至下组成</td>
+                                     <td>糞</td>
+                                     <td>⿱⿱米田共</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿱⿱⿱</td>
+                                     <td>四重上下结构，四个部件由上至下组成</td>
+                                     <td>稁</td>
+                                     <td>⿱⿱⿱亠口冖禾</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿴</td>
+                                     <td>全包围结构，两个部件由外而内组成</td>
+                                     <td>回</td>
+                                     <td>⿴囗口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿵</td>
+                                     <td>上包围结构，三面包围，下方开口</td>
+                                     <td>冋</td>
+                                     <td>⿵冂口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿶</td>
+                                     <td>下包围结构，三面包围，上方开口</td>
+                                     <td>凶</td>
+                                     <td>⿶凵㐅</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿷</td>
+                                     <td>左包围结构，三面包围，右方开口</td>
+                                     <td>叵</td>
+                                     <td>⿷匚口</td>
+                                 </tr>
+                                 <tr>
+                                     <td>~⿷</td>
+                                     <td>右包围结构，三面包围，左方开口</td>
+                                     <td>𨤏</td>
+                                     <td>~⿷⿱𠃍一采</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿸</td>
+                                     <td>左上包围结构，两面包围，右、下开口</td>
+                                     <td>病</td>
+                                     <td>⿸疒丙</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿹</td>
+                                     <td>右上包围结构，两面包围，左、下开口</td>
+                                     <td>戴</td>
+                                     <td>⿹𢦏異</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿺</td>
+                                     <td>左下包围结构，两面包围，右、上开口</td>
+                                     <td>起</td>
+                                     <td>⿺走己</td>
+                                 </tr>
+                                 <tr>
+                                     <td>~⿺</td>
+                                     <td>右下包围结构，两面包围，左、上开口</td>
+                                     <td></td>
+                                     <td>~⿺⺀十</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿻</td>
+                                     <td>交叉结构，两个部件重叠</td>
+                                     <td>巫</td>
+                                     <td>⿻工从</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <p>【注】包围结构的“包围”是比较严谨的， A（包围部件）须包围B（被包围部件）的绝大部分，否则应视为其他结构。如军（⿱冖车），应视为上下结构，而不是包围结构。</p>
+                         <p>2. 部件</p>
+                         <p>所谓部件，指的构成汉字的组成部分。如“盟”由“明”“皿”组合而成，则“明”“皿”都是“盟”的部件。</p>
+                         <p>3. 拆分树</p>
+                         <p>一个汉字可由一棵包含结构和部件的拆分树来表达。按照拆分的程度的不同，可以有多种拆分树。如“盟”字拆分树如下：</p>
+                         <p>(1). 初步拆分</p>
+                         <p class="pic ac"><img src="/static/img/split1.png" alt=""></p>
+                         <p class="ac">图1 初步拆分</p>
+                         <p>将一个汉字拆成尽可能大的部件，使得部件数量最少，即初步拆分。如上图中，“盟”拆为“⿱明皿”，而没有将“明”字继续拆分。</p>
+                         <p>注意，记录拆分树时，按照从上到下、从左到右的顺序记录，先写上面一层的结构符号，再从左到右记录部件。</p>
+                         <p>(2). 彻底拆分</p>
+                         <p>上图中，“明”还可以继续拆分为“⿰日月”，如下图</p>
+                         <p class="pic ac"><img src="/static/img/split2.png" alt=""></p>
+                         <p class="ac">图2 彻底拆分</p>
+                         <p>将一个汉字拆成尽可能小的部件，使得部件数量最多，即彻底拆分。如上图中，“盟”拆为“⿱⿰日月皿”。</p>
+                         <p>一些基于部件的输入法都会定义自己的基本部件集，“尽可能小的部件”指的就是基本部件。</p>
+                         <p>注意，记录拆分树时，先将左边的整棵子树记录完毕，再记录右边的子树。</p>
+                         <p>(3). 混合拆分</p>
+                         <p class="pic ac"><img src="/static/img/split3.png" alt=""></p>
+                         <p class="ac">图3 混合拆分</p>
+                         <p>混合拆分与彻底拆分相似，只是在遇到可继续拆分的部件时，先用左右尖括号括起来，然后再写结构符号。如上图中，“盟”拆为“⿱<明>⿰日月皿”。</p>
+                         <p>“初步拆分”较简洁，主要用于人工拆分。“彻底拆分”用于检验基本部件选择的合理性。将所有汉字的彻底拆分放在一起，然后做一个字频统计，便可以得到检字法所采用的基本部件集以及对应的使用频率，从而可以判断基本部件选取的合理性。“混合拆分”主要用于检索，用户无论输入该汉字的哪个部件，都能检索到该字。</p>
+                         <p>在算法实现时，“彻底拆分”“混合拆分”可由“初步拆分”递归实现，无须人工拆分。</p>
+                         <p>【注】</p>
+                         <p>1、人工拆分时，请用“初步拆分”的原则，使得部件数量尽可能少。也就是说，可用两个部件表达时，就不要用三个部件。这条原则执行时的难度在于，可能拆字人员对部件不是很熟悉，有些不需要拆分的部件被拆成了更小的部件组合。</p>
+                         <p>2、拆字过程中，应按照上下、左右、包围、交叉的顺序来拆分。如“”字，先拆分为上下结构，再拆分为左右结构，即“⿱⿰林林⿰林林”。</p>
+                         <p>3、 如果某些汉字的结构存在二义性，则可都记录下来，用|来分隔。如“么”，拆为“⿱|⿰丿厶”。</p>
+                         <p>(4). 一字多拆</p>
+                         <p>有些字可能有多种拆分方法。如“主”字，可以拆分为“⿱丶王”“ ⿱亠土”；“羆”字可以拆分为“⿱罒熊”“⿱罷灬”。对于这种情况，都需要予以记录，这样才能保证“无论用户如何拆分，都能检索到该字”。</p>
+                         <p>【注】网上拆字时，输入项“初步拆分1”“初步拆分2”，就是针对一字多拆的情况。</p>
+                         <p class="f14">(二) 难字问题</p>
+                         <p>IDS可以解决大部分结构规范、所含部件常用且易输入的字，但是对于某些结构复杂、部件生僻的字来讲，一般人不太容易准确拆分并找到合适的部件。因此，可将问题分为难字、易字两个层次。难字指的是：1、初步拆分所用部件数量≥5；或2、所用的是生僻部件。易字指的是：1、初步拆分所用部件数量≤4；且2、所用的是常规部件。</p>
+                         <p>生僻部件指的是一般人不易查找、输入的部件。如果是一般人较容易输入的部件，不属于生僻部件。网站上定义了一些部件集合，也不属于生僻部件。其余的部件，都可以叫做生僻部件。</p>
+                         <p>难字在初步拆分的基础上，增加以下几种解决方案。</p>
+                         <p>1. 调笔拆分</p>
+                         <p>调笔指的是调整笔画，包括破笔、重笔、改笔等多种情况。</p>
+                         <p>破笔指的是拆字时将一笔拆成多笔，以便于组成常规部件。比如“重”字，拆为“⿱⿱千里”“千田土”，中间的丨被拆分成两段或三段，这就是所谓的破笔。一般来讲，易字不允许破笔，难字可破笔。如“”字拆分为“⿰日⿱𦍌⿰秀戈”，其中“⿰秀戈”即是破笔。</p>
+                         <p>重笔指的是将一笔重复利用，以便构成常规部件。如将部件“”拆分为“⿱⿴口凵龱”，其中，“口”与“龱”有重复利用一横。</p>
+                         <p>改笔指的是将笔画稍作改动，以便构成常规部件。如将“”拆分为“⿸扌丶”，将原字形的撇变成了提，即属于改笔。</p>
+                         <p>破笔、重笔，不修改原字形；改笔对原字形有微细调整，但是不能增减笔画。</p>
+                         <p>【注】有些字调笔拆分时很简单，初步拆分的话则会非常零碎，乃至拆成一笔一画。这个情况下，可以不进行初步拆分，仅填写调笔拆分。如：</p>
+                         <p class="pic"><img src="/static/img/m2-help/6JxJXk_O8s5be8wSFCP4GpJEFIHAziuw.png" alt="" style="width:50px;"></p>
+                         <p>初步拆分：⿱⿱⿱⿰屮⿻凵丨⿱丿罓⿻⿰⿻二丨匕仌</p>
+                         <p>调笔拆分：⿱⿱⿱艸⿱丿罓⿻北仌</p>
+                         <p>此时，初步拆分太过琐碎，调笔拆分已经很接近原字形了，便可以不必填写初步拆分。这条规则是对“必须填写初步拆分”规则的特例补充。一般情况下，还是要尽量填写初步拆分。</p>
+                         <p>2. 相似部件</p>
+                         <p>对于某些部件复杂、不易输入的汉字，定义“相似部件”，从而增加检索的便利性。例如，部件“丏”不易输入，可定义相似部件“丐”。又如上例的“ ”，可定义相似部件“我”。</p>
+                         <p>【注】</p>
+                         <p>1、难字尽可能的运用调笔拆分和相似部件。但是如果确实不存在调笔拆分、相似部件，也可以不必记录。</p>
+                         <p>2、易字不需要记录调笔拆分、相似部件。</p>
+                         <p>3、需要注意“改笔”与“相似部件”的区别，改笔是对笔画的微细修改，不能增减笔画，而相似部件则可增减笔画的。如“冂”是“奂”的相似部件，而不是改笔，因为“冂”相比“”增加了一钩。</p>
+                         <p>3. 高频特殊部件</p>
+                         <p>初步拆分较严格，目的是为了统一拆分规则，避免不同的人有不同的拆分方法。但是严格也会带来一定的问题：有些特殊部件如果严格按照初步拆分进行，则会拆分的非常零碎。一旦这个部件经常出现时，就会从整体上增加初步拆分的难度。如果允许微细调整，则可以将它变成一个常规部件，从而使得拆分非常简洁。主要有两种情况：</p>
+                         <p>1、带钩与不带钩。如：小与 𡭔，禾与 。</p>
+                         <p>2、点与捺。如：穴与。</p>
+                         <p>针对这些情况，为了简化初步拆分，我们规定：在初步拆分时，可以用常规部件代替特殊部件。</p>
+                         <p>以下是我们整理部分特殊部件与常规部件的对照表，大家在拆字的过程中可以参考。</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>特殊部件</th>
+                                     <th>规范部件</th>
+                                     <th>例字</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>𡭔</td>
+                                     <td>小</td>
+                                     <td>尐，少，尖，尘</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/uxM3JGiFXMAVoP0GiidaftOE-S4Lpp1g.png" alt=""></td>
+                                     <td>示</td>
+                                     <td>𡛭，𤙷</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/RjTY4biWtkh9AvqK7H2yXuuZxPsW7HiM.png" alt=""></td>
+                                     <td>木</td>
+                                     <td>杀</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/HNb19HG0b08mJYa8F9X40DimqlBY0YSi.png" alt=""></td>
+                                     <td>来</td>
+                                     <td><img class="help-img" src="/static/img/m2-help/xd6OIOx2GMOwW9xy1RJvCNFsx2rggLFT.png" alt=""></td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/zfY5ThCfHm65ffGjEsNGjXWgInNAMosU.png" alt=""></td>
+                                     <td>未</td>
+                                     <td><img class="help-img" src="/static/img/m2-help/_v5sZiC_px91lDpBnoufSsHWWAhXQYwE.png" alt=""></td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/z44skRrRUGyRJnqw5T0aEtjZqp404eUP.png" alt=""></td>
+                                     <td>禾</td>
+                                     <td><img class="help-img" src="/static/img/m2-help/ocIB9vm4FkCYo7Yd3BomEY5rpAHVfxx-.png" alt=""></td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/SWiSusrWc9ou-2IPk9o042wk2NKg-w3o.png" alt=""></td>
+                                     <td>冂</td>
+                                     <td>𢫏，隩</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/mTYvF7Klowrr8yj-x_EfgcMPjzHt4Szb.png" alt="">、<img class="help-img" src="/static/img/m2-help/_kTK9XusFe-pJojpQvRDgdDrUfwZ0i5F.png" alt=""></td>
+                                     <td>穴</td>
+                                     <td>𧸵，空</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/vuAc5kRxVQsh_m2m5WoiyOcqAnHtM55h.png" alt="">、<img class="help-img" src="/static/img/m2-help/_kTK9XusFe-pJojpQvRDgdDrUfwZ0i5F.png" alt=""></td>
+                                     <td>囧</td>
+                                     <td>𡜸，𡮀</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/vuAc5kRxVQsh_m2m5WoiyOcqAnHtM55h.png" alt=""></td>
+                                     <td>冏</td>
+                                     <td>𡝆，𠕨</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/ePfShUirr2YTWy6tsx40xfKQ8TtsX4xS.png" alt=""></td>
+                                     <td>八</td>
+                                     <td>詹</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/6jelb1UIim0E878KAgly2N9RpRWHvUGg.png" alt="">、<img class="help-img" src="/static/img/m2-help/-gVyt3h-ezePgYXs3sbCuNaSb-rUNqVi.png"></td>
+                                     <td>〢</td>
+                                     <td>𠁵，𤎸，𢉖</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <p>3. 笔画</p>
+                         <p>检字法的数据库中，将存储汉字的笔画信息。</p>
+                         <p>4. 编码规则</p>
+                         <p>(1). 编码内容</p>
+                         <p>综上，拆字编码包括几部分内容：是否难字、初步拆分、调笔拆分、相似部件。如下表所示：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>字头</th>
+                                     <th>是否难字</th>
+                                     <th>初步拆分</th>
+                                     <th>调笔拆分</th>
+                                     <th>相似部件</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>楹</td>
+                                     <td>否</td>
+                                     <td>⿰木盈</td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>
+                                 <tr>
+                                     <td>𣌀</td>
+                                     <td>否</td>
+                                     <td>⿰日⿱𦍌⿹⿺⿻⿻禾𠄌丿丶乃</td>
+                                     <td>⿰日⿱𦍌⿰秀戈</td>
+                                     <td>我</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <p>(2). 拆字步骤</p>
+                         <p>1、先从整体上观察这个字的结构和部件。</p>
+                         <p>1）如果这个字从整体上看是两重或多重的上下结构，则同一水平方向上的多个部件应视为一个整体。</p>
+                         <p>例如“𧀍”，从整体上看，它是一个两重的上下结构。其中，下面一重的 “ ”，虽然无法直接写出，此时应看成一个整体。</p>
+                         <p>2）同理，如果这个字从整体看是两重或多重的左右结构，则同一垂直方向的多个部件应视为一个整体。</p>
+                         <p>例如“涩”，从整体上看，它是一个两重的左右结构。其中，右边一重为“”，虽然无法直接写出，也应看成一个整体。</p>
+                         <p>注意：记录多重上下结构或多重左右结构时，应先写结构符号，再写部件。A=⿱⿱⿱A1A2A3A4，表示A是一个四重上下结构的汉字，结构符为“⿱⿱⿱”，部件分别为A1、A2、A3、A4。B=B1B2B3B4，表示B是一个四重左右结构的汉字，结构符为“⿰⿰⿰”，部件分别为B1、B2、B3、B4。</p>
+                         <p>3）在进行整体观察时，笔画交错、连成一片的几个部件应视为一个大部件。如“𦾗”，从整体上看，它是上下结构。其中，中间一重为“<img class="help-img" src="/static/img/m2-help/N8nrpwcz4fQP-VwyXDSAlBi1UlMOiVFN.png" alt="">”，是多个部件交错而成，应视为一个整体。</p>
+                         <p>4）在整体是包围、交叉结构（整体上不是上下或左右结构）时，进行包围或交叉的两个部件，笔画数量应均衡（相差不能太大）。如“虎”字，应视为“虍”和“几”的包围结构，而不是“”和“”的上下结构。又如“両”字，应视为“”和“冂”的交叉结构，而不是“一”和“”的上下结构。</p>
+                         <p>2、然后进一步拆分之前被看成整体而无法直接写出的部件。</p>
+                         <p>拆分这些部件的方法与上一步相同。</p>
+                         <p>【注】以上各字的初步拆分如下：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <tbody>
+                                 <tr>
+                                     <td>𧀍 = ⿱艸⿶⿰⿰日二日王</td>
+                                     <td>涩 = ⿰氵⿱刀止</td>
+                                 </tr>
+                                 <tr>
+                                     <td>𦾗 = ⿱⿱艹⿻⺕𡗜皿</td>
+                                     <td>虎 = ⿸虍几</td>
+                                 </tr>
+                                 <tr>
+                                     <td>両 = ⿻⿱一山冂</td>
+                                     <td></td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <h3><a name="2_3">三、检索篇</a></h3>
+                         <p>本“部件笔画检字法”的检索规则包含三部分内容：改进的表意文字描述序列、相似部件、笔画。检索式由这三部分构成。</p>
+                         <p class="f14">(一) 改进的表意文字描述序列</p>
+                         <p>检索式中第一部分的内容为改进的表意文字描述序列。</p>
+                         <p>1. 部件</p>
+                         <p>检索式中，按照从左到右、从上到下、从外到里的顺序，用户可以输入所能见到的任何部件。比如输入“氵相”“氵木”“氵目”检索“湘”字；输入“亠口冋”“亠口口”检索“高”字等。</p>
+                         <p>对于某些不易输入的生僻部件，系统自动选取一些与其结构相近的常用部件作为替代，即“兼容部件”。如下表所示：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>生僻部件</th>
+                                     <th>兼容部件</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>⺄</td>
+                                     <td>乙</td>
+                                 </tr>
+                                 <tr>
+                                     <td>亻</td>
+                                     <td>人</td>
+                                 </tr>
+                                 <tr>
+                                     <td>𠆢</td>
+                                     <td>人</td>
+                                 </tr>
+                                 <tr>
+                                     <td>𡈼</td>
+                                     <td>壬</td>
+                                 </tr>
+                                 <tr>
+                                     <td>𤣩</td>
+                                     <td>王</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <p>用户输入兼容部件时，系统会同时检索相应的生僻部件。如果用户输入的是生僻部件，则只会检索生僻部件，而不检索对应的兼容部件。如用户输入“口乙”时，除了可以检索“𠮙”字外，还可检索到“𡆡”字。</p>
+                         <p>需要注意的是，兼容部件只是一个检索概念，与编码无关。</p>
+                         <p>2. 结构</p>
+                         <p>检索式中，还可以输入部件的结构信息。如输入“⿰氵木”，表示部件“氵”“木”是左右结构 ，则可以命中“沐”“湘”字等。</p>
+                         <p>如果对待检索汉字的结构有疑惑，则可以用“|”来连接多个可能的结构。比如，检索“亽”字时，如果不确定它是⿱结构还是⿵结构，则可以输入“⿱|⿵人丶”来进行检索。</p>
+                         <p>输入结构信息时，要输入能确定、有把握的结构信息，否则，可能因结构信息有误而查不到想要的字。</p>
+                         <p class="f14">(二) 相似部件</p>
+                         <p>检索式中，在部件之前加“~”符号，表示相似部件。针对一些生僻而不易输入的部件，可以输入相似部件进行检索。如检索“𧉄”字时，可输入“虫~丐”来检索。</p>
+                         <p>系统在检索相似部件时，除了检索本部件之外，还会检索所有与本部件相似的部件。上例中，输入“虫~丐”，会命中“𧉄”“𧉝”。</p>
+                         <p class="f14">(三) 剩余笔画</p>
+                         <p>针对不易输入的部件，除了可以输入相似部件外，还可以输入剩余笔画，或者输入剩余笔画范围。</p>
+                         <p>1. 剩余笔画</p>
+                         <p>检索式中，用户可以输入剩余笔画范围“n”。比如输入“⿰氵木0”，表示除了“氵”“木”之外，剩余笔画为0，这样就可以唯一命中“沐”字。如果输入“⿰氵木5”，则可以命中“湘”“媣”“渘”“渣”等字。</p>
+                         <p>2. 剩余笔画范围</p>
+                         <p>检索式中，用户可以输入剩余笔画范围“n，m”。如“⿰氵木0，5”，其中，“0，5”表示除部件“氵”“木”外，剩余部件的总笔画为0到5画。</p>
+                         <p>【注】在计算笔画信息时，不考虑相似部件。比如检索“𧉄”字时，应输入“虫~丐4”，而不是“虫~丐0”。</p>
+                         <p>附件</p>
+                         <p><span>.</span><a class="link" href="/article/attachment-download?id=10">部件笔画检字法介绍-20160608.ppt</a>&nbsp;(1.452 mebibytes)</p>
+                         <h2><a name="3">异体字拆字实例</a></h2>
+                         <table class="table table-bordered table-striped help-table" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>例字</th>
+                                     <th>拆分</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/64BuHXV4VxmRRsPR22Jg9Rcy7Bi0vzo9.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱⿰林林⿰林林</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/6QUyYKkekQSZ9aV3v3htDQOOa2KxxgFI.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰日⿱𦍌⿹⿻⿻亻戈八乃</span> </p>
+                                         <p>调笔拆分：<span>⿰日⿱𦍌⿰秀戈 </span></p>
+                                         <p>相似部件：<span>我曦</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/ly7lSwjth7n0a4AMKf2O8Cadg5tuNr_G.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿸⿻⿻一亅丿丶</span> </p>
+                                         <p>调笔拆分：<span>⿸扌丶，⿸才丶</span></p>
+                                         <p>相似部件：<span>我曦</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/7GxPutuj5CZHTRG2yoTjpJDc_z7E3PRK.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱艸⿶⿰⿰日二日王</span> </p>
+                                         <p>调笔拆分：<span>⿸扌丶，⿸才丶</span></p>
+                                         <p>相似部件：<span>我曦</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/ONz3MX3VqEzhuECduOSftTnj1pcSiY1e.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱⿱亠冏𧘇</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span>𧛨</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/SK0_Ad1DPtZ49W_qbdN_zCJjqfJYKR9R.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰十⿱⿱⿱亠罒⿰⿰二丨二𧘇 </span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span>懷</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/NvfLI97u2BjbvLvxOf7J1_kz8DUjijjA.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿸⿸广厂旦</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/B3BQ7GoEanew6M7gJrzMI4rj9_P6RgV6.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱⿱止罒⿰刀刀</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/uu4Jm7k4copd2N1ss08-7iAGPUBjboNw.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿻⿱一山冂</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/qTXwoCKvbQfpCkkMFg4K5vORGQfYy4L9.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱白⿱丿⿻冊一</span> </p>
+                                         <p>调笔拆分：<span>⿱⿱白丿𠕋</span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/kVeT2n3BWloVN8E_bCwrt6PT2edfb1_y.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿹|⿻⿻𫠠𠃌⿸尸𠃌</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/QJ7WZKWSC0JWO1oBjdJ6lkJ92M5qL7KS.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰扌⿱覀未</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/dxuwVB7yCTQtEJZMOxZB95gl99wCpA3p.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰⿺廴𠂤来</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span></span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/901Zgayf-vpvIYNw6gPCj4h0fTo27TiW.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰扌⿱覀⿻䒑小</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span>米</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/tndY0gOq5-hYVTg_PURGPryC6C6LtaeM.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿱宀⿸⿵~⿺廾丶⿰ ⿰丶丶丶丶</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span>米</span></p>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img2" src="http://storage.hanzisplit.lqdzj.cn/source/1/s1NotWzvGr28LbJwibJRpCZpadWFlTMy.png" alt=""></td>
+                                     <td>
+                                         <p>初步拆分：<span>⿰扌⿱⿱⿱亠丷⿵冂𠮦衣</span> </p>
+                                         <p>调笔拆分：<span></span></p>
+                                         <p>相似部件：<span>商</span></p>
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         <h2><a name="4">汉字部件表简介</a></h2>
+                         <h3><a name="4_1">二、部件面板</a></h3>
+                         <p class="pic"><img src="/static/img/m2-help/h-img5.png" alt=""></p>
+                         <p>如图所示，部件面板包括以下部分：</p>
+                         <p>●检索式;</p>
+                         <p>●？帮助文档;</p>
+                         <p>●检索结果。结果按笔画排序，笔画数以红色数字显示。</p>
+                         <h3><a name="4_2">二、检索式</a></h3>
+                         <p>检索式有多种表达方式。</p>
+                         <p>1. 总笔画</p>
+                         <p>如输入“2”，显示部件面板中所有总笔画为2的部件。</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img6.png" alt=""></p>
+                         <p>2. 笔顺</p>
+                         <p>根据《现代汉语通用字笔顺规范标准》，一共包括横、竖、撇、捺、折五个基本笔画。需要注意的是，点属于捺，它不是单独的基本笔画。在部件查找中，横、竖、撇、捺、折用它们的拼音首字母代替，分别是h、s、p、n、z。</p>
+                         <p>汉字笔画是有一定顺序要求的，如下图所示：</p>
+                         <p><img src="http://storage.hanzisplit.lqdzj.cn/source/1/CF3IvIUz437WshSlnLzTSSJg0k_9pJnG.jpg" alt=""></p>
+                         <p>可单独输入笔顺查找部件，如下：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img7.png" alt=""></p>
+                         <p>以上显示的是所有以横、竖开头的部件。</p>
+                         <p>3. 总笔画＋笔顺</p>
+                         <p>输入“5hs”，如下：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img8.png" alt=""></p>
+                         <p>表示总笔画为5，首两画为横、竖。</p>
+                         <!-- 此方法没有 -->
+                         <p>4. 总笔画＋空格＋笔顺</p>
+                         <p>输入“5 hs”，如下：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img8.png" alt=""></p>
+                         <p>表示总笔画为5，笔顺中包括连续的横、竖两个笔画。和前面相比，这里的“hs”不要求是首两画，它可以是中间两画。</p>
+                         <p>5. 笔顺+剩余笔画</p>
+                         <p>输入“输入“hs3”，如下：”，如下：</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img9.png" alt=""></p>
+                         <p>表示首两画为横、竖，剩余3画。</p>
+                         <h3><a name="4_3">三、点选</a></h3>
+                         <p>1. “部件笔画检字法”页面</p>
+                         <p>点击查找结果，系统自动将部件所对应的值填入检索条件中。如果是文字部件，则直接填入文字本身。如果是图片部件，则填入相应的IDS结构式。</p>
+                         <p class="pic"><img src="/static/img/m2-help/h-img10.png" alt=""></p>
+                         <p>注：12个结构符号均设置为0画，其笔顺信息如下表：</p>
+                         <table class="table table-bordered table-striped" style="width:80%;border:1px solid #ddd;">
+                             <thead>
+                                 <tr>
+                                     <th>结构符</th>
+                                     <th>笔顺</th>
+                                     <th>结构名称</th>
+                                     <th>结构符</th>
+                                     <th>笔顺</th>
+                                     <th>结构名称</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>⿱</td>
+                                     <td>sx</td>
+                                     <td>上下</td>
+                                     <td>⿰</td>
+                                     <td>zy</td>
+                                     <td>左右</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿴</td>
+                                     <td>bw</td>
+                                     <td>包围</td>
+                                     <td>⿵</td>
+                                     <td>bws</td>
+                                     <td>上包围</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿶</td>
+                                     <td>bwy</td>
+                                     <td>下包围</td>
+                                     <td>⿷</td>
+                                     <td>bwz</td>
+                                     <td>左包围</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/h-img11.png" alt=""></td>
+                                     <td>bwy</td>
+                                     <td>右包围</td>
+                                     <td>⿸</td>
+                                     <td>bwzs</td>
+                                     <td>左上包围</td>
+                                 </tr>
+                                 <tr>
+                                     <td>⿹</td>
+                                     <td>bwys</td>
+                                     <td>右上包围</td>
+                                     <td>⿺</td>
+                                     <td>bwzx</td>
+                                     <td>左下包围</td>
+                                 </tr>
+                                 <tr>
+                                     <td><img class="help-img" src="/static/img/m2-help/h-img12.png" alt=""></td>
+                                     <td>bwyx</td>
+                                     <td>右下包围</td>
+                                     <td>⿻</td>
+                                     <td>jc</td>
+                                     <td>交叉</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                         
+                     </div>
+                </div>
+                <!-- ./右侧内容 -->
+            </div>
+        </div>
+        <!-- ./help-content -->
+        <!-- 返回顶部 -->
+        <div class="gotop"></div>
+        <!-- ./返回顶部 -->
+        <!-- 调用 -->
+        <script type="text/javascript">
+            $(function(){
+                $.CateNav('#help_inner','#Catalog_box');//第一个参数为存放文章内容的box,第二个参数为存放生成目录的box；
+            })
+        </script>
+{% endblock %}

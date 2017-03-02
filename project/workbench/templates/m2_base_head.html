@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+{% load i18n %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}龙泉字库工作台{% endblock %}</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.css" type="text/css"/>
+  <!-- Font Awesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+  <!-- Ionicons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/daterangepicker/daterangepicker.css">
+  <!--skins-->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/skins/skin-blue.min.css"/>
+  <!-- bootstrap wysihtml5 - text editor -->
+  <!--<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">-->
+  <!--my font-->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/myFont.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/AdminLTE.css"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/iCheck/all.css"/>
+  <!--自定义样式-->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/ImproveAdminLTE.css"/>
+  <!--base-->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
+  <!--main.css-->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
+  {% block headercss %}
+  {% endblock %}
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- REQUIRED JS SCRIPTS-->
+   <!--<script src="{{ STATIC_URL }}js/vue.js" type="text/javascript"></script>-->
+  <script src="https://unpkg.com/vue@2.1.0/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+  <!-- jQuery 2.2.3 -->
+  <script src="{{STATIC_URL}}js/jquery-2.2.3.min.js"></script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+  <!-- Bootstrap WYSIHTML5 -->
+  <!--<script src="{{STATIC_URL}}js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>-->
+  <!-- date-range-picker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <script src="{{STATIC_URL}}js/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- icheck -->
+  <script src="{{STATIC_URL}}js/plugins/iCheck/icheck.js"></script>
+  <!-- AdminLTE App -->
+  <script src="{{STATIC_URL}}js/AdminLTE/app.js"></script>
+  <!--m2-template-specific js-->
+  <script src="{{STATIC_URL}}js/workbench/m2-template-specific.js"></script>
+  <!--m2-template-specific js-->
+  <script src="{{STATIC_URL}}js/js.cookie.js"></script>
+  <script src="{{ STATIC_URL }}js/hanzi_help.js" type="text/javascript"></script>
+</head>
+<style>
+    .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
+        background: none;
+    }
+    .content-wrapper, .right-side, .main-footer{
+        margin-left: 0;
+    }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <!-- Main Header -->
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="{% url 'm1.index' %}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini">龙泉字库</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>龙泉字库</b></span>
+    </a>
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <!-- <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a> -->
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown message">
+            <span>欢迎您使用龙泉字库用户工作台!</span>
+          </li>
+          <li class="dropdown messages-menu">
+            <a href="{% url 'm2.credits-ranking' %}" class="dropdown-toggle">
+              <i class="icon-score"></i><span class="label label-success">{{ today_credits|default:0 }}</span>
+            </a>
+          </li>
+          <!-- Tasks Menu -->
+          <!-- <li class="dropdown tasks-menu">
+            <a href="{% url 'm2.credits-ranking' %}" class="dropdown-toggle">
+              <span class="sort">积分排行</span>
+            </a>
+          </li> -->
+          <li class="dropdown tasks-menu">
+            <a href="{% url 'm2.diaries' %}" class="dropdown-toggle">
+              <i class="icon-clock"></i><span class="label label-danger circle"> </span>
+            </a>
+          </li>
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <img src="{{STATIC_URL}}img/user.jpg" class="user-image" alt="User Image">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">
+                {% if user.is_authenticated %}
+                    {{ user.username }}
+                    {% else %}
+                    游客
+                {% endif %}
+              </span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <img src="{{STATIC_URL}}img/user.jpg" class="img-circle" alt="User Image">
+                <p>{% if user.is_authenticated %}
+                  {{ user.username }}
+                  <small>{% trans 'Last login' %} {{ user.last_login }}</small>
+                  {% else %}
+                  游客
+                  {% endif %}
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <!--<li class="user-body">-->
+                <!--<div class="row">-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-4 text-center">-->
+                    <!--<a href="#">内容</a>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!-- /.row -->
+              <!--</li>-->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                  {% if user.is_authenticated %}
+                  <div class="pull-left">
+                      <a href="{% url 'auth_password_change' %}" class="btn btn-default btn-flat">{% trans "Change password" %}</a>
+                  </div>
+                  <div class="pull-right">
+                      <a href="{% url 'auth_logout' %}" class="btn btn-default btn-flat">{% trans "Log out" %}</a>
+                  </div>
+                  {% else %}
+                  <div class="pull-left">
+                      <a href="{% url 'registration_register' %}" class="btn btn-default btn-flat">{% trans "Sign in" %}</a>
+                  </div>
+                  <div class="pull-right">
+                      <a href="{% url 'auth_login' %}" class="btn btn-default btn-flat">{% trans "Log in" %}</a>
+                  </div>
+                  {% endif %}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    {% block right_side %}
+    <!-- / .content -->
+    <section class="content">
+    <div id="msg-bar">
+      <transition name="fade">
+      <div class="alert alert-dismissible" :class="show_type()"v-show="showup">
+          <button type="button" class="close" @click="dismiss()">&times;</button>
+          <h4><i class="icon fa" :class="symbol_type()"></i> #[ header ]]</h4>
+          #[ content ]]
+      </div>
+      </transition>
+   </div>
+      <script type="text/javascript">
+        var msg_bar = new Vue({
+            delimiters: ['#[', ']]'],
+            el: '#msg-bar',
+            data: {
+                header: "{% trans 'Alert!' %}",
+                is_success: true,
+                content: '',
+                showup: false,
+            },
+            methods: {
+                show_type: function() {
+                    return {
+                        'alert-success': this.is_success,
+                        'alert-warning': !this.is_success,
+                    }
+                },
+                symbol_type: function() {
+                    return {
+                        'fa-check': this.is_success,
+                        'fa-warning': !this.is_success,
+                    }
+                },
+                show: function(success, msg) {
+                    var m = msg;
+                    if (success) {
+                        this.content = m.detail;
+                        this.is_success = true;
+                    } else {
+                        this.content = m.detail;
+                        this.is_success = false;
+                    }
+                    this.showup = true;
+                },
+                dismiss: function() {
+                    this.showup = false;
+                }
+            },
+        });
+
+      // expose user info in javascript context.
+      var user={
+          "id": {{ user.id }},
+          "name": "{{ user.username }}"
+      };
+
+      // For api with token, need passing it via header.
+      $(document).ajaxSend(function(event, xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)
+                  && !settings.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+          }
+      }).ajaxError(function(event, xhr, o){
+          if (xhr.status >= 400) {
+            msg_bar.show(false, {'detail': xhr.status + ' ' + xhr.statusText});
+            console.log(xhr.responseText);
+          }
+      });
+
+      </script>
+      {% block content %}
+
+      {% endblock %}
+    </section>
+    {% endblock %}
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+{% block footerjs %}
+{% endblock %}
+</body>
+</html>
