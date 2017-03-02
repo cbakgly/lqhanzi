@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Tell the browser to be responsive to screen width -->
@@ -18,13 +17,10 @@
   <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
   <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-  <script src="{% static 'js/stroke_search.js' %}"></script>
+  <script src="{% static 'js/hanzi/stroke_search.js' %}"></script>
 
   <style type="text/css">
-
-
     .reverse {
       background-color: #b1cfff;
       font-size: 15px;
@@ -41,9 +37,14 @@
     .reverse td:nth-child(1) {
       width: 90px;
     }
+
+    .error-tips {
+      display: none;
+    }
   </style>
 
 </head>
+
 <body>
 <div class="wrapper lq-wrapper">
   <!--header-->
@@ -157,12 +158,12 @@
                   <div class="stroke-helppanel-bubble">
                     <div class="helppanel-bubble-inner">
                       <p>
-                      可点选，也可以手工输入。
-                      </br>
-                      笔顺点\横\竖\撇\捺\折分别对应d\h\s\p\n\z。
-                      </br>
-                      剩余笔画可以输入单个数字，也可输入数字范围。例如：
-                      </br>
+                        可点选，也可以手工输入。
+                        </br>
+                        笔顺点\横\竖\撇\捺\折分别对应d\h\s\p\n\z。
+                        </br>
+                        剩余笔画可以输入单个数字，也可输入数字范围。例如：
+                        </br>
                         1、hs3-5，表示前两画为横、竖，剩余3-5画；
                         </br>
                         2、3-5hs，表示总笔画为3-5，前两画为横、竖。
@@ -239,10 +240,6 @@
     <div class="bubble-inner">
       <div class="bubble-hd">
         <ul class="hd-lists">
-          <li class="clearfix">
-            <span class="fl"></span>
-            <div class="fl" id="bline1"></div>
-          </li>
           <li class="clearfix">
             <span class="fl">来源：</span>
             <div class="fl" id="bline2"></div>

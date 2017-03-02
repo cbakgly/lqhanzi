@@ -1,5 +1,28 @@
+
 $(document).ready(function()
 {
+    var ext = $("#ext").text();
+    if(ext !='')
+    {
+        $("#ext").text('');
+
+        $("#variant_searchinput").val(ext);
+
+        $(".tip").text("正在查询中...");
+        //触发按纽的点击事件
+        // $("#variant_search_btn").click();
+        //$(".loading").show();
+        $.get(
+          "variant_search",
+          {"q":$(".ser-input").val()},
+          function (data)
+          {
+              //渲染数据
+              render_variant_result(data);
+          });
+        //$(".loading").hide();
+    }
+
     //点击异体字搜索按钮时的响应函数
     $("#variant_search_btn").click( function ()
     {
@@ -19,6 +42,13 @@ $(document).ready(function()
 //渲染异体字检字法结果集的函数
 function render_variant_result(data)
 {
+    if(data=="none")
+    {
+        $(".tip").text("没有检索到数据！");
+        return;
+    }
+
+
     //首先清空结果面板
     $('.dict-result-lists').html('');
 
