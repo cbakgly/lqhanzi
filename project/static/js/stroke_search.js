@@ -154,12 +154,10 @@ $(document).ready(function()
     }
     });
 
-
     //在输入框里输入字符时错误信息为空，不空就会自动弹出来
     $('#searchinput').on('input propertychange',function(){
         document.getElementById("searchinput").setCustomValidity("");
     });
-
 
     //点击部件笔画搜索按钮时的响应函数
     $("#strock_search_btn").click( function ()
@@ -177,9 +175,9 @@ $(document).ready(function()
 
         if(order=='1')
         {
-            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
-            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3})$/;
-            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?)([^\w,;:`%?&.+*^(){}@!|]+)$/;
+            var regex1 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]{1})([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3}-\d{1,3})$/;
+            var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]{1})([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3})$/;
+            var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]{1})([^\w,;:`%?&.+*^(){}@!|]+)$/;
 
             //检验输入数据
             var m = new Array;
@@ -192,7 +190,6 @@ $(document).ready(function()
                     var large = parseInt(array[1]);
                     if(small>=large)
                     {
-                        //input.setCustomValidity("剩余笔画范围不对！");
                         $("#checkinfo_detail").html("剩余笔画范围不对！");
                         $("#checkinfo").show();
                         $("#checkinfo").fadeOut(2500);
@@ -202,7 +199,6 @@ $(document).ready(function()
             }
             else
             {
-                //input.setCustomValidity("检索条件不正确！");
                 $("#checkinfo_detail").html("检索条件不正确！");
                 $("#checkinfo").show();
                 $("#checkinfo").fadeOut(2500);
@@ -235,7 +231,6 @@ $(document).ready(function()
                     var large = parseInt(array[1]);
                     if(small>=large)
                     {
-                        //input.setCustomValidity("剩余笔画范围不对！");
                         $("#checkinfo_detail").html("剩余笔画范围不对！");
                         $("#checkinfo").show();
                         $("#checkinfo").fadeOut(2500);
@@ -245,7 +240,6 @@ $(document).ready(function()
             }
             else
             {
-                //input.setCustomValidity("检索条件不正确！");
                 $("#checkinfo_detail").html("检索条件不正确！");
                 $("#checkinfo").show();
                 $("#checkinfo").fadeOut(2500);
@@ -278,8 +272,6 @@ $(document).ready(function()
 
     });
 
-
-
     //部件笔画检字法结果页面中，点击上一页、下一页时的换页函数
     $(document).on('click', '.stroke_page', function()
     {
@@ -289,7 +281,6 @@ $(document).ready(function()
         if(current_order=='1')
         {
             url = 'stroke_normal_search?' + url;
-
         }
         else if(current_order=='2')
         {
@@ -327,7 +318,6 @@ $(document).ready(function()
         var current_order = $("#current_order").text();
         var url = $(this).attr("data-url") + '&page_num=' + new_page;
 
-
         if(current_order=='1')
         {
             url = 'stroke_normal_search?' + url;
@@ -337,7 +327,6 @@ $(document).ready(function()
             url = 'stroke_advanced_search?' + url;
         }
 
-
         $.get(
           url,
           function (data)
@@ -346,9 +335,6 @@ $(document).ready(function()
               render_stroke_result(data);
           });
     });
-
-
-
 });
 
 
@@ -730,7 +716,7 @@ function render_inverse_result(data)
     $('.pages-box').empty();
     $('.hanzi-wrap').html('');
 
-    if(data="none")
+    if(data=="none")
     {
         $("#total").html(0);
         $("#perpage").html(0);
