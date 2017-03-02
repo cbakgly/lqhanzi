@@ -31,7 +31,8 @@ AUTH_USER_MODEL = 'backend.User'
 # For customized user model, guardian must be tuned
 # GUARDIAN_MONKEY_PATCH = False
 # INTERNAL_IPS = ('127.0.0.1',)
-ADMINS = [('Xiandu', 'lqs.xiandu@qq.com')]
+ADMINS = [('Xiandu', 'lqs.xiandu@qq.com'), ('cbakgly', 'cbakgly@qq.com')]
+MANAGERS = [('Xiandu', 'lqs.xiandu@qq.com'), ('cbakgly', 'cbakgly@qq.com')]
 SERVER_EMAIL = 'root@hanzi.lqdzj.cn'
 
 # Internationalization
