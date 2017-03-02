@@ -1,5 +1,5 @@
 // 全局变量
-var base_url = 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
+var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
 var cur_page = 'A01';
 
 // 点击目录索引

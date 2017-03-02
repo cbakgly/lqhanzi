@@ -297,7 +297,7 @@ def get_tw_iframe_up(code_list):
     构造上窗格中iframe的src属性，放在list中返回
     输入参数为一个list，包含台湾异体字的图片ID
     """
-    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
+    base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi'
     tmp_list = []
     for item in code_list:
         # 如果不是附录字
@@ -324,7 +324,7 @@ def get_tw_iframe_left(code_list):
     输入参数为一个list，包含台湾异体字的图片ID
     """
     tmp_list = []
-    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
+    base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi'
     for item in code_list:
         # 如果不是附录字
         if fuluzi.count(item) == 0:
@@ -352,7 +352,7 @@ def get_tw_iframe_right(code_list):
     输入参数为一个list，包含台湾异体字的图片ID
     """
     tmp_list = []
-    base = 'https://s3.cn-north-1.amazonaws.com.cn/yitizi'
+    base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi'
     for item in code_list:
         # 如果不是附录字
         if fuluzi.count(item) == 0:
