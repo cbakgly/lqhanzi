@@ -297,7 +297,7 @@ function strokes_filter3() {
         var large = parseInt(array[1]);
 
         if (small >= large) {
-            $("#searcherror").text("剩余笔画范围有误");
+            $("#searcherror").text("剩余笔画范围有误。");
             return;
         }
 
@@ -324,7 +324,7 @@ function strokes_filter3() {
             }
         }
     } else {
-        $("#searcherror").text("格式错误");
+        $("#searcherror").text("格式错误。");
     }
 }
 
@@ -490,10 +490,10 @@ function render_inverse_result(data) {
     $('.pages-box').empty();
     $('.hanzi-wrap').html('');
 
-    if (data = "none") {
+    if ($.isEmptyObject(data)) {
         $("#total").html(0);
         $("#perpage").html(0);
-        $('.hanzi-wrap').html('没有检索到数据。');
+        // $('.hanzi-wrap').html('没有检索到数据。');
         $(".con-left").fadeIn(600);
         $(".con-right").addClass("con-right-new");
         return;
@@ -504,7 +504,7 @@ function render_inverse_result(data) {
 
     var str = '<table class="reverse">';
     if (data.hanzi_pic_id != "") {
-        str += '<tr><td>所查字</td><td><img src="' + data.hanzi_pic_id + '"></td></tr>';
+        str += '<tr><td>所查字</td><td><img src="' + data.pic_url + '"></td></tr>';
     } else {
         str += '<tr><td>所查字</td><td>' + data.hanzi_char + '</td></tr>';
     }
