@@ -4,17 +4,12 @@ $(document).ready(function()
     var ext = $("#ext").text();
     if(ext !='')
     {
+        // var patt = /^([\w~`!@#$%^&*()-+=[]{}\;:'"<>,.\?]{1})$/;
         $("#ext").text('');
-
         $("#variant_searchinput").val(ext);
         $("#current_variant").text(ext);
-
         $(".tip").text("正在查询中...");
 
-        //触发按纽的点击事件
-        //$('#variant_search_btn').click();
-        //$(".loading").show();
-        
         $.get(
           "variant_search",
           {"q":$(".ser-input").val()},
@@ -24,7 +19,6 @@ $(document).ready(function()
               render_variant_result(data);
               addKeywordPoint();
           });
-        //$(".loading").hide();
     }
 
     //给输入框添加回车键相应
@@ -82,7 +76,9 @@ function render_variant_result(data)
 {
     if(data=="none")
     {
+        $('.dict-result-lists').html('');
         $(".tip").text("没有检索到数据！");
+        $(".no-result").show();
         return;
     }
 
