@@ -147,7 +147,18 @@ class UserTaskProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'last_split_id', 'last_dedup_id', 'last_input_id',)
 
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+
+    """docstring for UserAdmin"""
+
+    def save_model(self, request, obj, form, change):
+        # Override this to set the password to the value in the field if it's
+        # changed.
+        obj.set_password(obj.password)
+        obj.save()
+
+
+admin.site.register(User, UserAdmin)
 admin.site.register(Permission)
 admin.site.register(HanziSet)
 admin.site.register(TaskPackages, TaskPackagesAdmin)
