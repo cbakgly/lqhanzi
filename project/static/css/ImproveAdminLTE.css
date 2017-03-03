@@ -738,6 +738,7 @@ input[type="radio"], input[type="checkbox"]{
 .box .box-header .box-title2{
     font-weight:normal;
     font-size:12px;
+    padding-bottom:20px;
 }
 .fonts-content a {
     margin: 6px 4px 0 0;
@@ -1138,7 +1139,7 @@ tbody tr th{
   font-size: 12px;
   line-height: 1.228571429;
   border-radius: 15px;
-  margin: 1px;
+  margin: 2px;
 }
 .btn-circle.active {
     color: white;
