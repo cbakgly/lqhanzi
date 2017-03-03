@@ -55,7 +55,7 @@
 }
 .parts-ser .input-ser{
     height:34px;
-    width:150px;
+    width:135px;
     padding: 0 10px;
     border-radius:3px;
     border:1px solid #ddd;
@@ -98,7 +98,7 @@
     color:#fff;
 }
 .parts .parts-results{
-    padding:10px 17px 100px 16px;
+    padding:5px 5px 30px 5px;
     background-color: #fff;
     margin-top:5px;
     font-size:0;
