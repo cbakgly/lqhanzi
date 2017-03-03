@@ -479,7 +479,7 @@ input[type="radio"], input[type="checkbox"]{
     display: block;
 }
 .z-table-responsive tbody td span:first-child{
-    font-size:34px;
+    /*font-size:34px;*/
 }
 .z-table-responsive table > thead > tr > th, .z-table-responsive table> tbody > tr > th, .z-table-responsive table> tfoot > tr > th, .z-table-responsive table> thead > tr > td, .z-table-responsive table> tbody > tr > td, .z-table-responsive table> tfoot > tr > td{
     vertical-align:middle;
@@ -490,6 +490,7 @@ input[type="radio"], input[type="checkbox"]{
 }
 .z-table-responsive .small em{
     font-style:normal;
+    font-size:14px;
 }
 /* input */
 .cn-split td input{
@@ -1271,4 +1272,8 @@ tbody tr th{
 }
 .final_inter{
     background: #ddf900;
+}
+.cn-dict-input td img{
+    width:40px;
+    height:40px;
 }
