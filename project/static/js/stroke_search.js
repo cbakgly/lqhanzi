@@ -1,5 +1,5 @@
 
-//string必须是"source=unicode;code=;variant_type=null;std_hanzi=;as_std_hanzi="这样的格式
+// string必须是"source=unicode;code=;variant_type=null;std_hanzi=;as_std_hanzi="这样的格式
 function FindPropertyValue(string,property)
 {
     var rex = new RegExp( property+"=(.*?)\\|");
@@ -30,8 +30,8 @@ $(document).ready(function()
         $('#bline6').html( FindPropertyValue(value,"std_hanzi") );
         $('#bline7').html( FindPropertyValue(value,"min_split") );
 
-        //设置"异体字检索"链接的属性值
-        //设置”反查编码“链接的属性值
+        // 设置"异体字检索"链接的属性值
+        // 设置”反查编码“链接的属性值
         var code = FindPropertyValue(value,"code");
         if(code!='')
         {
@@ -51,7 +51,7 @@ $(document).ready(function()
 
         $("#btip").css({ "visibility":"visible","left":offset.left-new_left_offset-5,"top":offset.top-btip_height-9});
 
-        //显示bubble
+        // 显示bubble
         $("#btip").show();
 
     });
@@ -76,7 +76,7 @@ $(document).ready(function()
 
 
 
-    //点击bubble中的“异体字检索”时的响应函数
+    // 点击bubble中的“异体字检索”时的响应函数
     $(document).on('click', '#search1', function()
     {
         var attr = $('#search2').attr("data-value");
@@ -85,22 +85,22 @@ $(document).ready(function()
     });
 
 
-    //点击bubble中的“反查编码”时的响应函数
+    // 点击bubble中的“反查编码”时的响应函数
     $(document).on('click', '#search2', function()
     {
         var attr = $('#search2').attr("data-value");
         $("#searchinput").val(attr);
 
-        //设置最后一个单选按纽为选中状态
+        // 设置最后一个单选按纽为选中状态
         $('.search-bottom input:last').click();
 
-        //触发按纽的点击事件
+        // 触发按纽的点击事件
         $("#strock_search_btn").trigger("click");
 
     });
 
 
-    //点击笔画数的响应函数
+    // 点击笔画数的响应函数
     $(document).on('click', '#strokes > span', function()
     {
         var stroke = $(this).html();
@@ -109,7 +109,7 @@ $(document).ready(function()
     });
 
 
-    //点击笔顺时的响应函数
+    // 点击笔顺时的响应函数
     $(document).on('click', '#stroke-order > span', function()
     {
         var value = $(this).attr("data-value");
@@ -118,7 +118,7 @@ $(document).ready(function()
     });
 
 
-    //点击重置时的响应函数
+    // 点击重置时的响应函数
     $(document).on('click', '#clearitem', function()
     {
         $("#radical_input").val("");
@@ -127,48 +127,48 @@ $(document).ready(function()
     });
 
 
-    //输入框有输入时的响应
+    // 输入框有输入时的响应
     $(document).on('input propertychange', '#radical_input', function()
     {
         strokes_filter3();
     });
 
-    //点击部件时的响应函数
+    // 点击部件时的响应函数
     $(document).on('click', '.result-item', function()
     {
         var text = $("#searchinput").val() + $(this).html();
         $("#searchinput").val(text);
     });
 
-    //点击结构时的响应函数
+    // 点击结构时的响应函数
     $(document).on('click', '.compontent-item', function()
     {
         var text = $("#searchinput").val() + $(this).attr("data-value");
         $("#searchinput").val(text);
     });
 
-    //给输入框添加回车键相应
+    // 给输入框添加回车键相应
     $('#searchinput').keydown(function(e){
     if(e.keyCode==13){
        $('#strock_search_btn').click();
     }
     });
 
-    //在输入框里输入字符时错误信息为空，不空就会自动弹出来
+    // 在输入框里输入字符时错误信息为空，不空就会自动弹出来
     $('#searchinput').on('input propertychange',function(){
         document.getElementById("searchinput").setCustomValidity("");
     });
 
-    //点击部件笔画搜索按钮时的响应函数
+    // 点击部件笔画搜索按钮时的响应函数
     $("#strock_search_btn").click( function ()
     {
-        //获取当前查询模式，并存储在隐藏元素中以备后用
+        // 获取当前查询模式，并存储在隐藏元素中以备后用
         var order = $('.search-bottom input[name="r"]:checked').val();
         $("#current_order").text(order);
 
         var input=document.getElementById("searchinput");
 
-        //获取输入并去除空格        
+        // 获取输入并去除空格        
         var q = $(".ser-input").val();
         q=q.replace(/\s/g,'');
         if(q=='')return;
@@ -179,7 +179,7 @@ $(document).ready(function()
             var regex2 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]{1})([^\w,;:`%?&.+*^(){}@!|]+)(\d{1,3})$/;
             var regex3 = /^([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]{1})([^\w,;:`%?&.+*^(){}@!|]+)$/;
 
-            //检验输入数据
+            // 检验输入数据
             var m = new Array;
             if(  (m=q.match(regex1))||(m=q.match(regex2))||(m=q.match(regex3)) )
             {
@@ -210,7 +210,7 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-                //渲染数据
+                // 渲染数据
                 render_stroke_result(data);
               });
         }
@@ -220,7 +220,7 @@ $(document).ready(function()
             var regex2 = /^([^a-zA-Z]+?)(\d{1,3})$/;
             var regex3 = /^([^a-zA-Z]+)$/;
 
-            //检验输入数据
+            // 检验输入数据
             var m = new Array;
             if(  (m=q.match(regex1))||(m=q.match(regex2))||(m=q.match(regex3)) )
             {
@@ -251,20 +251,20 @@ $(document).ready(function()
               {"q":q,"page_num":1,"page_size":100,},
               function (data)
               {
-                  //渲染数据
+                  // 渲染数据
                   render_stroke_result(data);
               });
         }
         else if(order=='3')
         {
-            //检验输入数据
+            // 检验输入数据
 
             $.get(
               "inverse_search",
               {"q":$(".ser-input").val()},
               function (data)
               {
-                  //渲染数据
+                  // 渲染数据
                   render_inverse_result(data);
               });
             return;
@@ -272,7 +272,7 @@ $(document).ready(function()
 
     });
 
-    //部件笔画检字法结果页面中，点击上一页、下一页时的换页函数
+    // 部件笔画检字法结果页面中，点击上一页、下一页时的换页函数
     $(document).on('click', '.stroke_page', function()
     {
         var current_order = $("#current_order").text();
@@ -291,13 +291,13 @@ $(document).ready(function()
           url,
           function (data)
           {
-              //渲染数据
+              // 渲染数据
               render_stroke_result(data);
           });
     });
 
 
-    //点击部件笔划检索结果中的跳页按钮时的响应函数
+    // 点击部件笔划检索结果中的跳页按钮时的响应函数
     $("#stroke_page_btn").click( function ()
     {
         var new_page = $('#new_page').val();
@@ -331,7 +331,7 @@ $(document).ready(function()
           url,
           function (data)
           {
-              //渲染数据
+              // 渲染数据
               render_stroke_result(data);
           });
     });
@@ -363,10 +363,10 @@ function letters_to_numbers(string)
 
 function strokes_filter3()
 {
-    //判断输入内容所符合的模式
-    //1、hs3-5，表示前两画为横、竖，剩余3-5画；
-    //2、3-5hs，表示总笔画为3-5，前两画为横、竖。
-    //又细分为以下5种
+    // 判断输入内容所符合的模式
+    // 1、hs3-5，表示前两画为横、竖，剩余3-5画；
+    // 2、3-5hs，表示总笔画为3-5，前两画为横、竖。
+    // 又细分为以下5种
 
     $("#searcherror").text("");
 
@@ -376,7 +376,7 @@ function strokes_filter3()
     var regex4 = /^([hspndz]+)(\d{1,2}-\d{1,2})$/;
     var regex5 = /^([hspndz]+)$/;
 
-    //去除空格
+    // 去除空格
     var input = $("#radical_input").val();
 
     input=input.replace(/\s/g,'');
@@ -388,7 +388,7 @@ function strokes_filter3()
         return;
     }
 
-    //经检查无问题
+    // 经检查无问题
     if(m = input.match(regex1))
     {
         var num = m[1];
@@ -406,7 +406,7 @@ function strokes_filter3()
         }
     }
 
-    //无问题
+    // 无问题
     else if(m = input.match(regex2))
     {
         var strokes = letters_to_numbers(m[2]);
@@ -437,7 +437,7 @@ function strokes_filter3()
         }
 
     }
-    //已满足
+    // 已满足
     else if(m = input.match(regex3))
     {
         var strokes = letters_to_numbers(m[1]);
@@ -482,7 +482,7 @@ function strokes_filter3()
             }
         }
     }
-    //已满足
+    // 已满足
     else if(m = input.match(regex5))
     {
         var strokes = letters_to_numbers(m[1]);
@@ -507,10 +507,10 @@ function strokes_filter3()
 
 
 
-//渲染部件笔画检字法结果集的函数
+// 渲染部件笔画检字法结果集的函数
 function render_stroke_result(data)
 {
-    //查询到的字对象的集合
+    // 查询到的字对象的集合
     var q = data.q;
     var page_num = data.page_num;
     var pages = data.pages;
@@ -518,7 +518,7 @@ function render_stroke_result(data)
     var total = data.total;
     var data = data.result;
 
-    //如果没有检索到数据
+    // 如果没有检索到数据
     if(total==0)
     {
         $("#total").html(0);
@@ -531,7 +531,7 @@ function render_stroke_result(data)
         return;
     }
 
-    //显示符合要求的条目数
+    // 显示符合要求的条目数
     $('.pages-box').show();
     $("#total").html(total);
     $("#perpage").html(page_size);
@@ -539,12 +539,12 @@ function render_stroke_result(data)
     $('.hanzi-wrap').html('');
     $('.pagination').empty();
 
-    //本次查询到的字对象的个数
+    // 本次查询到的字对象的个数
     len = data.length;
     for (var i=0;i<len;i++)
     {
         var char = "";
-        if(data[i].source == 1)//如果是unicode
+        if(data[i].source == 1)// 如果是unicode
         {
             var data_value = 'source=unicode|code='+data[i].remark +'|radical='+data[i].radical+ '|max_strokes='+data[i].max_strokes +'|std_hanzi='+data[i].std_hanzi + '|min_split=' + data[i].min_split +'|';
 
@@ -555,7 +555,7 @@ function render_stroke_result(data)
             char += data[i].hanzi_char;
             char += '</a></li>';
         }
-        else if(data[i].source == 2)//如果是台湾异体字
+        else if(data[i].source == 2)// 如果是台湾异体字
         {
             var data_value = 'source=台湾异体字|code='+data[i].seq_id +'|radical='+data[i].radical+ '|max_strokes='+data[i].max_strokes +'|std_hanzi='+data[i].std_hanzi + '|min_split=' + data[i].min_split+'|';
 
@@ -581,7 +581,7 @@ function render_stroke_result(data)
                 char += '"></a></li>';
             }
         }
-        else if(data[i].source == 3)   //如果是汉字大字典
+        else if(data[i].source == 3)   // 如果是汉字大字典
         {
 
             if(data[i].hanzi_char != "")
@@ -610,7 +610,7 @@ function render_stroke_result(data)
                 char += '"></a></li>';
             }
         }
-        else if(data[i].source == 4)   //如果是高丽异体字
+        else if(data[i].source == 4)   // 如果是高丽异体字
         {
             if(data[i].hanzi_char != "")
             {
@@ -638,7 +638,7 @@ function render_stroke_result(data)
                 char += '"></a></li>';
             }
         }
-        else if(data[i].source == 5)   //如果是敦煌俗字典
+        else if(data[i].source == 5)   // 如果是敦煌俗字典
         {
             if(data[i].hanzi_char != "")
             {
@@ -665,7 +665,7 @@ function render_stroke_result(data)
                 char += '"></a></li>';
             }
         }
-        //把字填到左面板里去
+        // 把字填到左面板里去
         $('.hanzi-wrap').append(char);
     }
 
@@ -700,11 +700,11 @@ function render_stroke_result(data)
     $('.pagination').append(str);
 
 
-    //给翻页按纽增加data-url属性， 以便单击时利用
+    // 给翻页按纽增加data-url属性， 以便单击时利用
     var new_url = 'q=' + q + '&page_size=' + page_size;
     $('#stroke_page_btn').attr("data-url",new_url);
 
-    //让隐藏的左面板显示出来
+    // 让隐藏的左面板显示出来
     $(".con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
 }

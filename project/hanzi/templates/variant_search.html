@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>首页-异体字检字法</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>首页-异体字检字法</title>
 
-    {% load static %}
+  {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-    <script src="{% static 'js/hanzi/variant_search.js' %}"></script>
+  <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+  <script src="{% static 'js/hanzi/variant_search.js' %}"></script>
 </head>
 
 <body>
@@ -50,7 +50,6 @@
           <div class="h13 mt20"></div>
         </div>
         <div class="help fr"><i class="icon-help"></i></div>
-        <label id="ext" hidden>{{ ext }}</label>
       </div>
     </div>
   </div>
@@ -80,6 +79,7 @@
     </div>
   </div>
   <!--./content-->
+  <label id="q" hidden>{{ q }}</label>
   <!-- loading:数据请求时动画-->
   <div class="loading">
     <div class="spinner">

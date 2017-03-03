@@ -48,7 +48,7 @@ def ajax_stroke_search(request):
         query_list.append(Q(stroke_serial__contains=p) | Q(similar_parts__contains=p))
         q = q.replace(similar_part, '')
 
-    # 如果表达式为“结构+字符+结构”或“字符+结构”，则模式应为正则检索
+    # 校验模式：如果表达式为“结构+字符+结构”或“字符+结构”，则模式应为正则检索
     pattern_mode = re.compile(ur"^[⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]?[^⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]+[⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴].*")
     if pattern_mode.match(q):
         output_mode = 2
@@ -116,16 +116,17 @@ def inverse_search(request):
     if not q:
         return JsonResponse({"msg": "Empty input."})
 
-    hanzi_set = HanziSet.objects.filter(Q(hanzi_char=q) | Q(hanzi_pic_id=q) | Q(seq_id__regex='^' + q + '(;|$)')).filter(Q(is_for_search=1)).values(
+    hanzi_set = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q) | Q(seq_id__regex='^' + q + '(;|$)')).filter(Q(is_for_search=1)).values(
         'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'as_std_hanzi', 'mix_split')
     hanzi_set = list(hanzi_set)
-    ret = {}
+
     if len(hanzi_set) > 0:
         ret = list(hanzi_set)[0]
         if ret['hanzi_pic_id']:
             ret['pic_url'] = get_pic_url_by_source_pic_name(ret['source'], ret['hanzi_pic_id'])
+        return JsonResponse(ret)
 
-    return JsonResponse(ret)
+    return JsonResponse({})
 
 
 def __get_parts_strokes(parts):

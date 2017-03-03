@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^ajax_stroke_search$', stroke.ajax_stroke_search, name='m1.ajax_stroke_search'),
     url(r'^inverse_search$', stroke.inverse_search, name='m1.inverse-search'),
     url(r'^variant_search$', variant.variant_search, name='m1.variant-search'),
+    url(r'^ajax_variant_search$', variant.ajax_variant_search, name='m1.ajax_variant-search'),
     url(r'^variant_detail$', variant.variant_detail, name='m1.variant-detail'),
     url(r'^dicts/?$', RedirectView.as_view(url='/dicts/taiwan', permanent=False), name='m1.dicts'),
     url(r'^dicts/taiwan/$', dicts.taiwan, name="m1.dicts-taiwan"),
