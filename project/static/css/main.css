@@ -380,7 +380,8 @@
 .con-left p {
     line-height: 30px;
     font-size: 13px;
-    padding-left: 5px;
+    font-style: italic;
+    padding-left: 20px;
     margin-bottom: 10px;
 }
 
@@ -747,7 +748,7 @@
 
 .pages-box li {
     float: left;
-    width: 70px; /*modified by xiandu*/
+    width: 28px; /*modified by xiandu*/
     height: 28px;
     line-height: 28px;
     text-align: center;
@@ -967,7 +968,8 @@
 
 .bubble {
     position: absolute;
-    max-width: 270px;
+    max-width: 300px;
+    min-width: 200px;
     height: auto;
     border-radius: 5px;
     padding: 5px;
@@ -1619,7 +1621,7 @@
     color: #fff;
     display: block;
     font-size:14px;
-    font-weight:bold;
+    /*font-weight:bold;*/
 }
 
 .dictionary-header .dict-tabs ul li.active {
@@ -1685,7 +1687,7 @@
 }
 
 .hd-lists div {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .other_style {
@@ -1698,7 +1700,7 @@
 .other_title {
     display: block;
     position: relative;
-    height: 20px;
+    height: 18px;
     width: 100%;
     padding:8px 0 5px 0;
     background-color: #f5f5f5;

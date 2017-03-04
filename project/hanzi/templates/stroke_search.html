@@ -37,7 +37,9 @@
     .reverse td:nth-child(1) {
       width: 90px;
     }
-
+    .search_tips {
+      font-style: italic;
+    }
     .error-tips {
       display: none;
     }
@@ -81,7 +83,7 @@
             <label><input type="radio" name="r" value="1" checked="checked"> 一般检索</label>
             <label><input type="radio" name="r" value="2"> 正则检索</label>
             <label><input type="radio" name="r" value="3"> 反查编码</label>
-            <label id="current_order" hidden></label>
+            <label id="current_mode" hidden></label>
           </div>
         </div>
         <div class="help fr">
@@ -108,16 +110,16 @@
   <!--content-->
   <div class="content lq-content">
     <div class="w">
-      <div class="con-left">
-        <p class="total">共有<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条</p>
-        <ul class="hanzi-wrap clearfix">
+      <div class="con-left" id="con-left">
+        <p class="total">检索到<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条。</p>
+        <ul class="hanzi-wrap clearfix" id="hanzi-wrap">
         </ul>
-        <div class="pages-box">
-          <ul class="pagination">
+        <div class="pages-box" id="pages-box">
+          <ul class="pagination" id="pagination">
           </ul>
-          <span>跳至:&nbsp;<input id="new_page" type="text">&nbsp;页</span>
-          <span id="stroke_page_btn" class="page-btn" data-url="test">GO</span><br>
-          <span id="search_tip"></span>
+          <span>跳至&nbsp;<input id="new_page" type="text">&nbsp;页/<span id="pages"></span>页</span>
+          <span id="stroke_page_btn" class="page-btn" data-url="">GO</span>
+          <span id="search_tip" class="search_tips"></span>
         </div>
       </div>
       <!-- 部件检索搜索错误信息提示 -->
@@ -158,7 +160,7 @@
       </div>
       <!-- ./反查编码 -->
       <!-- ./ 检索搜索错误信息提示-->
-      <div class="con-right">
+      <div class="con-right" id="con-right">
         <!--结构-->
         <div class="compontent clearfix">
           <div class="compontent-hd">
@@ -205,7 +207,6 @@
                         </br>
                         2、3-5hs，表示总笔画为3-5，前两画为横、竖。
                       </p>
-                      <p class="ar"><a target="_blank" class="more" href="{% url 'm1.help' %}">更多…</a></p>
                     </div>
                   </div>
                   <i class="icon-help"></i>
@@ -244,12 +245,12 @@
               <div class="stroke">
                 <span class="stroke-hd">笔顺：</span>
                 <div id="stroke-order" class="stroke-bd">
-                  <span data-value="d" class="stroke-item">丶</span>
-                  <span data-value="h" class="stroke-item">一</span>
-                  <span data-value="s" class="stroke-item">丨</span>
-                  <span data-value="p" class="stroke-item">丿</span>
-                  <span data-value="n" class="stroke-item">乀</span>
-                  <span data-value="z" class="stroke-item">乛</span>
+                  <span data-value="d" class="stroke-item">点</span>
+                  <span data-value="h" class="stroke-item">横</span>
+                  <span data-value="s" class="stroke-item">竖</span>
+                  <span data-value="p" class="stroke-item">撇</span>
+                  <span data-value="n" class="stroke-item">捺</span>
+                  <span data-value="z" class="stroke-item">折</span>
                 </div>
               </div>
             </div>
@@ -277,24 +278,24 @@
     <div class="bubble-inner">
       <div class="bubble-hd">
         <ul class="hd-lists">
-          <li class="clearfix">
-            <span class="fl">来源：</span>
+          <li class="clearfix" id="line1">
+            <span class="fl" id="source">来源：</span>
             <div class="fl" id="bline2"></div>
           </li>
-          <li class="clearfix">
-            <span class="fl">编码：</span>
+          <li class="clearfix" id="line2">
+            <span class="fl" id="code">编码：</span>
             <div class="fl" id="bline3"></div>
           </li>
-          <li class="clearfix">
-            <span class="fl">部首：</span>
+          <li class="clearfix" id="line3">
+            <span class="fl" id="radical">部首：</span>
             <div class="fl" id="bline4"></div>
-            <span class="fl">笔画：</span>
+            <span class="fl" id="strokes">笔画：</span>
             <div class="fl" id="bline5"></div>
-            <span class="fl">所属正字：</span>
+            <span class="fl" id="std_hanzi">所属正字：</span>
             <div class="fl" id="bline6"></div>
           </li>
-          <li class="clearfix">
-            <span class="fl">初步折分：</span>
+          <li class="clearfix" id="line4">
+            <span class="fl" id="initial_split">初步折分：</span>
             <div class="fl" id="bline7"></div>
           </li>
         </ul>
@@ -350,8 +351,9 @@
   </div>
 </div>
 <!-- ./bottom -->
-<script>
 
+
+<script>
     $(function () {
         $(".nav-tab .dropdown").mouseenter(function () {
             if (!$(this).children(".dropdown-menu").is(":animated")) {
