@@ -291,7 +291,7 @@
           }
       }).ajaxError(function(event, xhr, o){
           if (xhr.status >= 400) {
-            msg_bar.show(false, {'detail': xhr.status + ' ' + xhr.statusText});
+            msg_bar.show(false, {'detail': xhr.status + ' ' + xhr.statusText + ' ' + xhr.responseText});
             console.log(xhr.responseText);
           }
       });
