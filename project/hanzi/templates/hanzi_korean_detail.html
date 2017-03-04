@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>高丽异体字-{{ q }}</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<style>
+  body {
+    height: auto;
+  }
+</style>
+<body>
+<div class="content-wrapper-inner tab-panel showing">
+  <div id="korean-hanzi-set" style="text-align: left; margin-left: 20px;">
+    {% for hanzi in hanzi_set.values %}
+      <p class="hanzi-normal">
+        <a>[<span class="hanzi-normal" title="正字">
+          <img src="{{ hanzi.std_hanzi.pic_url }}" alt="{{ hanzi.std_hanzi.hanzi_pic_id }}">
+        </span>]</a>
+      </p>
+      <div class="hanzi-variants">
+        {% for variant in hanzi.variants %}
+          <a><span class="" title=""><img src="{{ variant.pic_url }}" alt="{{ variant.hanzi_pic_id }}"></span></a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+  <div style="text-align: center; height: 100%">
+    {% if welcome %}
+      <img src="{{ welcome }}">
+    {% endif %}
+  </div>
+</div>
+</body>
+
+</html>
