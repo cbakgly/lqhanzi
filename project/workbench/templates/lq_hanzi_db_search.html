@@ -216,7 +216,7 @@
             <tbody>
             <tr v-for="item in models">
               <td>#[ item.id ]]</td>
-              <td v-show="filter_hanzi">#[ item.hanzi_char ]]</td>
+              <td v-show="filter_hanzi" class="special-font">#[ item.hanzi_char ]]</td>
               <td v-show="filter_pic_char"><img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id"></td>
               <td v-show="filter_source">#[ item.source_display ]]</td>
               <td v-show="filter_variant_type">#[ item.variant_type_display ]]</td>
