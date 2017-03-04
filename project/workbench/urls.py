@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
 from django.conf.urls import url
-from views import diaries, task_package, search, forum, credits, task
+from views import diaries, task_package, search, forum, credits, task, help
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'search/korean-dedup/$', search.korean_dedup_db_search, name='m2.korean-dedup-search'),
     url(r'search/korean-taiwan-dedup/$', search.korean_taiwan_dedup_db_search, name='m2.korean-taiwan-dedup-search'),
     url(r'forum/$', forum.index, name='m2.forum'),
+    url(r'help/$', help.index, name='m2.helps'),
 
     url(r'^$', task_package.task_package_ongoing, name='m2.home-page')
 ]
