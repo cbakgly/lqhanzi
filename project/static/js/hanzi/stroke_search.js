@@ -63,7 +63,7 @@ $(document).ready(function () {
         $("#btip").css({
             "visibility": "visible",
             "left": offset.left - new_left_offset - 5,
-            "top": offset.top - btip_height - 5
+            "top": offset.top - btip_height - 12
         });
 
         // 显示bubble
