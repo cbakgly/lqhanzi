@@ -240,7 +240,7 @@
             <tbody>
             <tr v-for="item in models">
               <td>#[ item.id ]]</td>
-              <td v-show="filter_hanzi_char">#[ item.hanzi_char ]]</td>
+              <td v-show="filter_hanzi_char"><h1>#[ item.hanzi_char ]]</h1></td>
               <td v-show="filter_hanzi_pic_path"><span class="pic" v-if="item.hanzi_pic_path"><img :src="item.hanzi_pic_path" :alt="item.hanzi_pic_id"></span></td>
               <td v-show="filter_source">#[ item.source_display ]]</td>
               <td v-show="filter_std_hanzi">#[ item.std_hanzi ]]</td>
