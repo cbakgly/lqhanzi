@@ -5,8 +5,8 @@ from django.views.generic.base import RedirectView
 from views import stroke, variant, dicts
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='/stroke_search', permanent=False), name='m1.index'),
-    url(r'^index$', RedirectView.as_view(url='/stroke_search', permanent=False), name='m1.stroke-search'),
+    url(r'^$', RedirectView.as_view(url='stroke_search', permanent=False), name='m1.index'),
+    url(r'^index$', RedirectView.as_view(url='stroke_search', permanent=False), name='m1.stroke-search'),
     url(r'^stroke_search$', stroke.stroke_search, name='m1.stroke-search'),
     url(r'^ajax_stroke_search$', stroke.ajax_stroke_search, name='m1.ajax_stroke_search'),
     url(r'^inverse_search$', stroke.inverse_search, name='m1.inverse-search'),
