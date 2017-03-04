@@ -37,9 +37,11 @@
     .reverse td:nth-child(1) {
       width: 90px;
     }
+
     .search_tips {
       font-style: italic;
     }
+
     .error-tips {
       display: none;
     }
@@ -87,7 +89,7 @@
           </div>
         </div>
         <div class="help fr">
-          <i class="icon-help"></i>
+          <a target="_blank" href="{% url 'm1.help' %}"><i class="icon-help"></i></a>
           <!-- 帮助信息提示 -->
           <div class="stroke-ser-bubble">
             <div class="ser-bubble-inner">
@@ -132,28 +134,28 @@
         <div class="back"><i class="icon-left"></i>返回</div>
         <div class="reverse-bd">
           <div class="hanzi-tit">菩</div>
-          <table  class="table table-bordered reverse-table" style="width:90%;border:1px solid #ddd;">
+          <table class="table table-bordered reverse-table" style="width:90%;border:1px solid #ddd;">
             <tbody>
-              <tr>
-                <td>初步拆分</td>
-                <td>⿰氵⿱刀止</td>
-              </tr>
-              <tr>
-                <td>调笔拆分</td>
-                <td>⿰氵⿱刀止</td>
-              </tr>
-              <tr>
-                <td>混合拆分</td>
-                <td>⿰氵⿱刀止</td>
-              </tr>
-              <tr>
-                <td>相似部件</td>
-                <td>⿰氵⿱刀止</td>
-              </tr>
-              <tr>
-                <td>部件序列</td>
-                <td>⿰氵⿱刀止</td>
-              </tr>
+            <tr>
+              <td>初步拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>调笔拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>混合拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>相似部件</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>部件序列</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -343,7 +345,7 @@
       <ul class="links fr">
         <li><a>关于我们</a>|</li>
         <li><a>免责申请</a>|</li>
-        <li><a>帮助中心</a></li>
+        <li><a href="{% url 'm1.help' %}">帮助中心</a></li>
       </ul>
     </div>
     <div class="clearfix"></div>
