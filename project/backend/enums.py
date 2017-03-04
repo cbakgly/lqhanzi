@@ -16,6 +16,7 @@ PERMS = {'draft_input': 'backend.op_draft_input', 'review_input': 'backend.op_re
          'draft_dedup': 'backend.op_draft_dedup', 'review_dedup': 'backend.op_review_dedup', 'final_dedup': 'backend.op_final_dedup'}
 CREDIT_TYPE = {0: '总积分', 1: '拆字积分', 2: '录入积分', 3: '图书校对', 4: '论文下载', 5: '去重积分'}
 VARIANT_TYPE = {'STDANDARD': 0, 'VARIANT_NARROW': 1, 'STDANDARD_VARIANT_WIDE': 2, 'VARIANT_WIDE': 3}
+VARIANT_TYPE_INVERSE = {0: '正字', 1: '狭义异体字', 2: '广义且正字', 3: '广义异体字'}
 
 
 def getenum_task_package_status(name):

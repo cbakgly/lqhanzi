@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>异体字综合信息-{{ q }}</title>
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+  <script src="{% static 'js/hanzi/variant_detail.js' %}"></script>
+
+  <style type="text/css">
+    .tab-content {
+      margin: 0px;
+      padding: 0px;
+      border-left: 1px solid #82abd5;
+      border-bottom: 1px solid #82abd5;
+      border-right: 1px solid #82abd5;
+    }
+
+    .tab-panel {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .tab-panel iframe {
+      overflow: scroll;
+      width: 100%;
+      border: 1px solid #eee;
+      position: relative;
+      top: -2px;
+      left: -2px;
+    }
+  </style>
+
+</head>
+<body>
+
+{% load m1filter %}
+
+<div class="wrapper">
+  <div class="hanzi-sets-header">
+    <div class="shortcut">
+      <div class="w">
+        <div class="hanzi-sets-logo fl">
+          <h1><a href="{% url 'm1.index' %}">龙泉字库</a></h1>
+        </div>
+        <div class="nav-tab nav-tab-r fr">
+          <ul class="tabs clearfix">
+            <li><a href="{% url 'm1.variant-search' %}">异体字检索</a></li>
+            <li><a href="{% url 'm1.dicts' %}">字典</a></li>
+            <li><a href="{% url 'm2.home-page' %}">工作台</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hanzi-sets-content">
+    <div class="w">
+
+      <div class="hanzi-sets-main">
+        <div class="hanzi-main-hd clearfix">
+          <!--字头-->
+          <div class="hanzi">
+            <div class="zi">
+              {% if pic_url %}
+                <img src="{{ pic_url }}" alt="{{ hanzi_pic_id }}">
+              {% else %}
+                {{ hanzi_char }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!--表格-->
+          <div class="hanzi-origin clearfix">
+            <dl>
+              <dt></dt>
+              <dd>正异类型：</dd>
+              <dd>所属正字：</dd>
+              <dd>原始出处：</dd>
+            </dl>
+            <dl>
+              <dt>台湾异体字字典</dt>
+              <dd>{% if taiwan.variant_type %}{{ taiwan.variant_type }} {% else %}-{% endif %}</dd>
+              <dd>{% if taiwan.std_hanzi %}{{ taiwan.std_hanzi }} {% else %}-{% endif %}</dd>
+              <dd>
+                {% for item in taiwan.origin_positions %}
+                  <a target="_blank" href="{{ item.url }}">{{ item.seq_id }}</a>
+                {% empty %}
+                  -
+                {% endfor %}
+              </dd>
+            </dl>
+            <dl>
+              <dt>高丽异体字字典</dt>
+              <dd>{% if korean.variant_type %}{{ korean.variant_type }} {% else %}-{% endif %}</dd>
+              <dd>{% if korean.std_hanzi %}{{ korean.std_hanzi }} {% else %}-{% endif %}</dd>
+              <dd>
+                {% for item in korean.origin_positions %}
+                  <a target="_blank" href="{{ item.url }}">{{ item.seq_id }}</a>
+                {% empty %}
+                  -
+                {% endfor %}
+              </dd>
+            </dl>
+            <dl>
+              <dt>汉语大字典</dt>
+              <dd>-</dd>
+              <dd>-</dd>
+              <dd><span class="origin">{% if hanyu.positions %}{{ hanyu.positions }} {% else %}-{% endif %}</span></dd>
+            </dl>
+            <dl>
+              <dt>敦煌俗字典</dt>
+              <dd>-</dd>
+              <dd>-</dd>
+              <dd><span class="origin">{% if dunhuang.positions %}{{ dunhuang.positions }} {% else %}-{% endif %}</span>
+              </dd>
+            </dl>
+          </div>
+
+        </div>
+
+        <!--属性页-->
+        <div class="hanzi-main-bd">
+          <ul class="nav-tab-custom clearfix">
+            {% if taiwan %}
+              {% for item in taiwan.positions %}
+                <li>{{ item }}(台湾)</li>
+              {% endfor %}
+            {% endif %}
+
+            {% if korean %}
+              <li>{{ korean.positions|list:0 }}(高丽)</li>
+            {% endif %}
+
+            {% if hanyu %}
+              <li>{{ hanyu.positions }}(汉语)</li>
+            {% endif %}
+
+            {% if dunhuang %}
+              <li>{{ dunhuang.positions }}(敦煌)</li>
+            {% endif %}
+          </ul>
+
+          <div class="tab-content">
+            {% if taiwan %}
+              {% for seq_id in taiwan.positions %}
+                <div class="tab-panel">
+                  <iframe seamless src="/dicts/taiwan/detail?q={{ seq_id }}" id="iframe-taiwan"
+                          onload="iFrameHeight('iframe-taiwan')"></iframe>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% if korean %}
+              <div class="tab-panel">
+                <iframe seamless src="/dicts/korean/detail?q={{ korean.positions|list:0 }}" id="iframe-korean"
+                        onload="iFrameHeight('iframe-korean')"></iframe>
+              </div>
+            {% endif %}
+
+            {% if hanyu %}
+              <div class="tab-panel">
+                <img class="hy-img" src="{{ hanyu.image_url }}">
+              </div>
+            {% endif %}
+
+            {% if dunhuang %}
+              <div class="tab-panel">
+                <img class="dh-img" src="{{ dunhuang.image_url }}">
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        //dropdown menu
+        $(".nav-tab .dropdown").mouseenter(function () {
+            if (!$(this).children(".dropdown-menu").is(":animated")) {
+                $(this).children(".dropdown-menu").fadeIn(600);
+            }
+        });
+        $(".nav-tab .dropdown").mouseleave(function () {
+            $(this).children(".dropdown-menu").fadeOut(600);
+        });
+    });
+    //tab切换
+    $(function () {
+        $(".nav-tab-custom li").eq(0).addClass("active");
+        $(".tab-content .tab-panel").eq(0).addClass("showing");
+
+
+        $(".nav-tab-custom li").click(function () {
+            var $this = $(this),
+                index = $this.index();
+            $this.addClass("active").siblings("li").removeClass("active");
+            $(".tab-content .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
+        })
+    });
+</script>
+</body>
+</html>

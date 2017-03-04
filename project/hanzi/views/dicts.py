@@ -59,7 +59,7 @@ def taiwan_detail(request):
     """
     显示台湾异体字详细信息
     """
-    seq_id = request.GET.get('seq_id', False).lower()
+    seq_id = request.GET.get('q', False).lower()
     if not seq_id:
         content = {'error': 'not found' + seq_id}
     else:
@@ -148,7 +148,7 @@ def korean(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/kr-dict/korean_cover.jpg',
+        'welcome_url': '/dicts/korean/detail?q=welcome',
     }
 
     return render(request, 'hanzi_korean.html', context=content)
@@ -159,15 +159,18 @@ def korean_detail(request):
     """
     显示高丽异体字详细信息
     """
-    title = request.GET.get('title', False).lower()
-    if not title:
-        return JsonResponse({'error': 'not found' + title})
-    else:
+    q = request.GET.get('q', False)
+    context = {'q': q}
+
+    if q == 'welcome':
+        context['welcome'] = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/kr-dict/korean_cover.jpg'
+    elif q:
+        q = q.lower()
         query_list = [Q(source__exact=SOURCE_ENUM['korean'])]
-        if 'kr' in title:
-            query_list.append(Q(hanzi_pic_id__exact=title))
+        if 'kr' in q:
+            query_list.append(Q(hanzi_pic_id__exact=q))
         else:
-            query_list.append(Q(hanzi_char__exact=title))
+            query_list.append(Q(hanzi_char__exact=q))
         hanzi = HanziSet.objects.filter(reduce(operator.and_, query_list))[0]
         std_hanzis = [hanzi.std_hanzi]
         ids = [hanzi.id]
@@ -188,24 +191,25 @@ def korean_detail(request):
                 item['pic_url'] = get_pic_url_by_source_pic_name(SOURCE_ENUM['korean'], item['hanzi_pic_id'])
 
         # transform hanzi_set
-        result = {}
+        data = {}
         for item in hanzi_set:
             # 设置是否为请求参数
             if item['id'] in ids:
                 item['target'] = True
 
-            if item['std_hanzi'] not in result:
-                result[item['std_hanzi']] = {}
+            if item['std_hanzi'] not in data:
+                data[item['std_hanzi']] = {}
 
             if item['variant_type'] == 0:  # 正字
-                result[item['std_hanzi']]['std_hanzi'] = item
+                data[item['std_hanzi']]['std_hanzi'] = item
             else:
-                if 'variants' not in result[item['std_hanzi']]:
-                    result[item['std_hanzi']]['variants'] = [item]
+                if 'variants' not in data[item['std_hanzi']]:
+                    data[item['std_hanzi']]['variants'] = [item]
                 else:
-                    result[item['std_hanzi']]['variants'].append(item)
+                    data[item['std_hanzi']]['variants'].append(item)
+        context['hanzi_set'] = data
 
-        return JsonResponse(result)
+    return render(request, 'hanzi_korean_detail.html', context=context)
 
 
 @csrf_exempt

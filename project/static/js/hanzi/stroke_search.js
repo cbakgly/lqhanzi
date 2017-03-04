@@ -63,7 +63,7 @@ $(document).ready(function () {
         $("#btip").css({
             "visibility": "visible",
             "left": offset.left - new_left_offset - 5,
-            "top": offset.top - btip_height - 12
+            "top": offset.top - btip_height - 5
         });
 
         // 显示bubble
@@ -86,7 +86,7 @@ $(document).ready(function () {
     // 点击bubble中的“异体字检索”时的响应函数
     $(document).on('click', '#search1', function () {
         var attr = $('#search2').attr("data-value");
-        var url = 'variant_search?mark=ext&q=' + attr;
+        var url = '/variant_search?q=' + attr;
         window.open(url);
     });
 
@@ -141,20 +141,17 @@ $(document).ready(function () {
 
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
-
         // 获取输入并去除空格
         var q = $(".ser-input").val().replace(/\s/g, '');
         if (q == '') return;
 
         // 如果有超过两个结构符，则应为正则检索
         if (q.match(/[⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]/g) !== null && q.match(/[⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]/g).length > 1) {
-            //$('.search-bottom input[name="r"][value="2"]').attr('checked', true);
-            $('.search-bottom input[name="r"][value="2"]').click();
+            $('.search-bottom input[name="r"][value="2"]').attr('checked', true);
         }
 
         // 获取当前查询模式，并存储在隐藏元素中以备后用
         var mode = $('.search-bottom input[name="r"]:checked').val();
-
         $("#current_mode").text(mode);
 
         if (mode == '1' || mode == '2') { // 一般检索&正则检索
@@ -346,9 +343,8 @@ function render_stroke_result(dataset) {
         ++pages;
 
     // 如果没有检索到数据
-    if ( total == 0 || data === undefined) {
-        $('#hanzi-wrap').html('');
-        $('#pages-box').hide();
+    if (total == 0) {
+        $('#pages-box').empty();
         $("#total").html(0);
         $("#perpage").html(0);
         $("#con-left").fadeIn(600);
@@ -357,11 +353,10 @@ function render_stroke_result(dataset) {
     }
 
     // 显示符合要求的条目数
-    $('#pages-box').show();
     $("#total").html(total);
     $("#perpage").html(page_size);
     $('#hanzi-wrap').html('');
-    $('#pagination').html('');
+    $('#pagination').empty();
 
     // 本次查询到的字对象的个数
     len = data.length;
@@ -369,7 +364,8 @@ function render_stroke_result(dataset) {
         var char = "";
         if (data[i].source == 1) { // 如果是unicode
             var data_value = 'source=unicode|code=' + data[i].remark + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-            char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=1&type=char&text=';
+            // var data_value = 'source=unicode;code='+data[i].remark +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+            char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
             char += data[i].hanzi_char;
             char += '" data-value="';
             char += data_value + '">';
@@ -377,15 +373,16 @@ function render_stroke_result(dataset) {
             char += '</a></li>';
         } else if (data[i].source == 2) { // 如果是台湾异体字
             var data_value = 'source=台湾异体字|code=' + data[i].seq_id + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
+            //  var data_value = 'source=台湾异体字;code='+data[i].seq_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
             if (data[i].hanzi_char != "") {
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=2&type=char&text=';
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
                 char += data[i].hanzi_char;
                 char += '</a></li>';
             } else {
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=2&type=pic&text=';
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_pic_id;
                 char += '" data-value="';
                 char += data_value + '"><img src="';
@@ -397,7 +394,8 @@ function render_stroke_result(dataset) {
         } else if (data[i].source == 3) {  // 如果是汉字大字典
             if (data[i].hanzi_char != "") {
                 var data_value = 'source=汉字大字典|code=' + data[i].hanzi_char + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=3&type=char&text=';
+                //  var data_value = 'source=汉字大字典;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
@@ -405,7 +403,8 @@ function render_stroke_result(dataset) {
                 char += '</a></li>';
             } else {
                 var data_value = 'source=汉字大字典|code=' + data[i].hanzi_pic_id + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=3&type=pic&text=';
+                // var data_value = 'source=汉字大字典;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_pic_id;
                 char += '" data-value="';
                 char += data_value + '"><img src="';
@@ -417,7 +416,8 @@ function render_stroke_result(dataset) {
         } else if (data[i].source == 4) {  // 如果是高丽异体字
             if (data[i].hanzi_char != "") {
                 var data_value = 'source=高丽异体字|code=' + data[i].hanzi_char + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=4&type=char&text=';
+                // var data_value = 'source=高丽异体字;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
@@ -425,7 +425,8 @@ function render_stroke_result(dataset) {
                 char += '</a></li>';
             } else {
                 var data_value = 'source=高丽异体字|code=' + data[i].hanzi_pic_id + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=4&type=pic&text=';
+                // var data_value = 'source=高丽异体字;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_pic_id;
                 char += '" data-value="';
                 char += data_value + '"><img src="';
@@ -437,7 +438,8 @@ function render_stroke_result(dataset) {
         } else if (data[i].source == 5) {  // 如果是敦煌俗字典
             if (data[i].hanzi_char != "") {
                 var data_value = 'source=敦煌俗字典|code=' + data[i].hanzi_char + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=5&type=char&text=';
+                // var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_char +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi + ';as_std_hanzi=' + data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_char;
                 char += '" data-value="';
                 char += data_value + '">';
@@ -445,7 +447,8 @@ function render_stroke_result(dataset) {
                 char += '</a></li>';
             } else {
                 var data_value = 'source=敦煌俗字典|code=' + data[i].hanzi_pic_id + '|radical=' + data[i].radical + '|max_strokes=' + data[i].max_strokes + '|std_hanzi=' + data[i].std_hanzi + '|min_split=' + data[i].min_split + '|';
-                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?source=5&type=pic&text=';
+                // var data_value = 'source=敦煌俗字典;code='+data[i].hanzi_pic_id +';variant_type='+data[i].variant_type+';std_hanzi='+data[i].std_hanzi+';as_std_hanzi='+data[i].as_std_hanzi;
+                char = '<li><a class="hanzi-item" target="_blank" href="/variant_detail?q=';
                 char += data[i].hanzi_pic_id;
                 char += '" data-value="';
                 char += data_value + '"><img src="';
