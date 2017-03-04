@@ -1277,3 +1277,6 @@ tbody tr th{
     width:40px;
     height:40px;
 }
+.special-font {
+    font-family: 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+}
