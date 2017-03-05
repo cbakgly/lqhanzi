@@ -1219,7 +1219,6 @@
     background-color: #d8e8f2;
 }
 
-
 .hanzi-normal a span.keyword::after {
     content: "";
     position: absolute;
@@ -1442,7 +1441,11 @@
 }
 
 /*wxf modified*/
-.hanzi-origin dl { float: left; min-width: 120px; text-align: center;}
+.hanzi-origin dl {
+    float: left;
+    min-width: 19%;
+    text-align: center;
+}
 
 .hanzi-origin dl dt {
     font-size: 13px;
