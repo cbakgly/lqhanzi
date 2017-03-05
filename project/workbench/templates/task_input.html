@@ -28,7 +28,7 @@
                 <div class="box-body" id="box-input-img">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <div class="item active">
-                            <div class="imgContainer"><img class="imageFullScreen" src="/static/img/zoomSmall.jpg"/>
+                            <div class="imgContainer"><img class="imageFullScreen" src="{{ page_path }} "/>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
             template: '<tr @click="edit($event)">\
                         <td>#[id]]</td>\
                         <td v-if="pic_id!=\'\'">\
-                            <img :src= "pic_id">\
+                            <img height="20" width="20" :src= "pic_id">\
                         </td>\
                         <td v-else>\
                             <dd style="width:100px;text-align:center">#[local_char]]</dd>\
