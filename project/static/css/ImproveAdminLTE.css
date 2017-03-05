@@ -6,7 +6,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 }
 body{
     font-size:12px;
-    font-family: 'myFont', 'lqhanzi', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-family: 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 table{
     border-collapse:collapse;
