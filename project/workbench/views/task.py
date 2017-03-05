@@ -5,6 +5,7 @@ from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT
 from backend.enums import getenum_source, getenum_task_status, getenum_business_type
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
+from backend.views.api_variants_input import VariantsInputSerializer
 from backend.utils import has_business_type_perm
 
 
@@ -73,13 +74,20 @@ def input_page_detail(request, *args, **kwargs):
         pk = kwargs['pk']
     else:
         pk = request.GET['pk']
-    input_page = InputPage.objects.get(pk=pk)
-    inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+    try:
+        input_page = InputPage.objects.get(pk=pk)
+    except InputPage.DoesNotExist:
+        return render(request, '400.html')
+    try:
+        inputs = VariantsInput.objects.filter(page_num=input_page.page_num)
+    except VariantsInput.DoesNotExist:
+        return render(request, '400.html')
 
     return render(request, 'input_detail.html',
                   {
+                      'page_path': "%s%04d%s"%('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/',input_page.page_num,'.png'),
                       'inputpage': input_page,
-                      'inputs': inputs,
+                      'inputs': VariantsInputSerializer(inputs, many=True).data,
                       'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
                   })
 

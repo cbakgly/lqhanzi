@@ -28,7 +28,7 @@
                 <div class="box-body" id="box-input-img">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <div class="item active">
-                            <div class="imgContainer"><img class="imageFullScreen" src="/static/img/zoomSmall.jpg"/>
+                            <div class="imgContainer"><img class="imageFullScreen" src="{{ page_path }} "/>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                 {% for input_char in inputs %}
                                     <input_var
                                             id="{{ input_char.id }}"
-                                            pic_id="{{ input_char.hanzi_pic_id_draft }}"
+                                            pic_id="{{ input_char.hanzi_pic_path_draft }}"
                                             char="{{ input_char.hanzi_char_draft }}"
                                             std_hanzi="{{ input_char.std_hanzi_draft }}"
                                             notes="{{ input_char.notes_draft }}"
@@ -95,7 +95,7 @@
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
-                                    pic_id="{{ input_char.hanzi_pic_id_review }}"
+                                    pic_id="{{ input_char.hanzi_pic_path_review }}"
                                     char="{{ input_char.hanzi_char_review }}"
                                     std_hanzi="{{ input_char.std_hanzi_review}}"
                                     notes="{{ input_char.notes_review }}"
@@ -121,7 +121,7 @@
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
-                                    pic_id="{{ input_char.hanzi_pic_id_final }}"
+                                    pic_id="{{ input_char.hanzi_pic_path_final }}"
                                     char="{{ input_char.hanzi_char_final }}"
                                     std_hanzi="{{ input_char.std_hanzi_final}}"
                                     notes="{{ input_char.notes_final }}"
@@ -148,7 +148,7 @@
             template: '<tr @click="edit($event)">\
                         <td>#[id]]</td>\
                         <td v-if="pic_id!=\'\'">\
-                            <img :src= "pic_id">\
+                            <img height="20" width="20" :src= "pic_id">\
                         </td>\
                         <td v-else>\
                             <dd style="width:100px;text-align:center">#[local_char]]</dd>\
