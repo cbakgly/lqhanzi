@@ -134,6 +134,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'backend.context_processors.today_credits',
                 'backend.context_processors.model_enum',
+                'backend.context_processors.lqhanzi_font',
             ],
         },
     },

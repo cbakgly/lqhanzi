@@ -104,6 +104,7 @@ var hanzi_input = new Vue({
     created: function () {
         var vm = this;
         ajaxHelper.get(vm.urls, null, function (data) {
+            console.log(data);
             vm.context = data.html_context;
             vm.models = data.models;
         })
@@ -128,6 +129,7 @@ var hanzi_input = new Vue({
             }
             delete vm.params['stage']
             ajaxHelper.get(vm.urls, vm.params, function (data) {
+                console.log(data);
                 vm.models = data.models;
                 vm.context = data.html_context;
             })
@@ -141,6 +143,7 @@ var hanzi_input = new Vue({
         gotoPage: function (url) {
             var vm = this;
             ajaxHelper.get(url, null, function (data) {
+                console.log(data);
                 vm.models = data.models;
                 vm.context = data.html_context;
             })

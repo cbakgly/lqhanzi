@@ -1,222 +1,222 @@
-{% extends "m2_base.html" %}
-
-{% block 'menu-hanzi-css' %}active{% endblock %}
-
-{% block 'menu-item-input-css' %}class="active"{% endblock %}
-
-{% block content %}
-    <!-- Content Header-->
-    <div class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="javascript:;">字库检索</a></li>
-            <li class="active">汉大录入库</li>
-        </ol>
-    </div>
-    <div id="search" class="row">
-        <div class="col-xs-12">
-            <div class="box box-blue">
-                <!-- /.box-header -->
-                <div class="box-header">
-                    <div class="box-header-inner">
-                        <div class="ser-bd">
-                            <div class="z-ser z2-ser">
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">页码:</span>
-                                        <input type="text" class="form-control" v-model="params.page_num"
-                                               placeholder="请输入">
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">文字:</span>
-                                        <input type="text" class="form-control" v-model="params.hanzi_char_draft"
-                                               placeholder="请输入">
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">图片字编码:</span>
-                                        <input type="text" class="form-control" v-model="params.hanzi_pic_id_draft"
-                                               placeholder="请输入">
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">正异类型:</span>
-                                        <!-- select -->
-                                        <div class="form-group">
-                                            <select v-model="params.variant_type_draft" class="form-control">
-                                                <option>请选择</option>
-                                                <option v-for="option in options_type" v-bind:value="option.value">
-                                                    #[option.text]]
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">所属正字:</span>
-                                        <input type="text" class="form-control" v-model="params.std_hanzi_draft"
-                                               placeholder="请输入">
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">注释信息:</span>
-                                        <input type="text" class="form-control" v-model="params.notes_draft"
-                                               placeholder="请输入">
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">阶段:</span>
-                                        <div class="radios">
-                                            <label><input type="radio" v-model="params.stage" value="0">初次</label>
-                                            <label><input type="radio" v-model="params.stage" value="1">回查</label>
-                                            <label><input type="radio" v-model="params.stage" value="2">审查</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">初次=回查:</span>
-                                        <div class="radios">
-                                            <label><input type="radio" v-model="params.is_draft_equals_review"
-                                                          value="1">是</label>
-                                            <label><input type="radio" v-model="params.is_draft_equals_review"
-                                                          value="0">否</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">回查=审查:</span>
-                                        <div class="radios">
-                                            <label><input type="radio" v-model="params.is_review_equals_final"
-                                                          value="1">是</label>
-                                            <label><input type="radio" v-model="params.is_review_equals_final"
-                                                          value="0">否</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">是否审核:</span>
-                                        <div class="radios">
-                                            <label><input type="radio" v-model="params.is_checked" value="1">是</label>
-                                            <label><input type="radio" v-model="params.is_checked" value="0">否</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">是否入库:</span>
-                                        <div class="radios">
-                                            <label><input type="radio" v-model="params.is_submitted" value="1">是</label>
-                                            <label><input type="radio" v-model="params.is_submitted" value="0">否</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-md-4 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">更新时段:</span>
-                                        <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control pull-right" id="reservationtime">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btns">
-                                <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
-                                <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置
-                                </button>
-                                <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
-                            </div>
-                        </div>
-                    </div>
+{% extends "m2_base.html" %} {% block 'menu-hanzi-css' %}active{% endblock %} {% block 'menu-item-input-css' %}class="active"{% endblock %} {% block content %}
+<!-- Content Header-->
+<div class="content-header">
+  <ol class="breadcrumb">
+    <li><a href="javascript:;">字库检索</a></li>
+    <li class="active">汉大录入库</li>
+  </ol>
+</div>
+<div id="search" class="row">
+  <div class="col-xs-12">
+    <div class="box box-blue">
+      <!-- /.box-header -->
+      <div class="box-header">
+        <div class="box-header-inner">
+          <div class="ser-bd">
+            <div class="z-ser z2-ser">
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">页码:</span>
+                  <input type="text" class="form-control" v-model="params.page_num" placeholder="请输入">
                 </div>
-                <!-- 筛选 -->
-                <div class="expand-mode multi-mode">
-                    <div class="expand-hd">
-                        <p><span>筛选：</span></p>
-                    </div>
-                    <div class="expand-bd">
-                        <div class="expand-items">
-                            <div class="items-inner">
-                                <label v-for="title in titles" v-if="title.show">
-                                    <input type="checkbox" checked="checked" @click="title.show=false">#[title.text]]
-                                </label>
-                                <label v-else><input type="checkbox" @click="title.show=true">#[title.text]]</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="expand-ft">
-                        <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
-                    </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">文字:</span>
+                  <input type="text" class="form-control" v-model="params.hanzi_char_draft" placeholder="请输入">
                 </div>
-                <!-- 筛选 -->
-                <div  class="box-body table-responsive z-table-responsive cn-dict-input">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th v-for="title in titles" v-if="title.show">#[title.text]]</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in models">
-                            <td>#[item.id]]</td>
-                            <td v-show="titles[1]['show']">#[item.volume_num]]</td>
-                            <td v-show="titles[2]['show']">#[item.page_num]]</td>
-                            <td v-show="titles[3]['show']">#[item.seq_num_draft]]</td>
-                            <td v-show="titles[4]['show']">#[item.hanzi_char_draft]]</td>
-                            <td v-show="titles[5]['show']"><img :src="item.hanzi_pic_path_draft"></td>
-                            <td v-show="titles[6]['show']">#[item.variant_type_draft]]</td>
-                            <td v-show="titles[7]['show']">#[item.std_hanzi_draft]]</td>
-                            <td v-show="titles[8]['show']">#[item.notes_draft]]</td>
-                            <td v-show="titles[9]['show']">#[item.seq_num_review]]</td>
-                            <td v-show="titles[10]['show']">#[item.hanzi_char_review]]</td>
-                            <td v-show="titles[11]['show']"><img :src="item.hanzi_pic_path_review"></td>
-                            <td v-show="titles[12]['show']">#[item.variant_type_review]]</td>
-                            <td v-show="titles[13]['show']">#[item.std_hanzi_review]]</td>
-                            <td v-show="titles[14]['show']">#[item.notes_review]]</td>
-                            <td v-show="titles[15]['show']">#[item.seq_num_review]]</td>
-                            <td v-show="titles[16]['show']">#[item.hanzi_char_review]]</td>
-                            <td v-show="titles[17]['show']"><img :src="item.hanzi_pic_path_review"></td>
-                            <td v-show="titles[18]['show']">#[item.variant_type_review]]</td>
-                            <td v-show="titles[19]['show']">#[item.std_hanzi_review]]</td>
-                            <td v-show="titles[20]['show']">#[item.notes_review]]</td>
-                            <td v-show="titles[21]['show']">#[item.is_draft_equals_review_display]]</td>
-                            <td v-show="titles[22]['show']">#[item.is_review_equals_final_display]]</td>
-                            <td v-show="titles[23]['show']">#[item.is_checked_display]]</td>
-                            <td v-show="titles[24]['show']">#[new Date(item.u_t).toLocaleString()]]</td>
-                            <td v-show="titles[25]['show']">#[item.remark]]</td>
-                            <td><a :href="get_detail_url(item)">查看</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li v-if="context.previous_url"><a v-on:click="gotoPage(context.previous_url)">«</a></li>
-                        <li v-else><a href="javascript:void(0);">«</a></li>
-                        <li v-for="item in context.page_links">
-                            <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
-                            <a v-else-if="item[3]" href="javascript:void(0);">....</a>
-                            <a v-else href="javascript:void(0);" v-on:click="goto_page(item[0])">#[ item[1] ]]</a>
-                        </li>
-                        <li v-if="context.next_url"><a href="javascript:void(0);"
-                                                       v-on:click="gotoPage(context.next_url)">»</a></li>
-                        <li v-else><a href="javascript:void(0);">»</a></li>
-                    </ul>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">图片字编码:</span>
+                  <input type="text" class="form-control" v-model="params.hanzi_pic_id_draft" placeholder="请输入">
                 </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">正异类型:</span>
+                  <!-- select -->
+                  <div class="form-group">
+                    <select v-model="params.variant_type_draft" class="form-control">
+                      <option>请选择</option>
+                      <option v-for="option in options_type" v-bind:value="option.value">
+                        #[option.text]]
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">所属正字:</span>
+                  <input type="text" class="form-control" v-model="params.std_hanzi_draft" placeholder="请输入">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">注释信息:</span>
+                  <input type="text" class="form-control" v-model="params.notes_draft" placeholder="请输入">
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">阶段:</span>
+                  <div class="radios">
+                    <label>
+                      <input type="radio" v-model="params.stage" value="0">初次</label>
+                    <label>
+                      <input type="radio" v-model="params.stage" value="1">回查</label>
+                    <label>
+                      <input type="radio" v-model="params.stage" value="2">审查</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">初次=回查:</span>
+                  <div class="radios">
+                    <label>
+                      <input type="radio" v-model="params.is_draft_equals_review" value="1">是</label>
+                    <label>
+                      <input type="radio" v-model="params.is_draft_equals_review" value="0">否</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">回查=审查:</span>
+                  <div class="radios">
+                    <label>
+                      <input type="radio" v-model="params.is_review_equals_final" value="1">是</label>
+                    <label>
+                      <input type="radio" v-model="params.is_review_equals_final" value="0">否</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">是否审核:</span>
+                  <div class="radios">
+                    <label>
+                      <input type="radio" v-model="params.is_checked" value="1">是</label>
+                    <label>
+                      <input type="radio" v-model="params.is_checked" value="0">否</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">是否入库:</span>
+                  <div class="radios">
+                    <label>
+                      <input type="radio" v-model="params.is_submitted" value="1">是</label>
+                    <label>
+                      <input type="radio" v-model="params.is_submitted" value="0">否</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">更新时段:</span>
+                  <i class="fa fa-calendar"></i>
+                  <input type="text" class="form-control pull-right" id="reservationtime">
+                </div>
+              </div>
             </div>
-        </div><!-- /.box -->
+            <div class="btns">
+              <button class="btn btn-blue btn-sm z-btn-sm" @click="searchResult">搜索</button>
+              <button class="btn btn-default btn-sm z-btn-sm z-reset" @click="clearAllResult">重置
+              </button>
+              <a class="more"><span>更多搜索</span><i class="icon-down-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 筛选 -->
+      <div class="expand-mode multi-mode">
+        <div class="expand-hd">
+          <p><span>筛选：</span></p>
+        </div>
+        <div class="expand-bd">
+          <div class="expand-items">
+            <div class="items-inner">
+              <label v-for="title in titles" v-if="title.show">
+                <input type="checkbox" checked="checked" @click="title.show=false">#[title.text]]
+              </label>
+              <label v-else>
+                <input type="checkbox" @click="title.show=true">#[title.text]]</label>
+            </div>
+          </div>
+        </div>
+        <div class="expand-ft">
+          <a class="more"><span>更多</span><i class="icon-down-arrow"></i></a>
+        </div>
+      </div>
+      <!-- 筛选 -->
+      <div class="box-body table-responsive z-table-responsive cn-dict-input">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th v-for="title in titles" v-if="title.show">#[title.text]]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in models">
+              <td>#[item.id]]</td>
+              <td v-show="titles[1]['show']">#[item.volume_num]]</td>
+              <td v-show="titles[2]['show']">#[item.page_num]]</td>
+              <td v-show="titles[3]['show']">#[item.seq_num_draft]]</td>
+                <td v-show="titles[4]['show']"><h1>#[item.hanzi_char_draft]]</h1></td>
+              <td v-show="titles[5]['show']"><img :src="item.hanzi_pic_path_draft" v-if="item.hanzi_pic_path_draft"></td>
+              <td v-show="titles[6]['show']">#[item.variant_type_draft]]</td>
+              <td v-show="titles[7]['show']">#[item.std_hanzi_draft]]</td>
+              <td v-show="titles[8]['show']">#[item.notes_draft]]</td>
+              <td v-show="titles[9]['show']">#[item.seq_num_review]]</td>
+                <td v-show="titles[10]['show']"><h1>#[item.hanzi_char_review]]</h1></td>
+              <td v-show="titles[11]['show']"><img :src="item.hanzi_pic_path_review" v-if="item.hanzi_pic_path_review"></td>
+              <td v-show="titles[12]['show']">#[item.variant_type_review]]</td>
+              <td v-show="titles[13]['show']">#[item.std_hanzi_review]]</td>
+              <td v-show="titles[14]['show']">#[item.notes_review]]</td>
+              <td v-show="titles[15]['show']">#[item.seq_num_final]]</td>
+                <td v-show="titles[16]['show']"><h1>#[item.hanzi_char_final]]</h1></td>
+              <td v-show="titles[17]['show']"><img :src="item.hanzi_pic_path_final" v-if="item.hanzi_pic_path_final"></td>
+              <td v-show="titles[18]['show']">#[item.variant_type_final]]</td>
+              <td v-show="titles[19]['show']">#[item.std_hanzi_final]]</td>
+              <td v-show="titles[20]['show']">#[item.notes_final]]</td>
+              <td v-show="titles[21]['show']">#[item.is_draft_equals_review_display]]</td>
+              <td v-show="titles[22]['show']">#[item.is_review_equals_final_display]]</td>
+              <td v-show="titles[23]['show']">#[item.is_checked_display]]</td>
+              <td v-show="titles[24]['show']">#[new Date(item.u_t).toLocaleString()]]</td>
+              <td v-show="titles[25]['show']">#[item.remark]]</td>
+              <td><a :href="get_detail_url(item)">查看</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+          <li v-if="context.previous_url"><a v-on:click="gotoPage(context.previous_url)">«</a></li>
+          <li v-else><a href="javascript:void(0);">«</a></li>
+          <li v-for="item in context.page_links">
+            <a v-if="item[2]" href="javascript:void(0);">#[ item[1] ]]</a>
+            <a v-else-if="item[3]" href="javascript:void(0);">....</a>
+            <a v-else href="javascript:void(0);" v-on:click="gotoPage(item[0])">#[ item[1] ]]</a>
+          </li>
+          <li v-if="context.next_url"><a href="javascript:void(0);" v-on:click="gotoPage(context.next_url)">»</a></li>
+          <li v-else><a href="javascript:void(0);">»</a></li>
+        </ul>
+      </div>
     </div>
-    <!-- /.col -->
-    </div>
-    <script type="text/javascript">
-        var search_url = "{% url 'inputs-list' version='v1' %}";
-    </script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/workbench/cn-dict-input-db-search.js"></script>
+  </div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<script type="text/javascript">
+var search_url = "{% url 'inputs-list' version='v1' %}";
+
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/workbench/cn-dict-input-db-search.js"></script>
 {% endblock %}
+

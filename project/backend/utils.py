@@ -129,3 +129,7 @@ def has_business_type_perm(user, type):
 
 def get_lqhanzi_font_path():
     return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/lqhanzi.ttf'
+
+
+def get_kaixinsong_font_path():
+    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/KaiXinSong.ttf'
