@@ -1,5 +1,8 @@
 // iframe高度自适应
-function iFrameHeight(id) {
-    var ifm = document.getElementById(id);
-    ifm.height = document.getElementsByClassName('hanzi-sets-content')[0].clientHeight + 90;
+function iFrameHeightByClass(classname) {
+    var ifms = document.getElementsByClassName(classname);
+    for(var i = 0; i < ifms.length; i++) {
+        ifms[i].height = document.getElementsByClassName('hanzi-sets-content')[0].clientHeight + 90;
+    }
+
 }

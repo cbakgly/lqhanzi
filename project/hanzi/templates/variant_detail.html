@@ -62,7 +62,6 @@
   </div>
   <div class="hanzi-sets-content">
     <div class="w">
-
       <div class="hanzi-sets-main">
         <div class="hanzi-main-hd clearfix">
           <!--字头-->
@@ -151,16 +150,16 @@
             {% if taiwan %}
               {% for seq_id in taiwan.positions %}
                 <div class="tab-panel">
-                  <iframe seamless src="/dicts/taiwan/detail?q={{ seq_id }}" id="iframe-taiwan"
-                          onload="iFrameHeight('iframe-taiwan')"></iframe>
+                  <iframe seamless src="/dicts/taiwan/detail?q={{ seq_id }}" class="iframe-taiwan"
+                          onload="iFrameHeightByClass('iframe-taiwan')"></iframe>
                 </div>
               {% endfor %}
             {% endif %}
 
             {% if korean %}
               <div class="tab-panel">
-                <iframe seamless src="/dicts/korean/detail?q={{ korean.positions|list:0 }}" id="iframe-korean"
-                        onload="iFrameHeight('iframe-korean')"></iframe>
+                <iframe seamless src="/dicts/korean/detail?q={{ korean.positions|list:0 }}" class="iframe-korean"
+                        onload="iFrameHeightByClass('iframe-korean')"></iframe>
               </div>
             {% endif %}
 
