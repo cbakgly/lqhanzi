@@ -93,7 +93,7 @@
               <td v-if="item.business_stage=={{business_stage_enum.init}}">#[item.task_ele.notes_draft]]</td>
               <td v-else-if="item.business_stage=={{business_stage_enum.review}}">#[item.task_ele.notes_review]]</td>
               <td v-else-if="item.business_stage=={{business_stage_enum.final}}">#[item.task_ele.notes_final]]</td>
-              <td><a :href="detail_url.replace(0, item.id)">查看</a></td>
+              <td><a :href="detail_url.replace(0, item.object_id)">查看</a></td>
             </tr>
             </tbody>
           </table>

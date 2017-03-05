@@ -65,7 +65,7 @@
                                 {% for input_char in inputs %}
                                     <input_var
                                             id="{{ input_char.id }}"
-                                            pic_id="{{ input_char.hanzi_pic_id_draft }}"
+                                            pic_id="{{ input_char.hanzi_pic_path_draft }}"
                                             char="{{ input_char.hanzi_char_draft }}"
                                             std_hanzi="{{ input_char.std_hanzi_draft }}"
                                             notes="{{ input_char.notes_draft }}"
@@ -95,7 +95,7 @@
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
-                                    pic_id="{{ input_char.hanzi_pic_id_review }}"
+                                    pic_id="{{ input_char.hanzi_pic_path_review }}"
                                     char="{{ input_char.hanzi_char_review }}"
                                     std_hanzi="{{ input_char.std_hanzi_review}}"
                                     notes="{{ input_char.notes_review }}"
@@ -121,7 +121,7 @@
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
-                                    pic_id="{{ input_char.hanzi_pic_id_final }}"
+                                    pic_id="{{ input_char.hanzi_pic_path_final }}"
                                     char="{{ input_char.hanzi_char_final }}"
                                     std_hanzi="{{ input_char.std_hanzi_final}}"
                                     notes="{{ input_char.notes_final }}"
