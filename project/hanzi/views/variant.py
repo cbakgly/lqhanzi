@@ -87,7 +87,13 @@ def ajax_variant_search(request):
     hanzi_codes = re.sub(r";+", r";", hanzi_codes).strip(';')
     ret['hanzi_codes'] = list(set(hanzi_codes.split(';')))
 
-    return JsonResponse({'q': q, 'empty': False, 'data': ret})
+    if( len(ret[SOURCE_ENUM['taiwan']])==0 and
+        len(ret[SOURCE_ENUM['korean']])==0 and
+        len(ret[SOURCE_ENUM['hanyu']])==0 and
+        len(ret[SOURCE_ENUM['dunhuang']])==0 ):
+        return JsonResponse({'q': q, 'empty': True, 'data': ret})
+    else:
+        return JsonResponse({'q': q, 'empty': False, 'data': ret})
 
 
 def __get_variants_by_hanzi_code(hanzi_code, source):

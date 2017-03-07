@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 // 渲染异体字检字法结果集的函数
 function render_variant_result(res) {
-    if (res.empty == true) {
+    if (res.empty == true || res === undefined) {
         $(".tip").text("检索到0条数据。");
         return;
     }
