@@ -6,7 +6,7 @@ from backend.enums import getenum_source, getenum_task_status, getenum_business_
 from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
 from backend.views.api_variants_input import VariantsInputSerializer
-from backend.utils import has_business_type_perm
+from backend.utils import has_business_type_perm, get_input_page_path
 
 
 @login_required
@@ -41,7 +41,7 @@ def task_input(request, *args, **kwargs):
 
     return render(request, 'task_input.html',
                   {
-                      'page_path': "%s%04d%s" % ('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/', input_page.page_num, '.png'),
+                      'page_path': get_input_page_path(input_page.page_num),
                       'inputpage': input_page,
                       'inputs': inputs,
                       'task_package_id': pk,
@@ -63,7 +63,7 @@ def input_detail(request, *args, **kwargs):
 
     return render(request, 'input_detail.html',
                   {
-                      'page_path': "%s%04d%s" % ('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/', input_page.page_num, '.png'),
+                      'page_path': get_input_page_path(input_page.page_num),
                       'inputpage': input_page,
                       'inputs': inputs,
                       'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
@@ -87,7 +87,7 @@ def input_page_detail(request, *args, **kwargs):
 
     return render(request, 'input_detail.html',
                   {
-                      'page_path': "%s%04d%s"%('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/',input_page.page_num,'.png'),
+                      'page_path': get_input_page_path(input_page.page_num),
                       'inputpage': input_page,
                       'inputs': VariantsInputSerializer(inputs, many=True).data,
                       'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
