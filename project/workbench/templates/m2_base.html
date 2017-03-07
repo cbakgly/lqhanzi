@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-{% load i18n static %}
+{% load i18n %}
 <html>
 <head>
   <meta charset="utf-8">
@@ -110,7 +110,7 @@
           </li>
           <!-- help帮助 -->
           <li class="dropdown tasks-menu">
-            <a href="#" class="dropdown-toggle">
+            <a href="{% url 'm2.helps' %}" class="dropdown-toggle">
               <i class="icon-help1"></i>
             </a>
           </li>
@@ -290,7 +290,7 @@
 
       // expose user info in javascript context.
       var user={
-          "id": {{ user.id }},
+          "id": {{ user.id|default:0 }},
           "name": "{{ user.username }}"
       };
 
