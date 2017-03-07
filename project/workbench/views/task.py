@@ -41,6 +41,7 @@ def task_input(request, *args, **kwargs):
 
     return render(request, 'task_input.html',
                   {
+                      'page_path': "%s%04d%s" % ('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/', input_page.page_num, '.png'),
                       'inputpage': input_page,
                       'inputs': inputs,
                       'task_package_id': pk,
@@ -62,6 +63,7 @@ def input_detail(request, *args, **kwargs):
 
     return render(request, 'input_detail.html',
                   {
+                      'page_path': "%s%04d%s" % ('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/', input_page.page_num, '.png'),
                       'inputpage': input_page,
                       'inputs': inputs,
                       'input_variant_type': INPUT_VARIANT_TYPE_CHOICES
