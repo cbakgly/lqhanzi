@@ -133,3 +133,6 @@ def get_lqhanzi_font_path():
 
 def get_kaixinsong_font_path():
     return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/KaiXinSong.ttf'
+
+def get_input_page_path(page_num):
+    return "%s%04d%s" % ('http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/', page_num, '.png')

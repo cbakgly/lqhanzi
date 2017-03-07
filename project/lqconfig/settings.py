@@ -140,6 +140,7 @@ TEMPLATES = [
     },
 ]
 
+WSGI_APPLICATION = 'lqconfig.wsgi.application'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
@@ -176,7 +177,6 @@ REST_FRAMEWORK = {
         'rest_framework_filters.backends.DjangoFilterBackend',
     ),
 }
-
 
 CACHES = {
     'default': {
