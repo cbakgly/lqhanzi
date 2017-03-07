@@ -68,7 +68,7 @@ EMAIL_HOST = 'smtp.126.com'
 EMAIL_PORT = 25
 # Registration Settings end
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_HTTPONLY = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
@@ -139,8 +139,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'lqconfig.wsgi.application'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
