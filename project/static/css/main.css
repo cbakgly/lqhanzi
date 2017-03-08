@@ -25,7 +25,7 @@
 .header {
     position: relative;
     background-color: #3c7bbe;
-    height: 195px; /*wenxiaofeng modified*/
+    height: 195px; /*wxf modified*/
 }
 
 .header .shortcut .shortcut-inner {
@@ -656,14 +656,13 @@
     background-color: #fff;
     /*margin-top:5px;*/
     font-size: 0;
-    /*added by wenxiaofeng*/
+    /*added by wxf*/
     box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
     
 }
 
 .con-right .result-stoke, .con-right .result-item {
-    /*font-family: "lqhanzi" !important;*/
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -1763,7 +1762,7 @@
     border-radius:2px;
     -webkit-border-radius:2px;
     -moz-border-radius:2px;
-    font-family:"Microsoft yahei"
+    font-family:"Microsoft yahei",KaiXinSong,lqhanzi;
 }
 #Catalog_box{
     position: fixed;
