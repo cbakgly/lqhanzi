@@ -63,7 +63,7 @@
         <div class="box box-blue">
             <div class="box-header">
                 <div class="hanzi-content">
-                    <a href="#" class="pull-right dropdown-toggle" style="color:#4abfec;">
+                    <a target="_blank" href="{% url 'm2.helps' %}" class="pull-right dropdown-toggle" style="color:#4abfec;">
                         <i class="fa fa-question-circle" aria-hidden="true" style="font-size:18px;"></i>
                     </a>
                     <div class="split-top">
@@ -80,7 +80,7 @@
                         </div>
                         <div class="hanzi-info pull-left">
                             <p class="hanzi-origin">来源：<em>#[model.task_ele.source_display]]</em></p>
-                            <p class="hanzi-code">编码：<a href="#">#[model.task_ele.seq_id]]</a></p>
+                            <p class="hanzi-code">编码：<a target="_blank" :href="get_variant_url(model.task_ele.hanzi_pic_id)">#[model.task_ele.seq_id]]</a></p>
                         </div>
                     </div>
                 </div>
@@ -496,6 +496,9 @@ var part_input = new Vue({
           },(response)=>{
             console.log(response);
           });
+        },
+        get_variant_url: function(id) {
+            return "{% url 'm1.variant-search' %}" + "?q=" + id;
         },
     },
     created: function() {

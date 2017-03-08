@@ -253,7 +253,7 @@
             delimiters: ['#[', ']]'],
             el: '#msg-bar',
             data: {
-                header: "{% trans 'Alert!' %}",
+                header: '',
                 is_success: true,
                 content: '',
                 showup: false,
@@ -275,9 +275,11 @@
                     var m = msg;
                     if (success) {
                         this.content = m.detail;
+                        this.header = "{% trans 'Nice!' %}"
                         this.is_success = true;
                     } else {
                         this.content = m.detail;
+                        this.header = "{% trans 'Unlucky...' %}"
                         this.is_success = false;
                     }
                     this.showup = true;
