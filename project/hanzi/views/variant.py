@@ -86,7 +86,6 @@ def ajax_variant_search(request):
 
     hanzi_codes = re.sub(r";+", r";", hanzi_codes).strip(';')
     ret['hanzi_codes'] = list(set(hanzi_codes.split(';')))
-    
     if( len(ret[SOURCE_ENUM['taiwan']])==0 and
         len(ret[SOURCE_ENUM['korean']])==0 and
         len(ret[SOURCE_ENUM['hanyu']])==0 and
