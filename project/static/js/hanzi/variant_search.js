@@ -73,6 +73,7 @@ function render_variant_result(res) {
             }
             // 异体字
             char += '<div class="hanzi-variants">';
+            if (hanzi_set[j].variants === undefined) continue;
             var variants = hanzi_set[j].variants;
             for (var k = 0; k < variants.length; k++) {
                 if (variants[k].hanzi_char != '') {
@@ -103,6 +104,7 @@ function render_variant_result(res) {
             }
             // 异体字
             char += '<div class="hanzi-variants">';
+            if (hanzi_set[j].variants === undefined) continue;
             var variants = hanzi_set[j].variants;
             for (var k = 0; k < variants.length; k++) {
                 if (variants[k].hanzi_char != '') {
