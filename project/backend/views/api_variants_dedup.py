@@ -89,7 +89,7 @@ def update_tasks_status(variants_dedup):
     draft = task_dict[getenum_business_stage('init')]
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
-    origin_task = draftC01053
+    origin_task = draft
     if draft.task_status == getenum_task_status("ongoing"):
         draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
