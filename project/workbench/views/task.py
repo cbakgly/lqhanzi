@@ -22,8 +22,8 @@ def task_split(request, *args, **kwargs):
 
 @login_required
 def task_input(request, *args, **kwargs):
-    if not has_business_type_perm(request.user, 'input'):
-        return render(request, '401.html')
+    #if not has_business_type_perm(request.user, 'input'):
+        #return render(request, '401.html')
 
     if 'pk' in kwargs.keys():
         pk = kwargs['pk']
