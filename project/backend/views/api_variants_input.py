@@ -15,7 +15,7 @@ from ..models import VariantsInput, InputPage
 from ..filters import NumberInFilter
 from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type, getenum_source
 from task_func import assign_task
-from ..utils import get_pic_url_by_source_pic_name
+from ..utils import get_pic_url_by_source_pic_name, get_input_page_path
 from ..auth import IsBusinessMember
 
 
@@ -370,11 +370,29 @@ class InputPageViewSet(viewsets.ModelViewSet):
         return Response({"next_page": next_page.page_num})
 
     @detail_route(methods=["GET"])
-    def last_page(self, request, *args, **kwargs):
+    def last_img(self, request, *args, **kwargs):
         if 'pk' in kwargs.keys():
             pk = kwargs['pk']
         else:
             pk = request.GET['pk']
-        last_page = list(InputPage.objects.filter(page_num__lt=pk).order_by('page_num'))[-1]
+        page_num = int(pk) - 1
+        if page_num:
+            path = get_input_page_path(page_num)
+        else:
+            path = ""
 
-        return Response({"last_page": last_page.page_num})
+        return Response({"last_img": path})
+
+    @detail_route(methods=["GET"])
+    def next_img(self, request, *args, **kwargs):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        page_num = int(pk) + 1
+        if page_num:
+            path = get_input_page_path(page_num)
+        else:
+            path = ""
+
+        return Response({"next_img": path})

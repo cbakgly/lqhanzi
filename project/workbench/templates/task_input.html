@@ -9,26 +9,30 @@
     </div>
     <div class="row">
         <!-- /.box-header -->
-        <div class="col-md-7">
+        <div id="page_img" class="col-md-7">
             <div class="box box-blue">
                 <!-- /.box-header -->
                 <div class="box-header with-border">
                     <h3 class="box-title box-title-nobor"></h3>
                     <div class="pull-right box-tools">
                         <!--<a id="prev" class="btn btn-default btn-sm"><i class="fa fa-bars"></i></a>-->
-                        <button id="prev" class="btn btn-default btn-sm"><i class="icon-left"></i></button>
-                        <div class="btn-group">
-                            <button id="zoomIn" class="btn btn-default btn-sm"><i class="icon-zomIn"></i></button>
+                        <button id="prev" class="btn btn-default btn-sm" @click="last_img"><i class="icon-left"></i>
+                        </button>
+                        <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" />
+                        <!--<div class="btn-group">
+                            <button id="zoomIn" class="btn btn-default btn-sm" ><i
+                                    class="icon-zomIn"></i></button>
                             <button id="zoomOut" class="btn btn-default btn-sm"><i class="icon-zoomOut"></i></button>
-                        </div>
-                        <button id="next" class="btn btn-default btn-sm"><i class="icon-right"></i></button>
+                        </div>-->
+                        <button id="next" class="btn btn-default btn-sm" @click="next_img"><i class="icon-right"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" id="box-input-img">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <div class="item active">
-                            <div class="imgContainer"><img class="imageFullScreen" src="{{ page_path }} "/>
+                            <div class='zoom' id='zoom-page-image'><img class="imageFullScreen" :src="path"/>
                             </div>
                         </div>
                     </div>
@@ -80,24 +84,24 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="checkback">
-                    <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>字头</th>
-                                    <th>类型</th>
-                                    <th>通行字</th>
-                                    <th>备注</th>
-                                    <!--<th>存疑</th>-->
-                                </tr>
-                                </thead>
-                            </table>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>字头</th>
+                                <th>类型</th>
+                                <th>通行字</th>
+                                <th>备注</th>
+                                <!--<th>存疑</th>-->
+                            </tr>
+                            </thead>
+                        </table>
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
                                     pic_id="{{ input_char.hanzi_pic_path_review }}"
                                     char="{{ input_char.hanzi_char_review }}"
-                                    std_hanzi="{{ input_char.std_hanzi_review}}"
+                                    std_hanzi="{{ input_char.std_hanzi_review }}"
                                     notes="{{ input_char.notes_review }}"
                                     input_type="{{ input_char.variant_type_review }}"
                                     stage="review"
@@ -106,24 +110,24 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="checkup">
-                    <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>字头</th>
-                                    <th>类型</th>
-                                    <th>通行字</th>
-                                    <th>备注</th>
-                                    <!--<th>存疑</th>-->
-                                </tr>
-                                </thead>
-                            </table>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>字头</th>
+                                <th>类型</th>
+                                <th>通行字</th>
+                                <th>备注</th>
+                                <!--<th>存疑</th>-->
+                            </tr>
+                            </thead>
+                        </table>
                         {% for input_char in inputs %}
                             <input_var
                                     id="{{ input_char.id }}"
                                     pic_id="{{ input_char.hanzi_pic_path_final }}"
                                     char="{{ input_char.hanzi_char_final }}"
-                                    std_hanzi="{{ input_char.std_hanzi_final}}"
+                                    std_hanzi="{{ input_char.std_hanzi_final }}"
                                     notes="{{ input_char.notes_final }}"
                                     input_type="{{ input_char.variant_type_final }}"
                                     stage="final"
@@ -140,6 +144,11 @@
             <!-- /.nav-tabs-custom -->
         </div>
     </div>
+    <script src='/static/js/jquery.zoom.min.js' type="text/javascript"></script>
+    <script src='/static/js/jquery.colorbox-min.js' type="text/javascript"></script>
+    <script src='/static/js/jquery.colorbox-zh-CN.js' type="text/javascript"></script>
+    <script src='/static/js/autosize.min.js' type="text/javascript"></script>
+
     <script type="text/javascript">
 
         Vue.component('input_var', {
@@ -181,9 +190,9 @@
                 edit: function (e) {
                     element = e.target;
                     element.removeAttribute("readonly");
-                    element.style.backgroundColor="white";
+                    element.style.backgroundColor = "white";
                 },
-                save_draft:function(){
+                save_draft: function () {
                     $.ajax({
                         url: "/api/v1/inputs/" + this.id + "/submit_single_input/",
                         method: 'PATCH',
@@ -196,10 +205,10 @@
                         }
                     })
                 },
-                leave: function(e){
+                leave: function (e) {
                     element = e.target;
                     element.setAttribute("readonly", true);
-                    element.style.backgroundColor="#EDEDED";
+                    element.style.backgroundColor = "#EDEDED";
                     this.save_draft();
                 }
 
@@ -217,14 +226,13 @@
             data: {
                 page_num: {{ inputpage.page_num }}
             },
-            methods:{
-                submit_and_next:function(){
+            methods: {
+                submit_and_next: function () {
                     $.ajax({
                         url: "/api/v1/inputpage/" + this.page_num + "/submit_and_next/",
                         method: 'GET',
                         dataType: 'json',
-                        data: {
-                        },
+                        data: {},
                         success: function (response) {
                             window.location.reload();
                         },
@@ -233,6 +241,84 @@
                         }
                     })
                 }
+            }
+        });
+        var page_img = new Vue({
+            delimiters: ["#[", "]]"],
+            el: '#page_img',
+            data: {
+                path: "",
+                page_num: {{ inputpage.page_num }},
+                magnify: 0.5
+            },
+            watch: {
+                path: function () {
+                    $('#zoom-page-image').zoom({
+                        url: this.path,
+                        callback: function () {
+                            $(this).colorbox({href: this.src});
+                        },
+                        magnify: this.magnify
+                    });
+                },
+                magnify: function () {
+                    $('#zoom-page-image').zoom({
+                        url: this.path,
+                        callback: function () {
+                            $(this).colorbox({href: this.src});
+                        },
+                        magnify: this.magnify
+                    });
+                }
+            },
+            methods: {
+                next_img: function () {
+                    $.ajax({
+                        url: "/api/v1/inputpage/" + this.page_num + "/next_img/",
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {},
+                        success: function (response) {
+                            path = response['next_img'];
+                            if (path == "") {
+                                alert("The last Page！");
+                            }
+                            else {
+                                page_num = page_img.page_num
+                                page_img.path = path;
+                                page_img.page_num = page_num + 1
+                            }
+                        },
+                        error: function (xhr, status, err) {
+                            console.log(err);
+                        }
+                    });
+                },
+                last_img: function () {
+                    $.ajax({
+                        url: "/api/v1/inputpage/" + this.page_num + "/last_img/",
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {},
+                        success: function (response) {
+                            path = response['last_img'];
+                            if (path == "") {
+                                alert("The first Page！");
+                            }
+                            else {
+                                page_num = page_img.page_num
+                                page_img.path = path;
+                                page_img.page_num = page_num - 1
+                            }
+                        },
+                        error: function (xhr, status, err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            },
+            created: function () {
+                this.path = "{{ page_path }}"
             }
         });
     </script>
