@@ -133,7 +133,7 @@ class InterDictDedupViewSet(viewsets.ModelViewSet):
         variants_dedup = self.get_object()
         serializer = InterDictDedupSerializer(data=request.data)
         task_pacakge_id = serializer.initial_data['task_package_id']
-        business_stage = serializer.initial_data['business_stage']
+        business_stage = int(serializer.initial_data['business_stage'])
         if serializer.is_valid():
             tasks = list(variants_dedup.task.filter(business_stage=business_stage))
             if not tasks:
