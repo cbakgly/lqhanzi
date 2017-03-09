@@ -181,7 +181,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'lqhanzi',
         'OPTIONS': {
-            'MAX_ENTRIES': 500
+            'MAX_ENTRIES': 100
         },
     },
 }
