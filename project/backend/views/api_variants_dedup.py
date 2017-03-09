@@ -24,7 +24,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
         model = InterDictDedup
         fields = "__all__"
 
-    @timeout_cache(-1)
+    @timeout_cache(5*60)
     def get_tw_char_seq_id(self, char):
         if char is None or char == '':
             return ''
