@@ -30,7 +30,6 @@ urlpatterns = [
     url(r'^', include('hanzi.urls')),
     url(r'^workbench/', include('workbench.urls')),
     url(r'^sysadmin/', include('sysadmin.urls')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url=STATIC_URL + 'img/favicon.ico', permanent=True)),
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', obtain_jwt_token),
@@ -45,4 +44,7 @@ if DEBUG:
     import debug_toolbar
     from django.conf.urls.static import static
 
-    urlpatterns += [url(r'^__debug__/', include(debug_toolbar.urls)), ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+        url(r'^favicon\.ico$', RedirectView.as_view(url=STATIC_URL + 'img/favicon.ico', permanent=True)),
+    ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
