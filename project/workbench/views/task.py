@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES, InputPage, KoreanDupCharacters
@@ -7,9 +8,7 @@ from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
 from backend.views.api_variants_input import VariantsInputSerializer
 from backend.utils import has_business_type_perm, get_input_page_path
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
 
 @login_required
 def task_split(request, *args, **kwargs):
