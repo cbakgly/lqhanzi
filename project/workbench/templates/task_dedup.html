@@ -179,7 +179,7 @@
                         dataType: 'json',
                         data: {},
                         success: function (response) {
-                            alert(response);
+                            msg_bar.show(true, {'detail': response});
                         },
                         error: function (xhr, status, err) {
                             console.log(err);
@@ -193,7 +193,7 @@
                         dataType: 'json',
                         data: {},
                         success: function (response) {
-                            alert(response);
+                            msg_bar.show(true, {'detail': response});
                             window.location.reload();
                         },
                         error: function (xhr, status, err) {
