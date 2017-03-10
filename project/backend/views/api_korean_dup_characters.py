@@ -115,7 +115,7 @@ class KoreanTaiwanDupCharactersViewSet(viewsets.ModelViewSet):
         variants_dedup = self.get_object()
         origin_task = update_tasks_status(variants_dedup)
         if origin_task:
-            return Response(_("Succeess！"), status=status.HTTP_200_OK)
+            return Response(_("Success!"), status=status.HTTP_200_OK)
         else:
             return Response(_("Failed!"), status=status.HTTP_400_BAD_REQUEST)
 
