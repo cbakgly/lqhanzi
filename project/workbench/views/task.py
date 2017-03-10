@@ -7,7 +7,9 @@ from backend.views.api_hanzi_set import HanziSetDedupSerializer
 from backend.views.api_variants_dedup import InterDictDedupSerializer
 from backend.views.api_variants_input import VariantsInputSerializer
 from backend.utils import has_business_type_perm, get_input_page_path
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 @login_required
 def task_split(request, *args, **kwargs):
