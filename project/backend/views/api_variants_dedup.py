@@ -20,11 +20,12 @@ from ..auth import IsBusinessMember
 
 
 class InterDictDedupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = InterDictDedup
         fields = "__all__"
 
-    @timeout_cache(5*60)
+    @timeout_cache(5 * 60)
     def get_tw_char_seq_id(self, char):
         if char is None or char == '':
             return ''
@@ -70,6 +71,7 @@ class InterDictDedupSerializer(serializers.ModelSerializer):
 
 
 class InterDictDedupFilter(django_filters.FilterSet):
+
     """
     异体字拆字过滤器
     """
