@@ -62,7 +62,13 @@ def ajax_stroke_search(request):
             structure = m.group(1)
             query_list.append(Q(structure__contains=structure))
         if m.group(2):  # 部件序列
-            parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", m.group(2))
+
+            s = m.group(2)
+            l = list(s)
+            l.sort()
+            s = "".join(l)
+            parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", s)
+            # parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", m.group(2))
             query_list.append(Q(stroke_serial__regex=parts))
         if m.group(3):  # 笔画
             parts_strokes = 0
@@ -143,19 +149,32 @@ def __get_parts_strokes(parts):
     return stroke_num
 
 
+# def __format_ids(ids):
+#     """
+#     格式化IDS，在连续的汉字之间加上.*以便进一步正则查询
+#     """
+#     # 定义汉字的unicode范围
+#     hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
+#     # hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff" # for linux
+
+#     pattern = re.compile(ur"^[" + hanzi_range + ur"]$")
+#     ret = u''
+#     for i in range(len(ids) - 1):
+#         ret += ids[i]
+#         if pattern.match(ids[i]) and pattern.match(ids[i + 1]):  # 连续汉字
+#             ret += '.*'
+#     return ret + ids[len(ids) - 1]
+
+
+#wxf modified
 def __format_ids(ids):
     """
     格式化IDS，在连续的汉字之间加上.*以便进一步正则查询
     """
-    # 定义汉字的unicode范围
-    hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
-    # hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff" # for linux
-
-    pattern = re.compile(ur"^[" + hanzi_range + ur"]$")
     ret = u''
     for i in range(len(ids) - 1):
         ret += ids[i]
-        if pattern.match(ids[i]) and pattern.match(ids[i + 1]):  # 连续汉字
+        if ids[i] and ids[i+1]:  # 连续汉字
             ret += '.*'
     return ret + ids[len(ids) - 1]
 
