@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from backend.models import HanziSet, InterDictDedup, Tasks, VariantsInput, INPUT_VARIANT_TYPE_CHOICES, InputPage, KoreanDupCharacters
