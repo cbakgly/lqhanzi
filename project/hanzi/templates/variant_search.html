@@ -8,7 +8,20 @@
   <title>异体字检索</title>
 
   {% load static %}
-
+  <style type="text/css">
+    @font-face {
+      font-family: "lqhanzi";
+      src: url("{{lqhanzi_font_path}}");
+    }
+    @font-face {
+      font-family: "KaiXinSong";
+      src: url("{{kaixinsong_font_path}}");
+    }
+    @font-face {
+      font-family: "Tripitaka Unicode";
+      src: url("{{tripitaka_font_path}}");
+    }
+  </style>
   <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">

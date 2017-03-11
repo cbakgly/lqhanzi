@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
 import json
-from backend.utils import get_today_credits, get_lqhanzi_font_path, get_kaixinsong_font_path
+from backend.utils import get_today_credits, get_lqhanzi_font_path, get_kaixinsong_font_path, get_tripitaka_unicode_font_path
 from backend.enums import TASK_PACKAGE_STATUS_ENUM, TASK_STATUS_ENUM, BUSINESS_TYPE_ENUM, BUSINESS_STAGE_ENUM
 from backend.models import BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES, INPUT_VARIANT_TYPE_CHOICES
 
@@ -28,4 +28,5 @@ def lqhanzi_font(request):
     return {
         'lqhanzi_font_path': get_lqhanzi_font_path(),
         'kaixinsong_font_path': get_kaixinsong_font_path(),
+        'tripitaka_font_path': get_tripitaka_unicode_font_path(),
     }
