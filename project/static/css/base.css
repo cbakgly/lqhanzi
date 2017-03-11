@@ -48,7 +48,7 @@ table {
 }
 
 body {
-    font-family: Arial, Helvetica, "宋体", KaiXinSong, sans-serif, lqhanzi;
+    font-family: Arial, Helvetica, "宋体", KaiXinSong, sans-serif, lqhanzi, "Tripitaka Unicode";
     font-size: 12px;
     font-weight: 400;
     overflow-x: hidden;
