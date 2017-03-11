@@ -1121,6 +1121,7 @@
     margin: 15px 0 15px 0;
     margin: 15px 0 15px 0;
     position: relative;
+    font-family: 'myFont', 'lqhanzi', 'KaiXinSong', 'Tripitaka Unicode', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     /*padding-bottom: 10px;*/
 }
 
@@ -1404,6 +1405,7 @@
 .hanzi {
     position: relative;
     top: -40px;
+    font-family: 'myFont', 'lqhanzi', 'KaiXinSong', 'Tripitaka Unicode', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
 /*wxf modified*/
