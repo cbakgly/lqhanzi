@@ -22,7 +22,7 @@ jQuery.CateNav=function(elem1,elem2){
             $(this).parent('li').addClass('active');
             currObj=$("[name='"+$(this).attr('href').replace(/#/,'')+"']");
             offsetTop=currObj.offset().top;
-            console.log(currObj.offset().top);  //
+            //console.log(currObj.offset().top);  //
             $('html,body').animate({
                 scrollTop:offsetTop
             },600,'swing');
@@ -37,7 +37,7 @@ jQuery.CateNav=function(elem1,elem2){
                 currObj=$("[name='"+$(this).attr('href').replace(/#/,'')+"']");
                 //console.log(currObj); console.log(currObj.offset());
                 offsetTop=currObj.offset().top;
-                console.log("windowTop="+windowTop);
+                //console.log("windowTop="+windowTop);
                 if(windowTop>=offsetTop){
                     $(elem2+' li').removeClass('active');
                     $(this).parent('li').addClass('active');
