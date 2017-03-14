@@ -37,7 +37,7 @@ innodb_large_prefix=on
 > FLUSH PRIVILEGES;
 
 # import data
-> curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/data/lqhanzi-sql-20170206.zip
+> curl -LO https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/data/lqhanzi-sql.2017.03.14.tar.bz
 # 导入略
 
 # 下载代码
