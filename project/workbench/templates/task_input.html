@@ -18,7 +18,7 @@
                         <!--<a id="prev" class="btn btn-default btn-sm"><i class="fa fa-bars"></i></a>-->
                         <button id="prev" class="btn btn-default btn-sm" @click="last_img"><i class="icon-left"></i>
                         </button>
-                        <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" />
+                        <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify"/>
                         <!--<div class="btn-group">
                             <button id="zoomIn" class="btn btn-default btn-sm" ><i
                                     class="icon-zomIn"></i></button>
@@ -235,6 +235,8 @@
                         data: {},
                         success: function (response) {
                             alert(response);
+                            window.location.reload();
+
                         },
                         error: function (xhr, status, err) {
                             console.log(err);
