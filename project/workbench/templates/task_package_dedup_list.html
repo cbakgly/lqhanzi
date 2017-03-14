@@ -30,7 +30,7 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div class="fonts-content">
-            <a v-for="item in models" class="a1" :href="detail_url.replace(0, item.id)" target="_blank"><img :src="item.task_ele.std_hanzi_pic_path"></a>
+            <a v-for="item in models" class="a1" :href="detail_url.replace(0, item.object_id)" target="_blank"><img :src="item.task_ele.std_hanzi_pic_path"></a>
           </div>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
@@ -61,7 +61,7 @@
   function hanzi_search(url, cond) {
     console.log(cond);
     $.ajax({
-      url: url + '?task_package=' + package_id + '&task_status=' + status_complete,
+      url: url + '?task_package=' + package_id + '&task_status=' + status_complete +"&business_type=8",
       type: 'GET',
       data: cond,
       success: function(data) {
@@ -103,7 +103,7 @@
     data: {
       models: [],
       paging: {},
-      detail_url: "{% url 'm2.task-dedup' %}" + "?pk=0",
+      detail_url: "{% url 'm2.dedup-detail' %}" + "?pk=0",
    },
     methods: {
       goto_page: function(url) {
