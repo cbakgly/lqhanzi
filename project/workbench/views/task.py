@@ -101,11 +101,11 @@ def task_dedup(request, *args, **kwargs):
         return render(request, '401.html')
 
     pk = int(request.GET.get("pk", 0))
-    task = list(Tasks.objects.filter(task_package_id=pk, task_status=getenum_task_status("ongoing")))
+    task = list(Tasks.objects.filter(pk=pk, task_status=getenum_task_status("ongoing")))
     if task:
         task = task[0]
     else:
-        task = list(Tasks.objects.filter(task_package_id=pk, business_type=getenum_business_type('dedup')).order_by('u_t'))[-1]
+        task = list(Tasks.objects.filter(pk=pk, business_type=getenum_business_type('dedup')).order_by('u_t'))[-1]
     dedup_character = task.content_object
 
     korean_list = InterDictDedupSerializer(InterDictDedup.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('korean')), many=True).data
