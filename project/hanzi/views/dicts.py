@@ -282,12 +282,13 @@ def dicts_search(request):
     page_num = int(request.GET.get('page_num', 1))
 
     query_list = [Q(radical__exact=radical), Q(source__exact=source)]
-    radical_stroke = 0
+    # radical_stroke = 0
+    radical_stroke = int(HanziRadicals.objects.get(radical=radical).strokes)
     if request.GET.get('left_stroke', False):
-        total_stroke = int(request.GET.get('left_stroke'))
+        left_stroke = int(request.GET.get('left_stroke'))
         try:
-            radical_stroke = int(HanziRadicals.objects.get(radical=radical).strokes)
-            total_stroke += radical_stroke
+            # radical_stroke = int(HanziRadicals.objects.get(radical=radical).strokes)
+            total_stroke = radical_stroke + left_stroke
             query_list.append(Q(max_strokes__gte=total_stroke))
             query_list.append(Q(min_strokes__lte=total_stroke))
         except Exception:
