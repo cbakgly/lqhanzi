@@ -16,10 +16,11 @@ from api_variants_dedup import InterDictDedupSerializer
 from api_variants_split import VariantsSplitSerializer
 from api_korean_dup_characters import KoreanDupCharactersSerializer
 from api_variants_korean_dedup import KoreanDedupSerializer
+from api_hanzi_set import HanziSetDedupSerializer
 from task_func import assign_task, reset_task, get_working_task
 from ..pagination import NumberPagination
-from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage, TaskPackages
-from ..enums import getenum_business_type, getenum_business_stage
+from ..models import Tasks, VariantsSplit, KoreanDedup, VariantsInput, KoreanDupCharacters, InputPage, TaskPackages, InterDictDedup, HanziSet
+from ..enums import getenum_business_type, getenum_business_stage, getenum_source
 from ..auth import IsBusinessMember
 from ..utils import has_business_type_perm
 
@@ -341,3 +342,43 @@ class TasksViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
+
+
+    @detail_route()
+    def task_dedup_inter(self, request, *args, **kwargs):
+        user = request.user
+        if not has_business_type_perm(request.user, 'dedup'):
+            return Response("!!!")
+
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        inter_dict = InterDictDedup.objects.get(pk=pk)
+        std_hanzi = inter_dict.std_hanzi
+        dedup_character = list(KoreanDupCharacters.objects.filter(korean_variant=std_hanzi))[0]
+
+        korean_list = InterDictDedupSerializer(InterDictDedup.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('korean')), many=True).data
+        korean_char = dedup_character.korean_variant
+
+        if dedup_character.relation is 3:
+            taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.unicode).filter(source=getenum_source('taiwan')), many=True).data
+            taiwan_char = dedup_character.unicode
+        else:
+            taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('taiwan')), many=True).data
+            taiwan_char = dedup_character.korean_variant
+
+        task = Tasks.objects.filter(user=user, object_id=dedup_character.id)
+        if task:
+            task = list(task)[0]
+
+            return Response({'korean_char': korean_char,
+                             'korean_list': korean_list,
+                             'taiwan_char': taiwan_char,
+                             'taiwan_list': taiwan_list,
+                             'task_package_id': task.task_package_id,
+                             'business_stage': task.business_stage,
+                             'korean_dedup_id': dedup_character.id
+                             })
+        else:
+            return Response(_("Inputdata Error!"), status=status.HTTP_400_BAD_REQUEST)

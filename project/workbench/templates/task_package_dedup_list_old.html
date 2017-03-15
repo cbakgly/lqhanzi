@@ -47,8 +47,9 @@
                         </ul>
                     </div>
                     <div class="box-body">
-                        <div v-for="item in models" class="fonts-content">
-                            <img :src="item.task_ele.std_hanzi_pic_path"  :id="item.object_id" style="float:left" @click="clicked">
+                        <div class="fonts-content">
+                            <a v-for="item in models" class="a1" :href="detail_url.replace(0, item.object_id)"
+                               target="_blank"><img :src="item.task_ele.std_hanzi_pic_path"></a>
                         </div>
                     </div><!-- /.box-body -->
 
@@ -58,7 +59,7 @@
         <!-- /.col -->
     </div>
 
-    <div class="row" id="row" style="display: none;">
+    <div class="row">
         <div class="col-xs-12">
             <div class="box box-widget">
                 <!-- /.box-header -->
@@ -66,53 +67,87 @@
                     <div align="center"><span class="draft_inter">初次</span><span class="review_inter">回查</span><span
                             class="final_inter">审查</span></div>
                 </div>
-                <div id='taskdedup' class="box-body" >
+                <div id='taskdedup' class="box-body">
                     <div class="dedup-container">
                         <div class="dedup dedup-left">
                             <div class="header-img">
                                 <div class="zi">
-                                    <div class="single-zi">#[ korean_char ] </div>
+                                    <div class="single-zi">{{ korean_char }} </div>
                                 </div>
                             </div>  <!--字头-->
-                            <ul v-for="korean_variant in korean_list" class="dedup-bd">
+                            <ul class="dedup-bd">
+                                {% for korean_variant in korean_list %}
                                     <li>
-                                        <div class="l pull-left">
+                                        <div v-on:click="clicked()"
+                                             char_id="{{ korean_variant.id }}"
+                                             pic="{{ korean_variant.hanzi_pic_path }}"
+                                             char="{{ korean_variant.hanzi_char }}"
+                                             class="l pull-left"
+                                             inter_code="
+                                                {% if business_stage == business_stage_enum.init %}
+                                                    {{ korean_variant.inter_dict_dup_hanzi_draft }}
+                                                {% elif business_stage == business_stage_enum.review %}
+                                                    {{ korean_variant.inter_dict_dup_hanzi_review }}
+                                                {% else %}
+                                                    {{ korean_variant.inter_dict_dup_hanzi_final }}
+                                                {% endif %}
+                                             "
+                                        >
                                             <p class="top">
-                                                <img v-if = 'korean_variant.hanzi_pic_path != ""' :src="korean_variant.hanzi_pic_path">
-                                                <span v-else>#[korean_variant.hanzi_char]</span>
+                                                {% if korean_variant.hanzi_pic_path != "" %}
+                                                    <img src= {{ korean_variant.hanzi_pic_path }}>
+                                                {% else %}
+                                                    {{ korean_variant.hanzi_char }}
+                                                {% endif %}
 
                                                 <div class="intercode">
-                                            <p class="draft_inter">
-                                                #[korean_variant.inter_dict_dup_hanzi_draft]
+                                            <p class="draft_inter"
+                                                    {% if business_stage == business_stage_enum.init %}
+                                               id="{{ korean_variant.id }}"
+                                                    {% endif %}>
+                                                {{ korean_variant.inter_dict_dup_hanzi_draft }}
                                             </p>
-                                            <p class="review_inter">
-                                               #[korean_variant.inter_dict_dup_hanzi_review ]
+                                            <p class="review_inter"
+                                                    {% if business_stage == business_stage_enum.review %}
+                                               id="{{ korean_variant.id }}"
+                                                    {% endif %}>
+                                                {{ korean_variant.inter_dict_dup_hanzi_review }}
                                             </p>
-                                            <p>
-                                               #[korean_variant.inter_dict_dup_hanzi_final]
+                                            <p class="final_inter"
+                                                    {% if business_stage == business_stage_enum.final %}
+                                               id="{{ korean_variant.id }}"
+                                                    {% endif %}>
+                                                {{ korean_variant.inter_dict_dup_hanzi_final }}
                                             </p>
 
                                         </div>
+                                    </div>
 
                                     </li>
+                                {% endfor %}
                         </ul>
                     </div>
                     <div class="dedup dedup-right">
                         <div class="header-img">
                             <div class="zi">
-                                <div class="single-zi">#[taiwan_char]</div>
+                                <div class="single-zi">{{ taiwan_char }} </div>
                             </div>
                         </div>
-                        <ul v-for="taiwan_variant in taiwan_list" class="dedup-bd">
+                        <ul class="dedup-bd">
+                            {% for taiwan_variant in taiwan_list %}
                                 <li>
                                     <div class="l pull-right">
                                         <p class="top">
-                                                <img v-if='taiwan_variant.hanzi_pic != ""' :src= "taiwan_variant.hanzi_pic">
-                                            <span v-else>#[taiwan_variant.hanzi_char]</span>
-                                        <p class="bottom">#[taiwan_variant.seq_id]</p>
+                                            {% if taiwan_variant.hanzi_pic != "" %}
+                                                <img src= {{ taiwan_variant.hanzi_pic }}>
+                                            {% else %}
+                                                {{ taiwan_variant.hanzi_char }}
+                                            {% endif %}</p>
+                                        <p class="bottom">{{ taiwan_variant.seq_id }}</p>
                                     </div>
 
                                 </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -191,6 +226,7 @@
                 },
                 clicked: function () {
                     clicked_el = event.currentTarget;
+                    taskdedup.path = detail_url;
                     bus.$emit('clicked', clicked_el)
                 }
             },
@@ -204,26 +240,18 @@
             delimiters: ["#[", "]"],
             el: '#taskdedup',
             data: {
-                    path:"",
-                    korean_char: "",
-                    korean_list: {},
-                    taiwan_char: "",
-                    taiwan_list: {},
-                    first:"block"
+                path:"",
+                result:{}
             },
             watch:{
                 path: function () {
                         $.ajax({
-                            url: this.path,
+                            url: path,
                             method: 'GET',
                             dataType: 'json',
                             data: {},
                             success: function (response) {
-                                document.getElementById("row").style.display = "block";
-                                taskdedup.korean_char = response['korean_char'];
-                                taskdedup.korean_list = response['korean_list'];
-                                taskdedup.taiwan_char = response['taiwan_char'];
-                                taskdedup.taiwan_list = response['taiwan_list'];
+                                result = response.data;
                             },
                             error: function (xhr, status, err) {
                                 console.log(err);
@@ -232,14 +260,7 @@
                 }
             },
             methods: {
-
-            },
-            created:function(){
-                bus.$on('clicked', function (clicked_el) {
-                   id = clicked_el.getAttribute('id');
-                   //taskdedup.path = "url 'tasks-task-dedup-inter' version="v1" pk=id %}";
-                   taskdedup.path = '/api/v1/tasks/'+id+'/task_dedup_inter/';
-                })
+                
             }
         });
     </script>
