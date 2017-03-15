@@ -128,15 +128,15 @@ def has_business_type_perm(user, type):
 
 
 def get_lqhanzi_font_path():
-    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/lqhanzi.ttf'
+    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/lqhanzi.woff'
 
 
 def get_kaixinsong_font_path():
-    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/KaiXinSong.ttf'
+    return 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/KaiXinSong.woff'
 
 
 def get_tripitaka_unicode_font_path():
-    return 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/TripitakaUNI.ttf'
+    return 'https://s3.cn-north-1.amazonaws.com.cn/lqhanzi-misc/fonts/TripitakaUNI.woff'
 
 
 def get_input_page_path(page_num):
