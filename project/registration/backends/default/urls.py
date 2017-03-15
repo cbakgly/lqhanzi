@@ -24,7 +24,7 @@ from django.views.generic.base import TemplateView
 
 from .views import ActivationView
 from .views import RegistrationView
-
+from ...forms import RegistrationFormUniqueEmail
 
 urlpatterns = [
     url(r'^activate/complete/$',
@@ -48,7 +48,7 @@ urlpatterns = [
 if getattr(settings, 'INCLUDE_REGISTER_URL', True):
     urlpatterns += [
         url(r'^register/$',
-            RegistrationView.as_view(),
+            RegistrationView.as_view(form_class=RegistrationFormUniqueEmail),
             name='registration_register'),
     ]
 
