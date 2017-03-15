@@ -135,7 +135,10 @@ def task_dedup_inter(request, *args, **kwargs):
     if not has_business_type_perm(request.user, 'dedup'):
         return render(request, '401.html')
 
-    pk = int(request.GET.get('pk'))
+    if 'pk' in kwargs.keys():
+        pk = kwargs['pk']
+    else:
+        pk = request.GET['pk']
     inter_dict = InterDictDedup.objects.get(pk=pk)
     std_hanzi = inter_dict.std_hanzi
     dedup_character = list(KoreanDupCharacters.objects.filter(korean_variant=std_hanzi))[0]
@@ -154,7 +157,7 @@ def task_dedup_inter(request, *args, **kwargs):
     if task:
         task = list(task)[0]
 
-        return render(request, 'task_dedup.html',
+        return render(request, 'task_dedup_inter.html',
                       {'korean_char': korean_char,
                        'korean_list': korean_list,
                        'taiwan_char': taiwan_char,
