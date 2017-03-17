@@ -347,8 +347,6 @@ class TasksViewSet(viewsets.ModelViewSet):
     @detail_route()
     def task_dedup_inter(self, request, *args, **kwargs):
         user = request.user
-        if not has_business_type_perm(request.user, 'dedup'):
-            return Response("!!!")
 
         if 'pk' in kwargs.keys():
             pk = kwargs['pk']
@@ -368,17 +366,8 @@ class TasksViewSet(viewsets.ModelViewSet):
             taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('taiwan')), many=True).data
             taiwan_char = dedup_character.korean_variant
 
-        task = Tasks.objects.filter(user=user, object_id=dedup_character.id)
-        if task:
-            task = list(task)[0]
 
-            return Response({'korean_char': korean_char,
-                             'korean_list': korean_list,
-                             'taiwan_char': taiwan_char,
-                             'taiwan_list': taiwan_list,
-                             'task_package_id': task.task_package_id,
-                             'business_stage': task.business_stage,
-                             'korean_dedup_id': dedup_character.id
-                             })
-        else:
-            return Response(_("Inputdata Error!"), status=status.HTTP_400_BAD_REQUEST)
+        return Response({'korean_char': korean_char,
+                         'korean_list': korean_list,
+                         'taiwan_char': taiwan_char,
+                         'taiwan_list': taiwan_list})
