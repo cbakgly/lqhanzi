@@ -370,6 +370,16 @@ class InputPageViewSet(viewsets.ModelViewSet):
         return Response({"next_page": next_page.page_num})
 
     @detail_route(methods=["GET"])
+    def last_page(self, request, *args, **kwargs):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        last_page = list(InputPage.objects.filter(page_num__lt=pk).order_by('page_num'))[-1]
+
+        return Response({"last_page": last_page.page_num})
+
+    @detail_route(methods=["GET"])
     def last_img(self, request, *args, **kwargs):
         if 'pk' in kwargs.keys():
             pk = kwargs['pk']
