@@ -136,7 +136,8 @@ class InterDictDedupAdmin(admin.ModelAdmin):
 
 
 class RewardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'reward_name', 'reward_quantity', 'need_credits',)
+    list_display = ('id', 'reward_name', 'reward_quantity', 'need_credits', 'image',)
+    readonly_fields = ('image',)
 
 
 class HanziPartsAdmin(admin.ModelAdmin):

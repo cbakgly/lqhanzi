@@ -9,6 +9,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
+from django.utils.safestring import mark_safe
 
 VARIANT_TYPE_CHOICES = ((0, u'纯正字'), (1, u'狭义异体字'), (2, u'广义且正字'), (3, u'广义异体字'), (4, u'狭义且正字'), (5, u'特定异体字'), (6, u'特定且正字'), (7, u'误刻误印'), (8, u'其他不入库类型'), (9, u'其他入库类型'))
 INPUT_VARIANT_TYPE_CHOICES = ((1, u'狭义异体字'), (2, u'简化字'), (3, u'类推简化字'), (4, u'讹字'), (5, u'古今字'), (6, '@'))
@@ -399,7 +400,7 @@ class InterDictDedup(models.Model):
 class Reward(models.Model):
     reward_name = models.CharField(u'奖品名称', max_length=64)
     reward_quantity = models.SmallIntegerField(u'奖品数量', default=1)
-    reward_pic = models.CharField(u'奖品图片', max_length=128)
+    reward_pic = models.ImageField(u'奖品图片', upload_to='reward_pic')
     need_credits = models.SmallIntegerField(u'所需积分')
 
     class Meta:
@@ -408,7 +409,13 @@ class Reward(models.Model):
         db_table = 'lq_reward'
 
     def __unicode__(self):
-        return self.reward_name + ':' + self.reward_quantity
+        return self.reward_name + ':' + str(self.reward_quantity)
+
+    def image(self):
+        if self.reward_pic.name:
+            return mark_safe(u'<img src="/media/reward_pic/%s" width="150" height="150" />' % self.reward_pic.name)
+        else:
+            return ''
 
 
 class CreditsRedeem(models.Model):

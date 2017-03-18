@@ -18,7 +18,7 @@ class RewardFilter(django_filters.FilterSet):
     """
     class Meta:
         model = Reward
-        fields = "__all__"
+        fields = ['reward_name', 'reward_quantity', 'need_credits']
 
 
 class RewardSerializer(serializers.ModelSerializer):
