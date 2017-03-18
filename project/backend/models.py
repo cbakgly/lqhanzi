@@ -413,7 +413,7 @@ class Reward(models.Model):
 
     def image(self):
         if self.reward_pic.name:
-            return mark_safe(u'<img src="/media/reward_pic/%s" width="150" height="150" />' % self.reward_pic.name)
+            return mark_safe(u'<img src="/media/%s" width="150" height="150" />' % self.reward_pic.name)
         else:
             return ''
 
