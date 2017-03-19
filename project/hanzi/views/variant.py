@@ -269,7 +269,10 @@ def get_zh_image_url(seq_id):
     """
     获取《汉语大字典》图片url
     """
-    return get_hanyu_dict_path() + '0' + seq_id.split('-')[0] + ".png"
+    if len(seq_id.split('-')[0])==3:
+        return get_hanyu_dict_path() + '0' + seq_id.split('-')[0] + ".png"
+    else:
+        return get_hanyu_dict_path() + seq_id.split('-')[0] + ".png"
 
 
 def get_dh_image_url(seq_id):
