@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from ..pagination import NumberPagination
-from ..models import VariantsInput, InputPage
+from ..models import VariantsInput, InputPage, TaskPackages
 from ..filters import NumberInFilter
 from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type, getenum_source
 from task_func import assign_task
@@ -330,7 +330,7 @@ class InputPageViewSet(viewsets.ModelViewSet):
         input_page = self.get_object()
 
         origin_task = update_status(input_page)
-        task_package = origin_task.task_package
+        task_package = TaskPackages.objects.get(pk=int(request.GET['task_package_id']))
         task_plan = task_package.size
         task_num = len(list(task_package.tasks.all()))
         if task_num < task_plan:
