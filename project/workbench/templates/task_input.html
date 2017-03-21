@@ -232,7 +232,9 @@
                         url: "/api/v1/inputpage/" + this.page_num + "/submit_and_next/",
                         method: 'GET',
                         dataType: 'json',
-                        data: {},
+                        data: {
+                            task_package_id:{{ task_package_id }}
+                        },
                         success: function (response) {
                             alert(response);
                             window.location.reload();

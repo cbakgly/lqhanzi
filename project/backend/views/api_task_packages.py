@@ -13,7 +13,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 
 from api_tasks import TasksSerializer
-from task_func import assign_task
+from task_func import assign_task, task_to_arrange
 from ..enums import getenum_task_package_status
 from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
@@ -45,18 +45,20 @@ class TaskPackagesSerializer(serializers.ModelSerializer):
         exist = TaskPackages.objects.filter(user_id=user_id).filter(business_type=biz_type).filter(status=getenum_task_package_status('ongoing'))
         if exist:
             raise ValidationError({"detail": _("Only one task package per type and stage can be created.")})
+        if task_to_arrange(biz_type, biz_stage):
+            due_days = validated_data['size'] / validated_data['daily_plan']
+            c_t = timezone.now()
+            due_date = c_t + timezone.timedelta(days=due_days)
+            validated_data['due_date'] = due_date
+            validated_data['c_t'] = c_t
+            task_package = TaskPackages.objects.create(**validated_data)
+            task_package.save()
 
-        due_days = validated_data['size'] / validated_data['daily_plan']
-        c_t = timezone.now()
-        due_date = c_t + timezone.timedelta(days=due_days)
-        validated_data['due_date'] = due_date
-        validated_data['c_t'] = c_t
-        task_package = TaskPackages.objects.create(**validated_data)
-        task_package.save()
-
-        # 分配第一个任务
-        assign_task(biz_type, biz_stage, task_package, validated_data['user'])
-        return task_package
+            # 分配第一个任务
+            assign_task(biz_type, biz_stage, task_package, validated_data['user'])
+            return task_package
+        else:
+            raise ValidationError({"detail": _("No more tasks, come back tomorrow!")})
 
     def update(self, instance, validated_data):
         for key in validated_data.keys():

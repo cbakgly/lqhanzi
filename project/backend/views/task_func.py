@@ -18,7 +18,7 @@ def convert_profile_to_dict(profile):
     return {"id": profile.id,
             getenum_business_type('split'): profile.last_split_id,
             getenum_business_type('dedup'): profile.last_dedup_id,
-            getenum_business_type('input'): profile.last_input_id
+            getenum_business_type('input_page'): profile.last_input_id
             }
 
 
@@ -179,6 +179,15 @@ def has_task(task_ele, business_stage):
     tasks = list(Tasks.objects.filter(object_id=task_ele.id, business_stage=business_stage))
     return tasks
 
+
+def task_to_arrange(business_type, business_stage):
+    task = Tasks.objects.filter(business_type=business_type) \
+        .filter(business_stage=business_stage) \
+        .filter(task_status=getenum_task_status("to_be_arranged")).first()
+    if task:
+        return True
+    else:
+        return False
 
 def get_stage(task_package_id):
     return list(TaskPackages.objects.filter(id=task_package_id))[0].business_stage
