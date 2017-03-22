@@ -11,6 +11,7 @@ from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from api_tasks import TasksSerializer
 from task_func import assign_task, task_to_arrange
@@ -19,7 +20,7 @@ from backend.filters import NumberInFilter
 from ..models import TaskPackages, Tasks, BUSINESS_STAGE_CHOICES, BUSINESS_TYPE_CHOICES
 from ..pagination import NumberPagination
 from ..auth import IsBusinessMember
-
+from rest_framework.decorators import detail_route
 
 # Task Packages management
 class TaskPackagesSerializer(serializers.ModelSerializer):
@@ -111,3 +112,18 @@ class TaskPackagesViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return TaskPackages.objects.filter(user_id=self.request.user.id)
+
+    @detail_route(methods=['GET'])
+    def switch(self, request, *args, **kwargs):
+        if 'pk' in kwargs.keys():
+            pk = kwargs['pk']
+        else:
+            pk = request.GET['pk']
+        instance = TaskPackages.objects.get(pk=pk)
+        if instance.status == 1:
+            instance.status = 0
+        else:
+            instance.status = 1
+        instance.save()
+        d = TaskPackagesSerializer(instance)
+        return Response(d.data)

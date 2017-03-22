@@ -66,7 +66,7 @@
                                 <td>{{ item.due_date }}</td>
                                 <td>
                                     {% if item.status == task_package_status_enum.ongoing %}
-                                        {% if item.business_type == business_type_enum.input %}
+                                        {% if item.business_type == business_type_enum.input_page %}
                                             <a href="{% url 'm2.task-input' %}?pk={{item.id}}">继续任务</a>&nbsp;&nbsp;
                                             <a href="{% url 'm2.task-package-input-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
                                         {% elif item.business_type == business_type_enum.split %}
@@ -77,9 +77,10 @@
                                             <a href="{% url 'm2.task-package-dedup-list' package_id=item.id %}">查看</a>&nbsp;&nbsp;
                                         {% endif %}
                                         <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}"
-                                           role="button">修改每日计划</a></td>
+                                           role="button">修改每日计划</a>
+                                        <!-- <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a>-->
                                     {% else %}
-                                        {% if item.business_type == business_type_enum.input %}
+                                        {% if item.business_type == business_type_enum.input_page %}
                                             <a href="{% url 'm2.task-package-split-list' pk=item.id %}">查看</a>
                                         {% elif item.business_type == business_type_enum.split %}
                                             &nbsp;<a href="{% url 'm2.task-package-input-list' pk=item.id %}">查看</a>
@@ -87,6 +88,7 @@
                                             <a href="{% url 'm2.task-package-dedup-list' pk=item.id %}">查看</a>&nbsp;
                                         {% endif %}
                                     {% endif %}
+                           <!-- <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a>-->
                             </tr>
                         {% endfor %}
                         </tbody>

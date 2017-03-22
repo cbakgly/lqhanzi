@@ -3,8 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 
 from ..models import Tasks, TaskPackages, VariantsInput, UserTaskProfile
-from ..enums import getenum_task_status, getenum_business_type, getenum_business_stage
-
+from ..enums import getenum_task_status, getenum_business_type, getenum_business_stage, getenum_task_package_status
 
 def get_user_task_profile(user):
     profile = UserTaskProfile.objects.filter(user=user).first()
@@ -191,3 +190,15 @@ def task_to_arrange(business_type, business_stage):
 
 def get_stage(task_package_id):
     return list(TaskPackages.objects.filter(id=task_package_id))[0].business_stage
+
+def update_task_package(task):
+    task_package = task.task_package
+    task_plan = task_package.size
+    task_num = len(list(task_package.tasks.all()))
+    if task_num < task_plan:
+        return True
+    else:
+        status = getenum_task_package_status('completed')
+        task_package.status = status
+        task_package.save()
+        return False

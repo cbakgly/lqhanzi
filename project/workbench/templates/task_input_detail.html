@@ -1,5 +1,5 @@
 {% extends "m2_base.html" %}
-
+#TODO 修改为任务查看专用页面
 {% block content %}
     <div class="content-header">
         <ol class="breadcrumb">
@@ -236,7 +236,18 @@
                             task_package_id:{{ task_package_id }}
                         },
                         success: function (response) {
+                            if(response.statusCode==406){
+
+                                alert(response.statusCode);
+                            }
+                            else if(response.statusCode=100){
+                                alert(response);
+                                //window.location.href="{% url 'm2.new-task-package' %}"
                                 window.location.reload();
+                            }
+                            else {
+                                window.location.reload();
+                            }
                         },
                         error: function (xhr, status, err) {
                             console.log(err);

@@ -14,7 +14,7 @@ from ..pagination import NumberPagination
 from ..models import VariantsInput, InputPage, TaskPackages
 from ..filters import NumberInFilter
 from ..enums import getenum_task_status, getenum_business_stage, getenum_business_type, getenum_source
-from task_func import assign_task
+from task_func import assign_task, update_task_package
 from ..utils import get_pic_url_by_source_pic_name, get_input_page_path
 from ..auth import IsBusinessMember
 
@@ -280,7 +280,7 @@ class InputPageFilter(django_filters.FilterSet):
         fields = "__all__"
 
 
-def update_status(inputpage):
+def update_status(inputpage, b_s):
     tasks = list(inputpage.task.all())
     task_dict = {}
     for t in tasks:
@@ -289,14 +289,14 @@ def update_status(inputpage):
     review = task_dict[getenum_business_stage('review')]
     final = task_dict[getenum_business_stage('final')]
     origin_task = draft
-    if draft.task_status == getenum_task_status("ongoing"):
+    if b_s == getenum_business_stage('init'):
         draft.task_status = getenum_task_status("completed")
         draft.completed_at = timezone.now()
         review.task_status = getenum_task_status("to_be_arranged")
         inputpage.save()
         draft.save()
         review.save()
-    elif review.task_status == getenum_task_status("ongoing"):
+    elif b_s == getenum_business_stage('review'):
         review.task_status = getenum_task_status("completed")
         review.completed_at = timezone.now()
         final.task_status = getenum_task_status("to_be_arranged")
@@ -304,7 +304,7 @@ def update_status(inputpage):
         review.save()
         final.save()
         origin_task = review
-    elif final.task_status == getenum_task_status("ongoing"):
+    elif b_s == getenum_business_stage('final'):
         final.task_status = getenum_task_status("completed")
         final.completed_at = timezone.now()
         inputpage.save()
@@ -328,18 +328,15 @@ class InputPageViewSet(viewsets.ModelViewSet):
     @detail_route(methods=["PUT", "GET", "PATCH"])
     def submit_and_next(self, request, *args, **kwargs):
         input_page = self.get_object()
-
-        origin_task = update_status(input_page)
         task_package = TaskPackages.objects.get(pk=int(request.GET['task_package_id']))
-        task_plan = task_package.size
-        task_num = len(list(task_package.tasks.all()))
-        if task_num < task_plan:
-            business_stage = origin_task.business_stage
+        business_stage = task_package.business_stage
+        origin_task = update_status(input_page, business_stage)
+        if update_task_package(origin_task):
             user = origin_task.user
             new_task = assign_task(getenum_business_type("input_page"), business_stage, task_package, user)
             if new_task:
                 id = new_task.object_id
-                return Response(id)
+                return Response(id, status=status.HTTP_200_OK)
             else:
                 return Response(_("No more task today, have a try tommorrow!"), status=status.HTTP_204_NO_CONTENT)
         else:
