@@ -78,7 +78,7 @@
                                         {% endif %}
                                         <a class="show-layer" data-show-layer="hw-layer" data-row-id="{{ item.id }}"
                                            role="button">修改每日计划</a>
-                                        <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a></td>
+                                        <!-- <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a>-->
                                     {% else %}
                                         {% if item.business_type == business_type_enum.input_page %}
                                             <a href="{% url 'm2.task-package-split-list' pk=item.id %}">查看</a>
@@ -88,7 +88,7 @@
                                             <a href="{% url 'm2.task-package-dedup-list' pk=item.id %}">查看</a>&nbsp;
                                         {% endif %}
                                     {% endif %}
-                            <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a>
+                           <!-- <a href={% url 'task-packages-switch' version='v1' pk=item.id %}>取消</a>-->
                             </tr>
                         {% endfor %}
                         </tbody>
