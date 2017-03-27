@@ -107,9 +107,11 @@
                                 <li>
                                     <div class="l pull-right">
                                         <p class="top">
-                                                <img v-if='taiwan_variant.hanzi_pic != ""' :src= "taiwan_variant.hanzi_pic">
+                                                <img v-if='taiwan_variant.hanzi_char == ""' :src= "taiwan_variant.hanzi_pic">
+                                        <p v-else>#[taiwan_variant.hanzi_char]</p>
                                             <span v-else>#[taiwan_variant.hanzi_char]</span>
-                                        <p class="bottom">#[taiwan_variant.seq_id]</p>
+                                        <p class="bottom" v-if="taiwan_variant.hanzi_pic_id==''">#[taiwan_variant.seq_id]</p>
+                                        <p class="bottom" v-else>#[taiwan_variant.hanzi_pic_id]</p>
                                     </div>
 
                                 </li>

@@ -137,19 +137,6 @@ def task_dedup_inter(request, *args, **kwargs):
         pk = kwargs['pk']
     else:
         pk = request.GET['pk']
-    inter_dict = InterDictDedup.objects.get(pk=pk)
-    std_hanzi = inter_dict.std_hanzi
-    dedup_character = list(KoreanDupCharacters.objects.filter(korean_variant=std_hanzi))[0]
-
-    korean_list = InterDictDedupSerializer(InterDictDedup.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('korean')), many=True).data
-    korean_char = dedup_character.korean_variant
-
-    if dedup_character.relation is 3:
-        taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.unicode).filter(source=getenum_source('taiwan')), many=True).data
-        taiwan_char = dedup_character.unicode
-    else:
-        taiwan_list = HanziSetDedupSerializer(HanziSet.objects.filter(std_hanzi=dedup_character.korean_variant).filter(source=getenum_source('taiwan')), many=True).data
-        taiwan_char = dedup_character.korean_variant
 
     return render(request, 'task_dedup_inter.html',
                   {'path':'/api/v1/tasks/'+pk+'/task_dedup_inter/'

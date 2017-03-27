@@ -87,12 +87,16 @@
                                     <li>
                                         <div class="l pull-right">
                                             <p class="top">
-                                                {% if taiwan_variant.hanzi_pic != "" %}
+                                                {% if taiwan_variant.hanzi_char == "" %}
                                                     <img src= {{ taiwan_variant.hanzi_pic }}>
                                                 {% else %}
                                                     {{ taiwan_variant.hanzi_char }}
                                                 {% endif %}</p>
-                                            <p class="bottom">{{ taiwan_variant.seq_id }}</p>
+                                            {% if taiwan_variant.hanzi_pic_id != "" %}
+                                                <p class="bottom">{{ taiwan_variant.hanzi_pic_id }}</p>
+                                            {% else %}
+                                                <p class="bottom">{{ taiwan_variant.seq_id }}</p>
+                                            {% endif %}
                                         </div>
 
                                     </li>
@@ -172,7 +176,7 @@
                     taskdedup.showModal();
                     bus.$emit('clicked', clicked_el)
                 },
-                next_dup: function () {
+                next: function () {
                     $.ajax({
                         url: "/api/v1/korean-taiwan-dup-charaters/" + {{ korean_dedup_id }} +"/submit_and_next/",
                         method: 'GET',
