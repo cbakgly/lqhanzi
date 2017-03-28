@@ -56,8 +56,8 @@ class HanziSetDedupSerializer(serializers.ModelSerializer):
                    "c_t",
                    "u_t",
                    "std_hanzi",
-                   "source",
-                   "hanzi_pic_id",
+                   "source"
+                   #"hanzi_pic_id",
                    # "hanzi_char"
                    ]
 
