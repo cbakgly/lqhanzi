@@ -36,7 +36,7 @@ var o_time;
 function changeSize(id, action) {
     var obj = document.getElementById(id);
     obj.style.width = parseInt(obj.style.width) + (action == '+' ? +10 : -10) + '%';
-    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);
+//    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);
 }
 
 document.onmouseup = function () {

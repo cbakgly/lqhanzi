@@ -1,6 +1,6 @@
 // 全局变量
 var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
-var cur_page = 'A01';
+    var cur_page = 'A01';
 
 // 点击目录索引
 $(document).on('click', '.catalog-panel .treeview a', function () {
@@ -38,7 +38,7 @@ var o_time;
 function changeSize(id, action) {
     var obj = document.getElementById(id);
     obj.style.width = parseInt(obj.style.width) + (action == '+' ? +10 : -10) + '%';
-    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);
+//    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);
 }
 
 document.onmouseup = function () {
