@@ -139,6 +139,14 @@ $(document).ready(function () {
         $("#searchinput").val(text);
     });
 
+    var reverse_query = null;
+    $("#reverse-back-btn").on('click', function() {
+        $.get(reverse_query, function (data) {
+            render_stroke_result(data);
+        });
+        $('#reverse-back-btn').hide();
+    });
+
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
         // 获取输入并去除空格
@@ -157,13 +165,20 @@ $(document).ready(function () {
         $("#current_mode").text(mode);
 
         if (mode == '1' || mode == '2') { // 一般检索&正则检索
+
+            reverse_query =location.origin + '/ajax_stroke_search?q=' + q + '&mode=' + mode;
+
             $.get("ajax_stroke_search", {"q": q, "mode": mode}, function (data) {
                 render_stroke_result(data);
             });
+
+            $('#reverse-back-btn').hide();
         } else if (mode == '3') {  // 反查编码
+
             $.get("inverse_search", {"q": $(".ser-input").val()}, function (data) {
                 render_inverse_result(data);
             });
+            $('#reverse-back-btn').show();
         }
 
     });
