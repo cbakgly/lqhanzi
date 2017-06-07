@@ -1404,7 +1404,7 @@
 
 .hanzi {
     position: relative;
-    top: -40px;
+    top: 8px;
     font-family: 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif, 'Tripitaka Unicode';
 }
 
@@ -1511,6 +1511,7 @@
 
 .tab-content .tab-panel.showing {
     display: block;
+    overflow: hidden;
 }
 
 .tab-con .tab-panel {
