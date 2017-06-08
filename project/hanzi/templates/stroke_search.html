@@ -385,7 +385,12 @@
             }
         });
         $(".search-box .help").mouseleave(function () {
-            $(this).children(".stroke-ser-bubble").fadeOut(600);
+            var bubble = $(this).children(".stroke-ser-bubble");
+            if (bubble.is(":animated") || !bubble.is(":hidden")) {
+                bubble.fadeOut(600);
+            } else {
+                bubble.stop(true, true);
+            }
         });
     });
     $(function () {
@@ -395,7 +400,12 @@
             }
         });
         $(".parts-ser .help").mouseleave(function () {
-            $(this).children(".stroke-helppanel-bubble").fadeOut(600);
+            var bubble = $(this).children(".stroke-helppanel-bubble");
+            if (bubble.is(":animated") || !bubble.is(":hidden")) {
+                bubble.fadeOut(600);
+            } else {
+                bubble.stop(true, true);
+            }
         });
     });
     // $(function(){
