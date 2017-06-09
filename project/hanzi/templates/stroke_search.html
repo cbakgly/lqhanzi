@@ -354,14 +354,14 @@
   <div class="bottom-content">
     <div style="padding: 15px 0">
       <div class="copy-right fl">Copyright@2017 hanzi.lqdzj.cn All right Reserved</div>
-      <ul class="links fr">
-        <li><a>关于我们</a>|</li>
-        <li><a>免责申请</a>|</li>
-        <li><a href="{% url 'm1.help' %}">帮助中心</a></li>
-      </ul>
+      <!--<ul class="links fr">-->
+        <!--<li><a>关于我们</a>|</li>-->
+        <!--<li><a>免责申请</a>|</li>-->
+        <!--<li><a href="{% url 'm1.help' %}">帮助中心</a></li>-->
+      <!--</ul>-->
     </div>
     <div class="clearfix"></div>
-    <div class="record-code" style="padding: 10px 0">版权所有 京ICP备16061775号</div>
+    <!--<div class="record-code" style="padding: 10px 0">版权所有 京ICP备16061775号</div>-->
   </div>
 </div>
 <!-- ./bottom -->
@@ -385,7 +385,12 @@
             }
         });
         $(".search-box .help").mouseleave(function () {
-            $(this).children(".stroke-ser-bubble").fadeOut(600);
+            var bubble = $(this).children(".stroke-ser-bubble");
+            if (bubble.is(":animated") || !bubble.is(":hidden")) {
+                bubble.fadeOut(600);
+            } else {
+                bubble.stop(true, true);
+            }
         });
     });
     $(function () {
@@ -395,7 +400,12 @@
             }
         });
         $(".parts-ser .help").mouseleave(function () {
-            $(this).children(".stroke-helppanel-bubble").fadeOut(600);
+            var bubble = $(this).children(".stroke-helppanel-bubble");
+            if (bubble.is(":animated") || !bubble.is(":hidden")) {
+                bubble.fadeOut(600);
+            } else {
+                bubble.stop(true, true);
+            }
         });
     });
     // $(function(){

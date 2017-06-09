@@ -371,7 +371,11 @@ function render_stroke_result(dataset) {
     }
 
     // 显示符合要求的条目数
-    $('#pages-box').show();
+    if (total > page_size)
+        $('#pages-box').show();
+    else
+        $('#pages-box').hide();
+
     $("#total").html(total);
     $("#perpage").html(page_size);
     $('#hanzi-wrap').html('');
