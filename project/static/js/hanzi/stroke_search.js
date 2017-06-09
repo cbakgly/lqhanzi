@@ -359,6 +359,10 @@ function render_stroke_result(dataset) {
     if (total % page_size != 0)
         ++pages;
 
+    // 让隐藏的左面板显示出来
+    $(".con-left").fadeIn(600);
+    $(".con-right").addClass("con-right-new");
+    
     // 如果没有检索到数据
     if ( total == 0 || data === undefined) {
         $('#hanzi-wrap').html('');
