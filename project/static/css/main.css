@@ -1155,7 +1155,7 @@
 
 .hanzi-variants a span {
     position: relative;/*add by wxf*/
-    display: block;
+    /*display: block;*/
     width: 50px;
     height: 50px;
     font-size: 38px;
@@ -1330,7 +1330,17 @@
     background-color: rgb(254, 206, 75);
 }
 
+.instruction-searched-char {
+    background-color: #dd4a39;
+}
 
+.instruction-generic-variant-char {
+    background-color: rgba(60, 141, 189, 0.2);
+}
+
+.instruction-generic-variant-std-char {
+    background-color: rgba(221, 74, 57, 0.2);
+}
 
 /*部件笔画检字法结果详情页*/
 .hanzi-sets-header {
