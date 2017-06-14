@@ -120,6 +120,15 @@ em {
         position: relative;
     }
 }
+
+@media screen and (min-width: 1400px) {
+    .w {
+        width: 90%;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
 @media screen and (max-width: 1200px) and (min-width: 1024px) {
     .w1 {
         width: 1024px;

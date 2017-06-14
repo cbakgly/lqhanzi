@@ -146,20 +146,20 @@
           <ul class="nav-tab-custom clearfix">
             {% if taiwan %}
               {% for item in taiwan.positions %}
-                <li>{{ item }}(台湾)</li>
+                <li data-type="taiwan">{{ item }}(台湾)</li>
               {% endfor %}
             {% endif %}
 
             {% if korean %}
-              <li>{{ korean.positions|list:0 }}(高丽)</li>
+              <li data-type="korean">{{ korean.positions|list:0 }}(高丽)</li>
             {% endif %}
 
             {% if hanyu %}
-              <li>{{ hanyu.positions }}(汉语)</li>
+              <li data-type="hanyu">{{ hanyu.positions }}(汉语)</li>
             {% endif %}
 
             {% if dunhuang %}
-              <li>{{ dunhuang.positions }}(敦煌)</li>
+              <li data-type="dunhuang">{{ dunhuang.positions }}(敦煌)</li>
             {% endif %}
           </ul>
 
@@ -181,7 +181,7 @@
             {% endif %}
 
             {% if hanyu %}
-              <div class="button-group">
+              <div class="button-group" style="display: none;">
                 <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward"><i class="icon-left"></i></button>
                 <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"><i class="icon-zomIn"></i></button>
                 <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"><i class="icon-zoomOut"></i></button>
@@ -218,15 +218,28 @@
     });
     //tab切换
     $(function () {
-        $(".nav-tab-custom li").eq(0).addClass("active");
-        $(".tab-content .tab-panel").eq(0).addClass("showing");
+        var first_tab = $(".nav-tab-custom li").eq(0),
+            type = first_tab.data("type");
 
+        if (type=="hanyu" || type=="dunhuang") {
+                $(".button-group").show();
+        }
+        first_tab.addClass("active");
+
+        $(".tab-content .tab-panel").eq(0).addClass("showing");
 
         $(".nav-tab-custom li").click(function () {
             var $this = $(this),
-                index = $this.index();
+                index = $this.index(),
+                type = $this.data("type");
             $this.addClass("active").siblings("li").removeClass("active");
             $(".tab-content .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
+
+            if (type=="hanyu" || type=="dunhuang") {
+                $(".button-group").show();
+            } else {
+                $(".button-group").hide();
+            }
         })
     });
 
