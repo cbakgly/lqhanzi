@@ -64,8 +64,6 @@
     <div class="button-group">
       <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward" @click="prev"><i class="icon-left"></i></button>
       <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" style="border:2px solid #ddd"/>
-      <!--<button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"><i class="icon-zomIn"></i></button>-->
-      <!--<button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"><i class="icon-zoomOut"></i></button>-->
       <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward" @click="next"><i class="icon-right"></i></button>
     </div>
     <div id="img" style="text-align: center; overflow-y: auto;">
@@ -78,7 +76,7 @@
       delimiters: ["#[", "]]"],
       el: '#img-div',
       data: {
-        magnify: 1,
+        magnify: 0.5,
         path: "{{ welcome_url }}"
       },
       methods: {
@@ -90,14 +88,14 @@
               type = matches[1];
               page = matches[2];
           }
-          var max_page_map = {'A': 25, '': 5727};
+          var max_page_map = {'A': 91, '': 770};
           var max_page = max_page_map[type];
           var next_page = parseInt(page) + 1 < max_page ? parseInt(page) + 1 : max_page;
           if (type == 'A' && next_page < 10) {
               next_page = '0' + next_page;
           }
           next_page = '' + type + next_page;
-          if (next_page == 'A25')
+          if (next_page == 'A91')
               next_page = 1;
           set_page(next_page);
         },
@@ -116,13 +114,14 @@
           }
           last_page = '' + type + last_page;
           if (last_page == '1') {
-              last_page = 'A25';
+              last_page = 'A91';
           }
           set_page(last_page);
         },
       },
        watch: {
           magnify: function () {
+              $('#img').trigger('zoom.destroy');
               $('#img').zoom({
                   url: this.path,
                   callback: function () {
@@ -132,6 +131,7 @@
               });
           },
           path: function () {
+              $('#img').trigger('zoom.destroy');
               $('#img').zoom({
                   url: this.path,
                   callback: function () {
@@ -146,7 +146,7 @@
     $('#img').zoom({url: "{{ welcome_url }}", callback: function(){}, magnify: mag.magnify});
 
     // 全局变量
-    var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
+    var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/dh-dict/';
     var cur_page = 'A01';
     var cur_page_url = '';
     // 点击目录索引
@@ -165,35 +165,19 @@
 
     // 设置浏览页面
     function set_page(page) {
-        page = page + '';
-        var padding_page = page;
-        var suffix = '.png';
-        if (padding_page.match(/^\d+$/) != null) {
-            var pad = "0000"
-            padding_page = pad.substring(0, pad.length - page.length) + page;
-        } else if (page.match(/A0[12]/) != null) {
-            suffix = '.jpg';
-        }
-        <!--var url = base_url + padding_page + suffix;-->
-        cur_page_url = base_url + padding_page + suffix;
+      page = page + '';
+      var padding_page = page;
+      var suffix = '.png';
+      if (padding_page.match(/^\d+$/) != null) {
+          var pad = "000"
+          padding_page = pad.substring(0, pad.length - page.length) + page;
+      }
+      <!--var url = base_url + padding_page + suffix;-->
 
-        $('#image-page').attr('src', cur_page_url);
-        // 设置当前页面
-        cur_page = page;
+      mag.path = base_url + padding_page + suffix;
+      // 设置当前页面
+      cur_page = page;
     }
-
-    // 放大/缩小
-    <!--var o_time;-->
-    <!--function changeSize(id, action) {-->
-        <!--var obj = document.getElementById(id);-->
-        <!--obj.style.width = parseInt(obj.style.width) + (action == '+' ? +10 : -10) + '%';-->
-    <!--//    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);-->
-    <!--}-->
-
-    <!--document.onmouseup = function () {-->
-        <!--window.clearTimeout(o_time);-->
-    <!--}-->
-
   </script>
 {% endblock %}
 

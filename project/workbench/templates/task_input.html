@@ -255,6 +255,7 @@
             },
             watch: {
                 path: function () {
+                    $('#img').trigger('zoom.destroy');
                     $('#zoom-page-image').zoom({
                         url: this.path,
                         callback: function () {
@@ -264,6 +265,7 @@
                     });
                 },
                 magnify: function () {
+                    $('#img').trigger('zoom.destroy');
                     $('#zoom-page-image').zoom({
                         url: this.path,
                         callback: function () {

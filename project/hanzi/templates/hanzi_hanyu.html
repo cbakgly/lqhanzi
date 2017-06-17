@@ -97,8 +97,6 @@
     <div class="button-group">
       <button class="btn btn-default glyphicon glyphicon-step-backward" id="page-backward" @click="prev"><i class="icon-left"></i></button>
       <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" style="border:2px solid #ddd"/>
-      <!--<button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('image-page','+');"><i class="icon-zomIn"></i></button>-->
-      <!--<button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('image-page','-');"><i class="icon-zoomOut"></i></button>-->
       <button class="btn btn-default glyphicon glyphicon-step-forward" id="page-forward" @click="next"><i class="icon-right"></i></button>
     </div>
     <div id="img" style="text-align: center; overflow-y: auto;">
@@ -156,6 +154,7 @@
       },
        watch: {
           magnify: function () {
+              $('#img').trigger('zoom.destroy');
               $('#img').zoom({
                   url: this.path,
                   callback: function () {
@@ -165,6 +164,7 @@
               });
           },
           path: function () {
+              $('#img').trigger('zoom.destroy');
               $('#img').zoom({
                   url: this.path,
                   callback: function () {
@@ -181,7 +181,6 @@
     // 全局变量
     var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/';
     var cur_page = 'A01';
-    var cur_page_url = '';
     // 点击目录索引
     $(document).on('click', '.catalog-panel .treeview a', function () {
         var page = $(this).attr('alt');
@@ -207,25 +206,12 @@
         } else if (page.match(/A0[12]/) != null) {
             suffix = '.jpg';
         }
-        <!--var url = base_url + padding_page + suffix;-->
-        cur_page_url = base_url + padding_page + suffix;
+        var url = base_url + padding_page + suffix;
 
-        $('#image-page').attr('src', cur_page_url);
+        mag.path = url;
         // 设置当前页面
         cur_page = page;
     }
-
-    // 放大/缩小
-    <!--var o_time;-->
-    <!--function changeSize(id, action) {-->
-        <!--var obj = document.getElementById(id);-->
-        <!--obj.style.width = parseInt(obj.style.width) + (action == '+' ? +10 : -10) + '%';-->
-    <!--//    o_time = window.setTimeout('changeSize(\'' + id + '\',\'' + action + '\')', 100);-->
-    <!--}-->
-
-    <!--document.onmouseup = function () {-->
-        <!--window.clearTimeout(o_time);-->
-    <!--}-->
 
   </script>
 {% endblock %}
