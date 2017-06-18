@@ -183,8 +183,8 @@
               </div>
             {% endif %}
 
-            {% if hanyu %}
               <div class="tab-panel" id="hanyu-img">
+              {% if hanyu %}
                 <div class="button-group">
                   <button class="btn btn-default glyphicon glyphicon-step-backward" @click="prev"><i class="icon-left"></i></button>
                   <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" style="border:2px solid #ddd"/>
@@ -193,11 +193,11 @@
                 <div id="hy-img" style="text-align: center; overflow-y: auto;">
                   <img class="hanyu-image align-center" :src="path" alt="" style="width: 85%;">
                 </div>
+              {% endif %}
               </div>
-            {% endif %}
 
-            {% if dunhuang %}
              <div class="tab-panel" id="dunhuang-img">
+              {% if dunhuang %}
                 <div class="button-group">
                   <button class="btn btn-default glyphicon glyphicon-step-backward" @click="prev"><i class="icon-left"></i></button>
                   <span>放大倍数:</span><input size="4" id="magnify2" type="text" v-model="magnify" style="border:2px solid #ddd"/>
@@ -206,8 +206,8 @@
                 <div id="dh-img" style="text-align: center; overflow-y: auto;">
                   <img class="dh-img align-center" :src="path" alt="" style="width: 85%;">
                 </div>
+              {% endif %}
               </div>
-            {% endif %}
           </div>
         </div>
       </div>
@@ -251,10 +251,11 @@
       data: {
         magnify: 0.5,
         path: "{{ hanyu.image_url }}",
-        cur_page: 'A01',
+        cur_page: '',
       },
       created: function() {
-        this.cur_page = this.path.match('[0-9]{4}')[0];
+        if (this.path != '')
+          this.cur_page = this.path.match('[0-9]{4}')[0];
       },
       methods: {
         next: function() {
@@ -341,10 +342,11 @@
       data: {
         magnify: 0.5,
         path: "{{ dunhuang.image_url }}",
-        cur_page: 'A01',
+        cur_page: '',
       },
       created: function() {
-        this.cur_page = this.path.match('[0-9]{3}')[0];
+        if (this.path != '')
+          this.cur_page = this.path.match('[0-9]{3}')[0];
       },
       methods: {
         next: function() {
