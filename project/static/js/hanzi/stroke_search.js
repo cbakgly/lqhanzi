@@ -95,7 +95,7 @@ $(document).ready(function () {
         var attr = $('#search2').attr("data-value");
         $("#searchinput").val(attr);
         // 设置最后一个单选按纽为选中状态
-        $('.search-bottom input:last').click();
+        //$('.search-bottom input:last').click();
         // 触发按纽的点击事件
         $("#strock_search_btn").trigger("click");
 
