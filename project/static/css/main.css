@@ -1427,8 +1427,9 @@
     text-align: center;
     line-height: 140px;
     border-radius: 5px;
-    font-size: 100px;
+    font-size: 130px;
     font-family: 'kai', '楷体', 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif', 'Tripitaka Unicode';
+    padding-top: 5px;
 }
 
 
