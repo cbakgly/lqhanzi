@@ -145,7 +145,7 @@
         </div>
 
         <!--属性页-->
-        <div class="hanzi-main-bd">
+        <div class="hanzi-main-bd" style="{% if empty %}display: none;{% endif %}">
           <ul class="nav-tab-custom clearfix">
             {% if taiwan %}
               {% for item in taiwan.positions %}

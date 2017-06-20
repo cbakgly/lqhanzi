@@ -167,7 +167,7 @@ def variant_detail(request):
     hanzi_set = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q) | Q(seq_id__regex='^' + q + '(;|$)')).order_by('source').values(
         'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'seq_id', 'variant_type', 'inter_dict_dup_hanzi', 'korean_dup_hanzi')
 
-    ret = {'q': q, 'empty': False, 'taiwan': {}, 'hanyu': {}, 'korean': {}, 'dunhuang': {}}  # 初始化结果集
+    ret = {'q': q, 'empty': cnt == 1, 'taiwan': {}, 'hanyu': {}, 'korean': {}, 'dunhuang': {}}  # 初始化结果集
     for hanzi in list(hanzi_set):
         if hanzi['source'] == SOURCE_ENUM['taiwan']:  # 台湾异体字
             ret['taiwan'] = {
