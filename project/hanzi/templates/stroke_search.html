@@ -121,64 +121,11 @@
   <!--content-->
   <div class="content lq-content">
     <div class="w">
-      <div class="con-left">
-      <div id="reverse-back-btn" style="display: none; margin: -10px -10px 20px -10px; background-color: #f4f4f4; padding: 10px"><a href="javascript:void(0);">&lt;&nbsp;返回</a></div>
-      <div id="con-left">
-        <p class="total">检索到<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条。</p>
-        <ul class="hanzi-wrap clearfix" id="hanzi-wrap">
-        </ul>
-        <div class="pages-box" id="pages-box">
-          <ul class="pagination" id="pagination">
-          </ul>
-          <span>跳至&nbsp;<input id="new_page" type="text">&nbsp;页/<span id="pages"></span>页</span>
-          <span id="stroke_page_btn" class="page-btn" data-url="">GO</span>
-          <span id="search_tip" class="search_tips"></span>
-        </div>
-      </div>
-        </div>
-      <!-- 部件检索搜索错误信息提示 -->
-      <div class="ser-errormsg">
-        <div class="back"><i class="icon-left"></i>返回</div>
-        <p>请检查您输入的检索条件是否符合规则？点击查看<a class="lead" href="#">新手教程～</a></p>
-      </div>
-      <!-- 反查编码 -->
-      <div class="reverse-code">
-        <div class="back"><i class="icon-left"></i>返回</div>
-        <div class="reverse-bd">
-          <div class="hanzi-tit">菩</div>
-          <table class="table table-bordered reverse-table" style="width:90%;border:1px solid #ddd;">
-            <tbody>
-            <tr>
-              <td>初步拆分</td>
-              <td>⿰氵⿱刀止</td>
-            </tr>
-            <tr>
-              <td>调笔拆分</td>
-              <td>⿰氵⿱刀止</td>
-            </tr>
-            <tr>
-              <td>混合拆分</td>
-              <td>⿰氵⿱刀止</td>
-            </tr>
-            <tr>
-              <td>相似部件</td>
-              <td>⿰氵⿱刀止</td>
-            </tr>
-            <tr>
-              <td>部件序列</td>
-              <td>⿰氵⿱刀止</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- ./反查编码 -->
-      <!-- ./ 检索搜索错误信息提示-->
       <div class="con-right" id="con-right">
         <!--结构-->
         <div class="compontent clearfix">
           <div class="compontent-hd">
-            <span>结构：</span>
+            <span>结构选择：</span>
           </div>
           <div class="compontent-bd">
             <span data-value="⿱" class="compontent-item"><img src="{% static 'img/structs/01.gif' %}" alt=""></span>
@@ -200,7 +147,7 @@
         <div class="parts">
           <div class="parts-top clearfix">
             <div class="parts-hd">
-              <span>部件：</span>
+              <span>部件选择：</span>
             </div>
             <div class="parts-bd">
               <div class="parts-ser clearfix">
@@ -284,6 +231,61 @@
         </div>
         <!--./部件-->
       </div>
+
+      <div class="con-left-v1">
+      <div class="no-result"><p class="tip">请输入您要查的文字之结构/部件/笔画组合(如: ⿰艹立1-3)</p></div>
+      <div id="reverse-back-btn" style="display: none; margin: -10px -10px 20px -10px; background-color: #f4f4f4; padding: 10px"><a href="javascript:void(0);">&lt;&nbsp;返回</a></div>
+      <div id="con-left" style="display: none;">
+        <p class="total">检索到<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条。</p>
+        <ul class="hanzi-wrap clearfix" id="hanzi-wrap">
+        </ul>
+        <div class="pages-box" id="pages-box">
+          <ul class="pagination" id="pagination">
+          </ul>
+          <span>跳至&nbsp;<input id="new_page" type="text">&nbsp;页/<span id="pages"></span>页</span>
+          <span id="stroke_page_btn" class="page-btn" data-url="">GO</span>
+          <span id="search_tip" class="search_tips"></span>
+        </div>
+      </div>
+        </div>
+      <!-- 部件检索搜索错误信息提示 -->
+      <div class="ser-errormsg">
+        <div class="back"><i class="icon-left"></i>返回</div>
+        <p>请检查您输入的检索条件是否符合规则？点击查看<a class="lead" href="#">新手教程～</a></p>
+      </div>
+      <!-- 反查编码 -->
+      <div class="reverse-code">
+        <div class="back"><i class="icon-left"></i>返回</div>
+        <div class="reverse-bd">
+          <div class="hanzi-tit">菩</div>
+          <table class="table table-bordered reverse-table" style="width:90%;border:1px solid #ddd;">
+            <tbody>
+            <tr>
+              <td>初步拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>调笔拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>混合拆分</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>相似部件</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            <tr>
+              <td>部件序列</td>
+              <td>⿰氵⿱刀止</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ./反查编码 -->
+      <!-- ./ 检索搜索错误信息提示-->
     </div>
   </div>
   <!--./content-->

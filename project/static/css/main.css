@@ -367,6 +367,14 @@
     display: -ms-flex;
 }
 
+.con-left-v1,.ser-errormsg,.reverse-code{
+    width: 52%;
+    margin-left: 20px;
+    background-color: #fff;
+    padding: 10px;
+    display: block;
+}
+
 .con-left,.ser-errormsg,.reverse-code{
     width: 52%;
     margin-right: 20px;
@@ -388,7 +396,7 @@
 .hanzi-wrap {
     min-height: 380px;
     margin-bottom: 30px;
-
+    margin-top: 10px;
     /*wxf added*/
     padding-left: 5px;
 }

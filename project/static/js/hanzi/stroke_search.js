@@ -359,8 +359,7 @@ function render_stroke_result(dataset) {
     if (total % page_size != 0)
         ++pages;
 
-    // 让隐藏的左面板显示出来
-    $(".con-left").fadeIn(600);
+    $('.no-result').hide();
     $(".con-right").addClass("con-right-new");
     
     // 如果没有检索到数据
@@ -501,7 +500,7 @@ function render_stroke_result(dataset) {
     $('#stroke_page_btn').attr("data-url", new_url);
 
     // 让隐藏的左面板显示出来
-    $(".con-left").fadeIn(600);
+    $("#con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
 }
 
@@ -514,7 +513,7 @@ function render_inverse_result(data) {
         $("#total").html(0);
         $("#perpage").html(0);
         // $('.hanzi-wrap').html('没有检索到数据。');
-        $(".con-left").fadeIn(600);
+        $("#con-left").fadeIn(600);
         $(".con-right").addClass("con-right-new");
         return;
     }
@@ -535,6 +534,6 @@ function render_inverse_result(data) {
     str += '</table>';
     $('.hanzi-wrap').append(str);
 
-    $(".con-left").fadeIn(600);
+    $("#con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
 }
