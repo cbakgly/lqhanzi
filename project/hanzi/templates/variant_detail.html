@@ -11,12 +11,8 @@
   <link rel="stylesheet" href="{% static 'css/m1-myFont.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
   <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-  <script src="{% static 'js/vue.js' %}"></script>
   <script src="{% static 'js/hanzi/variant_detail.js' %}"></script>
-  <script src="{{STATIC_URL}}js/jquery.zoom.min.js" type="text/javascript"></script>
-  <script src="{{STATIC_URL}}js/jquery-ui.min.js" type="text/javascript"></script>
 
   <style type="text/css">
     .tab-content {
@@ -145,24 +141,24 @@
         </div>
 
         <!--属性页-->
-        <div class="hanzi-main-bd" style="{% if empty %}display: none;{% endif %}">
+        <div class="hanzi-main-bd">
           <ul class="nav-tab-custom clearfix">
             {% if taiwan %}
               {% for item in taiwan.positions %}
-                <li data-type="taiwan">{{ item }}(台湾)</li>
+                <li>{{ item }}(台湾)</li>
               {% endfor %}
             {% endif %}
 
             {% if korean %}
-              <li data-type="korean">{{ korean.positions|list:0 }}(高丽)</li>
+              <li>{{ korean.positions|list:0 }}(高丽)</li>
             {% endif %}
 
             {% if hanyu %}
-              <li data-type="hanyu">{{ hanyu.positions }}(汉语)</li>
+              <li>{{ hanyu.positions }}(汉语)</li>
             {% endif %}
 
             {% if dunhuang %}
-              <li data-type="dunhuang">{{ dunhuang.positions }}(敦煌)</li>
+              <li>{{ dunhuang.positions }}(敦煌)</li>
             {% endif %}
           </ul>
 
@@ -183,31 +179,29 @@
               </div>
             {% endif %}
 
-              <div class="tab-panel" id="hanyu-img">
-              {% if hanyu %}
+            {% if hanyu %}
+              <div class="tab-panel">
                 <div class="button-group">
-                  <button class="btn btn-default glyphicon glyphicon-step-backward" @click="prev"><i class="icon-left"></i></button>
-                  <span>放大倍数:</span><input size="4" id="magnify" type="text" v-model="magnify" style="border:2px solid #ddd"/>
-                  <button class="btn btn-default glyphicon glyphicon-step-forward" @click="next"><i class="icon-right"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-step-backward" id="hy-page-backward"><i class="icon-left"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('hy-image-page','+');"><i class="icon-zomIn"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('hy-image-page','-');"><i class="icon-zoomOut"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-step-forward" id="hy-page-forward"><i class="icon-right"></i></button>
                 </div>
-                <div id="hy-img" style="text-align: center; overflow-y: auto;">
-                  <img class="hanyu-image align-center" :src="path" alt="" style="width: 85%;">
-                </div>
-              {% endif %}
+                <img class="hy-img" id="hy-image-page" src="{{ hanyu.image_url }}" style="width: 85%;">
               </div>
+            {% endif %}
 
-             <div class="tab-panel" id="dunhuang-img">
-              {% if dunhuang %}
+            {% if dunhuang %}
+              <div class="tab-panel">
                 <div class="button-group">
-                  <button class="btn btn-default glyphicon glyphicon-step-backward" @click="prev"><i class="icon-left"></i></button>
-                  <span>放大倍数:</span><input size="4" id="magnify2" type="text" v-model="magnify" style="border:2px solid #ddd"/>
-                  <button class="btn btn-default glyphicon glyphicon-step-forward" @click="next"><i class="icon-right"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-step-backward" id="dh-page-backward"><i class="icon-left"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-zoom-in" onmousedown="changeSize('dh-image-page','+');"><i class="icon-zomIn"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-zoom-out" onmousedown="changeSize('dh-image-page','-');"><i class="icon-zoomOut"></i></button>
+                  <button class="btn btn-default glyphicon glyphicon-step-forward" id="dh-page-forward"><i class="icon-right"></i></button>
                 </div>
-                <div id="dh-img" style="text-align: center; overflow-y: auto;">
-                  <img class="dh-img align-center" :src="path" alt="" style="width: 85%;">
-                </div>
-              {% endif %}
+                <img class="dh-img" id="dh-image-page" src="{{ dunhuang.image_url }}" style="width: 85%;">
               </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -229,200 +223,20 @@
     });
     //tab切换
     $(function () {
-        var first_tab = $(".nav-tab-custom li").eq(0),
-            type = first_tab.data("type");
-
-        first_tab.addClass("active");
-
+        $(".nav-tab-custom li").eq(0).addClass("active");
         $(".tab-content .tab-panel").eq(0).addClass("showing");
+
 
         $(".nav-tab-custom li").click(function () {
             var $this = $(this),
-                index = $this.index(),
-                type = $this.data("type");
+                index = $this.index();
             $this.addClass("active").siblings("li").removeClass("active");
             $(".tab-content .tab-panel").eq(index).addClass("showing").siblings(".tab-panel").removeClass("showing");
         })
     });
 
-    var hanyu_zoom = new Vue({
-      delimiters: ["#[", "]]"],
-      el: '#hanyu-img',
-      data: {
-        magnify: 0.5,
-        path: "{{ hanyu.image_url }}",
-        cur_page: '',
-      },
-      created: function() {
-        if (this.path != '')
-          this.cur_page = this.path.match('[0-9]{4}')[0];
-      },
-      methods: {
-        next: function() {
-          var page = this.cur_page;
-          var type = '';
-          var matches = page.match(/(A)(\d+)/);
-          if (matches != null) {
-              type = matches[1];
-              page = matches[2];
-          }
-          var max_page_map = {'A': 25, '': 5727};
-          var max_page = max_page_map[type];
-          var next_page = parseInt(page) + 1 < max_page ? parseInt(page) + 1 : max_page;
-          if (type == 'A' && next_page < 10) {
-              next_page = '0' + next_page;
-          }
-          next_page = '' + type + next_page;
-          if (next_page == 'A25')
-              next_page = 1;
-          this.set_page(next_page);
-        },
-
-        prev: function() {
-          var page = this.cur_page;
-          var type = '';
-          var matches = page.match(/(A)(\d+)/);
-          if (matches != null) {
-              type = matches[1];
-              page = matches[2];
-          }
-          var last_page = parseInt(page) > 1 ? parseInt(page) - 1 : 1;
-          if (type == 'A' && last_page < 10) {
-              last_page = '0' + last_page;
-          }
-          last_page = '' + type + last_page;
-          if (last_page == '1') {
-              last_page = 'A25';
-          }
-          this.set_page(last_page);
-        },
-
-            // 设置浏览页面
-        set_page: function(page) {
-          page = page + '';
-          var padding_page = page;
-          var suffix = '.png';
-          if (padding_page.match(/^\d+$/) != null) {
-              var pad = "0000"
-              padding_page = pad.substring(0, pad.length - page.length) + page;
-          } else if (page.match(/A0[12]/) != null) {
-              suffix = '.jpg';
-          }
-          this.path = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/zh-dict/' + padding_page + suffix;
-
-          // 设置当前页面
-          this.cur_page = page;
-        }
-      },
-       watch: {
-          magnify: function () {
-              $('#img').zoom({
-                  url: this.path,
-                  callback: function () {
-                      $(this).colorbox({href: this.src});
-                  },
-                  magnify: this.magnify
-              });
-          },
-          path: function () {
-              $('#img').zoom({
-                  url: this.path,
-                  callback: function () {
-                      $(this).colorbox({href: this.src});
-                  },
-                  magnify: this.magnify
-              });
-          },
-      },
-    });
-
-    var dunhuang_zoom = new Vue({
-      delimiters: ["#[", "]]"],
-      el: '#dunhuang-img',
-      data: {
-        magnify: 0.5,
-        path: "{{ dunhuang.image_url }}",
-        cur_page: '',
-      },
-      created: function() {
-        if (this.path != '')
-          this.cur_page = this.path.match('[0-9]{3}')[0];
-      },
-      methods: {
-        next: function() {
-          var page = this.cur_page;
-          var type = '';
-          var matches = page.match(/(A)(\d+)/);
-          if (matches != null) {
-              type = matches[1];
-              page = matches[2];
-          }
-          var max_page_map = {'A': 91, '': 770};
-          var max_page = max_page_map[type];
-          var next_page = parseInt(page) + 1 < max_page ? parseInt(page) + 1 : max_page;
-          if (type == 'A' && next_page < 10) {
-              next_page = '0' + next_page;
-          }
-          next_page = '' + type + next_page;
-          if (next_page == 'A91')
-              next_page = 1;
-          this.set_page(next_page);
-        },
-
-        prev: function() {
-          var page = this.cur_page;
-          var type = '';
-          var matches = page.match(/(A)(\d+)/);
-          if (matches != null) {
-              type = matches[1];
-              page = matches[2];
-          }
-          var last_page = parseInt(page) > 1 ? parseInt(page) - 1 : 1;
-          if (type == 'A' && last_page < 10) {
-              last_page = '0' + last_page;
-          }
-          last_page = '' + type + last_page;
-          if (last_page == '1') {
-              last_page = 'A91';
-          }
-          this.set_page(last_page);
-        },
-
-            // 设置浏览页面
-        set_page: function(page) {
-          page = page + '';
-          var padding_page = page;
-          var suffix = '.png';
-          if (padding_page.match(/^\d+$/) != null) {
-              var pad = "000"
-              padding_page = pad.substring(0, pad.length - page.length) + page;
-          }
-          this.path = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries/dh-dict/' + padding_page + suffix;
-
-          // 设置当前页面
-          this.cur_page = page;
-        }
-      },
-       watch: {
-          magnify: function () {
-              $('#img').trigger('zoom.destroy');
-              $('#img').zoom({
-                  url: this.path,
-                  magnify: this.magnify
-              });
-          },
-          path: function () {
-              $('#img').trigger('zoom.destroy');
-              $('#img').zoom({
-                  url: this.path,
-                  magnify: this.magnify
-              });
-          },
-      },
-    });
-
-    $('#hy-img').zoom({url: hanyu_zoom.path, callback: function(){}, magnify: hanyu_zoom.magnify});
-    $('#dh-img').zoom({url: dunhuang_zoom.path, callback: function(){}, magnify: dunhuang_zoom.magnify});
+  var hy_cur_page = $('#hy-image-page').prop('src').match('[0-9]{4}')[0];
+  var dh_cur_page = $('#dh-image-page').prop('src').match('[0-9]{3}')[0];
 
 </script>
 </body>
