@@ -1361,12 +1361,13 @@
 .hanzi-sets-header .shortcut .w {
     height: 60px;
     line-height: 60px;
+    width: 100%;
 }
 
 .hanzi-sets-logo {
     width: 131px;
     height: 40px;
-    padding-top: 10px;
+    padding: 10px 0 0 20px;
 }
 
 .hanzi-sets-logo h1 {
