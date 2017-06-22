@@ -67,7 +67,7 @@ $(document).ready(function () {
         });
 
         // 显示bubble
-        $("#btip").show();
+        $("#btip").fadeIn(1000);
 
     });
     // 检索结果汉字集，鼠标离开时隐藏提示框
