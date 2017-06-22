@@ -55,6 +55,8 @@ function render_variant_result(res) {
     // 清空结果面板
     $('.dict-result-lists').html('');
 
+    var search_word = $('#variant_searchinput').val();
+
     var char = "";
     var data = res.data;
     var hanzi_codes = data.hanzi_codes;
@@ -68,10 +70,18 @@ function render_variant_result(res) {
             // 正字
             if (hanzi_set[j].hanzi_char != '') {
                 char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
-                char += '[<span>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_char == search_word)
+                    char += 'class="keyword" ';
+
+                char += '>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
             } else {
                 char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
-                char += '[<span><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
+                char +='[<span ';
+                if (hanzi_set[j].hanzi_pic_id == search_word)
+                    char += 'class="keyword" ';
+
+                char += '><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
             }
             // 异体字
             char += '<div class="hanzi-variants">';
@@ -79,19 +89,27 @@ function render_variant_result(res) {
             var variants = hanzi_set[j].variants;
             for (var k = 0; k < variants.length; k++) {
                 if (variants[k].hanzi_char != '') {
-                    char += '<a target="_blank" href="/variant_detail?q=' + variants[k].hanzi_char + '">';
+                    char += '<a '
+                    if (variants[k].variant_type == 3) char += 'class="instruction-generic-variant-char"';
+                    else if (variants[k].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
+                    char += ' target="_blank" href="/variant_detail?q=' + variants[k].hanzi_char + '">';
                     char += '<span class="normal ';
-                    if (variants[k].variant_type == 3) char += 'instruction-generic-variant-char';
-                    else if (variants[k].variant_type == 2) char += 'instruction-generic-variant-std-char';
+                    if (variants[k].hanzi_char == search_word)
+                        char += 'keyword';
+
                     char += '">';
                     char += variants[k].hanzi_char;
                     char += '</span></a>';
                 } else {
-                    char += '<a target="_blank" href="/variant_detail?q=' + variants[k].hanzi_pic_id + '">';
-                    char += '<span ';
+                    char += '<a '
                     if (variants[k].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                     else if (variants[k].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
-                    char += '>';
+                    char += ' target="_blank" href="/variant_detail?q=' + variants[k].hanzi_pic_id + '">';
+                    char += '<span ';
+                    if (variants[k].hanzi_pic_id == search_word)
+                        char += 'class="keyword"';
+
+                    char +='>';
                     char += '<img src="' + variants[k].pic_url + '">';
                     char += '</span></a>';
                 }
@@ -109,10 +127,18 @@ function render_variant_result(res) {
             // 正字
             if (hanzi_set[j].hanzi_char != '') {
                 char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
-                char += '[<span>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_char == search_word)
+                    char += 'class="keyword"';
+
+                char += '>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
             } else {
                 char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
-                char += '[<span><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_pic_id == search_word)
+                    char += 'class="keyword"';
+
+                char += '><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
             }
             // 异体字
             char += '<div class="hanzi-variants">';
@@ -120,17 +146,26 @@ function render_variant_result(res) {
             var variants = hanzi_set[j].variants;
             for (var k = 0; k < variants.length; k++) {
                 if (variants[k].hanzi_char != '') {
-                    char += '<a target="_blank" href="/variant_detail?q=' + variants[k].hanzi_char + '">';
-                    char += '<span class="normal ';
-                    if (hanzi_set[j].variant_type == 3) char += 'instruction-generic-variant-char';
-                    else if (hanzi_set[j].variant_type == 2) char += 'instruction-generic-variant-std-char';
-                    char += '">' + variants[k].hanzi_char + '</span></a>';
-                } else {
-                    char += '<a target="_blank" href="/variant_detail?q=' + variants[k].hanzi_pic_id + '">';
-                    char += '<span ';
+                    char += '<a ';
                     if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                     else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
-                    char +='><img src="' + variants[k].pic_url + '"></span></a>';
+                    char += ' target="_blank" href="/variant_detail?q=' + variants[k].hanzi_char + '">';
+                    char += '<span class="normal ';
+
+                    if (variants[k].hanzi_char == search_word)
+                        char += 'keyword';
+
+                    char += '">' + variants[k].hanzi_char + '</span></a>';
+                } else {
+                    char += '<a ';
+                    if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
+                    else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
+                    char += ' target="_blank" href="/variant_detail?q=' + variants[k].hanzi_pic_id + '">';
+                    char += '<span ';
+                    if (variants[k].hanzi_pic_id == search_word)
+                        char += 'class="keyword"';
+
+                    char += '><img src="' + variants[k].pic_url + '"></span></a>';
                 }
             }
             char += '</div></li>';
@@ -144,17 +179,25 @@ function render_variant_result(res) {
         var hanzi_set = data[source];
         for (var j = 0; j < hanzi_set.length; j++) {
             if (hanzi_set[j].hanzi_char != '') {
-                char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
-                char += '[<span ';
+                char += '<p class="hanzi-normal"><a ';
                 if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                 else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
+                char += ' target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_char == search_word)
+                    char += 'class="keyword"';
+
                 char += '>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
             } else {
-                char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
-                char += '[<span ';
+                char += '<p class="hanzi-normal"><a ';
                 if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                 else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
-                char +='><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
+                char += ' target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_pic_id == search_word)
+                    char += 'class="keyword"';
+
+                char += '><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
             }
         }
     }
@@ -166,16 +209,24 @@ function render_variant_result(res) {
         var hanzi_set = data[source];
         for (var j = 0; j < hanzi_set.length; j++) {
             if (hanzi_set[j].hanzi_char != '') {
-                char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
-                char += '[<span ';
+                char += '<p class="hanzi-normal"><a ';
                 if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                 else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
+                char += ' target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_char + '">';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_char == search_word)
+                    char += 'class="keyword"';
+
                 char += '>' + hanzi_set[j].hanzi_char + '</span>]</a></p>';
             } else {
-                char += '<p class="hanzi-normal"><a target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
-                char += '[<span ';
+                char += '<p class="hanzi-normal"><a ';
                 if (hanzi_set[j].variant_type == 3) char += 'class="instruction-generic-variant-char"';
                 else if (hanzi_set[j].variant_type == 2) char += 'class="instruction-generic-variant-std-char"';
+                char += 'target="_blank" href="/variant_detail?q=' + hanzi_set[j].hanzi_pic_id + '">';
+                char += '[<span ';
+                if (hanzi_set[j].hanzi_pic_id == search_word)
+                    char += 'class="keyword"';
+
                 char += '><img src="' + hanzi_set[j].pic_url + '"></span>]</a></p>';
             }
         }
