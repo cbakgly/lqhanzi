@@ -1532,7 +1532,7 @@
 
 .tab-content .tab-panel.showing {
     display: block;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .tab-con .tab-panel {
