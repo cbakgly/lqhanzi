@@ -48,7 +48,7 @@ def taiwan(request):
             }
     content = {
         'radical_dict': radical_dict,
-        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/yitizi/index.htm',
+        'welcome_url': 'http://s3.cn-north-1.amazonaws.com.cn/yitizi-big5/index.htm',
     }
 
     return render(request, 'hanzi_taiwan.html', context=content)
@@ -63,7 +63,7 @@ def taiwan_detail(request):
     if not seq_id:
         content = {'error': 'not found' + seq_id}
     else:
-        base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi'
+        base = 'http://s3.cn-north-1.amazonaws.com.cn/yitizi-big5'
         std_code = seq_id.split('-')[0]
         anchor = False
         if len(seq_id.split('-')) > 1:
