@@ -235,8 +235,8 @@
         })
     });
 
-  var hy_cur_page = $('#hy-image-page').prop('src').match('[0-9]{4}')[0];
-  var dh_cur_page = $('#dh-image-page').prop('src').match('[0-9]{3}')[0];
+  var hy_cur_page = $('#hy-image-page').prop('src') ? $('#hy-image-page').prop('src').match('[0-9]{4}')[0] : '';
+  var dh_cur_page = $('#dh-image-page').prop('src') ? $('#dh-image-page').prop('src').match('[0-9]{3}')[0] : '';
 
 </script>
 </body>
