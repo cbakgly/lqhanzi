@@ -102,7 +102,7 @@ $(document).ready(function () {
     });
 
     // 点击笔画数的响应函数
-    $(document).on('click', '#strokes > span', function () {
+    $(document).on('click', '#stroke > span', function () {
         var stroke = $(this).html();
         $("#radical_input").val(stroke);
         strokes_filter3();
