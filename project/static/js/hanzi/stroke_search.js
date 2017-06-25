@@ -67,11 +67,14 @@ $(document).ready(function () {
         });
 
         // 显示bubble
-        $("#btip").fadeIn(1000);
+        btip_timer = setTimeout('$("#btip").fadeIn(400)', 600);
 
     });
+
+    var btip_timer;
     // 检索结果汉字集，鼠标离开时隐藏提示框
     $(document).on('mouseout', '.hanzi-item', function () {
+        clearTimeout(btip_timer);
         $("#btip").hide();
     });
 
@@ -152,6 +155,7 @@ $(document).ready(function () {
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
         $('.no-result').hide();
+        $("#btip").hide();
 
         // 获取输入并去除空格
         var q = $(".ser-input").val().replace(/\s/g, '');
