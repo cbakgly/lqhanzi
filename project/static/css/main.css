@@ -1091,7 +1091,7 @@
 
 .no-result p {
     width: 190px;
-    padding-left: 50px;
+    /*padding-left: 50px;*/
     background: url(/static/img/tip.png) no-repeat;
     margin: 0 auto;
     color: #6087AE;
