@@ -1,10 +1,8 @@
 # coding=utf-8
 from __future__ import unicode_literals
-import json
 import re
 import operator
 from django.db.models import Q
-from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
 from backend.utils import get_pic_url_by_source_pic_name
@@ -14,7 +12,7 @@ from backend.models import HanziSet
 from backend.enums import SOURCE_ENUM
 from backend.enums import VARIANT_TYPE_INVERSE
 from tw_fuluzi import fuluzi
-
+from operator import attrgetter
 
 def variant_search(request):
     """
@@ -150,6 +148,9 @@ def __get_variants_by_std_hanzi(std_hanzis, source):
             else:
                 dicts[d]['variants'] = [v]
 
+    for k in dicts.keys():
+        dicts[k]['variants'].sort(key=lambda x:x['variant_type'])
+
     return dicts.values()
 
 
@@ -167,7 +168,7 @@ def variant_detail(request):
     hanzi_set = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q) | Q(seq_id__regex='^' + q + '(;|$)')).order_by('source').values(
         'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'seq_id', 'variant_type', 'inter_dict_dup_hanzi', 'korean_dup_hanzi')
 
-    ret = {'q': q, 'empty': cnt == 1, 'taiwan': {}, 'hanyu': {}, 'korean': {}, 'dunhuang': {}}  # 初始化结果集
+    ret = {'q': q, 'empty': True, 'taiwan': {}, 'hanyu': {}, 'korean': {}, 'dunhuang': {}}  # 初始化结果集
     for hanzi in list(hanzi_set):
         if hanzi['source'] == SOURCE_ENUM['taiwan']:  # 台湾异体字
             ret['taiwan'] = {
@@ -176,6 +177,7 @@ def variant_detail(request):
                 'positions': hanzi['seq_id'].split(';'),  # 位置信息
                 'origin_positions': get_tw_url(hanzi['seq_id']),  # 原始出处
             }
+            ret['empty'] = False
 
             if hanzi['inter_dict_dup_hanzi']:  # 字典间去重
                 hanzi_korean = HanziSet.objects.filter(Q(source=SOURCE_ENUM['korean']) & Q(hanzi_pic_id=hanzi['inter_dict_dup_hanzi'])).values(
@@ -205,6 +207,8 @@ def variant_detail(request):
                 'positions': positions.split(';'),
                 'origin_positions': get_kr_url(positions),
             }
+            ret['empty'] = False
+
             if hanzi['inter_dict_dup_hanzi']:  # 字典间去重
                 hanzi_taiwan = HanziSet.objects.filter(Q(source=SOURCE_ENUM['taiwan']) & Q(hanzi_pic_id=hanzi['inter_dict_dup_hanzi'])).values(
                     'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'seq_id', 'variant_type')
@@ -223,12 +227,14 @@ def variant_detail(request):
                 'positions': hanzi['seq_id'],
                 'image_url': get_zh_image_url(hanzi['seq_id']),
             }
+            ret['empty'] = False
 
         if hanzi['source'] == SOURCE_ENUM['dunhuang']:  # 敦煌俗字典
             ret['dunhuang'] = {
                 'positions': hanzi['seq_id'],
                 'image_url': get_dh_image_url(hanzi['seq_id']),
             }
+            ret['empty'] = False
 
     if hanzi_set[0]['hanzi_char']:  # 字头
         ret['hanzi_char'] = hanzi_set[0]['hanzi_char']
