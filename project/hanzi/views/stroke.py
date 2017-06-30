@@ -30,7 +30,7 @@ def ajax_stroke_search(request):
     """
     # 定义汉字的unicode范围
     hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
-    # hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff" # for linux
+    hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff"  # for linux
 
     q = request.GET.get('q', None)
     if not q:
