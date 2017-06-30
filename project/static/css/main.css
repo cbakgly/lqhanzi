@@ -367,6 +367,14 @@
     display: -ms-flex;
 }
 
+.con-left-v1,.ser-errormsg,.reverse-code{
+    width: 52%;
+    margin-left: 20px;
+    background-color: #fff;
+    padding: 10px;
+    display: block;
+}
+
 .con-left,.ser-errormsg,.reverse-code{
     width: 52%;
     margin-right: 20px;
@@ -388,7 +396,7 @@
 .hanzi-wrap {
     min-height: 380px;
     margin-bottom: 30px;
-
+    margin-top: 10px;
     /*wxf added*/
     padding-left: 5px;
 }
@@ -1083,10 +1091,11 @@
 
 .no-result p {
     width: 190px;
-    padding-left: 50px;
+    /*padding-left: 50px;*/
     background: url(/static/img/tip.png) no-repeat;
     margin: 0 auto;
-    color: #9bc5f1;
+    color: #6087AE;
+    font-size: 20px;
 }
 
 .dict-results {
@@ -1150,7 +1159,7 @@
     border: 1px solid #ddd;
     vertical-align: middle;
     margin-right: 4px;
-    margin-bottom: 4px;
+    margin-bottom: 20px;
 }
 
 .hanzi-variants a span {
@@ -1352,12 +1361,13 @@
 .hanzi-sets-header .shortcut .w {
     height: 60px;
     line-height: 60px;
+    width: 100%;
 }
 
 .hanzi-sets-logo {
     width: 131px;
     height: 40px;
-    padding-top: 10px;
+    padding: 10px 0 0 20px;
 }
 
 .hanzi-sets-logo h1 {
@@ -1427,7 +1437,9 @@
     text-align: center;
     line-height: 140px;
     border-radius: 5px;
-    font-size: 100px;
+    font-size: 130px;
+    font-family: 'kai', '楷体', 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif', 'Tripitaka Unicode';
+    padding-top: 5px;
 }
 
 
@@ -1521,7 +1533,7 @@
 
 .tab-content .tab-panel.showing {
     display: block;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .tab-con .tab-panel {

@@ -125,7 +125,7 @@ def inverse_search(request):
         return JsonResponse({"msg": "Empty input."})
 
     hanzi_set = HanziSet.objects.filter(Q(hanzi_char__contains=q) | Q(hanzi_pic_id=q) | Q(seq_id__regex='^' + q + '(;|$)')).filter(Q(is_for_search=1)).values(
-        'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'as_std_hanzi', 'mix_split')
+        'source', 'hanzi_char', 'hanzi_pic_id', 'std_hanzi', 'as_std_hanzi', 'mix_split', 'similar_parts', 'min_split', 'stroke_serial')
     hanzi_set = list(hanzi_set)
 
     if len(hanzi_set) > 0:

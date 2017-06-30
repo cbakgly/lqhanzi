@@ -67,11 +67,14 @@ $(document).ready(function () {
         });
 
         // 显示bubble
-        $("#btip").show();
+        btip_timer = setTimeout('$("#btip").fadeIn(400)', 600);
 
     });
+
+    var btip_timer;
     // 检索结果汉字集，鼠标离开时隐藏提示框
     $(document).on('mouseout', '.hanzi-item', function () {
+        clearTimeout(btip_timer);
         $("#btip").hide();
     });
 
@@ -102,7 +105,7 @@ $(document).ready(function () {
     });
 
     // 点击笔画数的响应函数
-    $(document).on('click', '#strokes > span', function () {
+    $(document).on('click', '#stroke > span', function () {
         var stroke = $(this).html();
         $("#radical_input").val(stroke);
         strokes_filter3();
@@ -141,6 +144,8 @@ $(document).ready(function () {
 
     var reverse_query = null;
     $("#reverse-back-btn").on('click', function() {
+        $('.search-bottom input:first').click();
+
         $.get(reverse_query, function (data) {
             render_stroke_result(data);
         });
@@ -149,6 +154,9 @@ $(document).ready(function () {
 
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
+        $('.no-result').hide();
+        $("#btip").hide();
+
         // 获取输入并去除空格
         var q = $(".ser-input").val().replace(/\s/g, '');
         if (q == '') return;
@@ -359,8 +367,6 @@ function render_stroke_result(dataset) {
     if (total % page_size != 0)
         ++pages;
 
-    // 让隐藏的左面板显示出来
-    $(".con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
     
     // 如果没有检索到数据
@@ -501,7 +507,7 @@ function render_stroke_result(dataset) {
     $('#stroke_page_btn').attr("data-url", new_url);
 
     // 让隐藏的左面板显示出来
-    $(".con-left").fadeIn(600);
+    $("#con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
 }
 
@@ -514,7 +520,7 @@ function render_inverse_result(data) {
         $("#total").html(0);
         $("#perpage").html(0);
         // $('.hanzi-wrap').html('没有检索到数据。');
-        $(".con-left").fadeIn(600);
+        $("#con-left").fadeIn(600);
         $(".con-right").addClass("con-right-new");
         return;
     }
@@ -524,17 +530,17 @@ function render_inverse_result(data) {
 
     var str = '<table class="reverse">';
     if (data.hanzi_pic_id != "") {
-        str += '<tr><td>所查字</td><td><img src="' + data.pic_url + '"></td></tr>';
+        str += '<tr><td><a target="_blank" href="/variant_detail?q=' + data.hanzi_pic_id + '"><img src="' + data.pic_url + '"></a></td></tr>';
     } else {
-        str += '<tr><td>所查字</td><td>' + data.hanzi_char + '</td></tr>';
+        str += '<tr><td style="font-size:35px;"><a target="_blank" href="/variant_detail?q=' + data.hanzi_char + '">' + data.hanzi_char + '</a></td></tr>';
     }
-    str += '<tr><td>来源</td><td>' + data.source + '</td></tr>';
-    str += '<tr><td>正字</td><td>' + data.std_hanzi + '</td></tr>';
-    str += '<tr><td>兼正字</td><td>' + data.as_std_hanzi + '</td></tr>';
+    str += '<tr><td>相似部件</td><td>' + data.similar_parts + '</td></tr>';
+    str += '<tr><td>初步拆分</td><td>' + data.min_split + '</td></tr>';
     str += '<tr><td>混合拆分</td><td>' + data.mix_split + '</td></tr>';
+    str += '<tr><td>部件序列</td><td>' + data.stroke_serial + '</td></tr>';
     str += '</table>';
     $('.hanzi-wrap').append(str);
 
-    $(".con-left").fadeIn(600);
+    $("#con-left").fadeIn(600);
     $(".con-right").addClass("con-right-new");
 }
