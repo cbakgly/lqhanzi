@@ -142,14 +142,15 @@ $(document).ready(function () {
         $("#searchinput").val(text);
     });
 
+    // 点击反查编码/返回
     var reverse_query = null;
     $("#reverse-back-btn").on('click', function() {
         $('.search-bottom input:first').click();
-
         $.get(reverse_query, function (data) {
             render_stroke_result(data);
+            $('#reverse-back-btn').hide();
         });
-        $('#reverse-back-btn').hide();
+
     });
 
     // 点击搜索按钮时的响应函数
@@ -173,20 +174,16 @@ $(document).ready(function () {
         $("#current_mode").text(mode);
 
         if (mode == '1' || mode == '2') { // 一般检索&正则检索
-
             reverse_query =location.origin + '/ajax_stroke_search?q=' + q + '&mode=' + mode;
-
             $.get("ajax_stroke_search", {"q": q, "mode": mode}, function (data) {
                 render_stroke_result(data);
             });
-
             $('#reverse-back-btn').hide();
         } else if (mode == '3') {  // 反查编码
-
             $.get("inverse_search", {"q": $(".ser-input").val()}, function (data) {
                 render_inverse_result(data);
+                $('#reverse-back-btn').show();
             });
-            $('#reverse-back-btn').show();
         }
 
     });
@@ -367,7 +364,8 @@ function render_stroke_result(dataset) {
     if (total % page_size != 0)
         ++pages;
 
-    $(".con-right").addClass("con-right-new");
+    $("#result-tips").show();
+    // $(".con-right").addClass("con-right-new");
     
     // 如果没有检索到数据
     if ( total == 0 || data === undefined) {
@@ -376,7 +374,7 @@ function render_stroke_result(dataset) {
         $("#total").html(0);
         $("#perpage").html(0);
         $("#con-left").fadeIn(600);
-        $("#con-right").addClass("con-right-new");
+        // $("#con-right").addClass("con-right-new");
         return;
     }
 
@@ -508,7 +506,7 @@ function render_stroke_result(dataset) {
 
     // 让隐藏的左面板显示出来
     $("#con-left").fadeIn(600);
-    $(".con-right").addClass("con-right-new");
+    // $(".con-right").addClass("con-right-new");
 }
 
 // 渲染反查编码的结果
@@ -521,12 +519,10 @@ function render_inverse_result(data) {
         $("#perpage").html(0);
         // $('.hanzi-wrap').html('没有检索到数据。');
         $("#con-left").fadeIn(600);
-        $(".con-right").addClass("con-right-new");
+        // $(".con-right").addClass("con-right-new");
         return;
     }
-
-    $("#total").html(1);
-    $("#perpage").html(1);
+    $("#result-tips").hide();
 
     var str = '<table class="reverse">';
     if (data.hanzi_pic_id != "") {
@@ -534,13 +530,13 @@ function render_inverse_result(data) {
     } else {
         str += '<tr><td style="font-size:35px;"><a target="_blank" href="/variant_detail?q=' + data.hanzi_char + '">' + data.hanzi_char + '</a></td></tr>';
     }
-    str += '<tr><td>相似部件</td><td>' + data.similar_parts + '</td></tr>';
     str += '<tr><td>初步拆分</td><td>' + data.min_split + '</td></tr>';
     str += '<tr><td>混合拆分</td><td>' + data.mix_split + '</td></tr>';
     str += '<tr><td>部件序列</td><td>' + data.stroke_serial + '</td></tr>';
+    str += '<tr><td>相似部件</td><td>' + data.similar_parts + '</td></tr>';
     str += '</table>';
     $('.hanzi-wrap').append(str);
 
     $("#con-left").fadeIn(600);
-    $(".con-right").addClass("con-right-new");
+    // $(".con-right").addClass("con-right-new");
 }

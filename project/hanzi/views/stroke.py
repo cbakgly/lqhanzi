@@ -4,6 +4,7 @@ import re
 import operator
 from django.db.models import Q
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from backend.utils import *
 from backend.models import HanziParts, HanziSet
@@ -29,7 +30,7 @@ def ajax_stroke_search(request):
     """
     # 定义汉字的unicode范围
     hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
-    # hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff" # for linux
+    hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff"  # for linux
 
     q = request.GET.get('q', None)
     if not q:
@@ -62,7 +63,6 @@ def ajax_stroke_search(request):
             structure = m.group(1)
             query_list.append(Q(structure__contains=structure))
         if m.group(2):  # 部件序列
-
             s = m.group(2)
             l = list(s)
             l.sort()
@@ -98,6 +98,8 @@ def ajax_stroke_search(request):
                 query_list.append(Q(max_strokes__lte=parts_strokes + end))
 
     total = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
+    # return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
+
     hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'hanzi_char', 'hanzi_pic_id', 'seq_id', 'radical', 'max_strokes', 'std_hanzi',
                                                                                   'min_split').order_by('source')[(page_num - 1) * page_size: page_num * page_size]
     hanzi_set = list(hanzi_set)

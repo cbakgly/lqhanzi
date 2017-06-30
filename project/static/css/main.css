@@ -1090,11 +1090,11 @@
 }
 
 .no-result p {
-    width: 190px;
+    width: 200px;
     /*padding-left: 50px;*/
     background: url(/static/img/tip.png) no-repeat;
     margin: 0 auto;
-    color: #6087AE;
+    color: rgba(50, 175, 230, 0.83);
     font-size: 20px;
 }
 
@@ -1407,8 +1407,8 @@
 
 /*wenxiaofeng modified*/
 .hanzi-sets-main {
-    padding: 15px 0 70px 0;
-    margin-top: 40px;
+    padding: 5px 0 70px 0;
+    margin-top: 10px;
 }
 
 .hanzi-main-hd {
@@ -1438,8 +1438,7 @@
     line-height: 140px;
     border-radius: 5px;
     font-size: 130px;
-    font-family: 'kai', '楷体', 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif', 'Tripitaka Unicode';
-    padding-top: 5px;
+    font-family:  '楷体', 'myFont', 'KaiXinSong', 'lqhanzi', 'Source Sans Pro', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif', 'Tripitaka Unicode';
 }
 
 
@@ -1453,7 +1452,11 @@
     border-radius: 5px;
 }*/
 
-.zi img{ width: 100px;position: relative;top:-10px;}
+.zi img{
+    width: 100px;
+    position: relative;
+    top:-20px;
+}
 
 .hanzi-origin {
     flex: 1;
