@@ -149,7 +149,8 @@ def __get_variants_by_std_hanzi(std_hanzis, source):
                 dicts[d]['variants'] = [v]
 
     for k in dicts.keys():
-        dicts[k]['variants'].sort(key=lambda x:x['variant_type'])
+        if dicts[k].has_key('variants'):
+            dicts[k]['variants'].sort(key=lambda x:x['variant_type'])
 
     return dicts.values()
 
