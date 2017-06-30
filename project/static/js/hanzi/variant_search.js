@@ -27,7 +27,7 @@ $(document).ready(function () {
     var q = $("#q").text();
     if (q != "None" && q.toString().length > 0) {
         $("#variant_searchinput").val(q);
-        $(".tip").text("正在查询中...");
+        $(".tip").text("查询中...");
         $.get("ajax_variant_search", {"q": $(".ser-input").val()}, function (data) {
             render_variant_result(data);
         });
@@ -48,7 +48,7 @@ function render_variant_result(res) {
     if (res.empty == true || res === undefined) {
         $('.no-result').show();
         $('.dict-results').hide();
-        $(".tip").text("检索到0条数据。");
+        $(".tip").text("无异体字。");
         return;
     }
 

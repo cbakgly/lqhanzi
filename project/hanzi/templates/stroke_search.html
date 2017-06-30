@@ -82,7 +82,7 @@
               <div id="checkinfo_detail"></div>
             </div>
 
-            <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息">
+            <input id="searchinput" class="ser-input" type="text" placeholder="请输入结构、部件及笔画信息，例如⿰日月3-4">
             <span class="ser-btn" id="strock_search_btn">搜索</span>
 
           </div>
@@ -103,7 +103,7 @@
                 </br>
                 常规部件可以直接输入，生僻部件可以查询以下部件面板后点选。
                 </br>
-                剩余笔画可以输入单个数字，也可输入数字范围。如“⿰日月3-5”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-5画。
+                剩余笔画可以输入单个数字，也可输入数字范围。如“⿰日月3-4”，表示该字为左右结构，包含“日”“月”两个部件，剩余笔画为3-4画。
               </p>
               <p class="ar"><a target="_blank" class="more" href="{% url 'm1.help' %}">更多...</a></p>
             </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="parts-bd">
               <div class="parts-ser clearfix">
-                <input type="text" class="fl" id="radical_input" placeholder="请点选或输入笔画及笔顺">
+                <input type="text" class="fl" id="radical_input" placeholder="请输入笔画及笔顺，例如3hs">
                 <button class="btn btn-default fl" id="clearitem"><i class="reset"></i></button>
                 <!-- 帮助图标 -->
                 <div class="help fl">
@@ -229,10 +229,12 @@
       </div>
 
       <div class="con-left-v1">
-      <div class="no-result"><p class="tip">请搜索</p></div>
+      <div class="no-result">
+          <p class="tip">请搜索…</p>
+      </div>
       <div id="reverse-back-btn" style="display: none; margin: -10px -10px 20px -10px; background-color: #f4f4f4; padding: 10px"><a href="javascript:void(0);">&lt;&nbsp;返回</a></div>
       <div id="con-left" style="display: none;">
-        <p class="total" style="margin-left: 20px;">检索到<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条。</p>
+        <p class="total" style="margin-left: 20px; color: #757575">检索到<span id="total"></span>条数据，每页最多显示<span id="perpage"></span>条。</p>
         <ul class="hanzi-wrap clearfix" id="hanzi-wrap">
         </ul>
         <div class="pages-box" id="pages-box">
