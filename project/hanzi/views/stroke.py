@@ -101,7 +101,7 @@ def ajax_stroke_search(request):
                 query_list.append(Q(max_strokes__lte=parts_strokes + end))
 
     total = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
-    return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
+    # return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
 
     hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'hanzi_char', 'hanzi_pic_id', 'seq_id', 'radical', 'max_strokes', 'std_hanzi',
                                                                                   'min_split').order_by('source')[(page_num - 1) * page_size: page_num * page_size]
