@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from backend.utils import *
 from backend.models import HanziParts, HanziSet
+from replace_parts import replace_parts
 
 
 def stroke_search(request):
@@ -29,7 +30,7 @@ def ajax_stroke_search(request):
     windows下的unicode采用的usc2，linux下采用的是usc4，多字节汉字的情况，上述正则式在windows不能工作，linux可以工作。
     """
     # 定义汉字的unicode范围
-    hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
+    # hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
     hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff"  # for linux
 
     q = request.GET.get('q', None)
@@ -69,6 +70,7 @@ def ajax_stroke_search(request):
             s = "".join(l)
             parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", s)
             # parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", m.group(2))
+            parts = __get_replace_parts(parts)
             query_list.append(Q(stroke_serial__regex=parts))
         if m.group(3):  # 笔画
             parts_strokes = 0
@@ -86,6 +88,7 @@ def ajax_stroke_search(request):
             return JsonResponse({"msg": "Invalid input, format error."})
         if m.group(1):  # IDS
             ids = __format_ids(m.group(1))
+            ids = __get_replace_parts(ids)
             query_list.append(Q(mix_split__regex=ids))
         if m.group(4):  # 笔画
             parts_strokes = 0
@@ -98,7 +101,7 @@ def ajax_stroke_search(request):
                 query_list.append(Q(max_strokes__lte=parts_strokes + end))
 
     total = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
-    # return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
+    return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
 
     hanzi_set = HanziSet.objects.filter(reduce(operator.and_, query_list)).values('source', 'hanzi_char', 'hanzi_pic_id', 'seq_id', 'radical', 'max_strokes', 'std_hanzi',
                                                                                   'min_split').order_by('source')[(page_num - 1) * page_size: page_num * page_size]
@@ -180,6 +183,18 @@ def __format_ids(ids):
             ret += '.*'
     return ret + ids[len(ids) - 1]
 
+def __get_replace_parts(querystr):
+    """
+    替代部件
+    """
+    qs = u''
+    for i in range(len(querystr) - 1):
+        j = querystr[i]
+        if j in replace_parts.keys():
+            qs += '[' + j + replace_parts[j] + ']'
+        else:
+            qs += j
+    return qs
 
 def __get_parts():
     """
