@@ -101,6 +101,7 @@ $(document).ready(function () {
         $('.search-bottom input:last').click();
         // 触发按纽的点击事件
         $("#strock_search_btn").trigger("click");
+        // $("#btip").css("display", "none");
 
     });
 
@@ -156,8 +157,6 @@ $(document).ready(function () {
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
         $('.no-result').hide();
-        $("#btip").hide();
-
         // 获取输入并去除空格
         var q = $(".ser-input").val().replace(/\s/g, '');
         if (q == '') return;
@@ -181,11 +180,12 @@ $(document).ready(function () {
             $('#reverse-back-btn').hide();
         } else if (mode == '3') {  // 反查编码
             $.get("inverse_search", {"q": $(".ser-input").val()}, function (data) {
+
                 render_inverse_result(data);
                 $('#reverse-back-btn').show();
             });
         }
-
+        $("#btip").hide();
     });
 
     // 结果页面中点击上一页、下一页时的响应函数
