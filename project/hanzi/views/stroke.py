@@ -188,7 +188,7 @@ def __get_replace_parts(querystr):
     替代部件
     """
     qs = u''
-    for i in range(len(querystr) - 1):
+    for i in range(len(querystr)):
         j = querystr[i]
         if j in replace_parts.keys():
             qs += '(' + j + '|' + replace_parts[j] + ')'

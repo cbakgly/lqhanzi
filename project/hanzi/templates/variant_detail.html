@@ -168,7 +168,7 @@
               {% for seq_id in taiwan.positions %}
                 <div class="tab-panel">
                   <iframe seamless src="/dicts/taiwan/detail?q={{ seq_id }}" class="iframe-taiwan" style="min-height: 650px;"
-                          onload="iFrameHeightByClass('iframe-taiwan')"></iframe>
+                          onload="iFrameHeightByObject(this)"></iframe>
                 </div>
               {% endfor %}
             {% endif %}
