@@ -61,13 +61,12 @@ $(document).ready(function () {
         var new_left_offset = (btip_width - w) / 2;
 
         $("#btip").css({
-            "visibility": "visible",
             "left": offset.left - new_left_offset - 5,
             "top": offset.top - btip_height - 5
         });
 
         // 显示bubble
-        btip_timer = setTimeout('$("#btip").fadeIn(400)', 600);
+        btip_timer = setTimeout('$("#btip").fadeIn(100)', 600);
 
     });
 
@@ -101,7 +100,6 @@ $(document).ready(function () {
         $('.search-bottom input:last').click();
         // 触发按纽的点击事件
         $("#strock_search_btn").trigger("click");
-
     });
 
     // 点击笔画数的响应函数
@@ -150,14 +148,13 @@ $(document).ready(function () {
             render_stroke_result(data);
             $('#reverse-back-btn').hide();
         });
-
+        $("#btip").hide();
+        $("#btip").css("visibility", "visible");    // 打开提示框的开关
     });
 
     // 点击搜索按钮时的响应函数
     $("#strock_search_btn").click(function () {
         $('.no-result').hide();
-        $("#btip").hide();
-
         // 获取输入并去除空格
         var q = $(".ser-input").val().replace(/\s/g, '');
         if (q == '') return;
@@ -174,18 +171,20 @@ $(document).ready(function () {
         $("#current_mode").text(mode);
 
         if (mode == '1' || mode == '2') { // 一般检索&正则检索
+            $("#btip").css("visibility", "visible");    // 打开提示框的开关
             reverse_query =location.origin + '/ajax_stroke_search?q=' + q + '&mode=' + mode;
             $.get("ajax_stroke_search", {"q": q, "mode": mode}, function (data) {
                 render_stroke_result(data);
             });
             $('#reverse-back-btn').hide();
         } else if (mode == '3') {  // 反查编码
+            $("#btip").css("visibility", "hidden");    // 关闭提示框的开关
             $.get("inverse_search", {"q": $(".ser-input").val()}, function (data) {
                 render_inverse_result(data);
                 $('#reverse-back-btn').show();
             });
         }
-
+        $("#btip").hide();
     });
 
     // 结果页面中点击上一页、下一页时的响应函数

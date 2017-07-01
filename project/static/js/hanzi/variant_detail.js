@@ -4,9 +4,11 @@ function iFrameHeightByClass(classname) {
     for(var i = 0; i < ifms.length; i++) {
         ifms[i].height = document.getElementsByClassName('hanzi-sets-content')[0].clientHeight + 90;
     }
-
 }
 
+function iFrameHeightByObject(obj) {
+    obj.height = document.getElementsByClassName('hanzi-sets-content')[0].clientHeight;
+}
 
 // 全局变量
 var base_url = 'http://s3.cn-north-1.amazonaws.com.cn/lqhanzi-images/dictionaries';

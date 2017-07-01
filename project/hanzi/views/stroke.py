@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from backend.utils import *
 from backend.models import HanziParts, HanziSet
+from replace_parts import replace_parts
 
 
 def stroke_search(request):
@@ -69,6 +70,7 @@ def ajax_stroke_search(request):
             s = "".join(l)
             parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", s)
             # parts = re.sub(ur"([" + hanzi_range + ur"])", ur"\1.*", m.group(2))
+            parts = __get_replace_parts(parts)
             query_list.append(Q(stroke_serial__regex=parts))
         if m.group(3):  # 笔画
             parts_strokes = 0
@@ -86,6 +88,7 @@ def ajax_stroke_search(request):
             return JsonResponse({"msg": "Invalid input, format error."})
         if m.group(1):  # IDS
             ids = __format_ids(m.group(1))
+            ids = __get_replace_parts(ids)
             query_list.append(Q(mix_split__regex=ids))
         if m.group(4):  # 笔画
             parts_strokes = 0
@@ -180,6 +183,18 @@ def __format_ids(ids):
             ret += '.*'
     return ret + ids[len(ids) - 1]
 
+def __get_replace_parts(querystr):
+    """
+    替代部件
+    """
+    qs = u''
+    for i in range(len(querystr)):
+        j = querystr[i]
+        if j in replace_parts.keys():
+            qs += '(' + j + '|' + replace_parts[j] + ')'
+        else:
+            qs += j
+    return qs
 
 def __get_parts():
     """
