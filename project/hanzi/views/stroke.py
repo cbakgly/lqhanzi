@@ -30,8 +30,8 @@ def ajax_stroke_search(request):
     windows下的unicode采用的usc2，linux下采用的是usc4，多字节汉字的情况，上述正则式在windows不能工作，linux可以工作。
     """
     # 定义汉字的unicode范围
-    hanzi_range = ur"\u3400-\uffff"  # for windows, temporary use
-    hanzi_range = ur"\u3400-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff"  # for linux
+    hanzi_range = ur"\u2E80-\uffff"  # for windows, temporary use
+    hanzi_range = ur"\u2E80-\uffff\U00010000-\U0002ffff\U000f0000-\U000fffff"  # for linux
 
     q = request.GET.get('q', None)
     if not q:
