@@ -71,7 +71,7 @@ def taiwan_detail(request):
         std_type = std_code[0]
         up_url = "%s/yiti%s/w%s/w%s.htm" % (base, std_type, std_type, std_code)
         right_url = "%s/yiti%s/s%s/s%s.htm" % (base, std_type, std_type, std_code)
-        if seq_id in fuluzi:
+        if seq_id.upper() in fuluzi:
             down_url = "%s/yiti%s/fu%s/fu%s.htm" % (base, std_type, std_type, std_code)
         elif anchor:
             down_url = "%s/yiti%s/yd%s/yd%s.htm%s" % (base, std_type, std_type, std_code, anchor)
