@@ -77,9 +77,8 @@ def ajax_stroke_search(request):
             if m.group(2):
                 parts_strokes = __get_parts_strokes(m.group(2))
             start, end = __get_stroke_range(m.group(3))
-            if start:
-                query_list.append(Q(min_strokes__gte=parts_strokes + start))
-                query_list.append(Q(max_strokes__lte=parts_strokes + end))
+            query_list.append(Q(min_strokes__gte=parts_strokes + start))
+            query_list.append(Q(max_strokes__lte=parts_strokes + end))
 
     elif output_mode == 2:  # 正则检索
         pattern_regex = re.compile(ur"^(([⿱⿰⿵⿶⿷󰃾⿺󰃿⿹⿸⿻⿴]|[" + hanzi_range + ur"]|[sS\(\)\[\]\^\$\*\+\.\,\?\:\=\!\|\\]|(\{[0-9\,]+\}))+)((\d+)(-\d+)?)?$")
@@ -96,9 +95,8 @@ def ajax_stroke_search(request):
                 parts = re.sub(ur"([^" + hanzi_range + ur"])", "", m.group(1))  # 提取部件
                 parts_strokes = __get_parts_strokes(parts)
             start, end = __get_stroke_range(m.group(4))
-            if start:
-                query_list.append(Q(min_strokes__gte=parts_strokes + start))
-                query_list.append(Q(max_strokes__lte=parts_strokes + end))
+            query_list.append(Q(min_strokes__gte=parts_strokes + start))
+            query_list.append(Q(max_strokes__lte=parts_strokes + end))
 
     total = HanziSet.objects.filter(reduce(operator.and_, query_list)).count()
     # return HttpResponse(str(HanziSet.objects.filter(reduce(operator.and_, query_list)).query))
