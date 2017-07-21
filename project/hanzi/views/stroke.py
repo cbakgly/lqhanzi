@@ -146,9 +146,12 @@ def __get_parts_strokes(parts):
     if not parts:
         return None
     for item in parts:
-        part = HanziSet.objects.filter(Q(hanzi_char=item) & Q(max_strokes__isnull=False)).order_by('source')
+        part = HanziSet.objects.filter(Q(hanzi_char__contains=item) & Q(max_strokes__isnull=False)).order_by('source')
         if len(part) > 0:
-            stroke_num += part[0].max_strokes
+            if part[0].min_strokes > 0:
+                stroke_num += part[0].min_strokes
+            else:
+                stroke_num += part[0].max_strokes
     return stroke_num
 
 
