@@ -1,4 +1,4 @@
-django==1.10.4
+django==2.2.24
 django-guardian==1.4.6
 djangorestframework-filters==0.9.1
 djangorestframework==3.5.3
